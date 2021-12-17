@@ -1,0 +1,217 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "roles" : ["admin","superadmin"],
+      "name": "Beranda",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><polygon points='0 0 24 0 24 24 0 24' /><path d='M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z' fill='#000000' fill-rule='nonzero' /><path d='M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z' fill='#000000' opacity='0.3' /></g></svg>",
+      "perms": "home",
+      "action" : ["index","create","edit","show","delete"]
+    },
+    {
+      "section" : "MAIN MENU",
+      "perms" : [
+        "pencarian-tiket",
+        "keluhan",
+        "claim"
+      ]
+    },
+    {
+      "url": "pencarian-tiket",
+      "roles" : ["admin","superadmin"],
+      "name": "Pencarian Tiket",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><polygon points='0 0 24 0 24 24 0 24' /><path d='M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z' fill='#000000' fill-rule='nonzero' /><path d='M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z' fill='#000000' opacity='0.3' /></g></svg>",
+      "perms": "pencarian-tiket",
+      "action" : ["index","create","edit","show","delete"]
+    },
+    {
+      "url": "#",
+      "roles" : ["admin","superadmin"],
+      "name": "Laporan Pelanggan",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><rect x='0' y='0' width='24' height='24'/><path d='M3,16 L21,16 C21,18.209139 19.209139,20 17,20 L7,20 C4.790861,20 3,18.209139 3,16 Z M3,11 L21,11 L21,12 C21,13.1045695 20.1045695,14 19,14 L5,14 C3.8954305,14 3,13.1045695 3,12 L3,11 Z' fill='#000000'/><path d='M3,5 L21,5 L21,7 C21,8.1045695 20.1045695,9 19,9 L5,9 C3.8954305,9 3,8.1045695 3,7 L3,5 Z' fill='#000000' opacity='0.3'/></g></svg>",
+      "perms" : [
+        "keluhan",
+        "claim"
+      ],
+      "action" : ["index","create","edit","show","delete"],
+      "submenu": [
+        {
+          "url": "keluhan",
+          "roles" : ["superadmin"],
+          "perms": "keluhan",
+          "name": "Keluhan",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "claim",
+          "roles" : ["superadmin"],
+          "perms": "claim",
+          "name": "Claim",
+          "action" : ["index","create","edit","show","delete"]
+        }
+      ]
+    },
+    {
+      "section" : "MASTER DATA",
+      "perms" : [
+        "master-bk",
+        "master-golken",
+        "master-regional",
+        "master-ro",
+        "master-ruas",
+        "master-status",
+        "master-sumber",
+        "master-unit"
+      ]
+    },
+    {
+      "url": "#",
+      "roles" : ["admin","superadmin"],
+      "name": "Master Data",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><rect x='0' y='0' width='24' height='24'/><path d='M3,16 L21,16 C21,18.209139 19.209139,20 17,20 L7,20 C4.790861,20 3,18.209139 3,16 Z M3,11 L21,11 L21,12 C21,13.1045695 20.1045695,14 19,14 L5,14 C3.8954305,14 3,13.1045695 3,12 L3,11 Z' fill='#000000'/><path d='M3,5 L21,5 L21,7 C21,8.1045695 20.1045695,9 19,9 L5,9 C3.8954305,9 3,8.1045695 3,7 L3,5 Z' fill='#000000' opacity='0.3'/></g></svg>",
+      "perms" : [
+        "master-bk",
+        "master-golken",
+        "master-regional",
+        "master-ro",
+        "master-ruas",
+        "master-status",
+        "master-sumber",
+        "master-unit"
+      ],
+      "action" : ["index","create","edit","show","delete"],
+      "submenu": [
+        {
+          "url": "master-bk",
+          "roles" : ["Superadmin"],
+          "perms": "master-bk",
+          "name": "Bidang Keluhan",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-golken",
+          "roles" : ["Superadmin"],
+          "perms": "master-golken",
+          "name": "Golongan Kendaraan",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-regional",
+          "roles" : ["Superadmin"],
+          "perms": "master-regional",
+          "name": "Regional",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-ro",
+          "roles" : ["Superadmin"],
+          "perms": "master-ro",
+          "name": "Ro",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-ruas",
+          "roles" : ["Superadmin"],
+          "perms": "master-ruas",
+          "name": "Ruas",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-status",
+          "roles" : ["Superadmin"],
+          "perms": "master-status",
+          "name": "Status",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-sumber",
+          "roles" : ["Superadmin"],
+          "perms": "master-sumber",
+          "name": "Sumber",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-unit",
+          "roles" : ["Superadmin"],
+          "perms": "master-unit",
+          "name": "Unit",
+          "action" : ["index","create","edit","show","delete"]
+        }
+      ]
+    },
+    {
+      "section" : "LOG HISTORY",
+      "perms" : ["log-audit","bug-report"]
+    },
+    {
+      "url": "#",
+      "roles" : ["admin","superadmin"],
+      "name": "Logs",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><rect x='0' y='0' width='24' height='24'/><path d='M3,16 L21,16 C21,18.209139 19.209139,20 17,20 L7,20 C4.790861,20 3,18.209139 3,16 Z M3,11 L21,11 L21,12 C21,13.1045695 20.1045695,14 19,14 L5,14 C3.8954305,14 3,13.1045695 3,12 L3,11 Z' fill='#000000'/><path d='M3,5 L21,5 L21,7 C21,8.1045695 20.1045695,9 19,9 L5,9 C3.8954305,9 3,8.1045695 3,7 L3,5 Z' fill='#000000' opacity='0.3'/></g></svg>",
+      "perms" : ["log-audit","bug-report"],
+      "action" : ["index","create","edit","show","delete"],
+      "submenu": [
+        {
+          "url": "log-auth",
+          "roles" : ["admin","superadmin"],
+          "perms": "log-auth",
+          "name": "Log Authentication",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "log-audit",
+          "roles" : ["admin","superadmin"],
+          "perms": "log-audit",
+          "name": "Log Audit",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "bug-report",
+          "roles" : ["admin","superadmin"],
+          "perms": "bug-report",
+          "name": "Bug Report",
+          "action" : ["index","create","edit","show","delete"]
+        }
+      ]
+    },
+    {
+      "section" : "PENGATURAN",
+      "perms" : ["user-account","merchant-account","user-device","role","model-permission"]
+    },
+    {
+      "url": "#",
+      "roles" : ["admin","superadmin"],
+      "name": "Account Configuration",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><rect x='0' y='0' width='24' height='24'/><path d='M3,16 L21,16 C21,18.209139 19.209139,20 17,20 L7,20 C4.790861,20 3,18.209139 3,16 Z M3,11 L21,11 L21,12 C21,13.1045695 20.1045695,14 19,14 L5,14 C3.8954305,14 3,13.1045695 3,12 L3,11 Z' fill='#000000'/><path d='M3,5 L21,5 L21,7 C21,8.1045695 20.1045695,9 19,9 L5,9 C3.8954305,9 3,8.1045695 3,7 L3,5 Z' fill='#000000' opacity='0.3'/></g></svg>",
+      "perms" : ["user-account","merchant-account","user-device"],
+      "action" : ["index","create","edit","show","delete"],
+      "submenu": [
+        {
+          "url": "setting/users",
+          "roles" : ["admin","superadmin"],
+          "perms": "user-account",
+          "name": "User Account",
+          "action" : ["index","create","edit","show","delete"]
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "roles" : ["admin","superadmin"],
+      "name": "Access",
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='24px' viewBox='0 0 24 24' version='1.1'><g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><rect x='0' y='0' width='24' height='24'/><path d='M3,16 L21,16 C21,18.209139 19.209139,20 17,20 L7,20 C4.790861,20 3,18.209139 3,16 Z M3,11 L21,11 L21,12 C21,13.1045695 20.1045695,14 19,14 L5,14 C3.8954305,14 3,13.1045695 3,12 L3,11 Z' fill='#000000'/><path d='M3,5 L21,5 L21,7 C21,8.1045695 20.1045695,9 19,9 L5,9 C3.8954305,9 3,8.1045695 3,7 L3,5 Z' fill='#000000' opacity='0.3'/></g></svg>",
+      "perms" : ["role","model-permission"],
+      "action" : ["index","create","edit","show","delete"],
+      "submenu": [
+        {
+          "url": "setting/role",
+          "roles" : ["admin","superadmin"],
+          "perms": "role",
+          "name": "Roles",
+          "action" : ["index","create","edit","show","delete"]
+        }
+      ]
+    }
+
+  ]
+}
