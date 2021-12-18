@@ -53,6 +53,7 @@
               <th width="25">#</th>
               <th>Bidang Keluhan</th>
               <th>Bidang</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -74,6 +75,7 @@
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data:'keluhan', name:'keluhan' },
       { data:'bidang', name:'bidang' },
+      { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false,orderable: false }
       ]);
   });

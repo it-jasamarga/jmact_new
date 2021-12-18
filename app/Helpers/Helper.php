@@ -206,3 +206,12 @@ function createdAt($created)
 {
     return "<b>". date('Y-m-d H:i:s', strtotime($created)) . "</b><br> " . Carbon::parse($created)->diffForHumans() . " ";
 }
+
+function getActive($record){
+    $result = 'In-Active';
+    if($record == true){
+        $result = 'Active';
+    }
+
+    return $result;
+}
