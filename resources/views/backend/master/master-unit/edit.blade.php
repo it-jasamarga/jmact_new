@@ -3,22 +3,29 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Data</h3>
+        <h3 class="modal-title">Ubah Unit</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="code" class="">{{ __('Code') }}</label>
-                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Code" maxlength="50">
+                    <label for="code" class="">{{ __('Kode Unit') }}</label>
+                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Kode Unit" maxlength="20" readonly>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="unit" class="">{{ __('Unit') }}</label>
-                    <input id="unit" type="text" class="form-control" name="unit" value="{{ $record->unit }}" required autocomplete="unit" autofocus placeholder="Unit" maxlength="50">
+                    <input id="unit" type="text" class="form-control" name="unit" value="{{ $record->unit }}" required autocomplete="unit" autofocus placeholder="Unit" maxlength="20">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="active" class="">{{ __('Status') }}</label>
+                    <input id="active" type="text" class="form-control" name="active" value="{{ $record->active }}" required autocomplete="active" autofocus placeholder="Status" maxlength="20">
                 </div>
             </div>
 

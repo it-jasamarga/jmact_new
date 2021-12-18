@@ -52,6 +52,7 @@
               </th>
               <th width="25">#</th>
               <th>Regional</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -72,6 +73,7 @@
       { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data:'name', name:'name' },
+      { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false,orderable: false }
       ]);
   });

@@ -20,7 +20,7 @@ class User extends Authenticatable implements Auditable, JWTSubject
 {
     use \OwenIt\Auditing\Auditable;
     use Utilities;
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles;
     use AuthenticationLogable;
 
     /**
