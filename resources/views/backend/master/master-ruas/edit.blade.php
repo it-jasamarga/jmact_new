@@ -11,8 +11,8 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="regional" class="">{{ __('Regional') }}</label>
-                    <select class="form-control" name="regional_id">
-                        {!! App\Models\MasterRegional::options('name','id',['selected' => $record->regional_id],'( Pilih Regional )') !!}
+                    <select class="form-control option-ajax select2" data-child="ro" name="regional_id">
+                        {!! App\Models\MasterRegional::options('name','id',['selected' => $record->ro->regional_id],'( Pilih Regional )') !!}
                     </select>
                 </div>
             </div>
@@ -20,8 +20,8 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="regional" class="">{{ __('RO') }}</label>
-                    <select class="form-control" name="ro_id">
-                        {!! App\Models\MasterRo::options('name','id',['selected' => $record->ro_id],'( Pilih RO )') !!}
+                    <select class="form-control" id="ro" name="ro_id">
+                        {!! App\Models\MasterRo::options('name','id',['selected' => $record->ro_id, 'filters' => ['regional_id' => $record->ro->regional_id]],'( Pilih RO )') !!}
                     </select>
                 </div>
             </div>

@@ -23,7 +23,7 @@ class MasterBkRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('bidang_keluhan')) ? ','.$id : '';
+      $unique = ($id = request()->route('master_bk')) ? ','.$id : '';
       return [
         'bidang' => 'required|string|max:255|min:1|unique:master_bk,bidang'.$unique,
         'keluhan' => 'required|string|max:255'

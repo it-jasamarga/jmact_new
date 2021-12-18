@@ -23,7 +23,7 @@ class MasterRuasRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('rua')) ? ','.$id : '';
+      $unique = ($id = request()->route('master_rua')) ? ','.$id : '';
       return [
         'name' => 'required|string|max:255|min:1|unique:master_ruas,name'.$unique,
         'ro_id' => 'required'

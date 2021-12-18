@@ -23,7 +23,7 @@ class MasterRegionalRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('regional')) ? ','.$id : '';
+      $unique = ($id = request()->route('master_regional')) ? ','.$id : '';
       return [
         'name' => 'required|string|max:255|min:1|unique:master_regional,name'.$unique
       ];

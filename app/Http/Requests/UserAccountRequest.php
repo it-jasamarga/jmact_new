@@ -23,7 +23,7 @@ class UserAccountRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('id')) ? ','.$id : '';
+      $unique = ($id = request()->route('user')) ? ','.$id : '';
       return [
         'name' => 'required|string|max:255|min:3',
         'email' => 'required|string|email|max:255|unique:users,email'.$unique,
