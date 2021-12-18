@@ -3,22 +3,22 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Data</h3>
+        <h3 class="modal-title">Ubah Golongan Kendaraan</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="golken" class="">{{ __('Nama Golongan Kendaraan') }}</label>
-                    <input id="golken" type="text" class="form-control" name="golken" value="{{ $record->golken }}" required autocomplete="golken" autofocus placeholder="Nama Golongan Kendaraan" maxlength="50">
+                    <label for="golongan" class="">{{ __('Golongan') }}</label>
+                    <input id="golongan" type="text" class="form-control" name="golongan" value="{{ $record->golongan }}" required autocomplete="golongan" autofocus placeholder="Golongan" maxlength="20">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description" class="">{{ __('Deskripsi') }}</label>
-                    <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Deskripsi">{{ $record->deskripsi }}</textarea>
+                    <textarea name="description" class="form-control" cols="4" rows="4" placeholder="Deskripsi">{{ $record->description }}</textarea>
                 </div>
             </div>
 

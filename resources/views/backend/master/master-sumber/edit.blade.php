@@ -10,15 +10,22 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="bidang" class="">{{ __('Nama Bidang') }}</label>
-                    <input id="bidang" type="text" class="form-control" name="bidang" value="{{ $record->bidang }}" required autocomplete="bidang" autofocus placeholder="Nama Bidang" maxlength="50">
+                    <label for="code" class="">{{ __('Kode Aduan') }}</label>
+                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Kode Aduan" maxlength="10" readonly>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description" class="">{{ __('Deskripsi') }}</label>
-                    <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Deskripsi">{{ $record->description }}</textarea>
+                    <label for="description" class="">{{ __('Sumber') }}</label>
+                    <input id="description" type="text" class="form-control" name="description" value="{{ $record->description }}" required autocomplete="description" autofocus placeholder="Sumber" maxlength="10">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="active" class="">{{ __('Status') }}</label>
+                    <input id="active" type="text" class="form-control" name="active" value="{{ $record->active }}" required autocomplete="active" autofocus placeholder="Status" maxlength="10">
                 </div>
             </div>
 

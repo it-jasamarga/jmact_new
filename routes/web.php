@@ -119,7 +119,7 @@ Route::group(['middleware' => 'auth'], function() {
   			Route::get('master-status/list', 'MasterStatusController@list')->name('master-status.list');
 			Route::resource('master-status', 'MasterStatusController');
 
-			// Master Status
+			// Master Sumber
 			Route::delete('master-sumber/removeMulti', 'MasterSumberController@removeMulti')->name('master-sumber.removeMulti');
   			Route::get('master-sumber/list', 'MasterSumberController@list')->name('master-sumber.list');
 			Route::resource('master-sumber', 'MasterSumberController');

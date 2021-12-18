@@ -1,14 +1,14 @@
 <form action="{{ route($route.'.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Buat Data</h3>
+        <h3 class="modal-title">Tambah Ruas</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Pilih Regional') }}</label>
+                    <label for="regional" class="">{{ __('Regional') }}</label>
                     <select class="form-control" name="regional_id">
                         {!! App\Models\MasterRegional::options('name','id',[],'( Pilih Regional )') !!}
                     </select>
@@ -17,10 +17,17 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Pilih Ro') }}</label>
-                    <select class="form-control" name="regional_id">
-                        {!! App\Models\MasterRo::options('name','id',[],'( Pilih Ro )') !!}
+                    <label for="regional" class="">{{ __('RO') }}</label>
+                    <select class="form-control" name="ro_id">
+                        {!! App\Models\MasterRo::options('name','id',[],'( Pilih RO )') !!}
                     </select>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="name" class="">{{ __('Ruas') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ruas" maxlength="10">
                 </div>
             </div>
 

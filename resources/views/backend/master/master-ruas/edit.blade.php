@@ -3,22 +3,33 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Data</h3>
+        <h3 class="modal-title">Ubah Ruas</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="bidang" class="">{{ __('Nama Bidang') }}</label>
-                    <input id="bidang" type="text" class="form-control" name="bidang" value="{{ $record->bidang }}" required autocomplete="bidang" autofocus placeholder="Nama Bidang" maxlength="50">
+                    <label for="regional" class="">{{ __('Regional') }}</label>
+                    <select class="form-control" name="regional_id">
+                        {!! App\Models\MasterRegional::options('name','id',['selected' => $record->regional_id],'( Pilih Regional )') !!}
+                    </select>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keluhan" class="">{{ __('Nama Keluhan') }}</label>
-                    <input id="keluhan" type="text" class="form-control" name="keluhan" value="{{ $record->keluhan }}" required autocomplete="keluhan" autofocus placeholder="Nama Keluhan" maxlength="50">
+                    <label for="regional" class="">{{ __('RO') }}</label>
+                    <select class="form-control" name="ro_id">
+                        {!! App\Models\MasterRo::options('name','id',['selected' => $record->ro_id],'( Pilih RO )') !!}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="name" class="">{{ __('Ruas') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Ruas" maxlength="10">
                 </div>
             </div>
 

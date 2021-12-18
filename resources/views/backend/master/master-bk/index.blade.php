@@ -51,8 +51,8 @@
                 </label>
               </th>
               <th width="25">#</th>
+              <th>Bidang Keluhan</th>
               <th>Bidang</th>
-              <th>Keluhan</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -72,8 +72,8 @@
     loadList([
       { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
-      { data:'bidang', name:'bidang' },
       { data:'keluhan', name:'keluhan' },
+      { data:'bidang', name:'bidang' },
       { data:'action', name: 'action', searchable: false,orderable: false }
       ]);
   });

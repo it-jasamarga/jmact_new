@@ -1,22 +1,22 @@
 <form action="{{ route($route.'.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Buat Data</h3>
+        <h3 class="modal-title">Tambah Golongan Kendaraan</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="golken" class="">{{ __('Nama Golken') }}</label>
-                    <input id="golken" type="text" class="form-control" name="golken" value="{{ old('golken') }}" required autocomplete="golken" autofocus placeholder="Nama Golken" maxlength="50">
+                    <label for="golongan" class="">{{ __('Golongan') }}</label>
+                    <input id="golongan" type="text" class="form-control" name="golongan" value="{{ old('golongan') }}" required autocomplete="golongan" autofocus placeholder="Golongan" maxlength="20">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description" class="">{{ __('Description') }}</label>
-                    <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Deskripsi"></textarea>
+                    <label for="description" class="">{{ __('Deskripsi') }}</label>
+                    <textarea name="description" class="form-control" cols="4" rows="4" placeholder="Deskripsi"></textarea>
                 </div>
             </div>
 

@@ -51,7 +51,8 @@
                 </label>
               </th>
               <th width="25">#</th>
-              <th>Code</th>
+              <th>Kode Status</th>
+              <th>Deskripsi</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -74,6 +75,7 @@
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data:'code', name:'code' },
       { data:'status', name:'status' },
+      { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false,orderable: false }
       ]);
   });

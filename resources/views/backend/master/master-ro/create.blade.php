@@ -1,15 +1,15 @@
 <form action="{{ route($route.'.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Buat Data</h3>
+        <h3 class="modal-title">Tambah Ro</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Nama Ro') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Nama Ro" maxlength="50">
+                    <label for="name" class="">{{ __('Ro') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ro" maxlength="50">
                 </div>
             </div>
 

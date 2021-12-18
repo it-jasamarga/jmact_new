@@ -3,15 +3,22 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Data</h3>
+        <h3 class="modal-title">Ubah Regional</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Nama Regional') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Nama Regional" maxlength="50">
+                    <label for="name" class="">{{ __('Regional') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Regional" maxlength="20">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="active" class="">{{ __('Status') }}</label>
+                    <input id="active" type="text" class="form-control" name="active" value="{{ $record->active }}" required autocomplete="active" autofocus placeholder="Status" maxlength="20">
                 </div>
             </div>
 
