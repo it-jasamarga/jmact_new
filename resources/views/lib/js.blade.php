@@ -122,6 +122,38 @@
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
     
     $(document).ready(function(){
+        $('.pickadate').pickadate({
+            format: 'yyyy-mm-dd',
+            selectYears: 100,
+            selectMonths: true
+        });
+
+        $('.pickadate-start').pickadate({
+            format: 'yyyy-mm-dd',
+            selectYears: 100,
+            selectMonths: true,
+            onClose: function(context) {
+                var end = $('.pickadate-end').pickadate('picker');
+                end.set('min', new Date($('.pickadate-start').val()));
+            }
+        });
+
+        $('.pickadate-end').pickadate({
+            format: 'yyyy-mm-dd',
+            selectYears: 100,
+            selectMonths: true,
+            onClose: function(context) {
+                var start = $('.pickadate-start').pickadate('picker');
+                start.set('max', new Date($('.pickadate-end').val()));
+            }
+        }); 
+
+        $('.datetimepicker').datetimepicker({
+            format:'Y-m-d h:i:s',
+            useCurrent: false,
+            autoclose: true
+        });
+        
         $(".select2").select2({
             dropdownAutoWidth: true,
             width: '100%',
@@ -214,10 +246,11 @@
         console.log('crot',formid)
         $("#" + formid).ajaxSubmit({
             success: function (resp) {
+                var textResp = (resp.messageBox) ? resp.messageBox : 'Proses penyimpan data berhasil';
                 Swal.fire({
                   type: 'success',
                   title: 'Sukses',
-                  text: 'Proses penyimpan data berhasil',
+                  text: textResp,
                   confirmButtonText:'<i class="fa fa-thumbs-up"></i> Kembali !',
                   confirmButtonAriaLabel: 'Thumbs up, great!',
                   // footer: '<a href>Why do I have this issue?</a>'

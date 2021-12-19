@@ -215,3 +215,16 @@ function getActive($record){
 
     return $result;
 }
+
+function getTiket($record = null){
+    $noTiket = '-';
+    if($record){
+        $sumber = ($record->sumber) ? $record->sumber->code : null;
+        $unit = ($record->user->unit) ? $record->user->unit->code : null;
+        $count = App\Models\KeluhanPelanggan::where('sumber_id', $record->sumber_id)
+            ->where('unit_id',$record->unit_id)->count() + 1;
+        $noTiket = $sumber.$unit.$count;
+    }
+
+    return $noTiket;
+}

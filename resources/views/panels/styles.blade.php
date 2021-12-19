@@ -24,6 +24,8 @@
 <link href="{{ asset('assets/plugins/custom/dropify/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/plugins/custom/cropper/cropper.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/plugins/custom/pickadate/pickadate.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/plugins/custom/jquery-datetimepicker/jquery.datetimepicker.min.css') }}" rel="stylesheet" type="text/css">
+
 
 
 @yield('styles')
