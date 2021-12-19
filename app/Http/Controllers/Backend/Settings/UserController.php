@@ -146,4 +146,24 @@ class UserController extends Controller
       ]);
     }
 
+    public function device(){
+      $record = User::findOrFail(auth()->user()->id);
+      $record->device_id = request()->device_id;
+      $record->save();
+
+      $messaging = app('firebase.messaging');
+      $topic = (auth()->user()->unit) ? auth()->user()->unit->unit : 'public';
+      if(request()->device_id){
+        $registrationTokens = [
+          request()->device_id
+        ];
+        // dd($topic);
+        $messaging->subscribeToTopic("".$topic."", $registrationTokens);
+      }
+
+      return response([
+        'status' => true,
+        'message' => 'success',
+      ]);
+    }
   }

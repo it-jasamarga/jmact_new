@@ -27,6 +27,21 @@ Route::group(['middleware' => 'auth'], function() {
 
 		Route::group(['namespace' => 'Ajax', 'prefix' => 'option'], function() {
 			Route::get('ro/{id}', 'OptionController@ro');
+			Route::get('ruas/{id}', 'OptionController@ruas');
+		});
+		
+		Route::group(['namespace' => 'Laporan'], function() {
+
+			Route::put('keluhan/sla/{id}', 'KeluhanController@prosesSla')->name('keluhan.prosesSla');  
+			Route::get('keluhan/sla/{id}', 'KeluhanController@sla')->name('keluhan.sla');  
+			Route::put('keluhan/sla/report/{id}', 'KeluhanController@prosesReportSla')->name('keluhan.prosesReportSla');  
+			Route::get('keluhan/sla/report/{id}', 'KeluhanController@reportSla')->name('keluhan.reportSla');  
+
+  			Route::put('keluhan/teruskan/{id}', 'KeluhanController@history')->name('keluhan.history');  
+			Route::delete('keluhan/removeMulti', 'KeluhanController@removeMulti')->name('keluhan.removeMulti');
+			Route::get('keluhan/list', 'KeluhanController@list')->name('keluhan.list');
+			Route::resource('keluhan', 'KeluhanController');
+
 		});
 
 		Route::group(['namespace' => 'LogHistory'], function() {
@@ -46,6 +61,7 @@ Route::group(['middleware' => 'auth'], function() {
 		});
 
 		Route::group(['namespace' => 'Settings', 'prefix' => 'setting'], function() {
+			Route::post('users/device', 'UserController@device')->name('users.device');
 			Route::delete('users/removeMulti', 'UserController@removeMulti')->name('users.removeMulti');
 			Route::get('users/list', 'UserController@list')->name('users.list');
 			Route::resource('users', 'UserController');

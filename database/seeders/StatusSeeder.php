@@ -42,6 +42,11 @@ class StatusSeeder extends Seeder
                 'code' => '05',
                 'status' =>'Proses SLA',
                 'active' => 1
+            ],
+            [
+                'code' => '06',
+                'status' =>'Report SLA Submited',
+                'active' => 1
             ]
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

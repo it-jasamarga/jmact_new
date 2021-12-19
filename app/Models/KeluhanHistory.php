@@ -29,4 +29,8 @@ class KeluhanHistory extends Model implements Auditable
     public function keluhan(){
 		return $this->belongsTo(KeluhanPelanggan::class,'keluhan_id');
 	}
+
+	public function status(){
+		return $this->belongsTo(MasterStatus::class,'status_id');
+	}
 }

@@ -89,4 +89,8 @@ class User extends Authenticatable implements Auditable, JWTSubject
     {
         return $this->hasMany('App\Models\BugReporting');
     }
+
+    public function unit(){
+        return $this->belongsTo(MasterUnit::class,'unit_id');
+    }
 }

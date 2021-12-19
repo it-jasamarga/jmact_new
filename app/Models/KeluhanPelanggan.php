@@ -41,7 +41,7 @@ class KeluhanPelanggan extends Model implements Auditable
 		return $this->belongsTo(MasterStatus::class,'status_id');
 	}
 	public function user(){
-		return $this->belongsTo('App\User','user_id');
+		return $this->belongsTo(User::class,'user_id');
 	}
 
 	public function mulaiSla(){
@@ -63,4 +63,5 @@ class KeluhanPelanggan extends Model implements Auditable
 	public function unit(){
 		return $this->belongsTo(MasterUnit::class,'unit_id');
 	}
+
 }
