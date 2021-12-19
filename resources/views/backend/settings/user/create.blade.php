@@ -1,45 +1,44 @@
 <form action="{{ route($route.'.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Buat Data</h3>
+        <h3 class="modal-title">Tambah Data User</h3>
     </div>
     <div class="modal-body">
         <div class="row">
             
-
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Name') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name" maxlength="50">
+                    <label for="username" class="">{{ __('Name') }}</label>
+                    <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="Name" maxlength="20">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Email') }}</label>
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email" maxlength="50">
+                    <label for="email" class="">{{ __('Email') }}</label>
+                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email" maxlength="20">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Phone') }}</label>
-                    <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus placeholder="Phone" maxlength="13" oninput="this.value= this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
+                    <label for="unit_id" class="">{{ __('Unit') }}</label>
+                    <input id="unit_id" type="text" class="form-control" name="unit_id" value="{{ old('unit_id') }}" required autocomplete="unit_id" autofocus placeholder="Unit" maxlength="10">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Role') }}</label>
+                    <label for="role" class="">{{ __('Role') }}</label>
                     <select class="form-control" name="role">
-                        {!! App\Models\Role::options('name','id',[],'( Choose Role )') !!}
+                        {!! App\Models\Role::options('name','id',[],'( Pilih Role )') !!}
                     </select>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>
                     <input type="password" class="form-control" name="password" value="{{ old('password') }}" required placeholder="Password">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label>{{ __('Password Confirmation') }}</label>
                     <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required placeholder="Password Confirmation">

@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="regional_id" class="">{{ __('Pilih Regional') }}</label>
-                    <select class="form-control" name="regional_id">
+                    <select class="form-control select2" name="regional_id">
                         {!! App\Models\MasterRegional::options('name','id',['selected' => $record->regional_id],'( Pilih Regional )') !!}
                     </select>
                 </div>

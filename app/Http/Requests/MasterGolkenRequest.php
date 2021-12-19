@@ -23,7 +23,7 @@ class MasterGolkenRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('golongan_kendaraan')) ? ','.$id : '';
+      $unique = ($id = request()->route('master_golken')) ? ','.$id : '';
       return [
         'golongan' => 'required|string|max:255|min:1|unique:master_golken,golongan'.$unique,
         'description' => 'max:5000',

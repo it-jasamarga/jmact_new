@@ -4,48 +4,47 @@
 
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Data</h3>
+        <h3 class="modal-title">Ubah Data User</h3>
     </div>
     <div class="modal-body">
         <div class="row">
-            
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Name') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Name" maxlength="50">
+                    <label for="username" class="">{{ __('Name') }}</label>
+                    <input id="username" type="text" class="form-control" name="username" value="{{ $record->username }}" required autocomplete="username" autofocus placeholder="Name" maxlength="30">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Email') }}</label>
-                    <input id="email" type="email" class="form-control" name="email" value="{{ $record->email }}" required autocomplete="email" autofocus placeholder="Email" maxlength="50">
+                    <input id="email" type="email" class="form-control" name="email" value="{{ $record->email }}" required autocomplete="email" autofocus placeholder="Email" maxlength="30">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Phone') }}</label>
-                    <input id="phone" type="text" class="form-control" name="phone" value="{{ $record->phone }}" required autocomplete="phone" autofocus placeholder="Phone" maxlength="13" oninput="this.value= this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
+                    <label for="unit_id" class="">{{ __('Unit') }}</label>
+                    <input id="unit_id" type="text" class="form-control" name="unit_id" value="{{ $record->unit_id }}" required autocomplete="unit_id" autofocus placeholder="Unit" maxlength="13">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Role') }}</label>
                     <select class="form-control" name="role">
-                        {!! App\Models\Role::options('name','id',["selected" => ($record->roles->first()) ? $record->roles->first()->id : ""],'( Choose Role )') !!}
+                        {!! App\Models\Role::options('name','id',["selected" => ($record->roles->first()) ? $record->roles->first()->id : ""],'( Pilih Role )') !!}
                     </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>
-                    <input type="password" class="form-control" name="password" value="{{ old('password') }}" required placeholder="Password">
+                    <input type="password" class="form-control" name="password" value="{{ $record->password }}" required placeholder="Password">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>{{ __('Password Confirmation') }}</label>
-                    <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required placeholder="Password Confirmation">
+                    <input type="password" class="form-control" name="password_confirmation" value="{{ $record->password }}" required placeholder="Password Confirmation">
                 </div>
             </div>
         </div>

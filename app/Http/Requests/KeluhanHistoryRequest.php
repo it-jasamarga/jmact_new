@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MasterSumberRequest extends FormRequest
+class KeluhanHistoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,10 @@ class MasterSumberRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('master_sumber')) ? ','.$id : '';
+      $unique = ($id = request()->route('keluhan_history')) ? ','.$id : '';
       return [
-        'code' => 'required|string|max:255|min:1|unique:master_sumber,code'.$unique,
-        'description' => 'max:5000'
+        'ruas_id' => 'required|string',
+        'provider' => 'required|string|min:1|max:255'
       ];
     }
   }

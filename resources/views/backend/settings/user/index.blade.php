@@ -20,9 +20,9 @@
     <form>
       <div class="row">
         <div class="col-12 col-sm-6 col-lg-3">
-          <label for="users-list-role">Username</label>
+          <label for="users-list-role">Name</label>
           <fieldset class="form-group">
-            <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Username">
+            <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Name">
           </fieldset>
         </div>
 
@@ -33,9 +33,9 @@
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-3">
-          <label for="users-list-role">Phone</label>
+          <label for="users-list-role">Unit</label>
           <fieldset class="form-group">
-            <input type="text" data-post="phone" id="dataFilter" class="form-control filter-control" placeholder="Phone">
+            <input type="text" data-post="unit" id="dataFilter" class="form-control filter-control" placeholder="Unit">
           </fieldset>
         </div>
       </div>

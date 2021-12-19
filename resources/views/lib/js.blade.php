@@ -21,7 +21,7 @@
 
     // DYNAMIC Input SELECT
     $(document).on('change', '.option-ajax', function () {
-        var append = $(this).data('append');
+        var append = $(this).data('child');
         var value = $(this).val();
         if (value != null) {
             $.ajax({

@@ -23,10 +23,10 @@ class MasterStatusRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('status')) ? ','.$id : '';
+      $unique = ($id = request()->route('master_status')) ? ','.$id : '';
       return [
         'code' => 'required|string|max:255|min:1|unique:master_status,code'.$unique,
-        'unit' => 'required|string|max:255|min:1'
+        'status' => 'required|string|max:255|min:1'
       ];
     }
   }

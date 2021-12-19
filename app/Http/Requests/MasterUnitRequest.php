@@ -23,7 +23,7 @@ class MasterUnitRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('unit')) ? ','.$id : '';
+      $unique = ($id = request()->route('master_unit')) ? ','.$id : '';
       return [
         'code' => 'required|string|max:255|min:1|unique:master_unit,code'.$unique,
         'unit' => 'required|string|min:1|max:255'

@@ -23,7 +23,7 @@ class UserProfilRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->get('id')) ? ','.$id : '';
+      $unique = ($id = request()->get('user')) ? ','.$id : '';
       return [
         'registered_village_id' => 'required',
         'name' => 'required|max:200|min:3',

@@ -54,6 +54,7 @@
               <th>Ruas</th>
               <th>Ro</th>
               <th>Regional</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -76,6 +77,7 @@
       { data:'name', name:'name' },
       { data:'ro_id', name:'ro_id' },
       { data:'regional_id', name:'regional_id' },
+      { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false,orderable: false }
       ]);
   });

@@ -25,38 +25,9 @@ Route::group(['middleware' => 'auth'], function() {
 		
 		Route::get('/', 'DashboardController@index');
 
-		Route::delete('crawler/removeMulti', 'CrawlerController@removeMulti')->name('crawler.removeMulti');
-		Route::get('crawler/list', 'CrawlerController@list')->name('crawler.list');
-		Route::resource('crawler', 'CrawlerController');
-
-		Route::delete('comic/removeMulti', 'ComicController@removeMulti')->name('comic.removeMulti');
-		Route::get('comic/list', 'ComicController@list')->name('comic.list');
-		Route::resource('comic', 'ComicController');
-
-		Route::delete('comic-detail/removeMulti', 'ComicDetailController@removeMulti')->name('comic-detail.removeMulti');
-		Route::get('comic-detail/list', 'ComicDetailController@list')->name('comic-detail.list');
-		Route::resource('comic-detail', 'ComicDetailController');
-
-		Route::delete('comic-request/removeMulti', 'ComicRequestController@removeMulti')->name('comic-request.removeMulti');
-		Route::get('comic-request/list', 'ComicRequestController@list')->name('comic-request.list');
-		Route::resource('comic-request', 'ComicRequestController');
-		
-		Route::group(['namespace' => 'Content'], function() {
-
-			Route::delete('advertisement/removeMulti', 'AdvertisementController@removeMulti')->name('advertisement.removeMulti');
-			Route::get('advertisement/list', 'AdvertisementController@list')->name('advertisement.list');
-			Route::resource('advertisement', 'AdvertisementController');
-
-			Route::delete('slider/removeMulti', 'SliderController@removeMulti')->name('slider.removeMulti');
-			Route::get('slider/list', 'SliderController@list')->name('slider.list');
-			Route::resource('slider', 'SliderController');
-
-			Route::delete('article/removeMulti', 'Article@removeMulti')->name('article.removeMulti');
-			Route::get('article/list', 'ArticleController@list')->name('article.list');
-			Route::resource('article', 'ArticleController');
-
+		Route::group(['namespace' => 'Ajax', 'prefix' => 'option'], function() {
+			Route::get('ro/{id}', 'OptionController@ro');
 		});
-
 
 		Route::group(['namespace' => 'LogHistory'], function() {
 

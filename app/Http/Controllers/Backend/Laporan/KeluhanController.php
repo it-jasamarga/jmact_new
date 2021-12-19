@@ -1,44 +1,44 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Master;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\MasterRegional;
+use App\Models\KeluhanPelanggan;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use JWTAuth;
 
-use App\Filters\MasterRegionalFilter;
-use App\Http\Requests\MasterRegionalRequest;
+use App\Filters\KeluhanPelangganFilter;
+use App\Http\Requests\KeluhanPelangganRequest;
 
 
-class MasterRegionalController extends Controller
+class KeluhanPelangganController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Regional"], 
+    ['name' => "Manage Master Bidang Keluhan"], 
     ['link' => "#", 'name' => "Master"],
-    ['link' => "master-regional", 'name' => "Master Regional"]
+    ['link' => "master-bk", 'name' => "Master Bidang Keluhan"]
   ];
 
   public function __construct(){
-    $this->route = 'master-regional';
+    $this->route = 'master-bk';
   }
 
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Master Regional',
+      'title' => 'Filter Data Master Bidang Keluhan',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];
 
-    return view('backend.master.master-regional.index', $data);
+    return view('backend.master.master-bk.index', $data);
   }
 
-  public function list(MasterRegionalFilter $request)
+  public function list(KeluhanPelangganFilter $request)
   {
 
-    $data  = MasterRegional::query()->filter($request);
+    $data  = KeluhanPelanggan::query()->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -47,10 +47,6 @@ class MasterRegionalController extends Controller
         'type' => 'deleteAll',
         'value' => $data->id
       ]);
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
       return $button;
     })
     ->addColumn('action', function($data){
@@ -78,11 +74,11 @@ class MasterRegionalController extends Controller
       'route' => $this->route
     ];
     
-    return view('backend.master.master-regional.create', $data);
+    return view('backend.master.master-bk.create', $data);
   }
 
-  public function store(MasterRegionalRequest $request){
-    $record = MasterRegional::saveData($request);
+  public function store(KeluhanPelangganRequest $request){
+    $record = KeluhanPelanggan::saveData($request);
 
     return response([
       'status' => true,
@@ -95,10 +91,10 @@ class MasterRegionalController extends Controller
 
     $data = [
       'route' => $this->route,
-      'record' => MasterRegional::findOrFail($id)
+      'record' => KeluhanPelanggan::findOrFail($id)
     ];
 
-    return view('backend.master.master-regional.edit', $data);
+    return view('backend.master.master-bk.edit', $data);
   }
 
   public function show($id)
@@ -106,14 +102,14 @@ class MasterRegionalController extends Controller
     
     $data =[
       'route' => $this->route,
-      'record' => MasterRegional::findOrFail($id)
+      'record' => KeluhanPelanggan::findOrFail($id)
     ];
 
-    return view('backend.master.master-regional.show', $data);
+    return view('backend.master.master-bk.show', $data);
   }
 
-  public function update(MasterRegionalRequest $request, $id){
-    $record = MasterRegional::saveData($request);
+  public function update(KeluhanPelangganRequest $request, $id){
+    $record = KeluhanPelanggan::saveData($request);
 
     return response([
       'status' => true,
@@ -123,7 +119,7 @@ class MasterRegionalController extends Controller
 
   public function destroy($id)
   {
-    $record = MasterRegional::destroy($id);
+    $record = KeluhanPelanggan::destroy($id);
 
     return response([
       'status' => true,
@@ -133,7 +129,7 @@ class MasterRegionalController extends Controller
   }
 
   public function removeMulti(){
-    $record = MasterRegional::whereIn('id',request()->id)->delete();
+    $record = KeluhanPelanggan::whereIn('id',request()->id)->delete();
 
     return response([
       'status' => true,

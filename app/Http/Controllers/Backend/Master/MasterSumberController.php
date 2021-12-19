@@ -49,6 +49,10 @@ class MasterSumberController extends Controller
       ]);
       return $button;
     })
+    ->addColumn('active', function ($data) use ($request) {
+      $button = getActive($data->active);
+      return $button;
+    })
     ->addColumn('action', function($data){
       $buttons = "";
       $buttons .= makeButton([
