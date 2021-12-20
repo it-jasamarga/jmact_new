@@ -27,7 +27,7 @@ class MasterSumberController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Master Sumber',
+      'title' => 'Master Sumber',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

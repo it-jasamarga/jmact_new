@@ -27,7 +27,7 @@ class MasterBkController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Master Bidang Keluhan',
+      'title' => 'Master Bidang Keluhan',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

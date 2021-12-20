@@ -24,7 +24,7 @@ class RoleController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Role',
+      'title' => 'Role',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

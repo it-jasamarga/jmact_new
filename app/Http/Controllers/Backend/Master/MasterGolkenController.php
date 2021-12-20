@@ -27,7 +27,7 @@ class MasterGolkenController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Master Golongan Kendaraan',
+      'title' => 'Master Golongan Kendaraan',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

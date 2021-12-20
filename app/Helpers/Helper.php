@@ -228,3 +228,12 @@ function getTiket($record = null){
 
     return $noTiket;
 }
+
+function stringToArray($data){
+    $result = '-';
+    if($data){
+        $result = explode('\\', $data);
+        $result = end($result);
+    }
+    return $result;
+}

@@ -25,7 +25,7 @@ class UserController extends Controller
   public function index(Request $request)
   {
     return view('backend.settings.user.index', [
-      'title' => 'List Users',
+      'title' => 'Users',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route
     ]);

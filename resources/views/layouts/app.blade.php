@@ -3,7 +3,7 @@
 	<!--begin::Head-->
 	<head>
 		<meta charset="utf-8" />
-		<title>JMACT - @yield('title')</title>
+		<title>JMACT - {{ @$title }}</title>
 		<meta name="description" content="Updates and statistics" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />

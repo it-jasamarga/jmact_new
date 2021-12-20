@@ -27,7 +27,7 @@ class MasterRegionalController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Master Regional',
+      'title' => 'Master Regional',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

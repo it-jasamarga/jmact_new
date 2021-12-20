@@ -27,7 +27,7 @@ class MasterRuasController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Master Ruas',
+      'title' => 'Master Ruas',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];
