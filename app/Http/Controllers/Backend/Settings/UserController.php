@@ -115,11 +115,14 @@ class UserController extends Controller
     public function store()
     {
       request()->validate(['email' => 'unique:users,email']);
+      $role = request()->role;
+      unset(request()['role']);
+      unset(request()['password_confirmation']);
       $record = User::saveData(request());
-      if(request()->role){
+      if($role){
         \DB::table('role_users')->where('user_id',$record->id)->delete();
         $createHasRole = \DB::table('role_users')->insert([
-          'role_id' => request()->role,
+          'role_id' => $role,
           'user_id' => $record->id,
         ]);
       }

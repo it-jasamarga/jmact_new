@@ -21,7 +21,7 @@
 			</a>
 			<!--end::Logo-->
 			<!--begin::Toolbar-->
-			<div class="d-flex align-items-center">
+			{{-- <div class="d-flex align-items-center">
 				<!--begin::Aside Mobile Toggle-->
 				<button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
 					<span></span>
@@ -47,7 +47,7 @@
 					</span>
 				</button>
 				<!--end::Topbar Mobile Toggle-->
-			</div>
+			</div> --}}
 			<!--end::Toolbar-->
 		</div>
 		<!--end::Header Mobile-->
@@ -67,7 +67,7 @@
 								<div class="d-flex align-items-center flex-wrap mr-2">
 									@if(@$breadcrumbs)
 										<h4 class="d-flex align-items-center text-dark font-weight-bold my-1 mr-3">{{ (@$breadcrumbs[0]) ? $breadcrumbs[0]['name'] : '' }}</h4>
-										<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
+										{{-- <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0">
 											@foreach($breadcrumbs as $k => $value)
 												@if($k !== 0)
 													<li class="breadcrumb-item text-muted">
@@ -75,14 +75,14 @@
 													</li>
 												@endif
 											@endforeach
-										</ul>
+										</ul> --}}
 									@endif
 									<!--begin::Actions-->
-									<div class="subheader-separator subheader-separator-ver ml-4 mt-2 mb-2 mr-4 bg-gray-200"></div>
+									{{-- <div class="subheader-separator subheader-separator-ver ml-4 mt-2 mb-2 mr-4 bg-gray-200"></div>
 
 									@section('toolbars')
 									<a href="javascript:void(0)" class="btn btn-light-warning font-weight-bolder btn-sm add-modal" data-modal="#mediumModal">Create Data</a>
-									@show
+									@show --}}
 									<!--end::Actions-->
 								</div>
 								<!--end::Info-->

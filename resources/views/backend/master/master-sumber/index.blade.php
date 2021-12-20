@@ -3,8 +3,12 @@
 @section('styles')
 @endsection
 
+@section('toolbars')
+  <a href="javascript:void(0)" class="btn btn-light-primary font-weight-bolder btn-sm add-modal" data-modal="#largeModal">Create Data</a>
+@endsection
+
 @section('content')
-<div class="card card-custom card-collapsed" data-card="true" id="kt_card_4">
+{{-- <div class="card card-custom card-collapsed" data-card="true" id="kt_card_4">
  <div class="card-header">
   <div class="card-title">
     <h3 class="card-label">{{ $title }}
@@ -34,7 +38,7 @@
 </div>
 </div>
 
-<br>
+<br> --}}
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12">

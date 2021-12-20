@@ -18,14 +18,19 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="status" class="">{{ __('Deskripsi') }}</label>
-                    <input id="status" type="text" class="form-control" name="status" value="{{ $record->status }}" required autocomplete="status" autofocus placeholder="Deskripsi" maxlength="10">
+                    {{-- <input id="status" type="text" class="form-control" name="status" value="{{ $record->status }}" required autocomplete="status" autofocus placeholder="Deskripsi" maxlength="10"> --}}
+                    <textarea name="status" class="form-control" cols="4" rows="4"  placeholder="Deskripsi">{{$record->status}}</textarea>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="active" class="">{{ __('Status') }}</label>
-                    <input id="active" type="text" class="form-control" name="active" value="{{ $record->active }}" required autocomplete="active" autofocus placeholder="Status" maxlength="10">
+                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <select class="form-control select2" name="active">
+                        <option value="">Pilih Status</option>
+                        <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
+                        <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>In-Active</option>
+                    </select>
                 </div>
             </div>
 

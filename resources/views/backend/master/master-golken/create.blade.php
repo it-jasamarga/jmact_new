@@ -20,8 +20,18 @@
                 </div>
             </div>
 
-        </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <select class="form-control select2" name="active">
+                        <option value="">Pilih Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">In-Active</option>
+                    </select>
+                </div>
+            </div>
 
+        </div>
     </div>
 
 </div>

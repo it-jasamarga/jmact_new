@@ -61,6 +61,7 @@ class MasterRoController extends Controller
       $buttons = "";
       $buttons .= makeButton([
         'type' => 'modal',
+        'modal' => '#largeModal',
         'url'   => $this->route.'/'.$data->id.'/edit'
       ]);
       $buttons .= makeButton([

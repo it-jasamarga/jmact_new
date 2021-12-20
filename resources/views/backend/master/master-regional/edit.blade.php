@@ -17,8 +17,12 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="active" class="">{{ __('Status') }}</label>
-                    <input id="active" type="text" class="form-control" name="active" value="{{ $record->active }}" required autocomplete="active" autofocus placeholder="Status" maxlength="20">
+                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <select class="form-control select2" name="active">
+                        <option value="">Pilih Status</option>
+                        <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
+                        <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>In-Active</option>
+                    </select>
                 </div>
             </div>
 

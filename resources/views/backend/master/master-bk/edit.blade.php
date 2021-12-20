@@ -7,7 +7,6 @@
     </div>
     <div class="modal-body">
         <div class="row">
-
             
             <div class="col-md-12">
                 <div class="form-group">
@@ -23,8 +22,18 @@
                 </div>
             </div>
 
-        </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <select class="form-control select2" name="active">
+                        <option value="">Pilih Status</option>
+                        <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
+                        <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>In-Active</option>
+                    </select>
+                </div>
+            </div>
 
+        </div>
     </div>
 
 </div>

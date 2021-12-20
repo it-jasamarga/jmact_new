@@ -16,19 +16,22 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="status" class="">{{ __('Deskripsi') }}</label>
-                    <input id="status" type="text" class="form-control" name="status" value="{{ old('status') }}" required autocomplete="status" autofocus placeholder="Deskripsi" maxlength="10">
+                    <textarea name="status" class="form-control" cols="4" rows="4" placeholder="Deskripsi"></textarea>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="active" class="">{{ __('Status') }}</label>
-                    <input id="active" type="text" class="form-control" name="active" value="{{ old('active') }}" required autocomplete="active" autofocus placeholder="Status" maxlength="10">
+                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <select class="form-control select2" name="active">
+                        <option value="">Pilih Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">In-Active</option>
+                    </select>
                 </div>
             </div>
 
         </div>
-
     </div>
 
 </div>
