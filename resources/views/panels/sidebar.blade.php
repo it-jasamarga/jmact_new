@@ -2,14 +2,12 @@
 
 <div class="aside aside-left d-flex flex-column flex-row-auto" id="kt_aside">
     <!--begin::Brand-->
-    <div class="brand flex-column-auto" id="kt_brand">
-        {{-- <!--begin::Logo-->
+    <div class="brand flex-column-auto mb-8" id="kt_brand">
+        <!--begin::Logo-->
         <a href="index.html" class="brand-logo">
-            <img alt="Logo" src="{{ asset('assets/media/logos/logo-dark.png') }}" />
-        </a>
-        <!--end::Logo--> --}}
-        <!--begin::Heading-->
-		<div class="row justify-content-center">
+            {{-- <img alt="Logo" src="{{ asset('assets/media/logos/logo-dark.png') }}" /> --}}
+             <!--begin::Heading-->
+		<div class="row justify-content-center pl-4 brand-logo">
 			<!--begin::Title-->
 				<div class="text-blue">
 				  JM
@@ -20,6 +18,9 @@
 			<!--end::Title-->
 		</div>
 		<!--begin::Heading-->
+        </a>
+        <!--end::Logo-->
+       
         <!--begin::Toggle-->
         <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
             <span class="svg-icon svg-icon svg-icon-xl">
@@ -98,3 +99,16 @@
     </div>
     <!--end::Aside Menu-->
 </div>
+
+<style>
+  .text-blue {
+    color: #0b4ba1;
+    font-weight: bold;
+    font-size: 32px;
+  }
+  .text-yellow {
+    color: #ffcb03;
+    font-weight: bold;
+    font-size: 32px;
+  }
+</style>

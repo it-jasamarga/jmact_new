@@ -1,28 +1,5 @@
 @extends('layouts/fullApp')
 
-@section('styles')
-<link href="{{asset('assets/css/pages/login/classic/login-4.css')}}" rel="stylesheet" type="text/css" />
-<style>
-  .text-blue {
-    color: #0b4ba1;
-	font-weight: bold;
-	font-size: 48px;
-  }
-  .btn-login{
-    color: #ffffff;
-	background-color: #0b4ba1;
-	border-color: #0b4ba1;
-	text-transform: none;
-	overflow: visible;
-  }
-  .text-yellow {
-    color: #ffcb03;
-	font-weight: bold;
-	font-size: 48px;
-  }
-</style>
-@endsection
-
 @section('content')
 {{-- <div class="d-flex flex-column flex-root">
 			<!--begin::Login-->
@@ -88,6 +65,22 @@
 			</div>
 			<!--end::Login-->
 		</div> --}}
+		<div id="kt_header" class="header">
+			<div class="container-fluid d-flex align-items-stretch justify-content-between" style="background-color: #0b4ba1;">
+				<!--begin::Heading-->
+				<div class="row justify-content-center">
+					<!--begin::Title-->
+						<div class="text-white">
+						  JM
+						</div>
+						<div class="text-yellow">
+						  Act
+						</div>
+					<!--end::Title-->
+				</div>
+				<!--begin::Heading-->
+			</div>
+		</div>
 	
 
 		<!--begin::Body-->
@@ -190,4 +183,32 @@
 @endsection
 
 @section('scripts')
+@endsection
+
+@section('styles')
+<link href="{{asset('assets/css/pages/login/classic/login-4.css')}}" rel="stylesheet" type="text/css" />
+<style>
+  .text-blue {
+    color: #0b4ba1;
+	font-weight: bold;
+	font-size: 48px;
+  }
+  .btn-login{
+    color: #ffffff;
+	background-color: #0b4ba1;
+	border-color: #0b4ba1;
+	text-transform: none;
+	overflow: visible;
+  }
+  .text-yellow {
+    color: #ffcb03;
+	font-weight: bold;
+	font-size: 48px;
+  }
+  .text-white {
+    color: #ffffff;
+	font-weight: bold;
+	font-size: 48px;
+  }
+</style>
 @endsection
