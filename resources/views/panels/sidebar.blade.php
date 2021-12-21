@@ -3,11 +3,23 @@
 <div class="aside aside-left d-flex flex-column flex-row-auto" id="kt_aside">
     <!--begin::Brand-->
     <div class="brand flex-column-auto" id="kt_brand">
-        <!--begin::Logo-->
+        {{-- <!--begin::Logo-->
         <a href="index.html" class="brand-logo">
             <img alt="Logo" src="{{ asset('assets/media/logos/logo-dark.png') }}" />
         </a>
-        <!--end::Logo-->
+        <!--end::Logo--> --}}
+        <!--begin::Heading-->
+		<div class="row justify-content-center">
+			<!--begin::Title-->
+				<div class="text-blue">
+				  JM
+				</div>
+				<div class="text-yellow">
+				  Act
+				</div>
+			<!--end::Title-->
+		</div>
+		<!--begin::Heading-->
         <!--begin::Toggle-->
         <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
             <span class="svg-icon svg-icon svg-icon-xl">

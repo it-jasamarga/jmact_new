@@ -48,13 +48,13 @@
         <table class="table data-thumb-view table-striped" id="listTables">
           <thead>
             <tr>
-              <th width="15">
+              <th width="16">
                 <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
                   <input type="checkbox" value="" class="group-checkable"/>
                   <span></span>
                 </label>
               </th>
-              <th width="25">#</th>
+              <th width="32">No</th>
               <th>Bidang Keluhan</th>
               <th>Bidang</th>
               <th>Status</th>
@@ -75,12 +75,12 @@
 <script>
   $(document).ready(function () {
     loadList([
-      { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+      { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
+      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
       { data:'keluhan', name:'keluhan' },
       { data:'bidang', name:'bidang' },
       { data:'active', name:'active' },
-      { data:'action', name: 'action', searchable: false,orderable: false }
+      { data:'action', name: 'action', searchable: false, orderable: false }
       ]);
   });
 </script>

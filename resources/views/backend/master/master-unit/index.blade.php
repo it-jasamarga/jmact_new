@@ -48,13 +48,13 @@
         <table class="table data-thumb-view table-striped" id="listTables">
           <thead>
             <tr>
-              <th width="15">
+              <th width="16">
                 <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
                   <input type="checkbox" value="" class="group-checkable"/>
                   <span></span>
                 </label>
               </th>
-              <th width="25">#</th>
+              <th width="32">No</th>
               <th>Kode Unit</th>
               <th>Unit</th>
               <th>Status</th>

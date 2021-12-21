@@ -41,13 +41,13 @@
         //   text: "<i class='flaticon2-layers'></i> Export Csv",
         //   className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
         // },
-        {
-          text: "<i class='flaticon2-paper'></i> Remove Select Data",
-          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-          action: function () {
-            removeSelect()
-          }
-        },
+        // {
+        //   text: "<i class='flaticon2-paper'></i> Remove Select Data",
+        //   className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+        //   action: function () {
+        //     removeSelect()
+        //   }
+        // },
         {
           text: "<i class='flaticon-file-1'></i>Create Data</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
@@ -103,14 +103,14 @@
       })
     }else{
       Swal.fire({
-          title: "Anda Yakin Untuk Menghapus Data?",
-          text: "Setelah dihapus, Anda tidak akan dapat memulihkan data!",
-          type: "question",
-          showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
-          confirmButtonColor:'#F64E60',
-          cancelButtonText: 'No, cancel!',
-          reverseButtons: true
+        type: "question",
+        title: "Anda Yakin Untuk Menghapus Data?",
+        text: "Setelah dihapus, Anda tidak akan dapat memulihkan data!",
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        confirmButtonColor:'#F64E60',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
       }).then((result) => {
         if (result.value) {
             var valueUuid = removeAll.map(function(value){

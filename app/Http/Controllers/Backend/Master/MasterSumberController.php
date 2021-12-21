@@ -59,10 +59,10 @@ class MasterSumberController extends Controller
         'type' => 'modal',
         'url'   => $this->route.'/'.$data->id.'/edit'
       ]);
-      $buttons .= makeButton([
-        'type' => 'delete',
-        'id'   => $data->id
-      ]);
+      // $buttons .= makeButton([
+      //   'type' => 'delete',
+      //   'id'   => $data->id
+      // ]);
       return $buttons;
     })
     ->rawColumns(['numSelect','action'])
