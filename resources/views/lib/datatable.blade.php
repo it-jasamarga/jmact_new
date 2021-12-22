@@ -1,36 +1,14 @@
 <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script>
-  function loadList(dataList = [], classTable = '#listTables') {
+  function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
     var page_url = '';
     @if(@$route)
       var page_url = "{{ (@$routeList) ? url($routeList).'/list' : route($route.'.list') }}";
     @endif
 
-    var table = $(classTable).DataTable({
-        processing: true,
-        serverSide: true,
-        responsive: false,
-        autoWidth: false,
-        scrollX: true,
-        scrollY: 400,
-        scrollCollapse: true,
-        fixedHeader:true,
-        lengthChange: false,
-        ajax: {
-          url: page_url,
-          data: function (d) {
-           d._token = "{{ csrf_token() }}";
-           $('.filter-control').each(function(idx, el) {
-            var name = $(el).data('post');
-            var val = $(el).val();
-            d[name] = val;
-          })
-         }
-       },
-      columns: dataList,
-      dom: 'Bfrtip',
-      buttons: [
+    if(dataButtons == null){
+      var dataButtons = [
         {
           extend: 'excelHtml5',
           text: "<i class='flaticon2-file'></i> Export Excel",
@@ -55,7 +33,33 @@
             'data-modal': "#largeModal"
           }
         },
-      ],
+      ];
+    }
+
+    var table = $(classTable).DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: false,
+        autoWidth: false,
+        scrollX: true,
+        scrollY: 400,
+        scrollCollapse: true,
+        fixedHeader:true,
+        lengthChange: false,
+        ajax: {
+          url: page_url,
+          data: function (d) {
+           d._token = "{{ csrf_token() }}";
+           $('.filter-control').each(function(idx, el) {
+            var name = $(el).data('post');
+            var val = $(el).val();
+            d[name] = val;
+          })
+         }
+       },
+      columns: dataList,
+      dom: 'Bfrtip',
+      buttons: dataButtons,
       initComplete: function (settings, json) {
         $(".dt-buttons .btn").removeClass("btn-secondary")
       },

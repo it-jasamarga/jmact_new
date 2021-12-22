@@ -300,13 +300,15 @@ class KeluhanController extends Controller
   public function show($id)
   {
     
+    $record = KeluhanPelanggan::findOrFail($id);
+
     $data =[
       'title' => 'Detail Data Keluhan',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
-      'record' => KeluhanPelanggan::findOrFail($id)
+      'record' => $record
     ];
-
+    
     return view('backend.laporan.keluhan.show', $data);
   }
 

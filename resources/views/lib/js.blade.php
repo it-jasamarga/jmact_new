@@ -38,7 +38,7 @@
 
     // OPEN MODAL FOR CREATE DATA
     $(document).on('click', '.add-modal', function (e) {
-        console.log('crot')
+        console.log('test')
         var modal = $(this).data('modal')
         loadModal({
             url: "{!! isset($route) ? route($route.'.create') : '' !!}",
@@ -46,13 +46,12 @@
         }, function (resp) {
             onShow();
         }); 
-    }); 
-
-    // OPEN CREATE PAGE 
+    });
+    
+    // OPEN PAGE FOR CREATE DATA
     $(document).on('click', '.add-page', function(event) {
-        var url = "{!! isset($route) ? route($route.'.create') : '' !!}";
+        var url = $(this).data('url')
         window.location = url;
-
     });
 
      // OPEN CUSTOM CREATE PAGE 
@@ -243,7 +242,7 @@
         $('#'+formid).append(`
             <div class="loadings" >Loading&#8230;</div>
             `);
-        console.log('crot',formid)
+        console.log('test',formid)
         $("#" + formid).ajaxSubmit({
             success: function (resp) {
                 var textResp = (resp.messageBox) ? resp.messageBox : 'Proses penyimpan data berhasil';
