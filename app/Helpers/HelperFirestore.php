@@ -120,6 +120,7 @@ class HelperFirestore
       $collection = $dbFire->collection($db);
       $documents = $collection->where('id','=',$data['id'])->documents();
       foreach ($documents as $document) {
+        dd($document);
         $document->reference()->delete();
       }
       $fireStore = $collection->add($data);

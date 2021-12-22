@@ -4,7 +4,7 @@
 @endsection
 
 @section('toolbars')
-<a href="{{ route($route.'.create') }}" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a>
+<!-- <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a> -->
 @endsection
 
 @section('content')
@@ -163,6 +163,19 @@
       { data:'golongan_id', name:'golongan_id' },
       { data:'status_id', name:'status_id' },
       { data:'action', name: 'action', searchable: false,orderable: false }
+    ],[
+        {
+          extend: 'excelHtml5',
+          text: "<i class='flaticon2-file'></i> Export Excel",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+        },
+        {
+          text: "<i class='flaticon-file-1'></i>Create Data</a>",
+          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
+          attr: {
+            'data-url': "{{ route($route.'.create') }}"
+          }
+        },
       ]);
   });
 </script>
