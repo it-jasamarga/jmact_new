@@ -1,7 +1,7 @@
 <!--begin::Header-->
 <div id="kt_header" class="header header-fixed">
 	<!--begin::Container-->
-	<div class="container-fluid d-flex align-items-stretch justify-content-end">
+	<div class="container-fluid d-flex align-items-stretch justify-content-end" style="background-color: #0b4ba1;">
 		<!--begin::Header Menu Wrapper-->
 		{{-- <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
 			<!--begin::Header Menu-->
