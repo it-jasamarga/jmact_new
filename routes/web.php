@@ -30,6 +30,11 @@ Route::group(['middleware' => 'auth'], function() {
 			Route::get('ruas/{id}', 'OptionController@ruas');
 		});
 		
+		Route::group(['namespace' => 'PencarianTiket'], function() {
+			Route::get('pencarian-tiket/list', 'PencarianTiketController@list')->name('pencarian-tiket.list');
+			Route::resource('pencarian-tiket', 'PencarianTiketController');
+		});
+
 		Route::group(['namespace' => 'Laporan'], function() {
 
 			Route::put('keluhan/sla/{id}', 'KeluhanController@prosesSla')->name('keluhan.prosesSla');  
