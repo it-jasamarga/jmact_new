@@ -65,7 +65,7 @@ class MasterSumberController extends Controller
       // ]);
       return $buttons;
     })
-    ->rawColumns(['numSelect','action'])
+    // ->rawColumns(['numSelect','action'])
     ->addIndexColumn()
     ->make(true);
 

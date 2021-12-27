@@ -8,14 +8,14 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="code" class="">{{ __('Kode Status') }}</label>
+                    <label for="code" class="">{{ __('Kode Status') }}</label><span class="text-danger">*</span>
                     <input id="code" type="text" class="form-control" name="code" value="{{ old('code') }}" required autocomplete="code" autofocus placeholder="Kode Status" maxlength="10">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="status" class="">{{ __('Deskripsi') }}</label>
+                    <label for="status" class="">{{ __('Deskripsi') }}</label><span class="text-danger">*</span>
                     <textarea name="status" class="form-control" cols="4" rows="4" placeholder="Deskripsi"></textarea>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1">Active</option>
-                        <option value="0">In-Active</option>
+                        <option value="0">Non-Active</option>
                     </select>
                 </div>
             </div>

@@ -18,42 +18,42 @@
     @csrf
     @method('PUT')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
               <label for="no_tiket" class="">{{ __('No Tiket') }}</label><span class="text-danger">*</span>
               <input id="no_tiket" type="text" disabled="" class="form-control" name="no_tiket" value="{{ $record->no_tiket }}" required autocomplete="no_tiket" autofocus placeholder="No Tiket" maxlength="20">
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
               <label for="nama_cust" class="">{{ __('Nama Pelanggan') }}</label><span class="text-danger">*</span>
               <input id="nama_cust" type="text" disabled="" class="form-control" name="nama_cust" value="{{ $record->nama_cust }}" required autocomplete="nama_cust" autofocus placeholder="Nama Pelanggan" maxlength="20">
           </div>
         </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="kontak_cust" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
               <input id="kontak_cust" type="text" disabled="" class="form-control" name="kontak_cust" value="{{ $record->kontak_cust }}" required autocomplete="kontak_cust" autofocus placeholder="Kontak Pelanggan" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="tanggal_kejadian" class="">{{ __('Tanggal Kejadian') }}</label><span class="text-danger">*</span>
               <input id="tanggal_kejadian" type="text" disabled="" class="form-control " name="tanggal_kejadian" value="{{ $record->tanggal_kejadian }}" required autocomplete="tanggal_kejadian" autofocus placeholder="Tanggal Kejadian" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="lokasi_kejadian" class="">{{ __('Lokasi Kejadian') }}</label><span class="text-danger">*</span>
               <input id="lokasi_kejadian" type="text" disabled="" class="form-control" name="lokasi_kejadian" value="{{ $record->lokasi_kejadian }}" required autocomplete="lokasi_kejadian" autofocus placeholder="Lokasi Kejadian" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      {{-- <div class="col-md-4">
           <div class="form-group">
               <label for="lokasi_kejadian" class="">{{ __('Jenis Keluhan') }}</label><span class="text-danger">*</span>
               <select disabled="" class="form-control select2" name="unit_id">
@@ -69,9 +69,9 @@
                 {!! App\Models\MasterRegional::options('name','id',['selected' => $record->regional_id],'( Marcom )') !!}
               </select>
           </div>
-      </div>
+      </div> --}}
       
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="lokasi_kejadian" class="">{{ __('Ruas Jalan Tol') }}</label><span class="text-danger">*</span>
               <select disabled="" class="form-control select2" id="ruas" name="ruas_id">
@@ -80,7 +80,7 @@
           </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="lokasi_kejadian" class="">{{ __('Sumber') }}</label><span class="text-danger">*</span>
               <select disabled="" class="form-control select2" name="sumber_id">

@@ -208,7 +208,7 @@ function createdAt($created)
 }
 
 function getActive($record){
-    $result = 'In-Active';
+    $result = 'Non-Active';
     if($record == true){
         $result = 'Active';
     }

@@ -17,82 +17,82 @@
  <form action="{{ route($route.'.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="nama_cust" class="">{{ __('Nama Pelanggan') }}</label><span class="text-danger">*</span>
               <input id="nama_cust" type="text" class="form-control" name="nama_cust" value="{{ old('nama_cust') }}" required autocomplete="nama_cust" autofocus placeholder="Nama Pelanggan" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="kontak_cust" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
               <input id="kontak_cust" type="text" class="form-control" name="kontak_cust" value="{{ old('kontak_cust') }}" required autocomplete="kontak_cust" autofocus placeholder="Kontak Pelanggan" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="tanggal_kejadian" class="">{{ __('Tanggal Kejadian') }}</label><span class="text-danger">*</span>
               <input id="tanggal_kejadian" type="text" class="form-control datetimepicker" name="tanggal_kejadian" value="{{ old('tanggal_kejadian') }}" required autocomplete="tanggal_kejadian" autofocus placeholder="Tanggal Kejadian" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
           <div class="form-group">
               <label for="lokasi_kejadian" class="">{{ __('Lokasi Kejadian') }}</label><span class="text-danger">*</span>
               <input id="lokasi_kejadian" type="text" class="form-control" name="lokasi_kejadian" value="{{ old('lokasi_kejadian') }}" required autocomplete="lokasi_kejadian" autofocus placeholder="Lokasi Kejadian" maxlength="20">
           </div>
       </div>
 
-      <div class="col-md-4">
+      {{-- <div class="col-md-6">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Jenis Keluhan') }}</label><span class="text-danger">*</span>
+              <label for="unit_id" class="">{{ __('Jenis Keluhan') }}</label><span class="text-danger">*</span>
               <select class="form-control select2" name="unit_id">
                 {!! App\Models\MasterUnit::options('unit','id',[],'( Jenis Keluhan )') !!}
               </select>
           </div>
-      </div>
+      </div> --}}
 
-      <div class="col-md-4">
+      {{-- <div class="col-md-6">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Marcom') }}</label><span class="text-danger">*</span>
+              <label for="regional_id" class="">{{ __('Marcom') }}</label><span class="text-danger">*</span>
               <select class="form-control select2 option-ajax" data-child="ruas" name="regional_id">
                 {!! App\Models\MasterRegional::options('name','id',[],'( Marcom )') !!}
               </select>
           </div>
-      </div>
+      </div> --}}
       
-      <div class="col-md-3">
+      <div class="col-md-6">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Ruas Jalan Tol') }}</label><span class="text-danger">*</span>
+              <label for="ruas_id" class="">{{ __('Ruas Jalan Tol') }}</label><span class="text-danger">*</span>
               <select class="form-control select2" id="ruas" name="ruas_id">
                 {!! App\Models\MasterRuas::options('name','id',[],'( Ruas Jalan Tol )') !!}
               </select>
           </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-6">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Sumber') }}</label><span class="text-danger">*</span>
+              <label for="sumber_id" class="">{{ __('Sumber') }}</label><span class="text-danger">*</span>
               <select class="form-control select2" name="sumber_id">
                 {!! App\Models\MasterSumber::options('description','id',[],'( Sumber )') !!}
               </select>
           </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-6">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
+              <label for="bidang_id" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
               <select class="form-control select2" name="bidang_id">
                 {!! App\Models\MasterBk::options('bidang','id',[],'( Bidang Keluhan )') !!}
               </select>
           </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-6">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Golongan Kendaraan') }}</label><span class="text-danger">*</span>
+              <label for="golongan_id" class="">{{ __('Golongan Kendaraan') }}</label><span class="text-danger">*</span>
               <select class="form-control select2" name="golongan_id">
                 {!! App\Models\MasterGolken::options('golongan','id',[],'( Golongan Kendaraan )') !!}
               </select>
@@ -101,7 +101,7 @@
 
       <div class="col-md-12">
           <div class="form-group">
-              <label for="lokasi_kejadian" class="">{{ __('Keterangan Keluhan') }}</label><span class="text-danger">*</span>
+              <label for="keterangan_keluhan" class="">{{ __('Keterangan Keluhan') }}</label><span class="text-danger">*</span>
               <textarea name="keterangan_keluhan" class="form-control" placeholder="Keterangan Keluhan" ></textarea>
           </div>
       </div>

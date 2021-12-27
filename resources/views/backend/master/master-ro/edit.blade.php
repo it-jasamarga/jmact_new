@@ -30,7 +30,7 @@
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
-                        <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>In-Active</option>
+                        <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>Non-Active</option>
                     </select>
                 </div>
             </div>

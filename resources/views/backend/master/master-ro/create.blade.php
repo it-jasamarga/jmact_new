@@ -8,7 +8,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Ro') }}</label>
+                    <label for="name" class="">{{ __('Ro') }}</label><span class="text-danger">*</span>
                     <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ro" maxlength="50">
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1">Active</option>
-                        <option value="0">In-Active</option>
+                        <option value="0">Non-Active</option>
                     </select>
                 </div>
             </div>

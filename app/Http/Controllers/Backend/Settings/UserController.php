@@ -54,10 +54,10 @@ class UserController extends Controller
             'type' => 'modal',
             'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
         ]);
-        $buttons .= makeButton([
-          'type' => 'delete',
-          'id'   => $data->id
-        ]);
+        // $buttons .= makeButton([
+        //   'type' => 'delete',
+        //   'id'   => $data->id
+        // ]);
       return $buttons;
     })
     ->rawColumns(['action','numSelect'])
@@ -135,11 +135,14 @@ class UserController extends Controller
     public function update($id)
     {
       request()->validate(['email' => 'unique:users,email,'.$id]);
+      $role = request()->role;
+      unset(request()['role']);
+      unset(request()['password_confirmation']);
       $record = User::saveData(request());
-      if(request()->role){
+      if($role){
         \DB::table('role_users')->where('user_id',$record->id)->delete();
         $createHasRole = \DB::table('role_users')->insert([
-          'role_id' => request()->role,
+          'role_id' => $role,
           'user_id' => $record->id,
         ]);
       }

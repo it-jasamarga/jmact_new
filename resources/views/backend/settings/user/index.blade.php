@@ -62,12 +62,12 @@
         <table class="table data-thumb-view table-striped" id="listTables">
           <thead>
             <tr>
-              <th width="15">
+              {{-- <th width="15">
                 <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
                   <input type="checkbox" value="" class="group-checkable"/>
                   <span></span>
                 </label>
-              </th>
+              </th> --}}
               <th>#</th>
               <th>Username</th>
               <th>Email</th>
@@ -89,13 +89,21 @@
 <script>
   $(document).ready(function () {
     loadList([
-      { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
+      // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data:'username', name:'username' },
       { data:'email', name:'email' },
       { data:'created_at', name:'created_at' },
       { data:'action', name: 'action', searchable: false,orderable: false }
-    ]);
+    ],[
+        {
+          text: "<i class='flaticon-file-1'></i>Create Data</a>",
+          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
+          attr: {
+            'data-url': "{{ route($route.'.create') }}"
+          }
+        },
+      ]);
   });
 </script>
 @endsection

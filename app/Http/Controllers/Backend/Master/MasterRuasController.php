@@ -73,7 +73,7 @@ class MasterRuasController extends Controller
       // ]);
       return $buttons;
     })
-    ->rawColumns(['numSelect','regional_id','action'])
+    // ->rawColumns(['numSelect','regional_id','action'])
     ->addIndexColumn()
     ->make(true);
 

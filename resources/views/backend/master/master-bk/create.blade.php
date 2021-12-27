@@ -8,14 +8,14 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keluhan" class="">{{ __('Bidang Keluhan') }}</label>
+                    <label for="keluhan" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
                     <input id="keluhan" type="text" class="form-control" name="keluhan" value="{{ old('keluhan') }}" required autocomplete="keluhan" autofocus placeholder="Bidang Keluhan" maxlength="20">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="bidang" class="">{{ __('Bidang') }}</label>
+                    <label for="bidang" class="">{{ __('Bidang') }}</label><span class="text-danger">*</span>
                     <input id="bidang" type="text" class="form-control" name="bidang" value="{{ old('bidang') }}" required autocomplete="bidang" autofocus placeholder="Bidang" maxlength="20">
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1">Active</option>
-                        <option value="0">In-Active</option>
+                        <option value="0">Non-Active</option>
                     </select>
                 </div>
             </div>
