@@ -2,106 +2,92 @@
 
 @section('styles')
 <style>
-  .dataTables_filter {
+  #listTables_wrapper>.dt-buttons {
     display: none;
   }
-</style>
+  #listTables_filter {
+    text-align: center;
+  }
 @endsection
 
-{{-- @section('toolbars')
-  <a href="javascript:void(0)" class="btn btn-light-primary font-weight-bolder btn-sm add-modal" data-modal="#largeModal">Create Data</a>
-@endsection --}}
-
 @section('content')
-{{-- <div class="card card-custom card-collapsed" data-card="true" id="kt_card_4">
- <div class="card-header">
-  <div class="card-title">
-    <h3 class="card-label">{{ $title }}
-      <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span></h3>
-    </div>
-    <div class="card-toolbar">
-     <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
-       <i class="ki ki-arrow-down icon-nm"></i>
-     </a>
-   </div>
- </div>
- <div class="card-body">
-  <form>
-    <div class="row">
 
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="card card-custom {{ @$class }}">
+      {{-- Body --}}
+      <div class="card-body pt-4 table-responsive" >
+        <table class="table data-thumb-view table-striped" id="listTables">
+          <thead>
+            <tr>
+              <th width="32">No</th>
+              <th>No Tiket</th>
+              <th>Status</th>
+              <th>Tipe</th>
+              <th width="80">Action</th>
+            </tr>
+          </thead>
 
-    </div>
-    <button type="button" class="btn btn-secondary clear" >
-      <i class="flaticon-circle"></i>
-      Clear Search
-    </button>
-    <button type="button" class="btn btn-light-primary filter-data">
-      <i class="flaticon-search"></i>
-      Search Data
-    </button>
-  </form>
-</div>
-</div>
-
-<br> --}}
-  <div class="card-header">
-    <form>
-      <div class="form-group row justify-content-center pt-4">
-        <label class="col-form-label">No Tiket</label>
-        <div class="col-12 col-sm-6 col-lg-4">
-          <input class="form-control filter-control" type="search" placeholder="Search" aria-controls="listTables" />
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <br>
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-      <div class="card card-custom {{ @$class }}">
-        {{-- Body --}}
-        <div class="card-body pt-4 table-responsive" >
-          <table class="table data-thumb-view table-striped" id="listTables">
-            <thead>
-              <tr>
-                {{-- <th width="16">
-                  <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
-                    <input type="checkbox" value="" class="group-checkable"/>
-                    <span></span>
-                  </label>
-                </th> --}}
-                <th width="32">No</th>
-                <th>No Tiket</th>
-                <th>Status</th>
-                <th>Tipe</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-          </table>
-        </div>
+        </table>
       </div>
     </div>
   </div>
-{{-- </div> --}}
+</div>
 
 @endsection
 
 @section('scripts')
 {{-- Page js files --}}
 <script>
+
+  window.ticket = {
+    cache: {},
+    line: 0,
+    detail: {
+      open: function(source) {
+        if (ticket.line>0) return false;
+        let row = $(source).closest('TR')[0];
+        ticket.line = row.children[0].innerText*1;
+
+        let url = '/histori-tiket/'+row.children[1].innerText;
+        $('TR[current-detail=true]').remove();
+        $(row).attr('id', "TL"+ticket.line);
+        console.log('## TDO', url);
+        $.post( url, {_token: "{{ csrf_token() }}"} )
+          .done(function( response ) {
+            console.log({response});
+            if (response.status=='ok') {
+              let html = '<tr current-detail=true><td style="background-color: #fff"></td><td colspan=4 style="background-color: #fafafa; border-bottom: 3px solid #ccc;border-right: 1px solid #eee"><b>Histori Tiket</b>:<table>';
+              Object.values(response.data.history).forEach( track => {
+                const d = new Date(track.created_at);
+                html += '<tr style="background-color: #fafafa!important"><td style="border: 0px!important; padding: 0px 0px 0px 15px!important; color: #3699FF">'+track.status.status+'</td><td style="border: 0px!important; padding: 0px 0px 0px 15px!important">'+d.toLocaleDateString('id-ID', { year:"numeric", month:"long", day:"numeric"})+" "+(d.getHours() < 10 ? "0" : "")+d.getHours()+":"+(d.getMinutes() < 10 ? "0" : "")+d.getMinutes()+":"+(d.getSeconds() < 10 ? "0" : "")+d.getSeconds()+'</td></tr>';
+              })
+              html +='</table></td></tr>';
+              let node = $('#TL'+ticket.line);
+              console.log({node});
+              let info = $(html);
+              $(info).insertAfter(node);
+              $(info).attr('current-detail', true);
+              ticket.line = 0;
+            } else {
+              ticket.line = 0;
+            }
+          })
+          .fail(function(xhr, status, error) {
+            ticket.line = 0;
+          });
+      }
+    }
+  }
+
   $(document).ready(function () {
     loadList([
-      // { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
-      { data:'notiket', name:'notiket' },
-      { data:'status', name:'status' },
-      { data:'type', name:'type' },
+      { data:'no_tiket', name:'no_tiket' },
+      { data:'status_id', name:'status_id' },
+      { data:'type_id', name:'type_id' },
       { data:'action', name: 'action', searchable: false, orderable: false }
-      ],
-      [],
-      );
+      ]);
   });
 </script>
 @endsection
