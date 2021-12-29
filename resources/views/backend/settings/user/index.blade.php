@@ -68,7 +68,7 @@
                   <span></span>
                 </label>
               </th> --}}
-              <th>#</th>
+              <th width="24">No</th>
               <th>Username</th>
               <th>Email</th>
               <th>Created At</th>

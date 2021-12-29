@@ -14,18 +14,18 @@
           text: "<i class='flaticon2-file'></i> Export Excel",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
         },
-        // {
-        //   extend: 'csvHtml5',
-        //   text: "<i class='flaticon2-layers'></i> Export Csv",
-        //   className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-        // },
-        // {
-        //   text: "<i class='flaticon2-paper'></i> Remove Select Data",
-        //   className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-        //   action: function () {
-        //     removeSelect()
-        //   }
-        // },
+        {
+          extend: 'csvHtml5',
+          text: "<i class='flaticon2-layers'></i> Export Csv",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+        },
+        {
+          text: "<i class='flaticon2-paper'></i> Remove Select Data",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+          action: function () {
+            removeSelect()
+          }
+        },
         {
           text: "<i class='flaticon-file-1'></i>Create Data</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",

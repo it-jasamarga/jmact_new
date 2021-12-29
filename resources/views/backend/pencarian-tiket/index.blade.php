@@ -1,6 +1,11 @@
 @extends('layouts/app')
 
 @section('styles')
+<style>
+  .dataTables_filter {
+    display: none;
+  }
+</style>
 @endsection
 
 {{-- @section('toolbars')
@@ -39,34 +44,47 @@
 </div>
 
 <br> --}}
+  <div class="card-header">
+    <form>
+      <div class="form-group row justify-content-center pt-4">
+        <label class="col-form-label">No Tiket</label>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <input class="form-control filter-control" type="search" placeholder="Search" aria-controls="listTables" />
+        </div>
+      </div>
+    </form>
+  </div>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="card card-custom {{ @$class }}">
-      {{-- Body --}}
-      <div class="card-body pt-4 table-responsive" >
-        <table class="table data-thumb-view table-striped" id="listTables">
-          <thead>
-            <tr>
-              {{-- <th width="16">
-                <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
-                  <input type="checkbox" value="" class="group-checkable"/>
-                  <span></span>
-                </label>
-              </th> --}}
-              <th width="32">No</th>
-              <th>No Tiket</th>
-              <th>Status</th>
-              <th>Tipe</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+  <br>
 
-        </table>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="card card-custom {{ @$class }}">
+        {{-- Body --}}
+        <div class="card-body pt-4 table-responsive" >
+          <table class="table data-thumb-view table-striped" id="listTables">
+            <thead>
+              <tr>
+                {{-- <th width="16">
+                  <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
+                    <input type="checkbox" value="" class="group-checkable"/>
+                    <span></span>
+                  </label>
+                </th> --}}
+                <th width="32">No</th>
+                <th>No Tiket</th>
+                <th>Status</th>
+                <th>Tipe</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
+{{-- </div> --}}
 
 @endsection
 
@@ -82,13 +100,7 @@
       { data:'type', name:'type' },
       { data:'action', name: 'action', searchable: false, orderable: false }
       ],
-      // [
-      //   {
-      //     extend: 'excelHtml5',
-      //     text: "<i class='flaticon2-file'></i> Export Excel",
-      //     className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-      //   },
-      // ]
+      [],
       );
   });
 </script>
