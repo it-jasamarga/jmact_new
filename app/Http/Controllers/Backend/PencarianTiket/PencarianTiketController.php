@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Backend\PencarianTiket;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tiket;
+// use App\Models\Tiket;
+use App\Models\KeluhanPelanggan;
 use Illuminate\Http\Request;
 
-use App\Filters\PencarianTiketFilter;
+use App\Filters\KeluhanPelangganFilter;
 use App\Http\Requests\MasterBkRequest;
 
 class PencarianTiketController extends Controller
@@ -31,34 +32,18 @@ class PencarianTiketController extends Controller
         return view('backend.pencarian-tiket.index', $data);
     }
 
-    public function list(PencarianTiketFilter $request) {
-
-        $data  = Tiket::query()->filter($request);
-
+    public function list(KeluhanPelangganFilter $request) {
+        $data  = KeluhanPelanggan::query()->filter($request);
         return datatables()->of($data)
-        ->addColumn('numSelect', function ($data) use ($request) {
-        $button = '';
-        $button .= makeButton([
-            'type' => 'deleteAll',
-            'value' => $data->id
-        ]);
-        return $button;
-        })
-        ->addColumn('active', function ($data) use ($request) {
-        $button = getActive($data->active);
-        return $button;
-        })
-        ->addColumn('action', function($data){
-        $buttons = "";
-        $buttons .= makeButton([
-            'type' => 'modal',
-            'url'   => $this->route.'/'.$data->id.'/edit'
-        ]);
-        return $buttons;
-        })
-        // ->rawColumns(['numSelect','action'])
+        ->addColumn('status_id', function ($data) use ($request) { return ($data->status) ? $data->status->status : '-'; })
+        ->addColumn('type_id', function ($data) use ($request) { return "Keluhan"; })   // TODO: there must be somethin todo
+        ->addColumn('action', function($data){ return '
+        <a href="/keluhan/'.$data->id.'" class="symbol-label font-size-h5 font-weight-bold"><i class="flaticon2-list-1"></i></a>
+        <span style="margin: 0 2px"></span>
+        <a href="#" onclick="ticket.detail.open(this)" class="symbol-label font-size-h5 font-weight-bold"><i class="flaticon2-arrow-down"></i></a>
+';})
+        ->rawColumns(['action'])
         ->addIndexColumn()
         ->make(true);
-
     }
 }
