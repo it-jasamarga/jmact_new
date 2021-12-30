@@ -16,6 +16,7 @@ use App\Http\Requests\KeluhanHistoryRequest;
 use App\Http\Requests\KeluhanReportRequest;
 
 use App\Helpers\HelperFirestore;
+use App\Models\MasterRuas;
 use DB;
 use Carbon\Carbon;
 class KeluhanController extends Controller
@@ -124,6 +125,18 @@ class KeluhanController extends Controller
   public function store(KeluhanPelangganRequest $request){
     DB::beginTransaction();
     try {
+      $dataRuas = MasterRuas::find($request->ruas_id);
+      
+      if($dataRuas) {
+        $dataRo = $dataRuas->ro;
+        if ($dataRo) {
+          $dataRegional = $dataRo->regional;
+          if ($dataRegional) {
+            $request['regional_id'] = $dataRegional->id;
+          }
+        }
+      }
+
       $request['user_id'] = auth()->user()->id;
       $request['status_id'] = MasterStatus::where('code','01')->first()->id;
 

@@ -52,6 +52,13 @@
 
         <div class="col-md-6">
           <div class="form-group">
+              <label for="inputer_pic" class="">{{ __('Inputer PIC') }}</label><span class="text-danger">*</span>
+              <input id="inputer_pic" type="text" disabled="" class="form-control" name="inputer_pic" value="{{ ($record->creator) ? $record->creator->username : "" }}" required autocomplete="inputer_pic" autofocus placeholder="Inputer PIC" maxlength="20">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
               <label for="nama_cust" class="">{{ __('Nama Pelanggan') }}</label><span class="text-danger">*</span>
               <input id="nama_cust" type="text" disabled="" class="form-control" name="nama_cust" value="{{ $record->nama_cust }}" required autocomplete="nama_cust" autofocus placeholder="Nama Pelanggan" maxlength="20">
           </div>
