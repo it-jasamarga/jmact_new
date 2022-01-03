@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="code" class="">{{ __('Kode Status') }}</label>
-                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Kode Status" maxlength="10">
+                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Kode Status" maxlength="10" readonly>
                 </div>
             </div>
 

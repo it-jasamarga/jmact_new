@@ -69,7 +69,13 @@ class ClaimController extends Controller
         'label'   => '<i class="flaticon2-paperplane"></i>',
         'tooltip' => 'Teruskan'
       ]);
-      
+      $buttons .= makeButton([
+        'type' => 'modal',
+        'url'   => $this->route.'/'.$data->id.'/edit-stage',
+        'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+        'label'   => '<i class="flaticon2-checking"></i>',
+        'tooltip' => 'Tahapan'
+      ]);
       $buttons .= makeButton([
         'type' => 'url',
         'url'   => $this->route.'/'.$data->id.'',
@@ -158,6 +164,43 @@ class ClaimController extends Controller
   }
 
   public function history(ClaimHistoryRequest $request, $id) {
+    $record = ClaimPelanggan::findOrFail($id);
+    
+    $request['status_id'] = MasterStatus::where('code','03')->first()->id;
+    $request['unit_id'] = $record->unit_id;
+    $request['regional_id'] = $record->regional_id;
+
+    $record->status_id = $request->status_id;
+    $record->save();
+
+    $recordHistory = $record->history()->create($request->all());
+    
+    $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
+
+    // $this->firebase->sendGroup(
+    //   $record, 
+    //   'JMACT - Keluhan Diteruskan Kepada Service Provider', 
+    //   'Diteruskan Ke '.$name
+    // );
+
+    return response([
+      'status' => true,
+      'message' => 'success',
+    ]);
+
+  }
+
+  public function editStage($id) {
+
+    $data = [
+      'route' => $this->route,
+      'record' => ClaimPelanggan::findOrFail($id)
+    ];
+
+    return view('backend.laporan.claim.edit-stage', $data);
+  }
+
+  public function historyStage(ClaimHistoryRequest $request, $id) {
     $record = ClaimPelanggan::findOrFail($id);
     
     $request['status_id'] = MasterStatus::where('code','03')->first()->id;

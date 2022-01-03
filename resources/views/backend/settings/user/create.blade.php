@@ -8,16 +8,22 @@
             
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="username" class="">{{ __('Name') }}</label>
-                    <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="Name" maxlength="20">
+                    <label for="name" class="">{{ __('Name') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name" maxlength="30">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
+                    <label for="username" class="">{{ __('Username/NPP') }}</label>
+                    <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="Username/NPP" maxlength="30">
+                </div>
+            </div>
+            {{-- <div class="col-md-12">
+                <div class="form-group">
                     <label for="email" class="">{{ __('Email') }}</label>
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email" maxlength="20">
                 </div>
-            </div>
+            </div> --}}
             {{-- <div class="col-md-12">
                 <div class="form-group">
                     <label for="unit_id" class="">{{ __('Unit') }}</label>

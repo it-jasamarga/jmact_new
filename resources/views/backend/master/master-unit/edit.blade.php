@@ -11,14 +11,14 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="code" class="">{{ __('Kode Unit') }}</label>
-                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Kode Unit" maxlength="20" readonly>
+                    <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}" required autocomplete="code" autofocus placeholder="Kode Unit" maxlength="10" readonly>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="unit" class="">{{ __('Unit') }}</label>
-                    <input id="unit" type="text" class="form-control" name="unit" value="{{ $record->unit }}" required autocomplete="unit" autofocus placeholder="Unit" maxlength="20">
+                    <input id="unit" type="text" class="form-control" name="unit" value="{{ $record->unit }}" required autocomplete="unit" autofocus placeholder="Unit" maxlength="30">
                 </div>
             </div>
 

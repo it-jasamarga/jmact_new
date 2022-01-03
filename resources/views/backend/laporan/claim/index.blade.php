@@ -116,7 +116,6 @@
               <th>Nama Pelanggan</th>
               <th>Kontak Pelanggan</th>
               <th>Claim</th>
-              <th>Penyebab</th>
               <th>Golongan Kendaraan</th>
               <th>Status</th>
               <th>Action</th>
@@ -144,7 +143,6 @@
       { data:'tanggal_kejadian', name:'tanggal_kejadian' },
       { data:'nama_pelanggan', name:'nama_pelanggan' },
       { data:'kontak_pelanggan', name:'kontak_pelanggan' },
-      { data:'keterangan_claim', name:'keterangan_claim' },
       { data:'keterangan_claim', name:'keterangan_claim' },
       { data:'golongan_id', name:'golongan_id' },
       { data:'status_id', name:'status_id' },

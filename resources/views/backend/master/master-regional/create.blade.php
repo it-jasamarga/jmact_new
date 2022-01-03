@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Regional') }}</label><span class="text-danger">*</span>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Regional" maxlength="20">
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Regional" maxlength="50">
                 </div>
             </div>
 

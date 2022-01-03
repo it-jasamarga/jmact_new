@@ -22,16 +22,21 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Name</label>
           <fieldset class="form-group">
-            <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Name">
+            <input type="text" data-post="name" id="dataFilter" class="form-control filter-control" placeholder="Name">
           </fieldset>
         </div>
-
         <div class="col-12 col-sm-6 col-lg-4">
+          <label for="users-list-role">Username</label>
+          <fieldset class="form-group">
+            <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Username">
+          </fieldset>
+        </div>
+        {{-- <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Email</label>
           <fieldset class="form-group">
             <input type="text" data-post="email" id="dataFilter" class="form-control filter-control" placeholder="Email">
           </fieldset>
-        </div>
+        </div> --}}
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Unit</label>
           <fieldset class="form-group">
@@ -69,9 +74,9 @@
                 </label>
               </th> --}}
               <th width="24">No</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Created At</th>
+              <th>Name</th>
+              <th>Username/NPP</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -91,9 +96,9 @@
     loadList([
       // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+      { data:'name', name:'name' },
       { data:'username', name:'username' },
-      { data:'email', name:'email' },
-      { data:'created_at', name:'created_at' },
+      { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false,orderable: false }
     ],[
         {

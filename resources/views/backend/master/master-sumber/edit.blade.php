@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description" class="">{{ __('Sumber') }}</label>
-                    <input id="description" type="text" class="form-control" name="description" value="{{ $record->description }}" required autocomplete="description" autofocus placeholder="Sumber" maxlength="10">
+                    <input id="description" type="text" class="form-control" name="description" value="{{ $record->description }}" required autocomplete="description" autofocus placeholder="Sumber" maxlength="30">
                 </div>
             </div>
 

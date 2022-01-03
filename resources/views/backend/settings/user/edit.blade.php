@@ -11,16 +11,22 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="username" class="">{{ __('Name') }}</label>
-                    <input id="username" type="text" class="form-control" name="username" value="{{ $record->username }}" required autocomplete="username" autofocus placeholder="Name" maxlength="30">
+                    <label for="name" class="">{{ __('Name') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Name" maxlength="30">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Email') }}</label>
-                    <input id="email" type="email" class="form-control" name="email" value="{{ $record->email }}" required autocomplete="email" autofocus placeholder="Email" maxlength="30">
+                    <label for="username" class="">{{ __('Username') }}</label>
+                    <input id="username" type="text" class="form-control" name="username" value="{{ $record->username }}" required autocomplete="username" autofocus placeholder="Username" maxlength="30">
                 </div>
             </div>
+            {{-- <div class="col-md-12">
+                <div class="form-group">
+                    <label for="email" class="">{{ __('Email') }}</label>
+                    <input id="email" type="email" class="form-control" name="email" value="{{ $record->email }}" required autocomplete="email" autofocus placeholder="Email" maxlength="30">
+                </div>
+            </div> --}}
             {{-- <div class="col-md-12">
                 <div class="form-group">
                     <label for="unit_id" class="">{{ __('Unit') }}</label>

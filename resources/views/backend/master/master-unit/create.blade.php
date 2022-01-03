@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="unit" class="">{{ __('Unit') }}</label><span class="text-danger">*</span>
-                    <input id="unit" type="text" class="form-control" name="unit" value="{{ old('unit') }}" required autocomplete="unit" autofocus placeholder="Unit" maxlength="10">
+                    <input id="unit" type="text" class="form-control" name="unit" value="{{ old('unit') }}" required autocomplete="unit" autofocus placeholder="Unit" maxlength="30">
                 </div>
             </div>
 

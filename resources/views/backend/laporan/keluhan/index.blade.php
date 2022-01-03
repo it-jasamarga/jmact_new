@@ -66,14 +66,6 @@
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Kelompok Pelanggan</label>
-          <fieldset class="form-group">
-            <select class="form-control select2" data-post="kelompok_id">
-                <option value="">( Pilih Salah Satu )</option>
-            </select>
-          </fieldset>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Status</label>
           <fieldset class="form-group">
             <select class="form-control select2" data-post="status_id">

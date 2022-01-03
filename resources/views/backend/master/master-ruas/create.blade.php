@@ -27,7 +27,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Ruas') }}</label><span class="text-danger">*</span>
-                    <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus placeholder="Ruas" maxlength="10">
+                    <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus placeholder="Ruas" maxlength="30">
                 </div>
             </div>
 
