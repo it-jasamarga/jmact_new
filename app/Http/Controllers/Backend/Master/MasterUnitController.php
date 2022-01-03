@@ -15,7 +15,7 @@ use App\Http\Requests\MasterUnitRequest;
 class MasterUnitController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Unit"], 
+    ['name' => "Master Data Unit"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-unit", 'name' => "Master Unit"]
   ];

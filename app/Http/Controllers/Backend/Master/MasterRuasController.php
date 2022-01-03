@@ -15,7 +15,7 @@ use App\Http\Requests\MasterRuasRequest;
 class MasterRuasController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Ruas"], 
+    ['name' => "Master Data Ruas"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-ruas", 'name' => "Master Ruas"]
   ];

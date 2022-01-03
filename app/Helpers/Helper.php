@@ -229,6 +229,18 @@ function getTiket($record = null){
     return $noTiket;
 }
 
+function getTiketClaim($record = null){
+    $noTiket = '-';
+    if($record){
+        // $sumber = ($record->sumber) ? $record->sumber->code : null;
+        $unit = ($record->user->unit) ? $record->user->unit->code : null;
+        $count = App\Models\ClaimPelanggan::where('unit_id',$record->unit_id)->count() + 1;
+        $noTiket = $unit.$count;
+    }
+
+    return $noTiket;
+}
+
 function stringToArray($data){
     $result = '-';
     if($data){

@@ -250,7 +250,7 @@
                   type: 'success',
                   title: 'Sukses',
                   text: textResp,
-                  confirmButtonText:'<i class="fa fa-thumbs-up"></i> Kembali !',
+                  confirmButtonText:'Kembali',
                   confirmButtonAriaLabel: 'Thumbs up, great!',
                   // footer: '<a href>Why do I have this issue?</a>'
               }).then(function(){

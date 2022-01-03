@@ -51,6 +51,7 @@
       "perms" : [
         "master-bk",
         "master-golken",
+        "master-claim",
         "master-regional",
         "master-ro",
         "master-ruas",
@@ -65,6 +66,13 @@
           "roles" : ["Superadmin"],
           "perms": "master-bk",
           "name": "Bidang Keluhan",
+          "action" : ["index","create","edit","show","delete"]
+        },
+        {
+          "url": "master-claim",
+          "roles" : ["Superadmin"],
+          "perms": "master-claim",
+          "name": "Jenis Claim",
           "action" : ["index","create","edit","show","delete"]
         },
         {

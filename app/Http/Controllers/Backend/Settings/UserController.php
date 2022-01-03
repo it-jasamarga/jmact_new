@@ -45,6 +45,10 @@ class UserController extends Controller
       ]);
       return $button;
     })
+    ->addColumn('active', function ($data) use ($request) {
+      $button = getActive($data->active);
+      return $button;
+    })
     ->addColumn('created_at', function ($data) use ($request) {
       return $data->creationDate();
     })

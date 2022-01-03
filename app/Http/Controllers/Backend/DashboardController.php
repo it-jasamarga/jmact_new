@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     public $breadcrumbs = [
-        ['name' => "Manage Role"], 
+        ['name' => "Dashboard"], 
         ['link' => "/", 'name' => "Dashboard"], 
     ];
 

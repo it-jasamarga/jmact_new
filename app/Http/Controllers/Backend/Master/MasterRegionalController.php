@@ -15,7 +15,7 @@ use App\Http\Requests\MasterRegionalRequest;
 class MasterRegionalController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Regional"], 
+    ['name' => "Master Data Regional"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-regional", 'name' => "Master Regional"]
   ];

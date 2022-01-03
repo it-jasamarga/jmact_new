@@ -15,7 +15,7 @@ use App\Http\Requests\MasterGolkenRequest;
 class MasterGolkenController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Golongan Kendaraan"], 
+    ['name' => "Master Data Golongan Kendaraan"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-golken", 'name' => "Master Golongan Kendaraan"]
   ];

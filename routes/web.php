@@ -53,9 +53,13 @@ Route::group(['middleware' => 'auth'], function() {
 			Route::get('keluhan/sla/report/{id}', 'KeluhanController@reportSla')->name('keluhan.reportSla');  
 
   			Route::put('keluhan/teruskan/{id}', 'KeluhanController@history')->name('keluhan.history');  
-			Route::delete('keluhan/removeMulti', 'KeluhanController@removeMulti')->name('keluhan.removeMulti');
-			Route::get('keluhan/list', 'KeluhanController@list')->name('keluhan.list');
-			Route::resource('keluhan', 'KeluhanController');
+			  Route::delete('keluhan/removeMulti', 'KeluhanController@removeMulti')->name('keluhan.removeMulti');
+			  Route::get('keluhan/list', 'KeluhanController@list')->name('keluhan.list');
+			  Route::resource('keluhan', 'KeluhanController');
+			  
+  			Route::put('claim/teruskan/{id}', 'ClaimController@history')->name('claim.history');  
+			Route::get('claim/list', 'ClaimController@list')->name('claim.list');
+			Route::resource('claim', 'ClaimController');
 
 		});
 
@@ -131,6 +135,10 @@ Route::group(['middleware' => 'auth'], function() {
   			Route::get('master-unit/list', 'MasterUnitController@list')->name('master-unit.list');
 			Route::resource('master-unit', 'MasterUnitController');
 
+			// Master Jenis Claim
+			Route::delete('master-claim/removeMulti', 'MasterJenisClaimController@removeMulti')->name('master-claim.removeMulti');
+  			Route::get('master-claim/list', 'MasterJenisClaimController@list')->name('master-claim.list');
+			Route::resource('master-claim', 'MasterJenisClaimController');
 			
   		});
 

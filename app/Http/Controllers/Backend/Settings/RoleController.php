@@ -50,6 +50,10 @@ class RoleController extends Controller
       ]);
       return $button;
     })
+    ->addColumn('active', function ($data) use ($request) {
+      $button = getActive($data->active);
+      return $button;
+    })
     ->addColumn('action', function($data){
       $buttons = "";
       $buttons .= makeButton([
@@ -62,10 +66,10 @@ class RoleController extends Controller
         'class' => 'btn btn-icon btn-success btn-sm btn-hover-light',
         'tooltip' => 'Setting Permission'
       ]);
-      $buttons .= makeButton([
-        'type' => 'delete',
-        'id'   => $data->id
-      ]);
+      // $buttons .= makeButton([
+      //   'type' => 'delete',
+      //   'id'   => $data->id
+      // ]);
       return $buttons;
     })
     ->rawColumns(['numSelect','action'])

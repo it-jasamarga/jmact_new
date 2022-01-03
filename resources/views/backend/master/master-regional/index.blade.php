@@ -81,7 +81,7 @@
       { data:'action', name: 'action', searchable: false,orderable: false }
       ],[
         {
-          text: "<i class='flaticon-file-1'></i>Create Data</a>",
+          text: "<i class='flaticon-file-1'></i>Add Regional</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
           attr: {
             'data-modal': "#largeModal"

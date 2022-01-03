@@ -41,7 +41,6 @@
         </div>
     </div>
         <div class="separator separator-solid mt-2 mb-4"></div>
-    
     <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -51,23 +50,32 @@
         </div>
 
         <div class="col-md-6">
-          <div class="form-group">
-              <label for="inputer_pic" class="">{{ __('Inputer PIC') }}</label><span class="text-danger">*</span>
-              <input id="inputer_pic" type="text" disabled="" class="form-control" name="inputer_pic" value="{{ ($record->creator) ? $record->creator->username : "" }}" required autocomplete="inputer_pic" autofocus placeholder="Inputer PIC" maxlength="20">
-          </div>
+            <div class="form-group">
+                <label for="nik_pelanggan" class="">{{ __('NIK Pelanggan') }}</label><span class="text-danger">*</span>
+                <input id="nik_pelanggan" disabled="" type="text" class="form-control" name="nik_pelanggan" value="{{ $record->nik_pelanggan }}" required autocomplete="nik_pelanggan" autofocus placeholder="NIK Pelanggan" maxlength="20">
+            </div>
         </div>
-
+  
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="kontak_pelanggan" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
+                <input id="kontak_pelanggan" disabled="" type="text" class="form-control" name="kontak_pelanggan" value="{{ $record->kontak_pelanggan }}" required autocomplete="kontak_pelanggan" autofocus placeholder="Kontak Pelanggan" maxlength="20">
+            </div>
+        </div>
+  
         <div class="col-md-6">
           <div class="form-group">
-              <label for="nama_cust" class="">{{ __('Nama Pelanggan') }}</label><span class="text-danger">*</span>
-              <input id="nama_cust" type="text" disabled="" class="form-control" name="nama_cust" value="{{ $record->nama_cust }}" required autocomplete="nama_cust" autofocus placeholder="Nama Pelanggan" maxlength="20">
+              <label for="alamat_pelanggan" class="">{{ __('Alamat Pelanggan') }}</label><span class="text-danger">*</span>
+              <textarea name="alamat_pelanggan" disabled="" class="form-control" placeholder="Alamat Pelanggan" >{{ $record->alamat_pelanggan }}</textarea>
           </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label for="kontak_cust" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
-                <input id="kontak_cust" type="text" disabled="" class="form-control" name="kontak_cust" value="{{ $record->kontak_cust }}" required autocomplete="kontak_cust" autofocus placeholder="Kontak Pelanggan" maxlength="20">
+                <label for="lokasi_kejadian" class="">{{ __('Ruas Jalan Tol') }}</label><span class="text-danger">*</span>
+                <select disabled="" class="form-control select2" id="ruas" name="ruas_id">
+                    {!! App\Models\MasterRuas::options('name','id',['selected' => $record->ruas_id],'( Ruas Jalan Tol )') !!}
+                </select>
             </div>
         </div>
 
@@ -102,33 +110,6 @@
               </select>
           </div>
       </div> --}}
-      
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="lokasi_kejadian" class="">{{ __('Ruas Jalan Tol') }}</label><span class="text-danger">*</span>
-                <select disabled="" class="form-control select2" id="ruas" name="ruas_id">
-                    {!! App\Models\MasterRuas::options('name','id',['selected' => $record->ruas_id],'( Ruas Jalan Tol )') !!}
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="lokasi_kejadian" class="">{{ __('Sumber') }}</label><span class="text-danger">*</span>
-                <select disabled="" class="form-control select2" name="sumber_id">
-                    {!! App\Models\MasterSumber::options('description','id',['selected' => $record->sumber_id],'( Sumber )') !!}
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="lokasi_kejadian" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
-                <select disabled="" class="form-control select2" name="bidang_id">
-                    {!! App\Models\MasterBk::options('bidang','id',['selected' => $record->bidang_id],'( Bidang Keluhan )') !!}
-                </select>
-            </div>
-        </div>
 
         <div class="col-md-6">
             <div class="form-group">
@@ -139,19 +120,48 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group">
-                <label for="keterangan_keluhan" class="">{{ __('Keterangan Keluhan') }}</label><span class="text-danger">*</span>
-                <textarea name="keterangan_keluhan" disabled="" class="form-control" placeholder="Keterangan Keluhan" >{{ $record->keterangan_keluhan }}</textarea>
+                <label for="jenis_kendaraan" class="">{{ __('Jenis Kendaraan') }}</label><span class="text-danger">*</span>
+                <input id="jenis_kendaraan" type="text" disabled="" class="form-control" name="jenis_kendaraan" value="{{ $record->jenis_kendaraan }}" required autocomplete="jenis_kendaraan" autofocus placeholder="Jenis Kendaraan" maxlength="20">
             </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="no_polisi" class="">{{ __('No Polisi') }}</label><span class="text-danger">*</span>
+                <input id="no_polisi" type="text" disabled="" class="form-control" name="no_polisi" value="{{ $record->no_polisi }}" required autocomplete="no_polisi" autofocus placeholder="No Polisi" maxlength="20">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="keterangan_claim" class="">{{ __('Claim') }}</label><span class="text-danger">*</span>
+                <input id="keterangan_claim" type="text" disabled="" class="form-control" name="keterangan_claim" value="{{ $record->keterangan_claim }}" required autocomplete="keterangan_claim" autofocus placeholder="Claim" maxlength="20">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nominal_customer" class="">{{ __('Besaran claim yang diajukan') }}</label><span class="text-danger">*</span>
+                <input id="nominal_customer" type="text" disabled="" class="form-control" name="nominal_customer" value="{{ $record->nominal_customer }}" required autocomplete="nominal_customer" autofocus placeholder="Besaran claim yang diajukan" maxlength="20">
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="lokasi_kejadian" class="">{{ __('Keterangan Claim') }}</label><span class="text-danger">*</span>
+                <textarea name="keterangan_claim" disabled="" class="form-control" placeholder="Keterangan Claim" >{{ $record->keterangan_claim }}</textarea>
+            </div>
+        </div>
+
     </div>
     
     <a href="{{ route($route.'.index') }}" class="btn btn-secondary" >
       <i class="flaticon-circle"></i>
       Kembali
     </a>
-    @if($record->report->count() > 0)
+    {{-- @if($record->report->count() > 0)
     <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
       <i class="flaticon2-file"></i>
       Detail Report
@@ -163,7 +173,7 @@
                 Teruskan Jenis Keluhan
             </div>
         @endif
-    @endif
+    @endif --}}
   </form>
 </div>
 </div>

@@ -18,20 +18,12 @@
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email" maxlength="20">
                 </div>
             </div>
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="form-group">
                     <label for="unit_id" class="">{{ __('Unit') }}</label>
                     <input id="unit_id" type="text" class="form-control" name="unit_id" value="{{ old('unit_id') }}" required autocomplete="unit_id" autofocus placeholder="Unit" maxlength="10">
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="role" class="">{{ __('Role') }}</label>
-                    <select class="form-control" name="role">
-                        {!! App\Models\Role::options('name','id',[],'( Pilih Role )') !!}
-                    </select>
-                </div>
-            </div>
+            </div> --}}
             <div class="col-md-12">
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>
@@ -40,11 +32,36 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>{{ __('Password Confirmation') }}</label>
-                    <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required placeholder="Password Confirmation">
+                    <label>{{ __('Confirm Password') }}</label>
+                    <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required placeholder="Confirm Password">
                 </div>
             </div>
-
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="unit_id" class="">{{ __('Unit') }}</label>
+                    <select class="form-control select2" name="unit_id">
+                        {!! App\Models\MasterUnit::options('unit','id',[],'( Pilih Unit )') !!}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="role" class="">{{ __('Role') }}</label>
+                    <select class="form-control select2" name="role">
+                        {!! App\Models\Role::options('name','id',[],'( Pilih Role )') !!}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <select class="form-control select2" name="active">
+                        <option value="">Pilih Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Non-Active</option>
+                    </select>
+                </div>
+            </div>
 
         </div>
 

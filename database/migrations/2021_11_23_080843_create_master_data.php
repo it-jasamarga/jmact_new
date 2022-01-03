@@ -138,6 +138,20 @@ class CreateMasterData extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('master_jenis_claim', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
+
+            $table->string('code')->nullable();
+            $table->string('jenis_claim')->nullable();
+            $table->boolean('active')->default(false)->nullable();
+            
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -155,5 +169,6 @@ class CreateMasterData extends Migration
         Schema::dropIfExists('master_unit');
         Schema::dropIfExists('master_status');
         Schema::dropIfExists('master_bk');
+        Schema::dropIfExists('master_jenis_claim');
     }
 }

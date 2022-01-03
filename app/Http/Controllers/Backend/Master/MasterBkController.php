@@ -15,7 +15,7 @@ use App\Http\Requests\MasterBkRequest;
 class MasterBkController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Bidang Keluhan"], 
+    ['name' => "Master Data Bidang Keluhan"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-bk", 'name' => "Master Bidang Keluhan"]
   ];

@@ -4,7 +4,7 @@
 @endsection
 
 @section('toolbars')
-<!-- <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a> -->
+  <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a>
 @endsection
 
 @section('content')
@@ -32,15 +32,23 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Nama Pelanggan</label>
           <fieldset class="form-group">
-            <input type="text" data-post="nama_cust" id="dataFilter" class="form-control filter-control" placeholder="Nama Pelanggan">
+            <input type="text" data-post="nama_pelanggan" id="dataFilter" class="form-control filter-control" placeholder="Nama Pelanggan">
           </fieldset>
         </div>
-        <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Nama Inputer</label>
+        {{-- <div class="col-12 col-sm-6 col-lg-4">
+          <label for="users-list-role">Status</label>
           <fieldset class="form-group">
-            <input type="text" data-post="user_id" id="dataFilter" class="form-control filter-control" placeholder="Nama Inputer">
+            <input type="text" data-post="user_id" id="dataFilter" class="form-control filter-control" placeholder="Status">
           </fieldset>
-        </div>
+        </div> --}}
+        <div class="col-12 col-sm-6 col-lg-4">
+            <label for="users-list-role">Status</label>
+            <fieldset class="form-group">
+              <select class="form-control select2" data-post="status_id">
+                  {!! App\Models\MasterStatus::options('status','id',[],'( Status )') !!}
+              </select>
+            </fieldset>
+          </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Ruas Jalan Tol</label>
           <fieldset class="form-group">
@@ -50,34 +58,18 @@
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Bidang</label>
+          <label for="users-list-role">Claim</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="bidang_id">
-                {!! App\Models\MasterBk::options('bidang','id',[],'( Bidang )') !!}
+            <select class="form-control select2" data-post="jenis_claim_id">
+                {!! App\Models\MasterJenisClaim::options('jenis_claim','id',[],'( Claim )') !!}
             </select>
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Sumber</label>
+          <label for="users-list-role">Golongan Kendaraan</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="sumber_id">
-                {!! App\Models\MasterSumber::options('description','id',[],'( Sumber )') !!}
-            </select>
-          </fieldset>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Kelompok Pelanggan</label>
-          <fieldset class="form-group">
-            <select class="form-control select2" data-post="kelompok_id">
-                <option value="">( Pilih Salah Satu )</option>
-            </select>
-          </fieldset>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Status</label>
-          <fieldset class="form-group">
-            <select class="form-control select2" data-post="status_id">
-                {!! App\Models\MasterStatus::options('status','id',[],'( Status )') !!}
+            <select class="form-control select2" data-post="golongan_id">
+              {!! App\Models\MasterGolken::options('description','id',[],'( Sumber )') !!}
             </select>
           </fieldset>
         </div>
@@ -116,12 +108,6 @@
         <table class="table data-thumb-view table-striped" id="listTables">
           <thead>
             <tr>
-              {{-- <th width="15">
-                <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
-                  <input type="checkbox" value="" class="group-checkable"/>
-                  <span></span>
-                </label>
-              </th> --}}
               <th width="24">No</th>
               <th>No Tiket</th>
               <th>Ruas</th>
@@ -129,8 +115,8 @@
               <th>Waktu Kejadian</th>
               <th>Nama Pelanggan</th>
               <th>Kontak Pelanggan</th>
-              <th>Sumber</th>
-              <th>Bidang Keluhan</th>
+              <th>Claim</th>
+              <th>Penyebab</th>
               <th>Golongan Kendaraan</th>
               <th>Status</th>
               <th>Action</th>
@@ -156,21 +142,21 @@
       { data:'ruas_id', name:'ruas_id' },
       { data:'lokasi_kejadian', name:'lokasi_kejadian' },
       { data:'tanggal_kejadian', name:'tanggal_kejadian' },
-      { data:'nama_cust', name:'nama_cust' },
-      { data:'kontak_cust', name:'kontak_cust' },
-      { data:'sumber_id', name:'sumber_id' },
-      { data:'bidang_id', name:'bidang_id' },
+      { data:'nama_pelanggan', name:'nama_pelanggan' },
+      { data:'kontak_pelanggan', name:'kontak_pelanggan' },
+      { data:'keterangan_claim', name:'keterangan_claim' },
+      { data:'keterangan_claim', name:'keterangan_claim' },
       { data:'golongan_id', name:'golongan_id' },
       { data:'status_id', name:'status_id' },
       { data:'action', name: 'action', searchable: false,orderable: false }
     ],[
         {
           extend: 'excelHtml5',
-          text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
+          text: "<i class='flaticon2-file'></i>Export Claim</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
         },
         {
-          text: "<i class='flaticon-file-1'></i>Add Keluhan</a>",
+          text: "<i class='flaticon-file-1'></i>Add Claim</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
           attr: {
             'data-url': "{{ route($route.'.create') }}"

@@ -15,7 +15,7 @@ use App\Http\Requests\MasterSumberRequest;
 class MasterSumberController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Sumber"], 
+    ['name' => "Master Data Sumber"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-sumber", 'name' => "Master Sumber"]
   ];

@@ -22,7 +22,7 @@ use Carbon\Carbon;
 class KeluhanController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Keluhan"], 
+    ['name' => "Laporan Keluhan Pelanggan"], 
     ['link' => "#", 'name' => "Laporan Pelanggan"],
     ['link' => "keluhan", 'name' => "Keluhan"]
   ];

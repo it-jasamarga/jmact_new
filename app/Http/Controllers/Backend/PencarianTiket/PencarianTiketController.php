@@ -14,8 +14,8 @@ class PencarianTiketController extends Controller
 {
     //
     public $breadcrumbs = [
-        ['name' => "Manage Pencarian Tiket"], 
-        ['link' => "#", 'name' => "PencarianTiket"],
+        ['name' => "Pencarian Tiket"], 
+        ['link' => "#", 'name' => "Pencarian Tiket"],
         ['link' => "pencarian-tiket", 'name' => "Pencarian Tiket"]
     ];
 

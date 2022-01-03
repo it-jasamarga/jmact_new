@@ -15,7 +15,7 @@ use App\Http\Requests\MasterStatusRequest;
 class MasterStatusController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Status"], 
+    ['name' => "Master Data Status"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-status", 'name' => "Master Status"]
   ];

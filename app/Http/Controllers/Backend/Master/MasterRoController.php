@@ -15,7 +15,7 @@ use App\Http\Requests\MasterRoRequest;
 class MasterRoController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Master Ro"], 
+    ['name' => "Master Data Ro"], 
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-ro", 'name' => "Master Ro"]
   ];

@@ -55,8 +55,8 @@
                 </label>
               </th> --}}
               <th width="32">No</th>
-              <th>Ro</th>
-              <th>Regional</th>
+              <th>Kode</th>
+              <th>Jenis Claim</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -75,21 +75,23 @@
 <script>
   $(document).ready(function () {
     loadList([
-      // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
-      { data:'name', name:'name' },
-      { data:'regional_id', name:'regional_id' },
+      // { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
+      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
+      { data:'code', name:'code' },
+      { data:'jenis_claim', name:'jenis_claim' },
       { data:'active', name:'active' },
-      { data:'action', name: 'action', searchable: false,orderable: false }
-      ],[
+      { data:'action', name: 'action', searchable: false, orderable: false }
+      ],
+      [
         {
-          text: "<i class='flaticon-file-1'></i>Add Ro</a>",
+          text: "<i class='flaticon-file-1'></i>Add Jenis Claim</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
           attr: {
             'data-modal': "#largeModal"
           }
         },
-      ]);
+      ]
+      );
   });
 </script>
 @endsection

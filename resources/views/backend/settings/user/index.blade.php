@@ -19,20 +19,20 @@
  <div class="card-body">
     <form>
       <div class="row">
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Name</label>
           <fieldset class="form-group">
             <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Name">
           </fieldset>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Email</label>
           <fieldset class="form-group">
             <input type="text" data-post="email" id="dataFilter" class="form-control filter-control" placeholder="Email">
           </fieldset>
         </div>
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Unit</label>
           <fieldset class="form-group">
             <input type="text" data-post="unit" id="dataFilter" class="form-control filter-control" placeholder="Unit">
@@ -97,10 +97,10 @@
       { data:'action', name: 'action', searchable: false,orderable: false }
     ],[
         {
-          text: "<i class='flaticon-file-1'></i>Create Data</a>",
-          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
+          text: "<i class='flaticon-file-1'></i>Add User</a>",
+          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
           attr: {
-            'data-url': "{{ route($route.'.create') }}"
+            'data-modal': "#largeModal"
           }
         },
       ]);
