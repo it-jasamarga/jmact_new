@@ -13,6 +13,20 @@ class CreateClaimPelangganTable extends Migration
      */
     public function up()
     {
+        Schema::create('master_jenis_claim', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
+
+            $table->string('code')->nullable();
+            $table->string('jenis_claim')->nullable();
+            $table->boolean('active')->default(false)->nullable();
+            
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('claim', function (Blueprint $table) {
             $table->bigIncrements('id');
 
@@ -63,5 +77,6 @@ class CreateClaimPelangganTable extends Migration
     public function down()
     {
         Schema::dropIfExists('claim');
+        Schema::dropIfExists('master_jenis_claim');
     }
 }
