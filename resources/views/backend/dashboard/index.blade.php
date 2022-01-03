@@ -8,6 +8,24 @@
 @endsection
 
 @section('content')
+<div class="card card-custom" data-card="true" id="kt_card_4">
+ <div class="card-body">
+  <form>
+    <div class="row">
+        
+    </div>
+    <button type="button" class="btn btn-secondary clear" >
+      <i class="flaticon-circle"></i>
+      Clear Search
+    </button>
+    <button type="button" class="btn btn-light-primary filter-data">
+      <i class="flaticon-search"></i>
+      Search Data
+    </button>
+  </form>
+</div>
+</div>
+
 <div class="row">
 	<div class="col-xl-8">
 		<!--begin::Nav Panel Widget 1-->
