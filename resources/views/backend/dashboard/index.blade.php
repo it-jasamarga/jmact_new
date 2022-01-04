@@ -63,8 +63,53 @@
 	</div>
 </div>
 
+<br>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="card card-custom {{ @$class }}">
+      {{-- Body --}}
+      <div class="card-body pt-4 table-responsive" >
+        <table class="table data-thumb-view table-striped" id="listTables">
+          <thead>
+            <tr>
+              <th width="24">No</th>
+              <th>Regional</th>
+              <th>Inputer</th>
+              <th>Sumber</th>
+              <th>Ruas</th>
+              <th>Waktu Kejadian</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('scripts')
-
+<script>
+	$(document).ready(function () {
+    loadList([
+      // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
+      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+      { data:'regional_id', name:'regional_id' },
+      { data:'inputer', name:'inputer' },
+      { data:'sumber_id', name:'sumber_id' },
+      { data:'ruas_id', name:'ruas_id' },
+      { data:'tanggal_kejadian', name:'tanggal_kejadian' },
+      { data:'status_id', name:'status_id' },
+    ],[
+        {
+          extend: 'excelHtml5',
+          text: "<i class='flaticon2-file'></i>Export</a>",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+        }
+      ]);
+  });
+</script>
 @endsection

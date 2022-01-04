@@ -26,7 +26,7 @@ class AddNameToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('name');
+            $table->dropColumn(['name']);
         });
     }
 }
