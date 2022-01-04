@@ -148,12 +148,13 @@ class UserController extends Controller
       $role = request()->role;
       unset(request()['role']);
       unset(request()['password_confirmation']);
-      $record = User::saveData(request());
 
       $passwords = request()->password;
       if(request()->password){
         request()['password'] = bcrypt($passwords);
       }
+      
+      $record = User::saveData(request());
 
       if($role){
         \DB::table('role_users')->where('user_id',$record->id)->delete();
