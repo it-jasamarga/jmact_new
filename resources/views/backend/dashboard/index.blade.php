@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-
 <div class="card card-custom" data-card="true" id="kt_card_4">
 	<div class="card-header">
 		<div class="card-title">
@@ -88,7 +87,6 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('scripts')
@@ -98,7 +96,7 @@
       // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data:'regional_id', name:'regional_id' },
-      { data:'inputer', name:'inputer' },
+      { data:'user_id', name:'user_id' },
       { data:'sumber_id', name:'sumber_id' },
       { data:'ruas_id', name:'ruas_id' },
       { data:'tanggal_kejadian', name:'tanggal_kejadian' },

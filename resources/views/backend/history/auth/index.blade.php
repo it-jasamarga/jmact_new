@@ -75,6 +75,12 @@
       { data: 'ip_address', name: 'ip_address'},
       { data: 'user_agent', name: 'user_agent'},
       { data: 'login_at', name: 'login_at'},
+    ],[
+      {
+          extend: 'excelHtml5',
+          text: "<i class='flaticon2-file'></i>Export Auth</a>",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+        },
     ]);
   });
 </script>

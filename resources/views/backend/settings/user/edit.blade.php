@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Name') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Name" maxlength="30">
+                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Name" maxlength="50">
                 </div>
             </div>
             <div class="col-md-12">
@@ -36,13 +36,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>
-                    <input type="password" class="form-control" name="password" value="{{ $record->password }}" required placeholder="Password">
+                    <input type="password" class="form-control" name="password" required placeholder="Password">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label>{{ __('Password Confirmation') }}</label>
-                    <input type="password" class="form-control" name="password_confirmation" value="{{ $record->password }}" required placeholder="Password Confirmation">
+                    <input type="password" class="form-control" name="password_confirmation" required placeholder="Password Confirmation">
                 </div>
             </div>
             <div class="col-md-12">

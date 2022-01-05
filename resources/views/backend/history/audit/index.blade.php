@@ -79,6 +79,12 @@
       { data: 'user', name: 'user'},
       { data:'created_at', name:'created_at' },
       { data:'action', name: 'action', searchable: false,orderable: false }
+    ],[
+      {
+          extend: 'excelHtml5',
+          text: "<i class='flaticon2-file'></i>Export Audit</a>",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+        },
     ]);
   });
 </script>

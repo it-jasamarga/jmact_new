@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use DB;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 class LoginController extends Controller
 {
     /*
@@ -46,12 +47,41 @@ class LoginController extends Controller
         return 'username';
     }
 
+    public function login()
+    {
+        request()->validate([
+            'username' => 'required|max:150',
+            'password' => 'required',
+        ]);
+
+        $users = DB::table('users')->where('username', request()->username)->first();
+        
+        if($users){
+            if ($users->active == 1) {
+                $auth = Auth::attempt(request(['username', 'password']));
+                if (!$auth) {
+                    $message = ['password' => 'The password is not valid'];
+                    return redirect()->back()->withInput()->withErrors($message);
+                }
+                
+                return redirect('/');
+                
+            }else{
+                $message = ['message' => 'The credential is not valid, please contact administrator'];
+                return redirect()->back()->withInput()->withErrors($message);
+            }
+        }else{
+            $message = ['username' => 'The username is not valid'];
+            return redirect()->back()->withInput()->withErrors($message);
+        }
+
+    }
+
     public function logout()
-     {
+    {
        Auth::logout();
        return redirect('/');
-
-     }
+    }
 
    
 }

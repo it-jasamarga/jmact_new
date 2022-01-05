@@ -6,7 +6,8 @@
 		<title>JMACT - {{ @$title }}</title>
 		<meta name="description" content="Updates and statistics" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		{{-- <link rel="shortcut icon" href="assets/media/logos/favicon.ico" /> --}}
+		<link rel="shortcut icon" href="assets/media/logos/jm-logo.png" />
 
 		@include('panels/styles')
 	</head>

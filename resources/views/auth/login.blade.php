@@ -121,12 +121,17 @@
 								<label class="form-label fs-6 fw-bolder text-dark">Username</label>
 								<!--end::Label-->
 								<!--begin::Input-->
-								<input class="form-control form-control-lg h-auto form-control-solid py-4 px-4 @error('username') is-invalid @enderror" type="text" name="username" autocomplete="off" />
-								@error('username')
+								<input class="form-control form-control-lg h-auto form-control-solid py-4 px-4 @if($errors->first('username')) is-invalid @endif @if($errors->first('message')) is-invalid @endif" type="text" name="username" autocomplete="off" value="{{ old('username') }}"/>
+								@if($errors->first('username'))
 									<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
+									<strong>{{ $errors->first('username') }}</strong>
 									</span>
-								@enderror
+								@endif
+								@if($errors->first('message'))
+									<span class="invalid-feedback" role="alert">
+									<strong>{{ $errors->first('message') }}</strong>
+									</span>
+								@endif
 								<!--end::Input-->
 							</div>
 							<!--end::Input group-->
@@ -136,13 +141,17 @@
 									<label class="form-label fs-6 fw-bolder text-dark">Password</label>
 									<!--end::Label-->
 								<!--begin::Input-->
-								<input class="form-control form-control-lg h-auto form-control-solid py-4 px-4 @error('password') is-invalid @enderror" type="password" name="password" />
-								
-								@error('password')
+								<input class="form-control form-control-lg h-auto form-control-solid py-4 px-4 @if($errors->first('password')) is-invalid @endif @if($errors->first('message')) is-invalid @endif" type="password" name="password" />
+								@if($errors->first('password'))
 									<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
+									<strong>{{ $errors->first('password') }}</strong>
 									</span>
-								@enderror
+								@endif
+								@if($errors->first('message'))
+									<span class="invalid-feedback" role="alert">
+									<strong>{{ $errors->first('message') }}</strong>
+									</span>
+								@endif
 								<!--end::Input-->
 							</div>
 							<!--end::Input group-->
