@@ -9,35 +9,23 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keluhan" class="">{{ __('Ruas') }}</label>
-                    <select class="form-control select2" name="ruas_id">
-                        {!! App\Models\MasterRuas::options(function($q){
-                        $ro = ($q->ro) ? $q->ro->name : '-';
-                        $regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
-                            return $q->name.' - '.$ro.' - '.$regional;
-                        },'id',['filters' => [function($q) use($record){
-                            $q->whereHas('ro',function($q1) use($record){
-                                $q1->where('regional_id',$record->ruas->ro->regional->id);
-                            });
-                        }]],'( Ruas Jalan Tol )') !!}
+                    <label for="tahap" class="">{{ __('Tahap') }}</label>
+                    <select class="form-control select2" name="tahap">
+                        <option value="">( Pilih Tahapan )</option>
+                        <option value="Negosiasi/Klarifikasi">Negosiasi/Klarifikasi</option>
+                        <option value="Pembayaran">Pembayaran</option>
                     </select>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="bidang" class="">{{ __('Service Provider') }}</label>
-                    <select class="form-control select2" name="provider">
-                        <option value="">( Pilih Service Provider )</option>
-                        <option value="Operasional">Operasional</option>
-                        <option value="Konstruksi">Konstruksi</option>
-                        <option value="Rest Area">Rest Area</option>
-                    </select>
+                    <label for="nominal" class="">{{ __('Nominal Claim (Rp)') }}</label><span class="text-danger">*</span>
+                    <input id="nominal" type="text" class="form-control" name="nominal" value="{{ old('nominal') }}" required autocomplete="nominal" autofocus placeholder="Nominal Claim (Rp)" maxlength="30">
                 </div>
             </div>
 
         </div>
-
     </div>
 
 </div>

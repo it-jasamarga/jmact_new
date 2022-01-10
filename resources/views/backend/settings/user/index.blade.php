@@ -37,12 +37,20 @@
             <input type="text" data-post="email" id="dataFilter" class="form-control filter-control" placeholder="Email">
           </fieldset>
         </div> --}}
-        <div class="col-12 col-sm-6 col-lg-4">
+        {{-- <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Unit</label>
           <fieldset class="form-group">
             <input type="text" data-post="unit" id="dataFilter" class="form-control filter-control" placeholder="Unit">
           </fieldset>
-        </div>
+        </div> --}}
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="form-group">
+              <label for="users-list-role" class="">{{ __('Unit') }}</label>
+              <select class="form-control filter-control select2" name="unit_id" data-post="unit_id">
+                  {!! App\Models\MasterUnit::options('unit','id',[],'( Pilih Unit )') !!}
+              </select>
+          </div>
+      </div>
       </div>
       <button type="button" class="btn btn-secondary clear" >
         <i class="flaticon-circle"></i>
@@ -95,11 +103,11 @@
   $(document).ready(function () {
     loadList([
       // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
       { data:'name', name:'name' },
       { data:'username', name:'username' },
       { data:'active', name:'active' },
-      { data:'action', name: 'action', searchable: false,orderable: false }
+      { data:'action', name: 'action', searchable: false, orderable: false }
     ],[
         {
           text: "<i class='flaticon-file-1'></i>Add User</a>",

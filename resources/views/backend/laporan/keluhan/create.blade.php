@@ -35,7 +35,7 @@
       <div class="col-md-6">
           <div class="form-group">
               <label for="tanggal_kejadian" class="">{{ __('Tanggal Kejadian') }}</label><span class="text-danger">*</span>
-              <input id="tanggal_kejadian" type="text" class="form-control datetimepicker" name="tanggal_kejadian" value="{{ old('tanggal_kejadian') }}" required autocomplete="tanggal_kejadian" autofocus placeholder="Tanggal Kejadian" maxlength="20">
+              <input id="tanggal_kejadian" type="text" class="form-control datetimepicker" name="tanggal_kejadian" value="{{ old('tanggal_kejadian') }}" required autocomplete="off" autofocus placeholder="Tanggal Kejadian" maxlength="20">
           </div>
       </div>
 

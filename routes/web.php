@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function() {
 			  Route::resource('keluhan', 'KeluhanController');
 			  
   			Route::put('claim/teruskan/{id}', 'ClaimController@history')->name('claim.history');
-  			// Route::get('claim/{id}/edit-stage', 'ClaimController@editStage')->name('claim.editStage');
+  			Route::get('claim/{id}/edit-stage', 'ClaimController@editStage')->name('claim.editStage');
   			Route::put('claim/tahapan/{id}', 'ClaimController@historyStage')->name('claim.historyStage');
 			Route::get('claim/list', 'ClaimController@list')->name('claim.list');
 			Route::resource('claim', 'ClaimController');

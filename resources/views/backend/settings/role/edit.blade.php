@@ -3,7 +3,7 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Buat Data</h3>
+        <h3 class="modal-title">Ubah Data</h3>
     </div>
     <div class="modal-body">
         <div class="row">
