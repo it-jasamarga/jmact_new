@@ -160,6 +160,10 @@
           extend: 'excelHtml5',
           text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+		  title: 'JMACT - Data Keluhan',
+		  exportOptions: {
+			columns: ':not(:last-child)',
+		  }
         },
         {
           text: "<i class='flaticon-file-1'></i>Add Keluhan</a>",
@@ -168,7 +172,11 @@
             'data-url': "{{ route($route.'.create') }}"
           }
         },
+        { "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]] },
       ]);
+
+
+
   });
 </script>
 @endsection

@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function() {
   	Route::get('/login', 'Auth\LoginController@login');
   	Route::get('/logout', 'Auth\LoginController@logout');
 
-	Route::post('/histori-tiket/{ticket}', function(Request $request, $ticket) {
+	Route::post('histori-tiket/{ticket}', function(Request $request, $ticket) {
 		$model = \App\Models\KeluhanPelanggan::where('no_tiket', $ticket)->with(['history' => function($query){ $query->with('status'); }])->first();
 		return $model ? response()->json([
 			'status' => 'ok',

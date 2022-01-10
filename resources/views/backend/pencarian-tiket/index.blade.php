@@ -2,12 +2,12 @@
 
 @section('styles')
 <style>
-  #listTables_wrapper>.dt-buttons {
-    display: none;
-  }
-  #listTables_filter {
-    text-align: center;
-  }
+  #listTables_wrapper>.dt-buttons { display: none; }
+  #listTables_filter { text-align: center; }
+  #x_listTables_wrapper>.dataTables_scroll { display: none; }
+  #x_listTables_wrapper>.dataTables_info { display: none; }
+  #x_listTables_wrapper>.dataTables_paginate { display: none; }
+  #x_listTables_processing { opacity: 0; }
 @endsection
 
 @section('content')
@@ -49,9 +49,10 @@
         let row = $(source).closest('TR')[0];
         ticket.line = row.children[0].innerText*1;
 
-        let url = '/histori-tiket/'+row.children[1].innerText;
+        let url = 'histori-tiket/'+row.children[1].innerText;
         $('TR[current-detail=true]').remove();
         $(row).attr('id', "TL"+ticket.line);
+        /* console.log('## TDO', url); */
         console.log('## TDO', url);
         $.post( url, {_token: "{{ csrf_token() }}"} )
           .done(function( response ) {
@@ -64,7 +65,6 @@
               })
               html +='</table></td></tr>';
               let node = $('#TL'+ticket.line);
-              console.log({node});
               let info = $(html);
               $(info).insertAfter(node);
               $(info).attr('current-detail', true);
@@ -88,6 +88,39 @@
       { data:'type_id', name:'type_id' },
       { data:'action', name: 'action', searchable: false, orderable: false }
       ]);
+
+/*
+  $('#listTables_wrapper').on( 'draw.dt', function () {
+
+    if (($('input[type="search"]')[0]).value.trim().length > 0) {
+        $('#listTables_wrapper>.dataTables_scroll').show();
+        $('#listTables_wrapper>.dataTables_info').show();
+        $('#listTables_wrapper>.dataTables_paginate').show();
+      } else {
+        $('#listTables_wrapper>.dataTables_scroll').hide();
+        $('#listTables_wrapper>.dataTables_info').hide();
+        $('#listTables_wrapper>.dataTables_paginate').hide();
+      }
+
+  } );
+*/
+    /* $('input[type="search"]').on('hover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    })
+
+    $('input[type="search"]').on('keyup', (e) => {
+      if (e.target.value.trim().length > 0) {
+        $('#listTables_wrapper>.dataTables_scroll').show();
+        $('#listTables_wrapper>.dataTables_info').show();
+        $('#listTables_wrapper>.dataTables_paginate').show();
+      } else {
+        $('#listTables_wrapper>.dataTables_scroll').hide();
+        $('#listTables_wrapper>.dataTables_info').hide();
+        $('#listTables_wrapper>.dataTables_paginate').hide();
+      }
+    }) */
+
   });
 </script>
 @endsection

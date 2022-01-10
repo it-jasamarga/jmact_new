@@ -38,7 +38,7 @@ class PencarianTiketController extends Controller
         ->addColumn('status_id', function ($data) use ($request) { return ($data->status) ? $data->status->status : '-'; })
         ->addColumn('type_id', function ($data) use ($request) { return "Keluhan"; })   // TODO: there must be somethin todo
         ->addColumn('action', function($data){ return '
-        <a href="/keluhan/'.$data->id.'" class="symbol-label font-size-h5 font-weight-bold"><i class="flaticon2-list-1 btn btn-icon btn-info btn-sm btn-hover-light"></i></a>
+        <a href="keluhan/'.$data->id.'" class="symbol-label font-size-h5 font-weight-bold"><i class="flaticon2-list-1 btn btn-icon btn-info btn-sm btn-hover-light"></i></a>
         <span style="margin: 0 2px"></span>
         <a href="#" onclick="ticket.detail.open(this)" class="symbol-label font-size-h5 font-weight-bold"><i class="flaticon2-arrow-down btn btn-icon btn-success btn-sm btn-hover-light"></i></a>
         ';})
