@@ -3,8 +3,8 @@
 @section('styles')
 @endsection
 
-@section('toolbars')
-  <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a>
+@section('toolbars')  
+{{-- <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a> --}}
 @endsection
 
 @section('content')
@@ -136,7 +136,7 @@
   $(document).ready(function () {
     loadList([
       // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
       { data:'no_tiket', name:'no_tiket' },
       { data:'ruas_id', name:'ruas_id' },
       { data:'lokasi_kejadian', name:'lokasi_kejadian' },
@@ -146,21 +146,24 @@
       { data:'keterangan_claim', name:'keterangan_claim' },
       { data:'golongan_id', name:'golongan_id' },
       { data:'status_id', name:'status_id' },
-      { data:'action', name: 'action', searchable: false,orderable: false }
+      { data:'action', name: 'action', searchable: false, orderable: false }
     ],[
         {
           extend: 'excelHtml5',
           text: "<i class='flaticon2-file'></i>Export Claim</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+          title: 'JMACT - Data Keluhan'
         },
+        @if(auth()->user()->can('claim.create'))
         {
           text: "<i class='flaticon-file-1'></i>Add Claim</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
           attr: {
             'data-url': "{{ route($route.'.create') }}"
           }
-        },
-      ]);
+        }
+        @endif
+    ]);
   });
 </script>
 @endsection

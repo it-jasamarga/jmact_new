@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label for="role" class="">{{ __('Role') }}</label>
                     <select class="form-control select2" name="role">
-                        {!! App\Models\Role::options('name','id',[],'( Pilih Role )') !!}
+                        {!! App\Models\Role::options('name','id',['filters'=>['active'=>1]],'( Pilih Role )') !!}
                     </select>
                 </div>
             </div>

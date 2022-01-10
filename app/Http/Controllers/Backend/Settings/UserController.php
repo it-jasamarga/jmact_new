@@ -35,6 +35,14 @@ class UserController extends Controller
   {
     
     $data  = User::query();
+
+    if($name = $request->name){
+      $data = $data->where('name','like', '%' . $name . '%');
+    } else if ($username = $request->username) {
+      $data = $data->where('username','like', '%' . $username . '%');
+    } else {
+      $data = $data->where('unit_id','like', '%' . $request->unit_id . '%');
+    }
     
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {

@@ -44,7 +44,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Ruas Jalan Tol</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="ruas_id">
+            <select class="form-control filter-control select2" data-post="ruas_id">
                 {!! App\Models\MasterRuas::options('name','id',[],'( Ruas Jalan Tol )') !!}
             </select>
           </fieldset>
@@ -52,7 +52,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Bidang</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="bidang_id">
+            <select class="form-control filter-control select2" data-post="bidang_id">
                 {!! App\Models\MasterBk::options('bidang','id',[],'( Bidang )') !!}
             </select>
           </fieldset>
@@ -60,7 +60,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Sumber</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="sumber_id">
+            <select class="form-control filter-control select2" data-post="sumber_id">
                 {!! App\Models\MasterSumber::options('description','id',[],'( Sumber )') !!}
             </select>
           </fieldset>
@@ -68,7 +68,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Status</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="status_id">
+            <select class="form-control filter-control select2" data-post="status_id">
                 {!! App\Models\MasterStatus::options('status','id',[],'( Status )') !!}
             </select>
           </fieldset>
@@ -160,14 +160,17 @@
           extend: 'excelHtml5',
           text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+          title: 'JMACT - Data Keluhan'
         },
+        @if(auth()->user()->can('keluhan.create'))
         {
           text: "<i class='flaticon-file-1'></i>Add Keluhan</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
           attr: {
             'data-url': "{{ route($route.'.create') }}"
           }
-        },
+        }
+        @endif
       ]);
   });
 </script>

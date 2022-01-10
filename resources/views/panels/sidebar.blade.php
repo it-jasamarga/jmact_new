@@ -7,7 +7,7 @@
         <a href="index.html" class="brand-logo">
             {{-- <img alt="Logo" src="{{ asset('assets/media/logos/logo-dark.png') }}" /> --}}
              <!--begin::Heading-->
-		<div class="row justify-content-center pl-4">
+		<div class="row justify-content-center pl-4" style="overflow: hidden">
 			<!--begin::Title-->
 				<div class="text-blue">
 				  JM

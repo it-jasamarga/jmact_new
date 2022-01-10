@@ -17,5 +17,5 @@ class Role extends RoleModel implements Auditable
      
    	protected $table = 'roles';
 	protected $guard_name = 'web';
- 	protected $fillable = ['name', 'name_alias', 'guard_name'];
+ 	protected $fillable = ['name', 'name_alias', 'guard_name', 'active'];
 }

@@ -26,7 +26,7 @@ class KeluhanPelangganRequest extends FormRequest
       $unique = ($id = request()->route('keluhan_pelanggan')) ? ','.$id : '';
       return [
         'nama_cust' => 'required|string|min:1|max:255',
-        'kontak_cust' => 'required|numeric|digits_between:8,14',
+        'kontak_cust' => 'required|string|min:1|max:255',
         'lokasi_kejadian' => 'required|string|min:1|max:255',
         'tanggal_kejadian' => 'required|string|min:1|max:255|date_format:Y-m-d H:i:s',
         'keterangan_keluhan' => 'required|string|min:1|max:255',

@@ -64,6 +64,7 @@ class RoleController extends Controller
         'type' => 'url',
         'url'   => route($this->route.'.permission',$data->id),
         'class' => 'btn btn-icon btn-success btn-sm btn-hover-light',
+        'label'   => '<i class="flaticon2-settings"></i>',
         'tooltip' => 'Setting Permission'
       ]);
       // $buttons .= makeButton([

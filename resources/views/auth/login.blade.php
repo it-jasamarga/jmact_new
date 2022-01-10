@@ -121,15 +121,10 @@
 								<label class="form-label fs-6 fw-bolder text-dark">Username</label>
 								<!--end::Label-->
 								<!--begin::Input-->
-								<input class="form-control form-control-lg h-auto form-control-solid py-4 px-4 @if($errors->first('username')) is-invalid @endif @if($errors->first('message')) is-invalid @endif" type="text" name="username" autocomplete="off" value="{{ old('username') }}"/>
+								<input class="form-control form-control-lg h-auto form-control-solid py-4 px-4 @if($errors->first('username')) is-invalid @endif" type="text" name="username" autocomplete="off" value="{{ old('username') }}"/>
 								@if($errors->first('username'))
 									<span class="invalid-feedback" role="alert">
 									<strong>{{ $errors->first('username') }}</strong>
-									</span>
-								@endif
-								@if($errors->first('message'))
-									<span class="invalid-feedback" role="alert">
-									<strong>{{ $errors->first('message') }}</strong>
 									</span>
 								@endif
 								<!--end::Input-->
