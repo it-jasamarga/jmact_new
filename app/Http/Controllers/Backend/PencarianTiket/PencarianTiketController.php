@@ -46,4 +46,18 @@ class PencarianTiketController extends Controller
         ->addIndexColumn()
         ->make(true);
     }
+
+    public function show($id) {
+        $record = KeluhanPelanggan::findOrFail($id);
+    
+        $data =[
+          'title' => 'Detail Data Keluhan',
+          'breadcrumbs' => $this->breadcrumbs,
+          'route' => $this->route,
+          'record' => $record
+        ];
+        
+        return view('backend.pencarian-tiket.show', $data);
+    }
+
 }

@@ -27,7 +27,7 @@ class MasterRoController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Master Ro',
+      'title' => 'Ro',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

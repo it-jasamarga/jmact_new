@@ -35,7 +35,7 @@ class KeluhanController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Filter Data Keluhan',
+      'title' => 'Keluhan',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];
@@ -91,8 +91,8 @@ class KeluhanController extends Controller
         'type' => 'url',
         'url'   => $this->route.'/sla/'.$data->id.'',
         'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
-        'label'   => '<i class="flaticon2-list-1"></i>',
-        'tooltip' => 'SLA'
+        'label'   => '<i class="flaticon-edit-1"></i>',
+        'tooltip' => 'Input SLA'
       ]);
       
       $buttons .= makeButton([
@@ -107,12 +107,9 @@ class KeluhanController extends Controller
     ->rawColumns(['numSelect','action'])
     ->addIndexColumn()
     ->make(true);
-
   }
-
   
-  public function create()
-  {
+  public function create() {
     $data = [
         'title' => 'Buat Data Keluhan',
         'breadcrumbs' => $this->breadcrumbs,
@@ -179,8 +176,7 @@ class KeluhanController extends Controller
     }
   }
   
-  public function edit($id)
-  {
+  public function edit($id) {
 
     $data = [
       'route' => $this->route,
@@ -219,8 +215,7 @@ class KeluhanController extends Controller
 
   // START PROSES SLA
 
-  public function sla($id)
-  {
+  public function sla($id) {
     $record = KeluhanPelanggan::findOrFail($id);
 
     if(($record->mulaiSla->count() > 0) && ($record->report->count() >= 0)){
@@ -239,7 +234,7 @@ class KeluhanController extends Controller
     return view($view, $data);
   }
 
-  public function prosesSla($id){
+  public function prosesSla($id) {
     request()['status_id'] = MasterStatus::where('code','05')->first()->id;
    
     $record = KeluhanPelanggan::findOrFail($id);
@@ -267,8 +262,7 @@ class KeluhanController extends Controller
     ]);
   }
 
-  public function reportSla($id)
-  {
+  public function reportSla($id) {
     $record = KeluhanPelanggan::findOrFail($id);
 
     $data = [
@@ -281,7 +275,7 @@ class KeluhanController extends Controller
     return view('backend.laporan.keluhan.sla.report-add', $data);
   }
 
-  public function prosesReportSla(KeluhanReportRequest $request, $id){
+  public function prosesReportSla(KeluhanReportRequest $request, $id) {
     $request['status_id'] = MasterStatus::where('code','06')->first()->id;
 
     $record = KeluhanPelanggan::findOrFail($id);
@@ -310,9 +304,7 @@ class KeluhanController extends Controller
   }
   // END SLA
 
-  public function show($id)
-  {
-    
+  public function show($id) {
     $record = KeluhanPelanggan::findOrFail($id);
 
     $data =[
@@ -325,7 +317,7 @@ class KeluhanController extends Controller
     return view('backend.laporan.keluhan.show', $data);
   }
 
-  public function update(KeluhanPelangganRequest $request, $id){
+  public function update(KeluhanPelangganRequest $request, $id) {
     $record = KeluhanPelanggan::saveData($request);
 
     return response([
@@ -334,18 +326,16 @@ class KeluhanController extends Controller
     ]);
   }
 
-  public function destroy($id)
-  {
+  public function destroy($id) {
     $record = KeluhanPelanggan::destroy($id);
 
     return response([
       'status' => true,
       'message' => 'success',
     ]);
-
   }
 
-  public function removeMulti(){
+  public function removeMulti() {
     $record = KeluhanPelanggan::whereIn('id',request()->id)->delete();
 
     return response([

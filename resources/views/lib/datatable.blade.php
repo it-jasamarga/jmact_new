@@ -1,5 +1,6 @@
 <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+
 <script>
   function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
     var page_url = '';
@@ -45,7 +46,6 @@
         scrollY: 400,
         scrollCollapse: true,
         fixedHeader:true,
-        lengthChange: false,
         ajax: {
           url: page_url,
           data: function (d) {
