@@ -1,6 +1,27 @@
 <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<style>
+.ec_pagination_wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
 
+.dataTables_length { flex-grow: 1; }
+
+.dataTables_info {
+  margin-right: 10px;
+  text-align: right;
+}
+
+.dataTables_paginate {
+  display: inline!important;
+}
+
+.dataTables_paginate>.pagination {
+  display: inline-flex;
+}
+
+</style>
 <script>
   function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
     var page_url = '';
@@ -46,6 +67,7 @@
         scrollY: 400,
         scrollCollapse: true,
         fixedHeader:true,
+        lengthMenu: [[5, 10, 30, -1], [5, 10, 30, "All"]],
         ajax: {
           url: page_url,
           data: function (d) {
@@ -58,7 +80,7 @@
          }
        },
       columns: dataList,
-      dom: 'Bfrtip',
+      dom: 'Bfrt<"ec_pagination_wrapper"lip>',
       buttons: dataButtons,
       initComplete: function (settings, json) {
         $(".dt-buttons .btn").removeClass("btn-secondary")
@@ -181,3 +203,4 @@
 
 
 </script>
+

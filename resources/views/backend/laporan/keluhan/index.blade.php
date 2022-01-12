@@ -160,10 +160,10 @@
           extend: 'excelHtml5',
           text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-		  title: 'JMACT - Data Keluhan',
-		  exportOptions: {
-			columns: ':not(:last-child)',
-		  }
+          title: 'JMACT - Data Keluhan',
+          exportOptions: {
+            columns: ':not(:last-child)',
+          }
         },
         @if(auth()->user()->can('keluhan.create'))
         {
