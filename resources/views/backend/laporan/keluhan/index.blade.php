@@ -172,8 +172,8 @@
           attr: {
             'data-url': "{{ route($route.'.create') }}"
           }
-        }
-	      @endif
+        },
+	@endif
       ]);
 
 

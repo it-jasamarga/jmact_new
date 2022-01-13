@@ -89,6 +89,8 @@
         var api = this.api(); 
       }
     });
+	
+	console.log('## ADR', {table});
 
 
     $('.group-checkable').on('change',function() {
