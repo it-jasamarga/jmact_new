@@ -173,8 +173,7 @@
             'data-url': "{{ route($route.'.create') }}"
           }
         },
-        { "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]] }
-	@endif
+		@endif
       ]);
 
 

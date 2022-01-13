@@ -1,5 +1,13 @@
 <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<style>
+.ec_pagination_wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.ec_pagination_wrapper>div { flex-grow: 1; }
+</style>
 <script>
   function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
     var page_url = '';
@@ -45,7 +53,8 @@
         scrollY: 400,
         scrollCollapse: true,
         fixedHeader:true,
-        lengthChange: false,
+        // lengthChange: false,
+        lengthMenu: [[5, 10, 30, -1], [5, 10, 30, "All"]],
         ajax: {
           url: page_url,
           data: function (d) {
@@ -58,7 +67,7 @@
          }
        },
       columns: dataList,
-      dom: 'Bfrtip',
+      dom: 'Bfrt<"ec_pagination_wrapper"lip>',
       buttons: dataButtons,
       initComplete: function (settings, json) {
         $(".dt-buttons .btn").removeClass("btn-secondary")
@@ -67,6 +76,8 @@
         var api = this.api(); 
       }
     });
+	
+	console.log('## ADR', {table});
 
 
     $('.group-checkable').on('change',function() {
