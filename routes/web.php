@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function() {
 		
 		Route::get('/', 'DashboardController@index');
 		Route::get('/', 'DashboardController@list');
+		Route::post('dashboard/chart-1', 'DashboardController@chart1')->name('dashboard.chart1');
 		Route::resource('/', 'DashboardController');
 
 		Route::group(['namespace' => 'Ajax', 'prefix' => 'option'], function() {

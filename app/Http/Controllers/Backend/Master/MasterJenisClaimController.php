@@ -22,7 +22,7 @@ class MasterJenisClaimController extends Controller
     
     public function index(Request $request) {
       $data = [
-        'title' => 'Master Claim',
+        'title' => 'Jenis Claim',
         'breadcrumbs' => $this->breadcrumbs,
         'route' => $this->route,
       ];

@@ -27,7 +27,7 @@ class MasterUnitController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Master Unit',
+      'title' => 'Unit',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

@@ -6,7 +6,21 @@
   flex-flow: row wrap;
 }
 
-.ec_pagination_wrapper>div { flex-grow: 1; }
+.dataTables_length { flex-grow: 1; }
+
+.dataTables_info {
+  margin-right: 10px;
+  text-align: right;
+}
+
+.dataTables_paginate {
+  display: inline!important;
+}
+
+.dataTables_paginate>.pagination {
+  display: inline-flex;
+}
+
 </style>
 <script>
   function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
@@ -53,7 +67,6 @@
         scrollY: 400,
         scrollCollapse: true,
         fixedHeader:true,
-        // lengthChange: false,
         lengthMenu: [[5, 10, 30, -1], [5, 10, 30, "All"]],
         ajax: {
           url: page_url,
@@ -100,6 +113,7 @@
 
     $('.clear').on('click', function(e) {
       $(".filter-control").val('');
+      $('.filter-control').val(null).trigger('change');
       table.draw();
     });
   }
@@ -192,3 +206,4 @@
 
 
 </script>
+

@@ -27,7 +27,7 @@ class ClaimController extends Controller
     
     public function index(Request $request) {
       $data = [
-        'title' => 'Filter Data Claim',
+        'title' => 'Claim',
         'breadcrumbs' => $this->breadcrumbs,
         'route' => $this->route,
       ];

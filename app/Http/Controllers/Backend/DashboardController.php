@@ -16,12 +16,14 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        // $this->route = 'dashboard';
     }
 
     public function index()
     {
         return view('backend.dashboard.index',[
-            'breadcrumbs' => $this->breadcrumbs
+            'breadcrumbs' => $this->breadcrumbs,
+            // 'route' => $this->route
         ]);
     }
 
@@ -62,5 +64,37 @@ class DashboardController extends Controller
         ->addIndexColumn()
         ->make(true);
 
+    }
+
+    public function chart1(){
+        dd(request()->all());
+        $record = KeluhanPelanggan::with('history')->select('*');
+
+        if($ruas_id = request()->ruas_id){
+            $record->where('ruas_id',$ruas_id);            
+        }
+
+        if($regional_id = request()->regional_id){
+        
+            $record->where('regional_id',$regional_id);        
+        }
+
+        if($month = request()->month){
+        
+            $record->whereMonth('tanggal_kejadian',$month);        
+        }
+
+        if($year = request()->year){
+        
+            $record->whereDate('tanggal_kejadian',$year);        
+        }
+
+        $record = $record->get();
+
+        if($record->count() > 0){
+            foreach($record as $k => $value){
+                dd($value->tanggal_kejadian->format('Y'));
+            }
+        }
     }
 }
