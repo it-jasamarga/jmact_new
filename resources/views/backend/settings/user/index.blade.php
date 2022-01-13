@@ -22,13 +22,13 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Name</label>
           <fieldset class="form-group">
-            <input type="text" data-post="name" id="dataFilter" class="form-control filter-control" placeholder="Name">
+            <input type="text" data-post="name" id="dataFilter" class="form-control filter-control" placeholder="Name" autocomplete="off">
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Username</label>
           <fieldset class="form-group">
-            <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Username">
+            <input type="text" data-post="username" id="dataFilter" class="form-control filter-control" placeholder="Username" autocomplete="off">
           </fieldset>
         </div>
         {{-- <div class="col-12 col-sm-6 col-lg-4">

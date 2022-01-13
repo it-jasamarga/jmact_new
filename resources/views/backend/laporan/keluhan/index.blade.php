@@ -114,7 +114,7 @@
                   <span></span>
                 </label>
               </th> --}}
-              <th width="24">No</th>
+              <th>No</th>
               <th>No Tiket</th>
               <th>Ruas</th>
               <th>Lokasi</th>

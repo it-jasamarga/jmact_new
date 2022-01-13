@@ -26,13 +26,13 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">No Tiket</label>
           <fieldset class="form-group">
-            <input type="text" data-post="no_tiket" id="dataFilter" class="form-control filter-control" placeholder="No Tiket">
+            <input type="text" data-post="no_tiket" id="dataFilter" class="form-control filter-control" placeholder="No Tiket" autocomplete="off">
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Nama Pelanggan</label>
           <fieldset class="form-group">
-            <input type="text" data-post="nama_pelanggan" id="dataFilter" class="form-control filter-control" placeholder="Nama Pelanggan">
+            <input type="text" data-post="nama_pelanggan" id="dataFilter" class="form-control filter-control" placeholder="Nama Pelanggan" autocomplete="off>
           </fieldset>
         </div>
         {{-- <div class="col-12 col-sm-6 col-lg-4">
@@ -76,13 +76,13 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Waktu Dari</label>
           <fieldset class="form-group ">
-            <input type="text" data-post="first_date" id="dataFilter" class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
+            <input type="text" data-post="tanggal_awal" id="dataFilter" class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Waktu Sampai</label>
           <fieldset class="form-group">
-            <input type="text" data-post="second_date" id="dataFilter" class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
+            <input type="text" data-post="tanggal_akhir" id="dataFilter" class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
           </fieldset>
         </div>
     </div>

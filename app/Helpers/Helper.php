@@ -137,6 +137,7 @@ function makeButton($params = []){
         break;
         case "url":
         default:
+        $settings['onClick'] = '';
         $settings['class']   = 'btn btn-icon btn-warning btn-sm btn-hover-light';
         $settings['label']   = '<i class="flaticon-edit-1 "></i>';
         $settings['tooltip'] = 'Ubah Data';
@@ -146,6 +147,7 @@ function makeButton($params = []){
 
         $btn = "<a href=\"{$params['url']}\" {$datas}{$attrs}{$extends} 
         class='{$params['class']}' 
+        onclick='{$params['onClick']}' 
         data-toggle=\"tooltip\" 
         data-theme=\"dark\"
         title=\"{$params['tooltip']}\"

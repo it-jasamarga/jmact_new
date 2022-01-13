@@ -52,10 +52,7 @@
         "master-bk",
         "master-golken",
         "master-claim",
-        "master-regional",
-        "master-ro",
         "master-ruas",
-        "master-status",
         "master-sumber",
         "master-unit"
       ],
@@ -83,31 +80,10 @@
           "action" : ["index","create","edit","show","delete"]
         },
         {
-          "url": "master-regional",
-          "roles" : ["Superadmin"],
-          "perms": "master-regional",
-          "name": "Regional",
-          "action" : ["index","create","edit","show","delete"]
-        },
-        {
-          "url": "master-ro",
-          "roles" : ["Superadmin"],
-          "perms": "master-ro",
-          "name": "Ro",
-          "action" : ["index","create","edit","show","delete"]
-        },
-        {
           "url": "master-ruas",
           "roles" : ["Superadmin"],
           "perms": "master-ruas",
           "name": "Ruas",
-          "action" : ["index","create","edit","show","delete"]
-        },
-        {
-          "url": "master-status",
-          "roles" : ["Superadmin"],
-          "perms": "master-status",
-          "name": "Status",
           "action" : ["index","create","edit","show","delete"]
         },
         {

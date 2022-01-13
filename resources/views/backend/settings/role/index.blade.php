@@ -23,7 +23,7 @@
       <div class="col-12 col-sm-6 col-lg-3">
         <label for="users-list-role">Role</label>
         <fieldset class="form-group">
-          <input type="text" data-post="name" id="dataFilter" class="form-control filter-control" placeholder="Role">
+          <input type="text" data-post="name" id="dataFilter" class="form-control filter-control" placeholder="Role" autocomplete="off">
         </fieldset>
       </div>
 
