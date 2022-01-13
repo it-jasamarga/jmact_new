@@ -89,6 +89,7 @@
 
     $('.clear').on('click', function(e) {
       $(".filter-control").val('');
+      $('.filter-control').val(null).trigger('change');
       table.draw();
     });
   }

@@ -55,9 +55,44 @@
 						{{-- </div> --}}
 					</div>
 				</div>
-				<div class="col-4">
+				<div class="col-md-12">
+					
 				</div>
 			</div>
+
+			<div class="card card-custom gutter-b">
+			 	<div class="card-body">
+				 		<div class="row">
+				 			<div class="col-md-6">
+						  	<select class="form-control filter-chart1 select2" data-post="ruas_id">
+		            {!! App\Models\MasterRuas::options(function($q){
+                    $ro = ($q->ro) ? $q->ro->name : '-';
+                    $regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
+                        return $q->name.' - '.$ro.' - '.$regional;
+                    },'id',[],'( Ruas Jalan Tol )') !!}
+		          </select>
+				 		</div>
+				 		<div class="col-md-6">
+						  	<select class="form-control filter-chart1 select2" data-post="regional_id">
+		            	{!! App\Models\MasterRegional::options('name','id',[],'( Regional)') !!}
+		          	</select>
+				 		</div>
+				 		<div class="col-md-6 pt-5">
+						  	<input id="month" type="text" class="form-control filter-chart1 pickadate-month" data-post="month" value="{{ old('month') }}" required autocomplete="month" autofocus placeholder="Bulan" maxlength="20">
+				 		</div>
+				 		<div class="col-md-6 pt-5">
+						  	<input id="year" type="text" class="form-control filter-chart1 pickadate-year" data-post="year" value="{{ old('year') }}" required autocomplete="year" autofocus placeholder="Tahun" maxlength="20">
+				 		</div>
+				  </div>
+			 	</div>
+			 	<div class="card-body">
+			  	<div class="card card-custom card-fit card-border">
+						<canvas id="chart-1" width="400" height="400"></canvas>
+					</div>
+			 	</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
@@ -90,24 +125,25 @@
 @endsection
 
 @section('scripts')
+@include('backend.dashboard.partials.chart-1')
 <script>
-	$(document).ready(function () {
-    loadList([
-      // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
-      { data:'regional_id', name:'regional_id' },
-      { data:'user_id', name:'user_id' },
-      { data:'sumber_id', name:'sumber_id' },
-      { data:'ruas_id', name:'ruas_id' },
-      { data:'tanggal_kejadian', name:'tanggal_kejadian' },
-      { data:'status_id', name:'status_id' },
-    ],[
-        {
-          extend: 'excelHtml5',
-          text: "<i class='flaticon2-file'></i>Export</a>",
-          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-        }
-      ]);
-  });
+	// $(document).ready(function () {
+ //    loadList([
+ //      // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
+ //      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+ //      { data:'regional_id', name:'regional_id' },
+ //      { data:'user_id', name:'user_id' },
+ //      { data:'sumber_id', name:'sumber_id' },
+ //      { data:'ruas_id', name:'ruas_id' },
+ //      { data:'tanggal_kejadian', name:'tanggal_kejadian' },
+ //      { data:'status_id', name:'status_id' },
+ //    ],[
+ //        {
+ //          extend: 'excelHtml5',
+ //          text: "<i class='flaticon2-file'></i>Export</a>",
+ //          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+ //        }
+ //      ]);
+ //  });
 </script>
 @endsection

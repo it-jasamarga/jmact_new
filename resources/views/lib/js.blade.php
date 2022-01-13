@@ -127,6 +127,18 @@
             selectMonths: true
         });
 
+        $('.pickadate-year').pickadate({
+            format: 'yyyy',
+            selectYears: 100,
+            selectMonths: false
+        });
+
+        $('.pickadate-month').pickadate({
+            format: 'mmmm',
+            selectMonths: true,
+            selectYears: 100
+        });
+
         $('.pickadate-start').pickadate({
             format: 'yyyy-mm-dd',
             selectYears: 100,
@@ -149,6 +161,12 @@
 
         $('.datetimepicker').datetimepicker({
             format:'Y-m-d h:i:s',
+            useCurrent: false,
+            autoclose: true
+        });
+
+        $('.datetimepicker-year').datetimepicker({
+            format:'Y',
             useCurrent: false,
             autoclose: true
         });

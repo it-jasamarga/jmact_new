@@ -35,7 +35,8 @@
 
 <script src="{{ asset('assets/plugins/global/moment.min.js') }}"></script>
 
-<script src="{{ asset('assets/plugins/custom/chartjs/chartjs.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/custom/chartjs/chart.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/custom/chartjs/chartjs-test-utils.js') }}"></script>
 
 @include('lib.firebase')
 
