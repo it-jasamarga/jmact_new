@@ -11,7 +11,7 @@
 <div class="card card-custom" data-card="true" id="kt_card_4">
  <div class="card-header">
   <div class="card-title">
-    <h3 class="card-label">{{ $title }}
+    <h3 class="card-label">{{"Filter Data $title"}}
       <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span></h3>
     </div>
     <div class="card-toolbar">
@@ -44,7 +44,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Ruas Jalan Tol</label>
           <fieldset class="form-group">
-            <select class="form-control filter-control select2" data-post="ruas_id">
+            <select class="form-control filter-control select2" data-post="ruas_id" id="dataFilter">
                 {!! App\Models\MasterRuas::options('name','id',[],'( Ruas Jalan Tol )') !!}
             </select>
           </fieldset>
@@ -76,13 +76,13 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Waktu Dari</label>
           <fieldset class="form-group ">
-            <input type="text" data-post="first_date" id="dataFilter" class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
+            <input type="text" data-post="tanggal_awal" id="dataFilter" class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Waktu Sampai</label>
           <fieldset class="form-group">
-            <input type="text" data-post="second_date" id="dataFilter" class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
+            <input type="text" data-post="tanggal_akhir" id="dataFilter" class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
           </fieldset>
         </div>
     </div>
@@ -160,10 +160,10 @@
           extend: 'excelHtml5',
           text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-		  title: 'JMACT - Data Keluhan',
-		  exportOptions: {
-			columns: ':not(:last-child)',
-		  }
+          title: 'JMACT - Data Keluhan',
+          exportOptions: {
+            columns: ':not(:last-child)',
+          }
         },
         @if(auth()->user()->can('keluhan.create'))
         {
@@ -172,9 +172,8 @@
           attr: {
             'data-url': "{{ route($route.'.create') }}"
           }
-        },
-        { "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]] }
-	@endif
+        }
+	      @endif
       ]);
 
 

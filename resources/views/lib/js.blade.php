@@ -136,7 +136,7 @@
         $('.pickadate-month').pickadate({
             format: 'mmmm',
             selectMonths: true,
-            selectYears: 100
+            selectYears: false
         });
 
         $('.pickadate-start').pickadate({

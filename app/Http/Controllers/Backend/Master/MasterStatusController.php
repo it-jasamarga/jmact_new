@@ -27,7 +27,7 @@ class MasterStatusController extends Controller
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Master Status',
+      'title' => 'Status',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];

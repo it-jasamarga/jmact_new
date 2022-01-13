@@ -26,9 +26,9 @@ class ClaimPelangganRequest extends FormRequest
       $unique = ($id = request()->route('claim_pelanggan')) ? ','.$id : '';
       return [
         'nama_pelanggan' => 'required|string|min:1|max:255',
-        'nik_pelanggan' => 'required|numeric|digits_between:8,14',
+        'nik_pelanggan' => 'required|numeric|max:16',
         'alamat_pelanggan' => 'required|string|min:1|max:255',
-        'kontak_pelanggan' => 'required|numeric|digits_between:8,14',
+        'kontak_pelanggan' => 'required|string|min:1|max:255',
         'lokasi_kejadian' => 'required|string|min:1|max:255',
         'jenis_kendaraan' => 'required|string|min:1|max:255',
         'tanggal_kejadian' => 'required|string|min:1|max:255|date_format:Y-m-d H:i:s',

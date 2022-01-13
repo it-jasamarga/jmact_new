@@ -11,7 +11,7 @@
 <div class="card card-custom" data-card="true" id="kt_card_4">
  <div class="card-header">
   <div class="card-title">
-    <h3 class="card-label">{{ $title }}
+    <h3 class="card-label">{{"Filter Data $title"}}
       <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span></h3>
     </div>
     <div class="card-toolbar">
