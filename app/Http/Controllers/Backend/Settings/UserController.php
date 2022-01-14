@@ -126,9 +126,10 @@ class UserController extends Controller
 
     public function store()
     {
+      // dd(request()->all());
       request()->validate([
         'email' => 'unique:users,email',
-        'password_confirmation' => 'required|string|min:6|max:250|confirmed'
+        'password' => 'required|string|min:6|max:250|confirmed'
       ]);
       $role = request()->role;
       unset(request()['role']);

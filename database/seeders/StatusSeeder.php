@@ -20,32 +20,74 @@ class StatusSeeder extends Seeder
         $array = [
             [
                 'code' => '01',
-                'status' =>'Proses',
+                'status' =>'Tiket di Input',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '01',
+                'status' =>'Tiket di Input',
+                'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '02',
-                'status' =>'Terima',
+                'status' =>'Tiket diteruskan',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '02',
+                'status' =>'Tiket di approve',
+                'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '03',
-                'status' =>'Teruskan',
+                'status' =>'Tiket diterima',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '03',
+                'status' =>'Tiket diteruskan',
+                'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '04',
-                'status' =>'Tutup',
+                'status' =>'On Progress',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '04',
+                'status' =>'Tahap Klarifikasi dan Negosiasi',
+                'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '05',
-                'status' =>'Proses SLA',
+                'status' =>'Closed',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '05',
+                'status' =>'Proses Pembayaran',
+                'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '06',
-                'status' =>'Report SLA Submited',
+                'status' =>'Overtime',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '06',
+                'status' =>'Closed',
+                'type' => 2,
                 'active' => 1
             ]
         ];

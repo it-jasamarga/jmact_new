@@ -86,13 +86,11 @@
 				  </div>
 			 	</div>
 			 	<div class="card-body">
-			  	<div class="card card-custom card-fit card-border">
+					<div class="card card-custom card-fit card-border">
 						<canvas id="chart-1" width="400" height="400"></canvas>
 					</div>
-			 	</div>
+				</div>
 			</div>
-
-
 		</div>
 	</div>
 </div>

@@ -21,8 +21,7 @@ class MasterStatusRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
       $unique = ($id = request()->route('master_status')) ? ','.$id : '';
       return [
         'code' => 'required|string|max:255|min:1|unique:master_status,code'.$unique,
