@@ -76,20 +76,102 @@
 					</div>
 				</div>
 				<div class="col-6">
-
-
 					<canvas id="chart-status-pengerjaan" width="auto" height="auto" drop-style="background:yellow"></canvas>
+				</div>
+			</div>
+			<div class="row mt-10 align-bottom">
+				<div class="col-4 align-bottom" drop-style="background:green">
+					<div class="row">
+						<div class="col-6">
+						  	<select class="form-control filter-chart-ruas select2" data-post="ruas_id">
+								{!! App\Models\MasterRuas::options(function($q){
+								$ro = ($q->ro) ? $q->ro->name : '-';
+								$regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
+									return $q->name.' - '.$ro.' - '.$regional;
+								},'id',[],'( Ruas Jalan Tol )') !!}
+							</select>
+				 		</div>
+				 		<div class="col-6">
+						  	<select class="form-control filter-chart-ruas select2" data-post="regional_id">
+								{!! App\Models\MasterRegional::options('name','id',[],'( Regional)') !!}
+							</select>
+				 		</div>
+					</div>
+					<div class="row mt-5">
+				 		<div class="col-6">
+							<select class="form-control filter-chart-ruas select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+						</div>
+				 		<div class="col-6">
+							<select class="form-control filter-chart-ruas select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+				 		</div>
+					</div>
 
+					<canvas id="chart-ruas" width="auto" height="auto" drop-style="background:yellow"></canvas>
 
+				</div>
+				<div class="col-4 align-bottom" drop-style="background:yellow">
+					<div class="row mt-5">
+				 		<div class="col-6">
+							<select class="form-control filter-chart-sumber select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+						</div>
+				 		<div class="col-6">
+							<select class="form-control filter-chart-sumber select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+				 		</div>
+					</div>
+
+					<canvas id="chart-sumber" width="auto" height="auto" drop-style="background:yellow"></canvas>
+
+				</div>
+				<div class="col-4">
+					<div class="row mt-5">
+				 		<div class="col-6">
+							<select class="form-control filter-chart-bidang-keluhan select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+						</div>
+				 		<div class="col-6">
+							<select class="form-control filter-chart-bidang-keluhan select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+				 		</div>
+					</div>
+
+					<canvas id="chart-bidang-keluhan" width="auto" height="auto" drop-style="background:yellow"></canvas>
 
 				</div>
 			</div>
 
-			<div class="card card-custom gutter-b">
+			<!--div class="card card-custom gutter-b">
 			 	<div class="card-body">
 				 		<div class="row">
 				 			<div class="col-md-6">
-						  	<select class="form-control filter-chart1 select2" data-post="ruas_id">
+						  	<select class="form-control filter-chart-ruas select2" data-post="ruas_id">
 		            {!! App\Models\MasterRuas::options(function($q){
                     $ro = ($q->ro) ? $q->ro->name : '-';
                     $regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
@@ -98,14 +180,14 @@
 		          </select>
 				 		</div>
 				 		<div class="col-md-6">
-						  	<select class="form-control filter-chart1 select2" data-post="regional_id">
+						  	<select class="form-control filter-chart-ruas select2" data-post="regional_id">
 								{!! App\Models\MasterRegional::options('name','id',[],'( Regional)') !!}
 							</select>
 				 		</div>
 				 		<div class="col-md-6 pt-5">
 
 						 
-							<select class="form-control filter-chart1 select2" data-post="month">
+							<select class="form-control filter-chart-ruas select2" data-post="month">
 								<option value="">(Month)</option>
 							@for( $i = 1; $i <= 12; $i++ )
 								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
@@ -117,7 +199,7 @@
 				 		<div class="col-md-6 pt-5">
 
 						 
-							<select class="form-control filter-chart1 select2" data-post="year">
+							<select class="form-control filter-chart-ruas select2" data-post="year">
 								<option value="">(Year)</option>
 							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
 								<option value="{{ $i }}">{{ $i }}</option>
@@ -133,7 +215,7 @@
 						<canvas id="chart-1" width="400" height="400"></canvas>
 					</div>
 			 	</div>
-			</div>
+			</div-->
 
 
 		</div>
@@ -146,7 +228,9 @@
 @section('scripts')
 
 @include('backend.dashboard.partials.chart-status-pengerjaan')
-@include('backend.dashboard.partials.chart-1')
+@include('backend.dashboard.partials.chart-ruas')
+@include('backend.dashboard.partials.chart-sumber')
+@include('backend.dashboard.partials.chart-bidang-keluhan')
 
 {{-- <script>
 	$(document).ready(function () {

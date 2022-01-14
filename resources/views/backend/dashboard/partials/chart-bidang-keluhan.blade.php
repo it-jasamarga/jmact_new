@@ -1,15 +1,15 @@
 <script>
 	$(document).ready(function(){
-		loadChartStatusPengerjaan();
+		loadChartRuas();
 	});
 
-	$(document).on('change','.filter-chart-status-pengerjaan',function(){
-		loadChartStatusPengerjaan();
+	$(document).on('change','.filter-chart-bidang-keluhan',function(){
+		loadChartRuas();
 	});
 
-	function loadChartStatusPengerjaan(){
+	function loadChartRuas(){
 		var array = [];
-		$('.filter-chart-status-pengerjaan').each(function(idx, el) {
+		$('.filter-chart-bidang-keluhan').each(function(idx, el) {
 	        var name = $(el).data('post');
 	        var val = $(el).val();
 	        array[name] = val;
@@ -40,26 +40,20 @@
 		  labels: labels,
 		  datasets: [
 		    {
-		      label: 'Overtime',
+		      label: 'Dataset 1',
 		      data: [45,50],
-		      borderColor: 'red',
-		      backgroundColor: 'red',
+		      borderColor: '#0b4ba1',
+		      backgroundColor: '#0b4ba1',
 		    },
 		    {
-		      label: 'On Progress',
+		      label: 'Dataset 2',
 		      data: [55,23],
-		      borderColor: 'yellow',
-		      backgroundColor: 'yellow',
-		    },
-		    {
-		      label: 'On Time',
-		      data: [55,23],
-		      borderColor: 'blue',
-		      backgroundColor: 'blue',
+		      borderColor: '#1BC5BD',
+		      backgroundColor: '#1BC5BD',
 		    }
 		  ]
 		};
-		var ctx = document.getElementById('chart-status-pengerjaan').getContext('2d');
+		var ctx = document.getElementById('chart-bidang-keluhan').getContext('2d');
 		var myChart = new Chart(ctx, {
 			type: 'bar',
 			data: data,
@@ -67,12 +61,11 @@
 				responsive: true,
 				plugins: {
 					legend: {
-						position: 'right',
-						align: 'middle'
+						position: 'top',
 					},
 					title: {
 						display: true,
-						text: 'Status Pengerjaan'
+						text: 'Ruas'
 					}
 				}
 			}
