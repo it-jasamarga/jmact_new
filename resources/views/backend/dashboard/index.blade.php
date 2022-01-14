@@ -23,48 +23,155 @@
 			</span>
 			<h6 class="card-text pl-2">Tiket Keluhan Overtime berjumlah 10</h6>
 		</div>
-		<div class="card-toolbar">
+		<!--div class="card-toolbar">
 			<a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
 			  	<i class="ki ki-arrow-down icon-nm"></i>
 			</a>
-		 </div>
+		 </div-->
 	</div>
 	<div class="card-body">
 		<div class="form">
 			<div class="row px-4">
-				<div class="col-8 border pt-2">
-					<label>Overtime : 10</label>
-					<div class="col-md-6 border pt-2">
-						<div class="row">
-							<label>Jasamarga Transjawa Tol</label>
+				<div class="col-6 border pt-2">
+					<label class="fw-bold pl-5">Overtime : 10</label>
+					<div class="accordion pb-5" id="accordionOvertime">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingOvertime-1">
+							<button class="accordion-button collapsed col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOvertime-1" aria-expanded="false" aria-controls="collapseOvertime-1">
+								Jasamarga Transjawa Tol<span class="badge bg-primary ml-2">3</span>
+							</button>
+							</h2>
+							<div id="collapseOvertime-1" class="accordion-collapse collapse" aria-labelledby="headingOvertime-1" data-bs-parent="#accordionOvertime">
+								<div class="accordion-body pl-10">
+									<div class="row">
+										<div class="col-10">RO1 - Jakarta - Tangerang</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">2</p></div>
+									</div>
+									<div class="row">
+										<div class="col-10">RO2 - Prof. DR. Ir. Soedijatmo</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">1</p></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingOvertime-2">
+							<button class="accordion-button collapsed col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOvertime-2" aria-expanded="false" aria-controls="collapseOvertime-2">
+								Jasamarga Metropolitan Tol<span class="badge bg-primary ml-2">7</span>
+							</button>
+							</h2>
+							<div id="collapseOvertime-2" class="accordion-collapse collapse" aria-labelledby="headingOvertime-2" data-bs-parent="#accordionOvertime">
+								<div class="accordion-body pl-10">
+									<div class="row">
+										<div class="col-10">RO1 - Palikanci</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">5</p></div>
+									</div>
+									<div class="row">
+										<div class="col-10">RO2 - Semarang ABC</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">2</p></div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-6 border my-4">
-						{{-- <div class="row"> --}}
-							{{-- <label>Jasamarga Metropolitan Tol</label> --}}
-							{{-- <div class="col-md-12"> --}}
-								<div class="form-group row">
-									<label for="regional" class="col-form-label">{{ __('Jasamarga Metropolitan Tol') }}</label>
-									<select class="form-control select2" name="active">
-										<option value="">Pilih Status</option>
-										<option value="1">Active</option>
-										<option value="0">Non-Active</option>
-									</select>
-								</div>
-							{{-- </div> --}}
-						{{-- </div> --}}
-					</div>
 				</div>
-				<div class="col-md-12">
-					
+				<div class="col-6">
+					<canvas id="chart-status-pengerjaan" width="auto" height="auto" drop-style="background:yellow"></canvas>
+				</div>
+			</div>
+			<div class="row mt-10 align-bottom">
+				<div class="col-4 align-bottom" drop-style="background:green">
+					<div class="row">
+						<div class="col-6">
+						  	<select class="form-control filter-chart-ruas select2" data-post="ruas_id">
+								{!! App\Models\MasterRuas::options(function($q){
+								$ro = ($q->ro) ? $q->ro->name : '-';
+								$regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
+									return $q->name.' - '.$ro.' - '.$regional;
+								},'id',[],'( Ruas Jalan Tol )') !!}
+							</select>
+				 		</div>
+				 		<div class="col-6">
+						  	<select class="form-control filter-chart-ruas select2" data-post="regional_id">
+								{!! App\Models\MasterRegional::options('name','id',[],'( Regional)') !!}
+							</select>
+				 		</div>
+					</div>
+					<div class="row mt-5">
+				 		<div class="col-6">
+							<select class="form-control filter-chart-ruas select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+						</div>
+				 		<div class="col-6">
+							<select class="form-control filter-chart-ruas select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+				 		</div>
+					</div>
+
+					<canvas id="chart-ruas" width="auto" height="auto" drop-style="background:yellow"></canvas>
+
+				</div>
+				<div class="col-4 align-bottom" drop-style="background:yellow">
+					<div class="row mt-5">
+				 		<div class="col-6">
+							<select class="form-control filter-chart-sumber select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+						</div>
+				 		<div class="col-6">
+							<select class="form-control filter-chart-sumber select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+				 		</div>
+					</div>
+
+					<canvas id="chart-sumber" width="auto" height="auto" drop-style="background:yellow"></canvas>
+
+				</div>
+				<div class="col-4">
+					<div class="row mt-5">
+				 		<div class="col-6">
+							<select class="form-control filter-chart-bidang-keluhan select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+						</div>
+				 		<div class="col-6">
+							<select class="form-control filter-chart-bidang-keluhan select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+				 		</div>
+					</div>
+
+					<canvas id="chart-bidang-keluhan" width="auto" height="auto" drop-style="background:yellow"></canvas>
+
 				</div>
 			</div>
 
-			<div class="card card-custom gutter-b">
+			<!--div class="card card-custom gutter-b">
 			 	<div class="card-body">
 				 		<div class="row">
 				 			<div class="col-md-6">
-						  	<select class="form-control filter-chart1 select2" data-post="ruas_id">
+						  	<select class="form-control filter-chart-ruas select2" data-post="ruas_id">
 		            {!! App\Models\MasterRuas::options(function($q){
                     $ro = ($q->ro) ? $q->ro->name : '-';
                     $regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
@@ -73,15 +180,33 @@
 		          </select>
 				 		</div>
 				 		<div class="col-md-6">
-						  	<select class="form-control filter-chart1 select2" data-post="regional_id">
-		            	{!! App\Models\MasterRegional::options('name','id',[],'( Regional)') !!}
-		          	</select>
+						  	<select class="form-control filter-chart-ruas select2" data-post="regional_id">
+								{!! App\Models\MasterRegional::options('name','id',[],'( Regional)') !!}
+							</select>
 				 		</div>
 				 		<div class="col-md-6 pt-5">
-						  	<input id="month" type="text" class="form-control filter-chart1 pickadate-month" data-post="month" value="{{ old('month') }}" required autocomplete="month" autofocus placeholder="Bulan" maxlength="20">
-				 		</div>
+
+						 
+							<select class="form-control filter-chart-ruas select2" data-post="month">
+								<option value="">(Month)</option>
+							@for( $i = 1; $i <= 12; $i++ )
+								<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
+							@endfor
+							</select>
+
+
+						</div>
 				 		<div class="col-md-6 pt-5">
-						  	<input id="year" type="text" class="form-control filter-chart1 pickadate-year" data-post="year" value="{{ old('year') }}" required autocomplete="year" autofocus placeholder="Tahun" maxlength="20">
+
+						 
+							<select class="form-control filter-chart-ruas select2" data-post="year">
+								<option value="">(Year)</option>
+							@for( $i = 2015; $i <= Date("Y")*1; $i++ )
+								<option value="{{ $i }}">{{ $i }}</option>
+							@endfor
+							</select>
+
+
 				 		</div>
 				  </div>
 			 	</div>
@@ -91,6 +216,8 @@
 					</div>
 				</div>
 			</div>
+			 	</div>
+			</div-->
 		</div>
 	</div>
 </div>
@@ -99,7 +226,11 @@
 @endsection
 
 @section('scripts')
-@include('backend.dashboard.partials.chart-1')
+
+@include('backend.dashboard.partials.chart-status-pengerjaan')
+@include('backend.dashboard.partials.chart-ruas')
+@include('backend.dashboard.partials.chart-sumber')
+@include('backend.dashboard.partials.chart-bidang-keluhan')
 
 {{-- <script>
 	$(document).ready(function () {
