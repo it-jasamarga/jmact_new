@@ -324,13 +324,13 @@
                 Swal.fire({
                   type: 'info',
                   title: 'Terjadi Kesalahan',
-                  html: showBoxValidation(resp),
+                //   html: showBoxValidation(resp),
               });
             }else{
                 Swal.fire({
                   type: 'info',
                   title: 'Terjadi Kesalahan',
-                  html: showBoxValidation(resp),
+                //   html: showBoxValidation(resp),
               });
             }
             

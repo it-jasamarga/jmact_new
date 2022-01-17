@@ -152,7 +152,7 @@
       Kembali
     </a>
     @if($record->report->count() > 0)
-    <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
+    <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
       <i class="flaticon2-file"></i>
       Detail Report
     </div>

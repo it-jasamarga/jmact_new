@@ -69,7 +69,7 @@
           <label for="users-list-role">Status</label>
           <fieldset class="form-group">
             <select class="form-control filter-control select2" data-post="status_id">
-                {!! App\Models\MasterStatus::options('status','id',[],'( Status )') !!}
+                {!! App\Models\MasterStatus::options('status','id',["filters"=>['type'=>1]],'( Status )') !!}
             </select>
           </fieldset>
         </div>

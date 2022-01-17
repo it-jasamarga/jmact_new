@@ -21,6 +21,10 @@ class MasterStatusFilter extends QueryFilters
         return $this->builder->where('code', $term);
     }
 
+    public function type($term) {
+        return $this->builder->where('type', $term);
+    }
+
     public function active($term) {
       return $this->builder->where('active', $term);
     }

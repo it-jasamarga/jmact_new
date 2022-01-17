@@ -141,7 +141,7 @@
       <div class="col-md-6">
         <div class="form-group">
             <label for="nominal_customer" class="">{{ __('Besaran claim yang diajukan') }}</label><span class="text-danger">*</span>
-            <input id="nominal_customer" type="text" class="form-control" name="nominal_customer" value="{{ old('nominal_customer') }}" required autocomplete="off" autofocus placeholder="Besaran claim yang diajukan" maxlength="10">
+            <input id="nominal_customer" type="text" class="form-control" name="nominal_customer" value="{{ old('nominal_customer') }}" required autocomplete="off" autofocus placeholder="Besaran claim yang diajukan" maxlength="20">
         </div>
       </div>
 

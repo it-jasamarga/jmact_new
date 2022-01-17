@@ -67,7 +67,7 @@ class DashboardController extends Controller
     }
 
     public function chart1(){
-        dd(request()->all());
+        // dd(request()->all());
         $record = KeluhanPelanggan::with('history')->select('*');
 
         if($ruas_id = request()->ruas_id){

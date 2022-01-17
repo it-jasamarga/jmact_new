@@ -32,7 +32,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Nama Pelanggan</label>
           <fieldset class="form-group">
-            <input type="text" data-post="nama_pelanggan" id="dataFilter" class="form-control filter-control" placeholder="Nama Pelanggan" autocomplete="off>
+            <input type="text" data-post="nama_pelanggan" id="dataFilter" class="form-control filter-control" placeholder="Nama Pelanggan" autocomplete="off">
           </fieldset>
         </div>
         {{-- <div class="col-12 col-sm-6 col-lg-4">
@@ -44,15 +44,15 @@
         <div class="col-12 col-sm-6 col-lg-4">
             <label for="users-list-role">Status</label>
             <fieldset class="form-group">
-              <select class="form-control select2" data-post="status_id">
-                  {!! App\Models\MasterStatus::options('status','id',[],'( Status )') !!}
+              <select class="form-control filter-control select2" data-post="status_id">
+                  {!! App\Models\MasterStatus::options('status','id',["filters"=>['type'=>2]],'( Status )') !!}
               </select>
             </fieldset>
           </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Ruas Jalan Tol</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="ruas_id">
+            <select class="form-control filter-control select2" data-post="ruas_id">
                 {!! App\Models\MasterRuas::options('name','id',[],'( Ruas Jalan Tol )') !!}
             </select>
           </fieldset>
@@ -60,7 +60,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Claim</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="jenis_claim_id">
+            <select class="form-control filter-control select2" data-post="jenis_claim_id">
                 {!! App\Models\MasterJenisClaim::options('jenis_claim','id',[],'( Claim )') !!}
             </select>
           </fieldset>
@@ -68,7 +68,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <label for="users-list-role">Golongan Kendaraan</label>
           <fieldset class="form-group">
-            <select class="form-control select2" data-post="golongan_id">
+            <select class="form-control filter-control select2" data-post="golongan_id">
               {!! App\Models\MasterGolken::options('description','id',[],'( Sumber )') !!}
             </select>
           </fieldset>

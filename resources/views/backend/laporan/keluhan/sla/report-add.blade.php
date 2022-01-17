@@ -11,7 +11,8 @@
                 <div class="form-group">
                     <label for="keluhan" class="">{{ __('Bukti Pengerjaan') }}</label><span class="text-danger">*</span>
                     @if(@$record->report()->orderByDesc('created_at')->first())
-                        <input type="file" name="url_file" class="dropify" data-max-file-size="10M" data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt" data-default-file="{{ asset('storage/'.@$record->report()->orderByDesc('created_at')->first()->url_file) }}" data-show-remove="false" disabled  >
+                        <iframe src="{{ asset('storage/'.@$record->report()->orderByDesc('created_at')->first()->url_file) }}" title="Detail" width="100%" height="340px"></iframe>
+                        {{-- <input type="file" name="url_file" class="dropify" data-max-file-size="10M" data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt" data-default-file="{{ asset('storage/'.@$record->report()->orderByDesc('created_at')->first()->url_file) }}" data-show-remove="false" disabled  > --}}
                     @else
                         <input type="file" name="url_file" class="dropify" data-max-file-size="10M" data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt" data-default-file="" data-show-remove="true" required  >
                     @endif
