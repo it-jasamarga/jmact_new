@@ -9,14 +9,14 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="keluhan" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
-                    <input id="keluhan" type="text" class="form-control" name="keluhan" value="{{ old('keluhan') }}" required autocomplete="keluhan" autofocus placeholder="Bidang Keluhan" maxlength="30">
+                    <input id="keluhan" type="text" class="form-control" name="keluhan" required autocomplete="off" autofocus placeholder="Bidang Keluhan" maxlength="30">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="bidang" class="">{{ __('Bidang') }}</label><span class="text-danger">*</span>
-                    <input id="bidang" type="text" class="form-control" name="bidang" value="{{ old('bidang') }}" required autocomplete="bidang" autofocus placeholder="Bidang" maxlength="30">
+                    <input id="bidang" type="text" class="form-control" name="bidang" required autocomplete="off" autofocus placeholder="Bidang" maxlength="30">
                 </div>
             </div>
 

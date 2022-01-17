@@ -24,28 +24,28 @@ class BidangKeluhanSeeder extends Seeder
 
         $array = [
             [
-                'bidang' => 'Lubang',
-                'keluhan' => 'Konstruksi',
+                'bidang' => 'Konstruksi',
+                'keluhan' => 'Lubang',
                 'active' => 1
             ],
             [
-                'bidang' => 'Rambu',
-                'keluhan' => 'Lalin',
+                'bidang' => 'Lalin',
+                'keluhan' => 'Rambu',
                 'active' => 1
             ],
             [
-                'bidang' => 'Uang Kembalian',
-                'keluhan' => 'Transaksi',
+                'bidang' => 'Transaksi',
+                'keluhan' => 'Uang Kembalian',
                 'active' => 1
             ],
             [
-                'bidang' => 'Banjir',
-                'keluhan' => 'Konstruksi',
+                'bidang' => 'Konstruksi',
+                'keluhan' => 'Banjir',
                 'active' => 1
             ],
             [
-                'bidang' => 'Kondisi Obyek',
-                'keluhan' => 'Iklan',
+                'bidang' => 'Iklan',
+                'keluhan' => 'Kondisi Obyek',
                 'active' => 1
             ]
         ];
