@@ -2,6 +2,7 @@
 @extends('layouts/app')
 
 @section('styles')
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
 @endsection
 
 @section('toolbars')
@@ -23,18 +24,18 @@
 			</span>
 			<h6 class="card-text pl-2">Tiket Keluhan Overtime berjumlah 10</h6>
 		</div>
-		<!--div class="card-toolbar">
+		<div class="card-toolbar">
 			<a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
 			  	<i class="ki ki-arrow-down icon-nm"></i>
 			</a>
-		 </div-->
+		</div>
 	</div>
 	<div class="card-body">
 		<div class="form">
 			<div class="row px-4">
 				<div class="col-6 border pt-2">
-					<label class="fw-bold pl-5">Overtime : 10</label>
-					<div class="accordion pb-5" id="accordionOvertime">
+					<h6 class="card-text pl-2">Overtime : 10</h6>
+					{{-- <div class="accordion pb-5" id="accordionOvertime">
 						<div class="accordion-item">
 							<h2 class="accordion-header" id="headingOvertime-1">
 							<button class="accordion-button collapsed col-12" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOvertime-1" aria-expanded="false" aria-controls="collapseOvertime-1">
@@ -62,6 +63,52 @@
 							</h2>
 							<div id="collapseOvertime-2" class="accordion-collapse collapse" aria-labelledby="headingOvertime-2" data-bs-parent="#accordionOvertime">
 								<div class="accordion-body pl-10">
+									<div class="row">
+										<div class="col-10">RO1 - Palikanci</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">5</p></div>
+									</div>
+									<div class="row">
+										<div class="col-10">RO2 - Semarang ABC</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">2</p></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> --}}
+					<div class="accordion accordion-toggle-arrow pb-4" id="accordionExample1">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title" data-toggle="collapse" data-target="#collapseOne1">
+									Jasamarga Transjawa Tol
+									<div class="symbol symbol-35 symbol-light-warning ml-3">
+										<span class="symbol-label font-size-h6">3</span>
+									</div>
+								</div>
+							</div>
+							<div id="collapseOne1" class="collapse show" data-parent="#accordionExample1">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-10">RO1 - Jakarta - Tangerang</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">2</p></div>
+									</div>
+									<div class="row">
+										<div class="col-10">RO2 - Prof. DR. Ir. Soedijatmo</div>
+										<div class="col-2 fw-bold text-end"><p class="mr-5">1</p></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title collapsed" data-toggle="collapse" data-target="#collapseTwo1">
+									Jasamarga Metropolitan Tol
+									<div class="symbol symbol-35 symbol-light-warning ml-3">
+										<span class="symbol-label font-size-h6">7</span>
+									</div>
+								</div>
+							</div>
+							<div id="collapseTwo1" class="collapse" data-parent="#accordionExample1">
+								<div class="card-body">
 									<div class="row">
 										<div class="col-10">RO1 - Palikanci</div>
 										<div class="col-2 fw-bold text-end"><p class="mr-5">5</p></div>
@@ -231,6 +278,7 @@
 @include('backend.dashboard.partials.chart-ruas')
 @include('backend.dashboard.partials.chart-sumber')
 @include('backend.dashboard.partials.chart-bidang-keluhan')
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
 
 {{-- <script>
 	$(document).ready(function () {
