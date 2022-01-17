@@ -54,6 +54,7 @@ class PermissionController extends Controller
       $buttons = "";
       $buttons .= makeButton([
         'type' => 'modal',
+        'modal' => '#mediumModal',
         'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
       ]);
       $buttons .= makeButton([
@@ -75,11 +76,29 @@ class PermissionController extends Controller
       'route' => $this->route
     ];
     
+    $dataMenuJson = file_get_contents(base_path('resources/json/menuJson.json'));
+    $json = json_decode($dataMenuJson,true);
+    $dataMenu = [];
+    foreach($json['menu'] as $k => $value){
+      if(is_array($value['perms'])){
+        foreach($value['perms'] as $k1 => $value1){
+          array_push($dataMenu, str_replace('-', ' ', $value1));
+        } 
+      }else{
+        array_push($dataMenu, str_replace('-', ' ', $value['perms']));
+      }
+    }
+
+    $data['dataMenu'] = $dataMenu;
     return view('backend.settings.permission.create', $data);
   }
 
   public function store(){
-    request()->validate(['name' => 'unique:permissions,name']);
+    request()->validate(['name' => 'required|string|regex:/(^[a-zA-Z]+[a-zA-Z0-9\\-]*$)/u|unique:permissions,name']);
+    if(request()->permission){
+      $dataName = request()->name;
+      request()['name'] = str_replace(' ', '-', request()->permission).'.'.$dataName;
+    }
     $record = Permission::saveData(request());
 
     return response([
@@ -91,10 +110,30 @@ class PermissionController extends Controller
   public function edit($id)
   {
 
+    $record = Permission::findOrFail($id);
+    $permission = explode('.',$record->name)[0];
+    $name = explode('.',$record->name)[1];
     $data = [
       'route' => $this->route,
-      'record' => Permission::findOrFail($id)
+      'record' => $record,
+      'permission' => $permission,
+      'name' => $name,
     ];
+
+    $dataMenuJson = file_get_contents(base_path('resources/json/menuJson.json'));
+    $json = json_decode($dataMenuJson,true);
+    $dataMenu = [];
+    foreach($json['menu'] as $k => $value){
+      if(is_array($value['perms'])){
+        foreach($value['perms'] as $k1 => $value1){
+          array_push($dataMenu, str_replace('-', ' ', $value1));
+        } 
+      }else{
+        array_push($dataMenu, str_replace('-', ' ', $value['perms']));
+      }
+    }
+
+    $data['dataMenu'] = $dataMenu;
 
     return view('backend.settings.permission.edit', $data);
   }
@@ -111,7 +150,11 @@ class PermissionController extends Controller
   }
 
   public function update($id){
-    request()->validate(['name' => 'unique:permissions,name,'.$id]);
+    request()->validate(['name' => 'required|string|regex:/(^[a-zA-Z]+[a-zA-Z0-9\\-]*$)/u|unique:permissions,name,'.$id]);
+    if(request()->permission){
+      $dataName = request()->name;
+      request()['name'] = str_replace(' ', '-', request()->permission).'.'.$dataName;
+    }
     $record = Permission::saveData(request());
 
     return response([
