@@ -155,7 +155,6 @@ class RoleController extends Controller
   public function permission($id){
     $record = Role::findOrFail($id);
     $permission = Permission::get();
-
     $data =[
       'title' => 'Setting Permission Role '.$record->name,
       'route' => $this->route,
