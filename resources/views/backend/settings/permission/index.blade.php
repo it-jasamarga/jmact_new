@@ -84,7 +84,7 @@
           text: "<i class='flaticon-file-1'></i>Add Permission</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
           attr: {
-            'data-modal': "#smallModal"
+            'data-modal': "#mediumModal"
           }
         },
       ]);

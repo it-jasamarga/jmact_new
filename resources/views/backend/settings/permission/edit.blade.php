@@ -7,11 +7,23 @@
     </div>
     <div class="modal-body">
         <div class="row">
-
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Permission') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Permission" maxlength="50">
+                    <select class="select2 form-control" required="" name="permission">
+                        <option value="">Pilih Menu</option>
+                        @if(count($dataMenu) > 0)
+                            @foreach($dataMenu as $k => $value)
+                                <option value="{{ $value }}" {{ ($value === $permission) ? "selected" : "" }}>{{ $value }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="name" class="">{{ __('Permission') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autocomplete="name" autofocus placeholder="Permission" maxlength="50">
                 </div>
             </div>
 
