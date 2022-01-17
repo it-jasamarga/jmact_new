@@ -30,6 +30,18 @@ class RoleSeeder extends Seeder
             [
                 'name' => 'Guest',
                 'guard_name' => 'web'
+            ],
+            [
+                'name' => 'JMTC',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'Regional',
+                'guard_name' => 'web'
+            ],
+            [
+                'name' => 'Inputer',
+                'guard_name' => 'web'
             ]
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
