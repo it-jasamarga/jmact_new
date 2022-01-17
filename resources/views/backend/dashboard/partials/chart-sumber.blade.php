@@ -35,18 +35,18 @@
 	var DATA_COUNT = 7;
 		var NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 
-		var labels = ['Januari', 'Febuari'];
+		var labels = ['Januari', 'Februari'];
 		var data = {
 		  labels: labels,
 		  datasets: [
 		    {
-		      label: 'Dataset 1',
+		      label: 'Instagram',
 		      data: [45,50],
 		      borderColor: '#0b4ba1',
 		      backgroundColor: '#0b4ba1',
 		    },
 		    {
-		      label: 'Dataset 2',
+		      label: 'Faceboook',
 		      data: [55,23],
 		      borderColor: '#1BC5BD',
 		      backgroundColor: '#1BC5BD',
@@ -65,7 +65,7 @@
 					},
 					title: {
 						display: true,
-						text: 'Ruas'
+						text: 'Sumber'
 					}
 				}
 			}

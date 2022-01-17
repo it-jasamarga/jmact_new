@@ -35,7 +35,7 @@
 	var DATA_COUNT = 7;
 		var NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 
-		var labels = ['Januari', 'Febuari'];
+		var labels = ['Januari', 'Februari'];
 		var data = {
 		  labels: labels,
 		  datasets: [
