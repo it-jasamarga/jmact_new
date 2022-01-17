@@ -25,7 +25,8 @@ class MasterGolkenRequest extends FormRequest
     {
       $unique = ($id = request()->route('master_golken')) ? ','.$id : '';
       return [
-        'golongan' => 'required|string|max:255|min:1|unique:master_golken,golongan'.$unique,
+        // 'golongan' => 'required|string|max:255|min:1|unique:master_golken,golongan'.$unique,
+        'golongan' => 'required|string|max:255|min:1',
         'description' => 'max:5000',
       ];
     }

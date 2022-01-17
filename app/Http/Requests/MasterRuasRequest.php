@@ -25,7 +25,8 @@ class MasterRuasRequest extends FormRequest
     {
       $unique = ($id = request()->route('master_rua')) ? ','.$id : '';
       return [
-        'name' => 'required|string|max:255|min:1|unique:master_ruas,name'.$unique,
+        // 'name' => 'required|string|max:255|min:1|unique:master_ruas,name'.$unique,
+        'name' => 'required|string|max:255|min:1',
         'ro_id' => 'required'
       ];
     }
