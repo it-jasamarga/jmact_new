@@ -44,6 +44,6 @@ class ClaimPelanggan extends Model implements Auditable
 		return $this->belongsTo(User::class,'user_id');
 	}
 	public function history(){
-		return $this->hasMany(ClaimHistory::class,'claim_id');
+		return $this->hasMany(DetailHistory::class,'claim_id');
 	}
 }

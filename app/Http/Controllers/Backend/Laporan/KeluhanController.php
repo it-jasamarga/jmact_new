@@ -12,8 +12,8 @@ use App\Models\MasterStatus;
 
 use App\Filters\KeluhanPelangganFilter;
 use App\Http\Requests\KeluhanPelangganRequest;
-use App\Http\Requests\KeluhanHistoryRequest;
-use App\Http\Requests\KeluhanReportRequest;
+use App\Http\Requests\DetailHistoryRequest;
+use App\Http\Requests\DetailReportRequest;
 
 use App\Helpers\HelperFirestore;
 use App\Models\MasterRuas;
@@ -186,7 +186,7 @@ class KeluhanController extends Controller
     return view('backend.laporan.keluhan.edit', $data);
   }
 
-  public function history(KeluhanHistoryRequest $request, $id){
+  public function history(DetailHistoryRequest $request, $id){
     $record = KeluhanPelanggan::findOrFail($id);
     
     $request['status_id'] = MasterStatus::where('code','03')->first()->id;
@@ -275,7 +275,7 @@ class KeluhanController extends Controller
     return view('backend.laporan.keluhan.sla.report-add', $data);
   }
 
-  public function prosesReportSla(KeluhanReportRequest $request, $id) {
+  public function prosesReportSla(DetailReportRequest $request, $id) {
     $request['status_id'] = MasterStatus::where('code','06')->first()->id;
 
     $record = KeluhanPelanggan::findOrFail($id);

@@ -49,11 +49,11 @@ class KeluhanPelanggan extends Model implements Auditable
 	}
 
 	public function report(){
-		return $this->hasMany(KeluhanReport::class,'keluhan_id');
+		return $this->hasMany(DetailReport::class,'keluhan_id');
 	}
 
 	public function history(){
-		return $this->hasMany(KeluhanHistory::class,'keluhan_id');
+		return $this->hasMany(DetailHistory::class,'keluhan_id');
 	}
 
 	public function keluhanUnit(){

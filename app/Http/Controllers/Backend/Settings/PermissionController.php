@@ -9,33 +9,33 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use JWTAuth;
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Role"], 
+    ['name' => "Manage Permission"], 
     ['link' => "#", 'name' => "Settings"],
-    ['link' => "setting/role", 'name' => "Role"]
+    ['link' => "setting/permission", 'name' => "Permission"]
   ];
 
   public function __construct(){
-    $this->route = 'role';
+    $this->route = 'permission';
   }
 
   public function index(Request $request)
   {
     $data = [
-      'title' => 'Role',
+      'title' => 'Permission',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];
 
-    return view('backend.settings.role.index', $data);
+    return view('backend.settings.permission.index', $data);
   }
 
   public function list(Request $request)
   {
 
-    $data  = Role::query();
+    $data  = Permission::query();
     
     if($name = $request->name){
       $data = $data->where('name','like', '%' . $name . '%');
@@ -50,10 +50,6 @@ class RoleController extends Controller
       ]);
       return $button;
     })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
     ->addColumn('action', function($data){
       $buttons = "";
       $buttons .= makeButton([
@@ -61,16 +57,9 @@ class RoleController extends Controller
         'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
       ]);
       $buttons .= makeButton([
-        'type' => 'url',
-        'url'   => route($this->route.'.permission',$data->id),
-        'class' => 'btn btn-icon btn-success btn-sm btn-hover-light',
-        'label'   => '<i class="flaticon2-settings"></i>',
-        'tooltip' => 'Setting Permission'
+        'type' => 'delete',
+        'id'   => $data->id
       ]);
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
       return $buttons;
     })
     ->rawColumns(['numSelect','action'])
@@ -86,12 +75,12 @@ class RoleController extends Controller
       'route' => $this->route
     ];
     
-    return view('backend.settings.role.create', $data);
+    return view('backend.settings.permission.create', $data);
   }
 
   public function store(){
-    request()->validate(['name' => 'unique:roles,name']);
-    $record = Role::saveData(request());
+    request()->validate(['name' => 'unique:permissions,name']);
+    $record = Permission::saveData(request());
 
     return response([
       'status' => true,
@@ -104,10 +93,10 @@ class RoleController extends Controller
 
     $data = [
       'route' => $this->route,
-      'record' => Role::findOrFail($id)
+      'record' => Permission::findOrFail($id)
     ];
 
-    return view('backend.settings.role.edit', $data);
+    return view('backend.settings.permission.edit', $data);
   }
 
   public function show($id)
@@ -115,15 +104,15 @@ class RoleController extends Controller
     
     $data =[
       'route' => $this->route,
-      'record' => Role::findOrFail($id)
+      'record' => Permission::findOrFail($id)
     ];
 
-    return view('backend.settings.role.show', $data);
+    return view('backend.settings.permission.show', $data);
   }
 
   public function update($id){
-    request()->validate(['name' => 'unique:roles,name,'.$id]);
-    $record = Role::saveData(request());
+    request()->validate(['name' => 'unique:permissions,name,'.$id]);
+    $record = Permission::saveData(request());
 
     return response([
       'status' => true,
@@ -133,7 +122,7 @@ class RoleController extends Controller
 
   public function destroy($id)
   {
-    $record = Role::destroy($id);
+    $record = Permission::destroy($id);
 
     return response([
       'status' => true,
@@ -143,7 +132,7 @@ class RoleController extends Controller
   }
 
   public function removeMulti(){
-    $record = Role::whereIn('id',request()->id)->delete();
+    $record = Permission::whereIn('id',request()->id)->delete();
 
     return response([
       'status' => true,
@@ -153,21 +142,19 @@ class RoleController extends Controller
 
   // other
   public function permission($id){
-    $record = Role::findOrFail($id);
-    $permission = Permission::get();
+    $record = Permission::findOrFail($id);
 
     $data =[
       'title' => 'Setting Permission Role '.$record->name,
       'route' => $this->route,
-      'record' => $record,
-      'permission' => $permission
+      'record' => $record
     ];
 
-    return view('backend.settings.role.edit-permission', $data);
+    return view('backend.settings.permission.edit-permission', $data);
   }
 
   public function storePermission(){
-    $role = Role::findById(request()->id);
+    $role = Permission::findById(request()->id);
     if(isset(request()->check)){
       if(count(request()->check) > 0){
         foreach (request()->check as $key => $value) {
@@ -179,13 +166,13 @@ class RoleController extends Controller
           }
         }
         $permsi = Permission::whereIn('name', request()->check)->pluck('id');
-        $record = Role::findById($role->id);
+        $record = Permission::findById($role->id);
         $record->permissions()->sync($permsi);
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
       }   
     }else{
       $permsi = Permission::whereIn('name', [])->get()->pluck('id');
-      $record = Role::findById($role->id);
+      $record = Permission::findById($role->id);
       $record->permissions()->sync($permsi);
       app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     }

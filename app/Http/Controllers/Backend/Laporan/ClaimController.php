@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend\Laporan;
 
 use App\Filters\ClaimPelangganFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClaimHistoryRequest;
+use App\Http\Requests\DetailHistoryRequest;
 use App\Http\Requests\ClaimPelangganRequest;
 use App\Models\ClaimPelanggan;
 use App\Models\MasterRuas;
@@ -163,7 +163,7 @@ class ClaimController extends Controller
     return view('backend.laporan.claim.edit', $data);
   }
 
-  public function history(ClaimHistoryRequest $request, $id) {
+  public function history(DetailHistoryRequest $request, $id) {
     $record = ClaimPelanggan::findOrFail($id);
     
     $request['status_id'] = MasterStatus::where('code','03')->first()->id;
@@ -200,7 +200,7 @@ class ClaimController extends Controller
     return view('backend.laporan.claim.edit-stage', $data);
   }
 
-  public function historyStage(ClaimHistoryRequest $request, $id) {
+  public function historyStage(DetailHistoryRequest $request, $id) {
     $record = ClaimPelanggan::findOrFail($id);
     
     $request['status_id'] = MasterStatus::where('code','03')->first()->id;

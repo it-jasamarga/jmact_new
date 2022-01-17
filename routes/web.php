@@ -96,6 +96,10 @@ Route::group(['middleware' => 'auth'], function() {
 			Route::get('role/permission/{id}', 'RoleController@permission')->name('role.permission');
 			Route::get('role/list', 'RoleController@list')->name('role.list');
 			Route::resource('role', 'RoleController');
+
+			Route::delete('permission/removeMulti', 'PermissionController@removeMulti')->name('permission.removeMulti');
+			Route::get('permission/list', 'PermissionController@list')->name('permission.list');
+			Route::resource('permission', 'PermissionController');
 			
 			
 		});
