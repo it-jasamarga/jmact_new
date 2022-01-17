@@ -51,7 +51,7 @@
         @if($perms->count() > 0)
           @foreach($perms as $k => $value)
             <label class="checkbox checkbox-square checkbox-outline checkbox-outline-2x checkbox-success">
-              <input name="check[]" class="index check" type="checkbox" value="{{ $value->name }}" @if($record->hasPermissionTo($item->perms.'.index')) checked @endif>
+              <input name="check[]" class="index check" type="checkbox" value="{{ $value->name }}" @if($record->hasPermissionTo($value->name)) checked @endif>
               <span></span>{{ explode('.',$value->name)[1] }}
             </label>
           @endforeach
@@ -79,7 +79,7 @@
           @if($perms->count() > 0)
             @foreach($perms as $k => $value)
               <label class="checkbox checkbox-square checkbox-outline checkbox-outline-2x checkbox-success">
-                <input name="check[]" class="index check" type="checkbox" value="{{ $value->name }}" @if($record->hasPermissionTo($bigChild->perms.'.index')) checked @endif>
+                <input name="check[]" class="index check" type="checkbox" value="{{ $value->name }}" @if($record->hasPermissionTo($value->name)) checked @endif>
                 <span></span>{{ explode('.',$value->name)[1] }}
               </label>
             @endforeach
