@@ -86,7 +86,7 @@
           <div class="form-group">
               <label for="bidang_id" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
               <select class="form-control select2" name="bidang_id">
-                {!! App\Models\MasterBk::options('bidang','id',[],'( Bidang Keluhan )') !!}
+                {!! App\Models\MasterBk::options('keluhan','id',[],'( Bidang Keluhan )') !!}
               </select>
           </div>
       </div>
