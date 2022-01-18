@@ -53,7 +53,7 @@
           <label for="users-list-role">Bidang</label>
           <fieldset class="form-group">
             <select class="form-control filter-control select2" data-post="bidang_id">
-                {!! App\Models\MasterBk::options('bidang','id',[],'( Bidang )') !!}
+                {!! App\Models\MasterBk::options('keluhan','id',[],'( Bidang )') !!}
             </select>
           </fieldset>
         </div>
