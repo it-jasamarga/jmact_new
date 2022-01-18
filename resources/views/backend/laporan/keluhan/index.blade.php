@@ -143,7 +143,7 @@
   $(document).ready(function () {
     loadList([
       // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
       { data:'no_tiket', name:'no_tiket' },
       { data:'ruas_id', name:'ruas_id' },
       { data:'lokasi_kejadian', name:'lokasi_kejadian' },
@@ -154,7 +154,7 @@
       { data:'bidang_id', name:'bidang_id' },
       { data:'golongan_id', name:'golongan_id' },
       { data:'status_id', name:'status_id' },
-      { data:'action', name: 'action', searchable: false,orderable: false }
+      { data:'action', name: 'action', searchable: false, orderable: false }
     ],[
         {
           extend: 'excelHtml5',
@@ -173,7 +173,7 @@
             'data-url': "{{ route($route.'.create') }}"
           }
         },
-	@endif
+	      @endif
       ]);
 
 

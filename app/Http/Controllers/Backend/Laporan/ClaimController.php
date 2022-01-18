@@ -62,27 +62,37 @@ class ClaimController extends Controller
     })
     ->addColumn('action', function($data){
       $buttons = "";
-      $buttons .= makeButton([
-        'type' => 'modal',
-        'url'   => $this->route.'/'.$data->id.'/edit',
-        'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-        'label'   => '<i class="flaticon2-paperplane"></i>',
-        'tooltip' => 'Teruskan'
-      ]);
-      $buttons .= makeButton([
-        'type' => 'modal',
-        'url'   => $this->route.'/'.$data->id.'/edit-stage',
-        'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-        'label'   => '<i class="flaticon2-checking"></i>',
-        'tooltip' => 'Tahapan'
-      ]);
-      $buttons .= makeButton([
-        'type' => 'url',
-        'url'   => $this->route.'/'.$data->id.'',
-        'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
-        'label'   => '<i class="flaticon2-list-1"></i>',
-        'tooltip' => 'Detail Data'
-      ]);
+
+      if(auth()->user()->can('claim.edit')) {
+        $buttons .= makeButton([
+          'type' => 'modal',
+          'url'   => $this->route.'/'.$data->id.'/edit',
+          'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+          'label'   => '<i class="flaticon2-paperplane"></i>',
+          'tooltip' => 'Teruskan'
+        ]);
+      }
+
+      if(auth()->user()->can('claim.edit-stage')) {
+        $buttons .= makeButton([
+          'type' => 'modal',
+          'url'   => $this->route.'/'.$data->id.'/edit-stage',
+          'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+          'label'   => '<i class="flaticon2-checking"></i>',
+          'tooltip' => 'Tahapan'
+        ]);
+      }
+
+      if(auth()->user()->can('claim.show')) {
+        $buttons .= makeButton([
+          'type' => 'url',
+          'url'   => $this->route.'/'.$data->id.'',
+          'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+          'label'   => '<i class="flaticon2-list-1"></i>',
+          'tooltip' => 'Detail Data'
+        ]);
+      }
+      
       return $buttons;
     })
     ->rawColumns(['numSelect','action'])
