@@ -127,7 +127,7 @@ class ClaimController extends Controller
       }
 
       $request['user_id'] = auth()->user()->id;
-      $request['status_id'] = MasterStatus::where('code','01')->first()->id;
+      $request['status_id'] = MasterStatus::where('code','01')->where('type', 2)->first()->id;
 
       $record = ClaimPelanggan::saveData($request);
       $record->no_tiket = getTiketClaim($record);
@@ -141,7 +141,7 @@ class ClaimController extends Controller
         'ruas_id' => $record->ruas_id,
         'regional_id' => $record->regional_id,
         'unit_id' => $record->unit_id,
-        'status_id' => MasterStatus::where('code','01')->first()->id
+        'status_id' => MasterStatus::where('code','01')->where('type', 2)->first()->id
       ]);
       DB::commit();
       return response([
@@ -176,7 +176,7 @@ class ClaimController extends Controller
   public function history(DetailHistoryRequest $request, $id) {
     $record = ClaimPelanggan::findOrFail($id);
     
-    $request['status_id'] = MasterStatus::where('code','03')->first()->id;
+    $request['status_id'] = MasterStatus::where('code','03')->where('type', 2)->first()->id;
     $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
 
@@ -213,7 +213,7 @@ class ClaimController extends Controller
   public function historyStage(DetailHistoryRequest $request, $id) {
     $record = ClaimPelanggan::findOrFail($id);
     
-    $request['status_id'] = MasterStatus::where('code','03')->first()->id;
+    $request['status_id'] = MasterStatus::where('code','03')->where('type', 2)->first()->id;
     $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
 

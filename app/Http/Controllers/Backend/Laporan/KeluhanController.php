@@ -143,7 +143,7 @@ class KeluhanController extends Controller
       }
 
       $request['user_id'] = auth()->user()->id;
-      $request['status_id'] = MasterStatus::where('code','01')->first()->id;
+      $request['status_id'] = MasterStatus::where('code','01')->where('type','1')->first()->id;
 
       $record = KeluhanPelanggan::saveData($request);
       $record->no_tiket = getTiket($record);
@@ -163,7 +163,7 @@ class KeluhanController extends Controller
         'ruas_id' => $record->ruas_id,
         'regional_id' => $record->regional_id,
         'unit_id' => $record->unit_id,
-        'status_id' => MasterStatus::where('code','01')->first()->id
+        'status_id' => MasterStatus::where('code','01')->where('type','1')->first()->id
       ]);
       DB::commit();
       return response([
@@ -197,7 +197,8 @@ class KeluhanController extends Controller
   public function history(DetailHistoryRequest $request, $id){
     $record = KeluhanPelanggan::findOrFail($id);
     
-    $request['status_id'] = MasterStatus::where('code','03')->first()->id;
+    // $request['status_id'] = MasterStatus::where('code','03')->first()->id;
+    $request['status_id'] = MasterStatus::where('code','02')->where('type','1')->first()->id;
     $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
 
@@ -243,7 +244,8 @@ class KeluhanController extends Controller
   }
 
   public function prosesSla($id) {
-    request()['status_id'] = MasterStatus::where('code','05')->first()->id;
+    // request()['status_id'] = MasterStatus::where('code','05')->first()->id;
+    request()['status_id'] = MasterStatus::where('code','03')->where('type','1')->first()->id;
    
     $record = KeluhanPelanggan::findOrFail($id);
     $record->status_id = request()->status_id;
@@ -284,9 +286,12 @@ class KeluhanController extends Controller
   }
 
   public function prosesReportSla(DetailReportRequest $request, $id) {
-    $request['status_id'] = MasterStatus::where('code','06')->first()->id;
+    // $request['status_id'] = MasterStatus::where('code','06')->first()->id;
+    $request['status_id'] = MasterStatus::where('code','04')->where('type','1')->first()->id;
 
     $record = KeluhanPelanggan::findOrFail($id);
+    $record->status_id = $request['status_id'];
+    $record->save();
     $record->report()->create(request()->all());
 
     unset($request['keterangan']);
@@ -296,7 +301,8 @@ class KeluhanController extends Controller
     $recordHistory = $record->history()->create([
       'unit_id' => $record->unit_id,
       'regional_id' => $record->regional_id,
-      'status_id' => MasterStatus::where('code','06')->first()->id
+      // 'status_id' => MasterStatus::where('code','06')->first()->id
+      'status_id' => MasterStatus::where('code','04')->where('type','1')->first()->id
     ]);
 
     // $this->firebase->send(

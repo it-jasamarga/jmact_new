@@ -44,7 +44,7 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '03',
-                'status' =>'Tiket diterima',
+                'status' =>'On Progress',
                 'type' => 1,
                 'active' => 1
             ],
@@ -56,7 +56,7 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '04',
-                'status' =>'On Progress',
+                'status' =>'Closed',
                 'type' => 1,
                 'active' => 1
             ],
@@ -68,7 +68,7 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '05',
-                'status' =>'Closed',
+                'status' =>'Overtime',
                 'type' => 1,
                 'active' => 1
             ],
@@ -76,12 +76,6 @@ class StatusSeeder extends Seeder
                 'code' => '05',
                 'status' =>'Proses Pembayaran',
                 'type' => 2,
-                'active' => 1
-            ],
-            [
-                'code' => '06',
-                'status' =>'Overtime',
-                'type' => 1,
                 'active' => 1
             ],
             [
