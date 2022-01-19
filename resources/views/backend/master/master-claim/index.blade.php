@@ -83,13 +83,15 @@
       { data:'action', name: 'action', searchable: false, orderable: false }
       ],
       [
+        @if(auth()->user()->can('claim.create'))
         {
           text: "<i class='flaticon-file-1'></i>Add Jenis Claim</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
           attr: {
             'data-modal': "#largeModal"
           }
-        },
+        }
+        @endif
       ]
       );
   });

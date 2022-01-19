@@ -62,10 +62,12 @@ class UserController extends Controller
     })
     ->addColumn('action', function($data){
       $buttons = "";
+      if(auth()->user()->can('user-account.edit')) {
         $buttons .= makeButton([
             'type' => 'modal',
             'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
         ]);
+      }
         // $buttons .= makeButton([
         //   'type' => 'delete',
         //   'id'   => $data->id

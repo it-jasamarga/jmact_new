@@ -63,7 +63,7 @@ class ClaimController extends Controller
     ->addColumn('action', function($data){
       $buttons = "";
 
-      if(auth()->user()->can('claim.edit')) {
+      if(auth()->user()->can('claim.forward')) {
         $buttons .= makeButton([
           'type' => 'modal',
           'url'   => $this->route.'/'.$data->id.'/edit',
@@ -73,7 +73,7 @@ class ClaimController extends Controller
         ]);
       }
 
-      if(auth()->user()->can('claim.edit-stage')) {
+      if(auth()->user()->can('claim.stage')) {
         $buttons .= makeButton([
           'type' => 'modal',
           'url'   => $this->route.'/'.$data->id.'/edit-stage',
@@ -83,13 +83,13 @@ class ClaimController extends Controller
         ]);
       }
 
-      if(auth()->user()->can('claim.show')) {
+      if(auth()->user()->can('claim.detail')) {
         $buttons .= makeButton([
           'type' => 'url',
           'url'   => $this->route.'/'.$data->id.'',
           'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
           'label'   => '<i class="flaticon2-list-1"></i>',
-          'tooltip' => 'Detail Data'
+          'tooltip' => 'Detail'
         ]);
       }
       

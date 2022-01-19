@@ -56,17 +56,23 @@ class RoleController extends Controller
     })
     ->addColumn('action', function($data){
       $buttons = "";
-      $buttons .= makeButton([
-        'type' => 'modal',
-        'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
-      ]);
-      $buttons .= makeButton([
-        'type' => 'url',
-        'url'   => route($this->route.'.permission',$data->id),
-        'class' => 'btn btn-icon btn-success btn-sm btn-hover-light',
-        'label'   => '<i class="flaticon2-settings"></i>',
-        'tooltip' => 'Setting Permission'
-      ]);
+
+      if(auth()->user()->can('role.edit')) {
+        $buttons .= makeButton([
+          'type' => 'modal',
+          'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
+        ]);
+      }
+
+      if(auth()->user()->can('role.setting')) {
+        $buttons .= makeButton([
+          'type' => 'url',
+          'url'   => route($this->route.'.permission',$data->id),
+          'class' => 'btn btn-icon btn-success btn-sm btn-hover-light',
+          'label'   => '<i class="flaticon2-settings"></i>',
+          'tooltip' => 'Setting Permission'
+        ]);
+      }
       // $buttons .= makeButton([
       //   'type' => 'delete',
       //   'id'   => $data->id

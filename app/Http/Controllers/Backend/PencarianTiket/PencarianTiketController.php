@@ -44,21 +44,25 @@ class PencarianTiketController extends Controller
         // ';})
         ->addColumn('action', function($data){
             $buttons = "";
-            $buttons .= makeButton([
-              'type' => 'url',
-              'url'   => $this->route.'/'.$data->id.'',
-              'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
-              'label'   => '<i class="flaticon2-list-1"></i>',
-              'tooltip' => 'Detail Data'
-            ]);
+            if(auth()->user()->can('pencarian-tiket.detail')) {
+              $buttons .= makeButton([
+                'type' => 'url',
+                'url'   => $this->route.'/'.$data->id.'',
+                'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                'label'   => '<i class="flaticon2-list-1"></i>',
+                'tooltip' => 'Detail Data'
+              ]);
+            }
             
-            $buttons .= makeButton([
-              'type' => 'url',
-              'url' => '#',
-              'onClick'   => 'ticket.detail.open(this)',
-              'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
-              'label'   => '<i class="flaticon2-arrow-down"></i>'
-            ]);
+            if(auth()->user()->can('pencarian-tiket.expand')) {
+              $buttons .= makeButton([
+                'type' => 'url',
+                'url' => '#',
+                'onClick'   => 'ticket.detail.open(this)',
+                'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
+                'label'   => '<i class="flaticon2-arrow-down"></i>'
+              ]);
+            }
             
             return $buttons;
           })

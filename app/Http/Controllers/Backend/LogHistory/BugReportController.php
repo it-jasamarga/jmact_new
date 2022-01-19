@@ -61,10 +61,12 @@ class BugReportController extends Controller
     })
     ->addColumn('action', function($data){
       $buttons = "";
-      $buttons .= makeButton([
-        'type' => 'delete',
-        'id'   => $data->id
-      ]);
+      if(auth()->user()->can('bug-report.delete')) {
+        $buttons .= makeButton([
+          'type' => 'delete',
+          'id'   => $data->id
+        ]);
+      }
       return $buttons;
     })
     ->rawColumns(['numSelect','class','action'])

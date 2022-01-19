@@ -42,13 +42,13 @@
         <table class="table data-thumb-view table-striped" id="listTables">
           <thead>
             <tr>
-              <th width="15">
+              {{-- <th width="15">
                 <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
                   <input type="checkbox" value="" class="group-checkable"/>
                   <span></span>
                 </label>
-              </th>
-              <th>#</th>
+              </th> --}}
+              <th>No</th>
               <th>User</th>
               <th>Ip Address</th>
               <th>User Agent</th>
@@ -69,7 +69,7 @@
 <script>
   $(document).ready(function () {
     loadList([
-      { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
+      // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data: 'user', name: 'user'},
       { data: 'ip_address', name: 'ip_address'},

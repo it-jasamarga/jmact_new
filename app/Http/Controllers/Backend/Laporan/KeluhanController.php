@@ -80,7 +80,7 @@ class KeluhanController extends Controller
     ->addColumn('action', function($data){
       $buttons = "";
 
-      if(auth()->user()->can('keluhan.edit')) {
+      if(auth()->user()->can('keluhan.forward')) {
         $buttons .= makeButton([
           'type' => 'modal',
           'url'   => $this->route.'/'.$data->id.'/edit',
@@ -100,13 +100,13 @@ class KeluhanController extends Controller
         ]);
       }
 
-      if(auth()->user()->can('keluhan.show')) {
+      if(auth()->user()->can('keluhan.detail')) {
         $buttons .= makeButton([
           'type' => 'url',
           'url'   => $this->route.'/'.$data->id.'',
           'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
           'label'   => '<i class="flaticon2-list-1"></i>',
-          'tooltip' => 'Detail Data'
+          'tooltip' => 'Detail'
         ]);
       }
       

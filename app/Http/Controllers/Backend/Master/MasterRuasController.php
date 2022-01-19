@@ -63,10 +63,12 @@ class MasterRuasController extends Controller
     })
     ->addColumn('action', function($data){
       $buttons = "";
-      $buttons .= makeButton([
-        'type' => 'modal',
-        'url'   => $this->route.'/'.$data->id.'/edit'
-      ]);
+      if(auth()->user()->can('master-ruas.edit')) {
+        $buttons .= makeButton([
+          'type' => 'modal',
+          'url'   => $this->route.'/'.$data->id.'/edit'
+        ]);
+      }
       // $buttons .= makeButton([
       //   'type' => 'delete',
       //   'id'   => $data->id
