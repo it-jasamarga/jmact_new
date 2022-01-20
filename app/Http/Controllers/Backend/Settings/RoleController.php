@@ -57,20 +57,20 @@ class RoleController extends Controller
     ->addColumn('action', function($data){
       $buttons = "";
 
-      if(auth()->user()->can('role.edit')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
-        ]);
-      }
+      // if(auth()->user()->can('role.edit')) {
+      //   $buttons .= makeButton([
+      //     'type' => 'modal',
+      //     'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
+      //   ]);
+      // }
 
-      if(auth()->user()->can('role.setting')) {
+      if(auth()->user()->can('role.edit')) {
         $buttons .= makeButton([
           'type' => 'url',
           'url'   => route($this->route.'.permission',$data->id),
-          'class' => 'btn btn-icon btn-success btn-sm btn-hover-light',
-          'label'   => '<i class="flaticon2-settings"></i>',
-          'tooltip' => 'Setting Permission'
+          'class' => 'btn btn-icon btn-warning btn-sm btn-hover-light',
+          'label'   => '<i class="flaticon-edit-1"></i>',
+          'tooltip' => 'Edit'
         ]);
       }
       // $buttons .= makeButton([
@@ -86,18 +86,24 @@ class RoleController extends Controller
   }
 
   
-  public function create()
-  {
+  public function create() {
+    $permission = Permission::get();
     $data = [
-      'route' => $this->route
+      'title' => 'Buat Data Role Permission',
+      'route' => $this->route,
+      'permission' => $permission
     ];
     
     return view('backend.settings.role.create', $data);
   }
 
   public function store(){
+
     request()->validate(['name' => 'unique:roles,name']);
     $record = Role::saveData(request());
+    request()['id'] = $record->id;
+
+    $this->storePermission();
 
     return response([
       'status' => true,
@@ -116,41 +122,10 @@ class RoleController extends Controller
     return view('backend.settings.role.edit', $data);
   }
 
-  public function show($id)
-  {
-    
-    $data =[
-      'route' => $this->route,
-      'record' => Role::findOrFail($id)
-    ];
-
-    return view('backend.settings.role.show', $data);
-  }
-
   public function update($id){
     request()->validate(['name' => 'unique:roles,name,'.$id]);
     $record = Role::saveData(request());
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
-  public function destroy($id)
-  {
-    $record = Role::destroy($id);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-
-  }
-
-  public function removeMulti(){
-    $record = Role::whereIn('id',request()->id)->delete();
-
+    $this->storePermission();
     return response([
       'status' => true,
       'message' => 'success',
@@ -168,10 +143,11 @@ class RoleController extends Controller
       'permission' => $permission
     ];
 
-    return view('backend.settings.role.edit-permission', $data);
+    return view('backend.settings.role.edit', $data);
   }
 
   public function storePermission(){
+    // dd(request()->all());
     $role = Role::findById(request()->id);
     if(isset(request()->check)){
       if(count(request()->check) > 0){

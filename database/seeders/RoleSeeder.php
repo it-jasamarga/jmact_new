@@ -18,6 +18,7 @@ class RoleSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Role::truncate();
+        Permission::truncate();
         $array = [
             [
                 'name' => 'Superadmin',

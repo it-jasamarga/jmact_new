@@ -67,14 +67,14 @@
   <!-- CHILD -->
 
   @if(isset($item->submenu) && (count($item->submenu) > 0))
-  <tbody>
+  <thead>
     @foreach($item->submenu as $bigChild)
     <tr>
       <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="{{ isset($bigChild->icon) ? $bigChild->icon : '' }} icon"></i> {!! $bigChild->name !!} </td>
       @php
           $perms = \App\Models\Permission::where('name', 'like', $bigChild->perms.'%')->get();
       @endphp
-      <td class="text-center">
+      <th class="text-center">
         <div class="checkbox-inline">
           @if($perms->count() > 0)
             @foreach($perms as $k => $value)
@@ -85,13 +85,13 @@
             @endforeach
           @endif 
         </div>
-      </td>
-      <td class="text-center">
+      </th>
+      <th class="text-center">
         <button class="btn btn-pesat-add btn-addon btn-sm horizontal all"><i class="flaticon2-checkmark"></i>Check </button>
-      </td>
+      </th>
     </tr>
     @endforeach
-  </tbody>
+  </thead>
   @endif  
 @endif
 @endforeach

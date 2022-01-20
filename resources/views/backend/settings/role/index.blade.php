@@ -85,9 +85,11 @@
         @if(auth()->user()->can('role.create'))
         {
           text: "<i class='flaticon-file-1'></i>Add Role</a>",
-          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
+          // className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
+          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
           attr: {
-            'data-modal': "#largeModal"
+            // 'data-modal': "#largeModal"
+            'data-url': "{{ route($route.'.create') }}"
           }
         }
         @endif

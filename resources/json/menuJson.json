@@ -122,7 +122,7 @@
           "roles" : ["admin","superadmin"],
           "perms": "role",
           "name": "Roles",
-          "action" : ["create","edit","setting"]
+          "action" : ["create","edit"]
         }
       ]
     },
