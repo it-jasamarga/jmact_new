@@ -25,7 +25,7 @@ class RegionalSeeder extends Seeder
                 'active' => 1
             ],
             [
-                'name' => 'Jamamarga Nusantara Tol',
+                'name' => 'Jasamarga Nusantara Tol',
                 'active' => 1
             ],
             [
