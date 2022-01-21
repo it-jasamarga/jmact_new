@@ -128,27 +128,27 @@ class RoSeeder extends Seeder
             ],
             [
                 'name' => 'Representative Office 1',
-                'regional_id' => 'Jamamarga Nusantara Tol',
+                'regional_id' => 'Jasamarga Nusantara Tol',
                 'active' => 1,
             ],
             [
                 'name' => 'PT Jasamarga Kualanamu Tol',
-                'regional_id' => 'Jamamarga Nusantara Tol',
+                'regional_id' => 'Jasamarga Nusantara Tol',
                 'active' => 1,
             ],
             [
                 'name' => 'PT Jasamarga Bali Tol',
-                'regional_id' => 'Jamamarga Nusantara Tol',
+                'regional_id' => 'Jasamarga Nusantara Tol',
                 'active' => 1,
             ],
             [
                 'name' => 'PT Jasamarga Balikpapan Samarinda',
-                'regional_id' => 'Jamamarga Nusantara Tol',
+                'regional_id' => 'Jasamarga Nusantara Tol',
                 'active' => 1,
             ],
             [
                 'name' => 'PT Jasamarga Manado Bitung',
-                'regional_id' => 'Jamamarga Nusantara Tol',
+                'regional_id' => 'Jasamarga Nusantara Tol',
                 'active' => 1,
             ]
         ];
