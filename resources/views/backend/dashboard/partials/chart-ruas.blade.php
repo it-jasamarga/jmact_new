@@ -1,11 +1,11 @@
 <script>
-	$(document).ready(function(){
-		loadChartRuas();
-	});
+	// $(document).ready(function(){
+	// 	loadChartRuas();
+	// });
 
-	$(document).on('change','.filter-chart-ruas',function(){
-		loadChartRuas();
-	});
+	// $(document).on('change','.filter-chart-ruas',function(){
+	// 	loadChartRuas();
+	// });
 
 	function loadChartRuas(){
 		var array = [];

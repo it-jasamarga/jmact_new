@@ -1,13 +1,13 @@
 <script>
-	$(document).ready(function(){
-		loadChartRuas();
-	});
+	// $(document).ready(function(){
+	// 	loadChartSumber();
+	// });
 
-	$(document).on('change','.filter-chart-sumber',function(){
-		loadChartRuas();
-	});
+	// $(document).on('change','.filter-chart-sumber',function(){
+	// 	loadChartSumber();
+	// });
 
-	function loadChartRuas(){
+	function loadChartSumber(){
 		var array = [];
 		$('.filter-chart-sumber').each(function(idx, el) {
 	        var name = $(el).data('post');
@@ -35,19 +35,19 @@
 	var DATA_COUNT = 7;
 		var NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 
-		var labels = ['Januari', 'Februari'];
+		var labels = ['Belmera'];
 		var data = {
 		  labels: labels,
 		  datasets: [
 		    {
 		      label: 'Instagram',
-		      data: [45,50],
+		      data: [45],
 		      borderColor: '#0b4ba1',
 		      backgroundColor: '#0b4ba1',
 		    },
 		    {
 		      label: 'Faceboook',
-		      data: [55,23],
+		      data: [55],
 		      borderColor: '#1BC5BD',
 		      backgroundColor: '#1BC5BD',
 		    }

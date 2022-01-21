@@ -33,7 +33,11 @@ Route::group(['middleware' => 'auth'], function() {
 	});
 
 	Route::group(['namespace' => 'Backend'], function() {
-		
+
+		Route::post('lookup/area/{category}', 'LookupController@area')->name('lookup.area');
+
+		Route::post('lookup/data/chart/{name}', 'LookupController@dataChart')->name('lookup.data-chart');
+
 		Route::get('/', 'DashboardController@index');
 		Route::get('/', 'DashboardController@list');
 		Route::post('dashboard/chart-1', 'DashboardController@chart1')->name('dashboard.chart1');

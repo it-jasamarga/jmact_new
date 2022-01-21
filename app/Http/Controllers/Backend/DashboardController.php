@@ -21,8 +21,9 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $appVars = \App\Models\AppVar::where('name', 'LIKE', "Chart %")->get(['name', 'value'])->pluck('value', 'name');
         return view('backend.dashboard.index',[
-            'breadcrumbs' => $this->breadcrumbs,
+            'breadcrumbs' => $this->breadcrumbs, 'appVars' => $appVars
             // 'route' => $this->route
         ]);
     }
