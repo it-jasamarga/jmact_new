@@ -158,7 +158,7 @@
 				</div>
 				<div class="col-4">
 
-					<canvas id="chart-bidang-keluhan" width="auto" height="auto"></canvas>
+					<canvas id="chart-sector" width="auto" height="auto"></canvas>
 
 				</div>
 			</div>
@@ -171,7 +171,6 @@
 @section('scripts')
 
 @include('backend.dashboard.partials.chart-status-pengerjaan')
-@include('backend.dashboard.partials.chart-bidang-keluhan')
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js"></script>
@@ -198,7 +197,7 @@
 		colors.push("#" + ("000000" + color.toString(16)).slice(-6));
 	}
 
-	let updateChart = function(name, filters, stage = 0, data = {}) {
+	let updateChart = function(name, filters, stage = 0, data = {}, type = 'bar') {
 		console.log('## Update Stage #'+stage+' Chart "'+name+'"', {filters:filters, data:data});
 
 		var chartName = 'chart-'+name;
@@ -217,7 +216,7 @@
 			})
 			.done(function(resp) {
 				if (resp.status=='ok') {
-					updateChart(resp.name, resp.filters, 1, resp.data);
+					updateChart(resp.name, resp.filters, 1, resp.data, resp.type);
 				}
 			})
 			.fail(function(resp) { console.log("## POST Error", resp); });
@@ -236,85 +235,130 @@
 				var colorRef = "";
 				switch (name) {
 					case 'area':
-						colorRef = ("Chart Area "+$('#category_id').children("option:selected").text()+" "+label).replace(' - ', " ");
+						colorRef = $('#categorySelector').children("option:selected").val()=='ruas' ? ("Chart Area "+$('#category_id').children("option:selected").text()) : ("Chart Area "+$('#category_id').children("option:selected").text()+" - "+label);
 						break;
 					case 'source':
 						colorRef = ("Chart Source "+label);
+						break;
+					case 'sector':
+						colorRef = ("Chart Sector "+label);
 						break;
 				}
 
 				var color = typeof appVars[colorRef] !== 'undefined' ? appVars[colorRef] : "RGBA(0,0,0,0.1)";
 				if (typeof appVars[colorRef] === 'undefined') console.log ('!! ERROR: No color for "'+ colorRef + '"')
 				// console.log('## ', colorRef, color);
-				var dataset = {};
-				var values = [];
-				values.push(value);
-				dataset['label'] = label;
-				dataset['data'] = values;
-				dataset['borderColor'] = color;
-				dataset['backgroundColor'] = color;
-				datasets.push(dataset);
+
+				if (type=='bar') {
+					var dataset = {};
+					var values = [];
+					values.push(value);
+					dataset['label'] = label;
+					dataset['data'] = values;
+					dataset['borderColor'] = color;
+					dataset['backgroundColor'] = color;
+					datasets.push(dataset);
+				}
 			})
 
 			// console.log({datasets});
 
 			let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "Octtober", "November", "December"];
 
-			var labels = [];
-			var title = 'Chart';
-			switch (name) {
-				case 'area':
-					title = $('#categorySelector').children("option:selected").text() +' '+ $('#category_id').children("option:selected").text();
-					break;
-				case 'source':
-					title = 'Grafik Sumber Laporan';
-					break;
-			}
-			labels.push(title);	//+' - '+months[filters.month-1]+' '+filters.year);
-
-			var data = {
-				labels: labels,
-				datasets: datasets
-			};
-
+			var oChart = false;
 			var ctx = document.getElementById(chartName).getContext('2d');
 
-			var chartArea = new Chart(ctx, {
-				type: 'bar',
-				plugins: [ChartDataLabels],
-				data: data,
-				options: {
-					"animation": {
-						"duration": 1,
-						"onComplete": function() {
-							// console.log('## Chart rendered', this);
-						}
-					},
-					showDatapoints: true,
-					responsive: true,
-					// events: [],
-					scales: {
-						y: { max: (maxValue+10) }
-					},
-					interaction: {
-						mode: 'index'
-					},
-					plugins: {
-
-						datalabels: {
-							anchor: 'end', // remove this line to get label in middle of the bar
-							align: 'end',
-							// formatter: (val) => (`${val} Keluhan`),
-							labels: { value: { color: '#000' } }
-						},
-
-						legend: { display: true, position: 'right' },
-						title: { display: false }
-					}
+			if (type=='bar') {
+				var labels = [];
+				var title = 'Chart';
+				switch (name) {
+					case 'area':
+						title = $('#categorySelector').children("option:selected").text() +' '+ $('#category_id').children("option:selected").text();
+						break;
+					case 'source':
+						title = 'Grafik Sumber Laporan';
+						break;
+					case 'sector':
+						title = 'Grafik Bidang Keluhan';
+						break;
 				}
-			});
+				labels.push(title);	//+' - '+months[filters.month-1]+' '+filters.year);
 
-			window.charts[chartName] = chartArea;
+				var data = {
+					labels: labels,
+					datasets: datasets
+				};
+
+				var oChart = new Chart(ctx, {
+					type: 'bar',
+					plugins: [ChartDataLabels],
+					data: data,
+					options: {
+						"animation": {
+							"duration": 1,
+							"onComplete": function() {
+								// console.log('## Chart rendered', this);
+							}
+						},
+						showDatapoints: true,
+						responsive: true,
+						// events: [],
+						scales: {
+							y: { max: (maxValue+10) }
+						},
+						interaction: {
+							mode: 'index'
+						},
+						plugins: {
+
+							datalabels: {
+								anchor: 'end', // remove this line to get label in middle of the bar
+								align: 'end',
+								// formatter: (val) => (`${val} Keluhan`),
+								labels: { value: { color: '#000' } }
+							},
+
+							legend: { display: true, position: 'right' },
+							title: { display: false }
+						}
+					}
+				});
+			} else if (type=='pie') {
+				var colors = [];
+				$.each(data[name], function(name, value) {
+					// console.log('==', 'Chart Sector '+name);
+					colors.push(appVars['Chart Sector '+name])
+				});
+				// console.log('==', {colors});
+				var oChart = new Chart(ctx, {
+					type: 'pie',
+					data: {
+						labels: Object.keys(data[name]),
+						datasets: [{
+							label: '',
+							data: Object.values(data[name]),
+							backgroundColor: colors,
+							hoverOffset: 4
+						}]
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							legend: {
+								position: 'right',
+							},
+							title: {
+								font: {weight: 'normal'},
+								position: 'bottom',
+								display: true,
+								text: 'Grafik Bidang Keluhan'
+							}
+						}
+					}
+				});
+			}
+
+			if (oChart) window.charts[chartName] = oChart;
 
 		}
 	}
@@ -337,6 +381,7 @@
 			console.log('## Applying filters');
 			updateChart('area', filters);
 			updateChart('source', filters);
+			updateChart('sector', filters);
 		}
 
 	}
@@ -405,26 +450,31 @@
 		$('select[name="month"').val(today.getMonth()+1);
 		$('select[name="year"').val(today.getFullYear());
 		fillCategory();
+
+
+		loadList([
+			{ data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
+			{ data:'regional_id', name:'regional_id' },
+			{ data:'user_id', name:'user_id' },
+			{ data:'sumber_id', name:'sumber_id' },
+			{ data:'ruas_id', name:'ruas_id' },
+			{ data:'tanggal_kejadian', name:'tanggal_kejadian' },
+			{ data:'status_id', name:'status_id' },
+			],[
+			{
+				extend: 'excelHtml5',
+				text: "<i class='flaticon2-file'></i>Export</a>",
+				className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+			}
+		]);
+
+
+
 	});
 </script>
 
-{{-- <script>
+<script>
 	$(document).ready(function () {
-    loadList([
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
-      { data:'regional_id', name:'regional_id' },
-      { data:'user_id', name:'user_id' },
-      { data:'sumber_id', name:'sumber_id' },
-      { data:'ruas_id', name:'ruas_id' },
-      { data:'tanggal_kejadian', name:'tanggal_kejadian' },
-      { data:'status_id', name:'status_id' },
-    ],[
-        {
-          extend: 'excelHtml5',
-          text: "<i class='flaticon2-file'></i>Export</a>",
-          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-        }
-      ]);
   });
 </script> --}}
 @endsection

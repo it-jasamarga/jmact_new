@@ -9,7 +9,7 @@ class LookupController extends Controller
 {
     public function dataChart(Request $request, $name) {
         $params = $request->all();
-        $return = ['status' => 'error', 'name' => $name, 'filters' => $params['filters']];
+        $return = ['status' => 'error', 'name' => $name, 'filters' => $params['filters'], 'type' => "bar"];
 
         $month = $params['filters']['month'];
         $year = $params['filters']['year'];
@@ -43,6 +43,15 @@ class LookupController extends Controller
             $query = \App\Models\MasterSumber::where('active', 1)->get(['description']);
             foreach ($query as $record) {
                 $return['data'][$name][$record->description] = rand(0, 100);
+            }
+            $return['status'] = 'ok';
+
+        } else if ($name == 'sector') {
+
+            $return['type'] = "pie";
+            $query = \App\Models\MasterBk::where('active', 1)->get(['bidang']);
+            foreach ($query as $record) {
+                $return['data'][$name][$record->bidang] = rand(0, 100);
             }
             $return['status'] = 'ok';
 
