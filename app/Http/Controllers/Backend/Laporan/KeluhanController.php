@@ -46,7 +46,20 @@ class KeluhanController extends Controller
   public function list(KeluhanPelangganFilter $request)
   {
 
-    $data  = KeluhanPelanggan::query()->filter($request);
+    $data  = KeluhanPelanggan::with('unit','ruas')
+      ->whereHas('unit',function($q){
+        $q->where('unit_id',auth()->user()->id);
+      })
+      ->select('*')
+      ->filter($request);
+
+    if(auth()->user()->hasRole('Superadmin')){
+      $data  = KeluhanPelanggan::select('*')->filter($request);
+    }
+
+    if(auth()->user()->hasRole('JMTC')){
+      $data  = KeluhanPelanggan::doesntHave('history')->select('*')->filter($request);
+    }
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {

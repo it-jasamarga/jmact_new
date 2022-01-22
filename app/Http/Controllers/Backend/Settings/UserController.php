@@ -162,10 +162,14 @@ class UserController extends Controller
       $role = request()->role;
       unset(request()['role']);
       unset(request()['password_confirmation']);
+      
+      $record = User::find(request()->id);
 
       $passwords = request()->password;
       if(request()->password){
         request()['password'] = bcrypt($passwords);
+      }else{
+        request()['password'] = $record->password;
       }
       
       $record = User::saveData(request());
