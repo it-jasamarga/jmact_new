@@ -58,7 +58,16 @@ class KeluhanController extends Controller
     }
 
     if(auth()->user()->hasRole('JMTC')){
-      $data  = KeluhanPelanggan::doesntHave('history')->select('*')->filter($request);
+      $data  = KeluhanPelanggan::doesntHave('history')->where('status_id','1')->select('*')->filter($request);
+    }
+
+    if(auth()->user()->hasRole('Service Provider')){
+      $data  = KeluhanPelanggan::with('history')
+        ->whereHas('history',function($q){
+          $q->where('unit_id',auth()->user()->unit_id);
+        })
+        ->select('*')
+        ->filter($request);
     }
 
     return datatables()->of($data)
@@ -212,7 +221,7 @@ class KeluhanController extends Controller
     
     // $request['status_id'] = MasterStatus::where('code','03')->first()->id;
     $request['status_id'] = MasterStatus::where('code','02')->where('type','1')->first()->id;
-    $request['unit_id'] = $record->unit_id;
+    // $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
 
     $record->status_id = $request->status_id;

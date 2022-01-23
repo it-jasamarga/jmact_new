@@ -27,11 +27,10 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="bidang" class="">{{ __('Service Provider') }}</label>
-                    <select class="form-control select2" name="provider">
-                        <option value="">( Pilih Service Provider )</option>
-                        <option value="Operasional">Operasional</option>
-                        <option value="Konstruksi">Konstruksi</option>
-                        <option value="Rest Area">Rest Area</option>
+                    <select class="form-control select2" name="unit_id">
+                        {!! App\Models\MasterUnit::options('unit','id',['filters' => [function($q){
+                            $q->where('type',1);
+                        }]],'( Ruas Jalan Tol )') !!}
                     </select>
                 </div>
             </div>
