@@ -66,7 +66,7 @@ class KeluhanController extends Controller
     if(auth()->user()->hasRole('Service Provider')){
       $data  = KeluhanPelanggan::with('history')
         ->whereHas('history',function($q){
-          $q->where('unit_id',auth()->user()->unit_id);
+          $q->orderByDesc('created_at')->skip(1)->take(1)->where('unit_id',auth()->user()->unit_id);
         })
         ->orderByDesc('created_at')
         ->select('*')
@@ -290,7 +290,12 @@ class KeluhanController extends Controller
       'date' => Carbon::now()->addDays(3)
     ]);
 
-    request()['unit_id'] = $record->unit_id;
+    $history = $record->history()->orderByDesc('created_at')->first();
+    $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
+    $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
+
+    request()['unit_id'] = $unitHistory;
+    request()['ruas_id'] = $ruasHistory;
     request()['regional_id'] = $record->regional_id;
     $recordHistory = $record->history()->create(request()->all());
 
@@ -331,11 +336,17 @@ class KeluhanController extends Controller
     unset($request['keterangan']);
     unset($request['url_file']);
     
-    
+    $history = $record->history()->orderByDesc('created_at')->first();
+    $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
+    $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
+
+    // dump($unitHistory);
+    // dd($record->history()->get());
+
     $recordHistory = $record->history()->create([
-      'unit_id' => $record->unit_id,
+      'unit_id' => $unitHistory,
       'regional_id' => $record->regional_id,
-      // 'status_id' => MasterStatus::where('code','06')->first()->id
+      'ruas_id' => $ruasHistory,
       'status_id' => MasterStatus::where('code','04')->where('type','1')->first()->id
     ]);
 
