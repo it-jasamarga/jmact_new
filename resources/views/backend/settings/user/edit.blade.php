@@ -12,13 +12,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="name" class="">{{ __('Name') }}</label>
-                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Name" maxlength="50">
+                    <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="off" autofocus placeholder="Name" maxlength="50">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="username" class="">{{ __('Username') }}</label>
-                    <input id="username" type="text" class="form-control" name="username" value="{{ $record->username }}" required autocomplete="username" autofocus placeholder="Username" maxlength="30">
+                    <input id="username" type="text" class="form-control" name="username" value="{{ $record->username }}" required autocomplete="off" autofocus placeholder="Username" maxlength="30">
                 </div>
             </div>
             {{-- <div class="col-md-12">
@@ -50,6 +50,14 @@
                     <label for="unit_id" class="">{{ __('Unit') }}</label>
                     <select class="form-control select2" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit','id',["selected" => $record->unit_id],'( Pilih Unit )') !!}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="regional_id" class="">{{ __('Regional') }}</label>
+                    <select class="form-control select2" name="regional_id">
+                        {!! App\Models\MasterRegional::options('name','id',["selected" => $record->regional_id],'( Pilih Regional )') !!}
                     </select>
                 </div>
             </div>
