@@ -34,6 +34,11 @@ class KeluhanPelanggan extends Model implements Auditable
 	public function ruas(){
 		return $this->belongsTo(MasterRuas::class,'ruas_id');
 	}
+
+	public function regional(){
+		return $this->belongsTo(MasterRegional::class,'regional_id');
+	}
+
 	public function golongan(){
 		return $this->belongsTo(MasterGolken::class,'golongan_id');
 	}

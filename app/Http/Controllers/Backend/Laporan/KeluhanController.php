@@ -70,6 +70,14 @@ class KeluhanController extends Controller
         ->filter($request);
     }
 
+    if(auth()->user()->hasRole('Regional')){
+      $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
+
+      $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+        ->select('*')
+        ->filter($request);
+    }
+
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
       $button = '';

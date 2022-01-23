@@ -93,4 +93,8 @@ class User extends Authenticatable implements Auditable, JWTSubject
     public function unit(){
         return $this->belongsTo(MasterUnit::class,'unit_id');
     }
+
+    public function regional(){
+        return $this->belongsTo(MasterRegional::class,'regional_id');
+    }
 }
