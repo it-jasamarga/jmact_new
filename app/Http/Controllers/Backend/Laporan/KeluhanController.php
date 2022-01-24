@@ -46,8 +46,10 @@ class KeluhanController extends Controller
   public function list(KeluhanPelangganFilter $request)
   {
 
-    $data  = KeluhanPelanggan::with('unit','ruas')
-      ->where('unit_id',auth()->user()->unit_id)
+    $data  = KeluhanPelanggan::with('history')
+      ->whereHas('history',function($q){
+        $q->where('unit_id',auth()->user()->unit_id);
+      })
       ->select('*')
       ->filter($request);
 
@@ -62,9 +64,7 @@ class KeluhanController extends Controller
 
     if(auth()->user()->hasRole('Service Provider')){
       $data  = KeluhanPelanggan::with('history')
-        ->whereHas('history',function($q){
-          $q->orderByDesc('created_at')->skip(1)->take(1)->where('unit_id',auth()->user()->unit_id);
-        })
+        ->where('unit_id',auth()->user()->unit_id)
         ->orderByDesc('created_at')
         ->select('*')
         ->filter($request);
@@ -279,8 +279,6 @@ class KeluhanController extends Controller
     request()['status_id'] = MasterStatus::where('code','03')->where('type','1')->first()->id;
    
     $record = KeluhanPelanggan::findOrFail($id);
-    $record->status_id = request()->status_id;
-    $record->save();
 
     $record->mulaiSla()->create([
       'estimate' => 3,
@@ -290,7 +288,9 @@ class KeluhanController extends Controller
     $history = $record->history()->orderByDesc('created_at')->first();
     $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
     $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
-
+    $record->unit_id = $unitHistory;
+    $record->status_id = request()->status_id;
+    $record->save();
     request()['unit_id'] = $unitHistory;
     request()['ruas_id'] = $ruasHistory;
     request()['regional_id'] = $record->regional_id;
@@ -326,8 +326,6 @@ class KeluhanController extends Controller
     $request['status_id'] = MasterStatus::where('code','04')->where('type','1')->first()->id;
 
     $record = KeluhanPelanggan::findOrFail($id);
-    $record->status_id = $request['status_id'];
-    $record->save();
     $record->report()->create(request()->all());
 
     unset($request['keterangan']);
@@ -336,7 +334,9 @@ class KeluhanController extends Controller
     $history = $record->history()->orderByDesc('created_at')->first();
     $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
     $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
-
+    $record->unit_id = $unitHistory;
+    $record->status_id = $request['status_id'];
+    $record->save();
     // dump($unitHistory);
     // dd($record->history()->get());
 
