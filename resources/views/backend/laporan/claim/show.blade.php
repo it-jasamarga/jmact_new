@@ -161,6 +161,17 @@
       <i class="flaticon-circle"></i>
       Kembali
     </a>
+
+    <div class="btn btn-light-success float-right" >
+        <i class="flaticon-plus"></i>
+        Approve
+    </div>
+    
+    <div class="btn btn-light-danger float-right mr-2">
+      <i class="flaticon-cancel"></i>
+      Reject
+    </div>
+    
     {{-- @if($record->report->count() > 0)
     <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
       <i class="flaticon2-file"></i>

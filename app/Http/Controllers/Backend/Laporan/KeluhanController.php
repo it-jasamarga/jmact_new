@@ -66,7 +66,12 @@ class KeluhanController extends Controller
     if(auth()->user()->hasRole('Service Provider')){
       $data  = KeluhanPelanggan::with('history')
         ->whereHas('history',function($q){
-          $q->orderByDesc('created_at')->skip(1)->take(1)->where('unit_id',auth()->user()->unit_id);
+          $unit_id = $q->latest()->first();
+          $q->orderByDesc('created_at')
+          // ->skip(0)->take(0)
+          ->where('unit_id', $unit_id)
+          ->where('unit_id',auth()->user()->unit_id);
+          // ->latest();
         })
         ->orderByDesc('created_at')
         ->select('*')
