@@ -21,14 +21,14 @@
       <div class="col-md-6">
           <div class="form-group">
               <label for="nama_cust" class="">{{ __('Nama Pelanggan') }}</label><span class="text-danger">*</span>
-              <input id="nama_cust" type="text" class="form-control" name="nama_cust" value="{{ old('nama_cust') }}" required autocomplete="off" autofocus placeholder="Nama Pelanggan" maxlength="20">
+              <input id="nama_cust" type="text" class="form-control" name="nama_cust" value="{{ old('nama_cust') }}" required autocomplete="off" autofocus placeholder="Nama Pelanggan" maxlength="100">
           </div>
       </div>
 
       <div class="col-md-6">
           <div class="form-group">
               <label for="kontak_cust" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
-              <input id="kontak_cust" type="text" class="form-control" name="kontak_cust" value="{{ old('kontak_cust') }}" required autocomplete="off" autofocus placeholder="Kontak Pelanggan" maxlength="20">
+              <input id="kontak_cust" type="text" class="form-control" name="kontak_cust" value="{{ old('kontak_cust') }}" required autocomplete="off" autofocus placeholder="Kontak Pelanggan" maxlength="100">
           </div>
       </div>
 
@@ -42,7 +42,7 @@
       <div class="col-md-6">
           <div class="form-group">
               <label for="lokasi_kejadian" class="">{{ __('Lokasi Kejadian') }}</label><span class="text-danger">*</span>
-              <input id="lokasi_kejadian" type="text" class="form-control" name="lokasi_kejadian" value="{{ old('lokasi_kejadian') }}" required autocomplete="off" autofocus placeholder="Lokasi Kejadian" maxlength="20">
+              <input id="lokasi_kejadian" type="text" class="form-control" name="lokasi_kejadian" value="{{ old('lokasi_kejadian') }}" required autocomplete="off" autofocus placeholder="Lokasi Kejadian" maxlength="100">
           </div>
       </div>
 
