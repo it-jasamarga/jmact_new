@@ -35,7 +35,7 @@ class RoleController extends Controller
   public function list(Request $request)
   {
 
-    $data  = Role::query();
+    $data  = Role::query()->orderByDesc('created_at');
     
     if($name = $request->name){
       $data = $data->where('name','like', '%' . $name . '%');
