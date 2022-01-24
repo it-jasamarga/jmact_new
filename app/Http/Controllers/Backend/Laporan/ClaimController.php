@@ -37,7 +37,7 @@ class ClaimController extends Controller
 
     public function list(ClaimPelangganFilter $request) {
 
-    $data  = ClaimPelanggan::query()->filter($request);
+    $data  = ClaimPelanggan::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {

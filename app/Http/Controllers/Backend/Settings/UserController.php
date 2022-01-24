@@ -34,15 +34,16 @@ class UserController extends Controller
   public function list(Request $request)
   {
     
-    $data  = User::query();
+    $data  = User::query()->orderByDesc('created_at');
 
     if($name = $request->name){
       $data = $data->where('name','like', '%' . $name . '%');
     } else if ($username = $request->username) {
       $data = $data->where('username','like', '%' . $username . '%');
-    } else {
-      $data = $data->where('unit_id','like', '%' . $request->unit_id . '%');
-    }
+    } 
+    // else {
+    //   $data = $data->where('unit_id','like', '%' . $request->unit_id . '%');
+    // }
     
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -51,6 +52,14 @@ class UserController extends Controller
         'type' => 'deleteAll',
         'value' => $data->id
       ]);
+      return $button;
+    })
+    ->addColumn('regional_id', function ($data) use ($request) {
+      $button = ($data->regional) ? $data->regional->name : '-';
+      return $button;
+    })
+    ->addColumn('unit_id', function ($data) use ($request) {
+      $button = ($data->unit) ? $data->unit->unit : '-';
       return $button;
     })
     ->addColumn('active', function ($data) use ($request) {
