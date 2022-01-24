@@ -58,7 +58,7 @@ class KeluhanController extends Controller
     }
 
     if(auth()->user()->hasRole('JMTC')){
-      $data  = KeluhanPelanggan::doesntHave('history')->where('status_id','1')
+      $data  = KeluhanPelanggan::where('status_id','1')
       ->orderByDesc('created_at')->select('*')->filter($request);
     }
 
