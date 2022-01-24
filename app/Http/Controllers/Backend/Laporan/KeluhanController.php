@@ -47,10 +47,7 @@ class KeluhanController extends Controller
   {
 
     $data  = KeluhanPelanggan::with('unit','ruas')
-      ->whereHas('unit',function($q){
-        $q->where('unit_id',auth()->user()->id);
-      })
-      ->orderByDesc('created_at')
+      ->where('unit_id',auth()->user()->unit_id)
       ->select('*')
       ->filter($request);
 
