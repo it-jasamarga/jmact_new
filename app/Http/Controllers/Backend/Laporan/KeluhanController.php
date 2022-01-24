@@ -52,26 +52,29 @@ class KeluhanController extends Controller
       ->filter($request);
 
     if(auth()->user()->hasRole('Superadmin')){
-      $data  = KeluhanPelanggan::select('*')->filter($request);
+      $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
     }
 
     if(auth()->user()->hasRole('JMTC')){
-      $data  = KeluhanPelanggan::doesntHave('history')->where('status_id','1')->select('*')->filter($request);
+      $data  = KeluhanPelanggan::doesntHave('history')->where('status_id','1')
+      ->orderByDesc('created_at')->select('*')->filter($request);
     }
 
     if(auth()->user()->hasRole('Service Provider')){
       $data  = KeluhanPelanggan::with('history')
-      ->whereHas('history',function($q){
-        $q->orderByDesc('created_at')->get()->where('unit_id',auth()->user()->unit_id);
-      })
-      ->select('*')
-      ->filter($request);
+        ->whereHas('history',function($q){
+          $q->orderByDesc('created_at')->skip(1)->take(1)->where('unit_id',auth()->user()->unit_id);
+        })
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
     }
 
     if(auth()->user()->hasRole('Regional')){
       $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
 
       $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+        ->orderByDesc('created_at')
         ->select('*')
         ->filter($request);
     }
