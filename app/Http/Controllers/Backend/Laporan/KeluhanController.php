@@ -47,9 +47,7 @@ class KeluhanController extends Controller
   {
 
     $data  = KeluhanPelanggan::with('unit','ruas')
-      ->whereHas('unit',function($q){
-        $q->where('unit_id',auth()->user()->id);
-      })
+      ->where('unit_id',auth()->user()->unit_id)
       ->select('*')
       ->filter($request);
 
@@ -63,11 +61,11 @@ class KeluhanController extends Controller
 
     if(auth()->user()->hasRole('Service Provider')){
       $data  = KeluhanPelanggan::with('history')
-        ->whereHas('history',function($q){
-          $q->orderByDesc('created_at')->skip(1)->take(1)->where('unit_id',auth()->user()->unit_id);
-        })
-        ->select('*')
-        ->filter($request);
+      ->whereHas('history',function($q){
+        $q->orderByDesc('created_at')->get()->where('unit_id',auth()->user()->unit_id);
+      })
+      ->select('*')
+      ->filter($request);
     }
 
     if(auth()->user()->hasRole('Regional')){

@@ -61,6 +61,10 @@ class KeluhanPelanggan extends Model implements Auditable
 		return $this->hasMany(DetailHistory::class,'keluhan_id');
 	}
 
+	public function historyLast(){
+		return $this->hasOne(DetailHistory::class,'keluhan_id')->orderByDesc('id');
+	}
+
 	public function keluhanUnit(){
 		return $this->hasMany(KeluhanUnit::class,'keluhan_id');
 	}
