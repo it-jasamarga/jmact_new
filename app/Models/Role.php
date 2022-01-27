@@ -10,12 +10,17 @@ use OwenIt\Auditing\Contracts\Auditable;
 use App\Traits\GenerateUuid;
 use App\Traits\Utilities;
 
-class Role extends RoleModel implements Auditable 
+class Role extends RoleModel implements Auditable
 {
 	use \OwenIt\Auditing\Auditable;
 	use Utilities;
-     
-   	protected $table = 'roles';
+
+	protected $table = 'roles';
 	protected $guard_name = 'web';
- 	protected $fillable = ['name', 'name_alias', 'guard_name', 'active'];
+	protected $fillable = ['name', 'name_alias', 'regional_id', 'guard_name', 'active'];
+
+	public function regional()
+	{
+		return $this->belongsTo(MasterRegional::class, 'regional_id');
+	}
 }

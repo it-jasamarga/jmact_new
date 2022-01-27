@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="golongan" class="">{{ __('Golongan') }}</label>
-                    <input id="golongan" type="text" class="form-control" name="golongan" value="{{ $record->golongan }}" required autocomplete="golongan" autofocus placeholder="Golongan" maxlength="20">
+                    <input id="golongan" type="text" class="form-control" name="golongan" value="{{ $record->golongan }}" required autocomplete="golongan" autofocus placeholder="Golongan" maxlength="20" readonly>
                 </div>
             </div>
 

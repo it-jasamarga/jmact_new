@@ -108,24 +108,18 @@
         <table class="table data-thumb-view table-striped" id="listTables">
           <thead>
             <tr>
-              {{-- <th width="15">
-                <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
-                  <input type="checkbox" value="" class="group-checkable"/>
-                  <span></span>
-                </label>
-              </th> --}}
-              <th>No</th>
-              <th>No Tiket</th>
-              <th>Ruas</th>
-              <th>Lokasi</th>
-              <th>Waktu Kejadian</th>
-              <th>Nama Pelanggan</th>
-              <th>Kontak Pelanggan</th>
-              <th>Sumber</th>
-              <th>Bidang Keluhan</th>
-              <th>Golongan Kendaraan</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th id="listTables">No</th>
+              <th id="listTables">No Tiket</th>
+              <th id="listTables">Ruas</th>
+              <th id="listTables">Lokasi</th>
+              <th id="listTables">Waktu Kejadian</th>
+              <th id="listTables">Nama Pelanggan</th>
+              <th id="listTables">No Telepon</th>
+              <th id="listTables">Sumber</th>
+              <th id="listTables">Bidang Keluhan</th>
+              <th id="listTables">Golongan Kendaraan</th>
+              <th id="listTables">Status</th>
+              <th id="listTables">Action</th>
             </tr>
           </thead>
 
@@ -149,7 +143,7 @@
       { data:'lokasi_kejadian', name:'lokasi_kejadian' },
       { data:'tanggal_kejadian', name:'tanggal_kejadian' },
       { data:'nama_cust', name:'nama_cust' },
-      { data:'kontak_cust', name:'kontak_cust' },
+      { data:'no_telepon', name:'no_telepon' },
       { data:'sumber_id', name:'sumber_id' },
       { data:'bidang_id', name:'bidang_id' },
       { data:'golongan_id', name:'golongan_id' },

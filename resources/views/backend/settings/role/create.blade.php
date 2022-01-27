@@ -24,7 +24,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="name" class="">{{ __('Role') }}</label>
                             <input id="name" type="text" class="form-control" name="name" required autocomplete="off"
@@ -39,6 +39,15 @@
                                 <option value="">Pilih Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Non-Active</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="regional_id" class="">{{ __('Regional') }}</label>
+                            <select class="form-control select2" name="regional_id">
+                                {!! App\Models\MasterRegional::options('name', 'id', [], '( Pilih Unit )') !!}
                             </select>
                         </div>
                     </div>
