@@ -4,10 +4,7 @@
 <style>
   #listTables_wrapper>.dt-buttons { display: none; }
   #listTables_filter { text-align: center; }
-  #x_listTables_wrapper>.dataTables_scroll { display: none; }
-  #x_listTables_wrapper>.dataTables_info { display: none; }
-  #x_listTables_wrapper>.dataTables_paginate { display: none; }
-  #x_listTables_processing { opacity: 0; }
+</style>
 @endsection
 
 @section('content')
@@ -87,8 +84,11 @@
       { data:'status_id', name:'status_id' },
       { data:'type_id', name:'type_id' },
       { data:'action', name: 'action', searchable: false, orderable: false }
-      ]);
-
+    ]);
+    let searchInput = $('input[type=search]')[0];
+    let span = $('<span />').text('Nomor Tiket:');
+    $('#listTables_filter>label').prepend(span);
+    $(searchInput.previousSibling).remove();
 /*
   $('#listTables_wrapper').on( 'draw.dt', function () {
 

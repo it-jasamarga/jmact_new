@@ -2,14 +2,17 @@
 @extends('layouts/app')
 
 @section('styles')
-{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
+<style>
+  #listTables_wrapper>.dt-buttons { display: none; }
+  #listTables_filter { display: none; }
+</style>
 @endsection
 
 @section('toolbars')
 @endsection
 
 @section('content')
-<div class="card card-custom" data-card="true" id="kt_card_4">
+<div class="card card-custom" data-card="true">
 	<div class="card-header">
 		<div class="card-title">
 			<span class="svg-icon svg-icon-warning svg-icon-3x">
@@ -108,39 +111,37 @@
 <br>
 
 
-<div class="card card-custom" data-card="true" id="kt_card_4">
+<div class="card card-custom" data-card="true">
 	<div class="card-header row pt-5">
-			<div class="col-2">
-				<select id="categorySelector" class="form-control select2" place-holder="Pilih Kategori">
-					<option value="regional">Regional</option>
-					<option value="ro">R.O</option>
-					<option value="ruas">Ruas</option>
-				</select>
-			</div>
-			<div class="col-5">
-				<select class="form-control dashboard-filter-chart select2" id="category_id" name="category_id" place-holder="">
-					<option value=""></option>
-				</select>
-			</div>
-			<div class="col-2">
-				<select class="form-control dashboard-filter-chart select2" name="month" place-holder="Pilih Bulan">
-				@for( $i = 1; $i <= 12; $i++ )
-					<option value="{{ $i }}">{{ strftime( '%B', mktime( 0, 0, 0, $i, 1 ) ) }}</option>
-				@endfor
-				</select>
-			</div>
-			<div class="col-2">
-				<select class="form-control dashboard-filter-chart select2" name="year" place-holder="Pilih Tahun">
-				@for( $i = 2015; $i <= Date("Y")*1; $i++ )
-					<option value="{{ $i }}">{{ $i }}</option>
-				@endfor
-				</select>
-			</div>
-			<div class="col-1 text-right">
-			<a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
-			  	<i class="ki ki-arrow-down icon-nm"></i>
-			</a>
-			</div>
+		<div class="col-2">
+			<select id="categorySelector" class="form-control select2" place-holder="Pilih Kategori">
+				<option value="regional">Regional</option>
+				<option value="ro">R.O</option>
+				<option value="ruas">Ruas</option>
+			</select>
+		</div>
+		<div class="col-3">
+			<select class="form-control dashboard-filter-chart select2" id="category_id" name="category_id" place-holder="">
+				<option value=""></option>
+			</select>
+		</div>
+
+		<div class="col-3">
+			<fieldset class="form-group ">
+				<input type="text" name="date_start" data-post="tanggal_awal" class="form-control filter-control pickadate-start dashboard-filter-chart" placeholder="Waktu Dari">
+			</fieldset>
+		</div>
+		<div class="col-3">
+			<fieldset class="form-group">
+				<input type="text" name="date_end" data-post="tanggal_akhir" class="form-control filter-control pickadate-end dashboard-filter-chart" placeholder="Waktu Sampai">
+			</fieldset>
+		</div>
+
+		<div class="col-1 text-right">
+		<a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+			<i class="ki ki-arrow-down icon-nm"></i>
+		</a>
+		</div>
 	</div>
 	<div class="card-body pb-20">
 		<div class="form">
@@ -153,7 +154,7 @@
 			<div class="row mt-10 align-bottom">
 				<div class="col-8 align-bottom">
 
-					<canvas id="chart-source" width="auto" height="auto" style="position:absolute; top: 20px"></canvas>
+					<canvas id="chart-source" width="auto" height="auto"></canvas>
 
 				</div>
 				<div class="col-4">
@@ -164,8 +165,39 @@
 			</div>
 
 		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="card card-custom {{ @$class }}">
+				{{-- Body --}}
+				<div class="card-body pt-4 table-responsive" >
+					<table class="table data-thumb-view table-striped" id="listTables">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>No Tiket</th>
+							<th>Sumber</th>
+							<th>Lokasi</th>
+							<th>Waktu Kejadian</th>
+							<th>Bidang Keluhan</th>
+							<th>Golongan Kendaraan</th>
+							<th>Nama Pelanggan</th>
+							<th>Kontak Pelanggan</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+
+					</table>
+				</div>
+				</div>
+			</div>
+		</div>
+
+
+
 	</div>
 </div>
+
 @endsection
 
 @section('scripts')
@@ -188,14 +220,6 @@
 	};
 
 	window.charts = {};
-
-	let colors = [];
-	while (colors.length < 100) {
-		do {
-			var color = Math.floor((Math.random()*1000000)+1);
-		} while (colors.indexOf(color) >= 0);
-		colors.push("#" + ("000000" + color.toString(16)).slice(-6));
-	}
 
 	let updateChart = function(name, filters, stage = 0, data = {}, type = 'bar') {
 		console.log('## Update Stage #'+stage+' Chart "'+name+'"', {filters:filters, data:data});
@@ -229,9 +253,6 @@
 			var datasets = [];
 
 			$.each(data[name], function(label, value) {
-				// var color = '#'+(Array(6).fill(iColor--)).join('');
-				// var color = colors[iColor++];
-
 				var colorRef = "";
 				switch (name) {
 					case 'area':
@@ -375,7 +396,7 @@
 
 		let filterCount = Object.keys(filters).length;
 
-		// console.log("Filter: "+filterCount, {filters});
+		console.log("## Filter: "+filterCount, {filters});
 
 		if (filterCount == 4) {
 			console.log('## Applying filters');
@@ -445,30 +466,28 @@
 			checkFilters();
 		})
 
-		let today = new Date();
-
+		/* let today = new Date();
 		$('select[name="month"').val(today.getMonth()+1);
-		$('select[name="year"').val(today.getFullYear());
+		$('select[name="year"').val(today.getFullYear()); */
+
+		$('input[name="date_start"').val((new Date()).toISOString().slice(0, -17)+'-01');
+		$('input[name="date_end"').val((new Date()).toISOString().slice(0, -14));
+
 		fillCategory();
 
-
 		loadList([
-			{ data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
-			{ data:'regional_id', name:'regional_id' },
-			{ data:'user_id', name:'user_id' },
-			{ data:'sumber_id', name:'sumber_id' },
+			{ data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
+			{ data:'no_tiket', name:'no_tiket' },
 			{ data:'ruas_id', name:'ruas_id' },
+			{ data:'lokasi_kejadian', name:'lokasi_kejadian' },
 			{ data:'tanggal_kejadian', name:'tanggal_kejadian' },
+			{ data:'nama_cust', name:'nama_cust' },
+			{ data:'kontak_cust', name:'kontak_cust' },
+			{ data:'sumber_id', name:'sumber_id' },
+			{ data:'bidang_id', name:'bidang_id' },
+			{ data:'golongan_id', name:'golongan_id' },
 			{ data:'status_id', name:'status_id' },
-			],[
-			{
-				extend: 'excelHtml5',
-				text: "<i class='flaticon2-file'></i>Export</a>",
-				className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-			}
 		]);
-
-
 
 	});
 </script>

@@ -5,15 +5,73 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\KeluhanPelanggan;
+use App\Filters\KeluhanPelangganFilter;
+
 class LookupController extends Controller
 {
+
+    public function list(KeluhanPelangganFilter $request)
+    {
+  
+        $data  = KeluhanPelanggan::with('history')
+            ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
+            ->select('*')
+            ->filter($request);
+  
+        if(auth()->user()->hasRole('Superadmin')){
+            $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
+        }
+
+        if(auth()->user()->hasRole('JMTC')){
+            $data  = KeluhanPelanggan::where('status_id','1')
+                ->orderByDesc('created_at')->select('*')->filter($request);
+        }
+
+        if(auth()->user()->hasRole('Service Provider')){
+            $data  = KeluhanPelanggan::with('history')
+                ->where('unit_id',auth()->user()->unit_id)
+                ->orderByDesc('created_at')
+                ->select('*')
+                ->filter($request);
+        }
+
+        if(auth()->user()->hasRole('Regional')){
+            $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
+            $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+                ->orderByDesc('created_at')
+                ->select('*')
+                ->filter($request);
+        }
+  
+        return datatables()->of($data)
+            ->addColumn('sumber_id', function ($data) use ($request) {
+                return ($data->sumber) ? $data->sumber->description : '-';
+            })
+            ->addColumn('bidang_id', function ($data) use ($request) {
+                return ($data->bidang) ? $data->bidang->bidang : '-';
+            })
+            ->addColumn('golongan_id', function ($data) use ($request) {
+                return ($data->golongan) ? $data->golongan->golongan : '-';
+            })
+            ->addColumn('status_id', function ($data) use ($request) {
+                return ($data->status) ? $data->status->status : '-';
+            })
+            ->addIndexColumn()
+            ->make(true);
+    }
+  
+
     public function dataChart(Request $request, $name) {
         $params = $request->all();
         $return = ['status' => 'error', 'name' => $name, 'filters' => $params['filters'], 'type' => "bar"];
 
-        $month = $params['filters']['month'];
-        $year = $params['filters']['year'];
+        // $month = $params['filters']['month'];
+        // $year = $params['filters']['year'];
 
+        $date_start = $params['filters']['date_start'];
+        $date_end = $params['filters']['date_end'];
+        
         if ($name == 'area') {
             switch ($params['filters']['category']) {
                 case 'regional':

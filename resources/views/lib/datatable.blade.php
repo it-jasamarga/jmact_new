@@ -24,7 +24,7 @@
 </style>
 <script>
   function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
-    var page_url = '';
+    var page_url = '/list';
     @if(@$route)
       var page_url = "{{ (@$routeList) ? url($routeList).'/list' : route($route.'.list') }}";
     @endif
