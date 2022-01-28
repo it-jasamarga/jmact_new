@@ -159,31 +159,14 @@ class KeluhanController extends Controller
   }
 
   public function store(KeluhanPelangganRequest $request) {
-    $recordData =  KeluhanPelanggan::select('*');
-    $noData = 0;
-    if ($request->nama_cust) {
-      $recordData->where('nama_cust', $request->nama_cust);
-      $noData += 1;
-    }
-    if ($request->no_telepon) {
-      $recordData->where('no_telepon', $request->no_telepon);
-      $noData += 1;
-    }
-    if ($request->tanggal_kejadian) {
-      $recordData->where('tanggal_kejadian', $request->tanggal_kejadian);
-      $noData += 1;
-    }
-    if ($request->bidang_id) {
-      $recordData->where('bidang_id', $request->bidang_id);
-      $noData += 1;
-    }
-    if ($request->ruas_id) {
-      $recordData->where('ruas_id', $request->ruas_id);
-      $noData += 1;
-    }
+    $recordData =  KeluhanPelanggan::where('nama_cust', $request->nama_cust)
+    ->where('no_telepon', $request->no_telepon)
+    ->where('tanggal_kejadian', $request->tanggal_kejadian)
+    ->where('bidang_id', $request->bidang_id)
+    ->where('ruas_id', $request->ruas_id)->first();
 
-    if ($noData == 5) {
-      $noTiket = $recordData->first()->no_tiket;
+    if ($recordData) {
+      $noTiket = ($recordData) ? $recordData->no_tiket : '-';
       // $noTiket = makeButton([
       //   'type' => 'url',
       //   'class' => 'btn btn-link mb-5 p-0',
@@ -191,8 +174,8 @@ class KeluhanController extends Controller
       //   'label' => $recordData->first()->no_tiket,
       // ]);
       return response([
-        'messageBox' => 'Keluhan sedang di proses dengan no tiket '.$noTiket.'',
-        // 'messageBox' => "Keluhan Ini Sedang Di Proses No Tiket <a href='."url('keluhan/'.$recordData->first()->id)".'>".$recordData->first()->no_tiket."</a>",
+        // 'messageBox' => 'Keluhan sedang di proses dengan no tiket '.$noTiket.'',
+        'messageBox' => "Keluhan Ini Sedang Di Proses No Tiket <a href='".url('keluhan/'.$recordData->first()->id)."'>".$recordData->first()->no_tiket."</a>",
       ], 412);
     }
 
