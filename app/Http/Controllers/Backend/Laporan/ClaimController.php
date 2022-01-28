@@ -112,40 +112,17 @@ class ClaimController extends Controller
   }
 
   public function store(ClaimPelangganRequest $request){
-    $recordData =  ClaimPelanggan::select('*');
-    $noData = 0;
-    if ($request->nama_pelanggan) {
-      $recordData->where('nama_pelanggan', $request->nama_pelanggan);
-      $noData += 1;
-    }
-    if ($request->no_telepon) {
-      $recordData->where('no_telepon', $request->no_telepon);
-      $noData += 1;
-    }
-    if ($request->tanggal_kejadian) {
-      $recordData->where('tanggal_kejadian', $request->tanggal_kejadian);
-      $noData += 1;
-    }
-    if ($request->jenis_claim_id) {
-      $recordData->where('jenis_claim_id', $request->jenis_claim_id);
-      $noData += 1;
-    }
-    if ($request->ruas_id) {
-      $recordData->where('ruas_id', $request->ruas_id);
-      $noData += 1;
-    }
+    $recordData =  ClaimPelanggan::where('nama_pelanggan', $request->nama_pelanggan)
+    ->where('no_telepon', $request->no_telepon)
+    ->where('tanggal_kejadian', $request->tanggal_kejadian)
+    ->where('jenis_claim_id', $request->jenis_claim_id)
+    ->where('ruas_id', $request->ruas_id)->first();
 
-    if ($noData == 5) {
-      $noTiket = $recordData->first()->no_tiket;
-      // $noTiket = makeButton([
-      //   'type' => 'url',
-      //   'class' => 'btn btn-link mb-5 p-0',
-      //   'url'  => $this->route.'/'.$recordData->first()->id.'',
-      //   'label' => $recordData->first()->no_tiket,
-      // ]);
+    if ($recordData) {
+      $noTiket = ($recordData) ? $recordData->no_tiket : '-';
+      $idData = ($recordData) ? $recordData->id : '-';
       return response([
-        'messageBox' => 'Claim sedang di proses dengan no tiket '.$noTiket.'',
-        // 'messageBox' => "Keluhan Ini Sedang Di Proses No Tiket <a href='."url('keluhan/'.$recordData->first()->id)".'>".$recordData->first()->no_tiket."</a>",
+        'messageBox' => "Claim sedang di proses dengan no tiket <a href='".url('claim/'.$idData)."'>".$noTiket."</a>",
       ], 412);
     }
 
