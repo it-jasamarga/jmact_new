@@ -25,7 +25,8 @@ class MasterJenisClaimRequest extends FormRequest
     {
       $unique = ($id = request()->route('master_claim')) ? ','.$id : '';
       return [
-        'code' => 'required|string|max:255|min:1',
+        'code' => 'required|string|max:255|min:1|unique:master_jenis_claim,code'.$unique,
+        // 'code' => 'required|string|max:255|min:1',
         'jenis_claim' => 'required|string|min:1|max:255'
       ];
     }

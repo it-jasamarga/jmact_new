@@ -54,10 +54,6 @@ class UserController extends Controller
       ]);
       return $button;
     })
-    ->addColumn('regional_id', function ($data) use ($request) {
-      $button = ($data->regional) ? $data->regional->name : '-';
-      return $button;
-    })
     ->addColumn('unit_id', function ($data) use ($request) {
       $button = ($data->unit) ? $data->unit->unit : '-';
       return $button;

@@ -25,8 +25,8 @@ class MasterSumberRequest extends FormRequest
     {
       $unique = ($id = request()->route('master_sumber')) ? ','.$id : '';
       return [
-        // 'code' => 'required|string|max:255|min:1|unique:master_sumber,code'.$unique,
-        'code' => 'required|string|max:255|min:1',
+        'code' => 'required|string|max:255|min:1|unique:master_sumber,code'.$unique,
+        // 'code' => 'required|string|max:255|min:1',
         'description' => 'max:5000'
       ];
     }

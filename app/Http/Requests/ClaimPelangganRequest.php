@@ -28,7 +28,7 @@ class ClaimPelangganRequest extends FormRequest
         'nama_pelanggan' => 'required|string|min:1|max:255',
         'nik_pelanggan' => 'required|max:16',
         'alamat_pelanggan' => 'required|string|min:1|max:255',
-        'kontak_pelanggan' => 'required|string|min:1|max:255',
+        'no_telepon' => 'required|string|min:1|max:255',
         'lokasi_kejadian' => 'required|string|min:1|max:255',
         'jenis_kendaraan' => 'required|string|min:1|max:255',
         'tanggal_kejadian' => 'required|string|min:1|max:255|date_format:Y-m-d H:i:s',

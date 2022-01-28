@@ -50,14 +50,14 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="form-group">
                     <label for="regional_id" class="">{{ __('Regional') }}</label>
                     <select class="form-control select2" name="regional_id">
                         {!! App\Models\MasterRegional::options('name','id',[],'( Pilih Unit )') !!}
                     </select>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="role" class="">{{ __('Role') }}</label>

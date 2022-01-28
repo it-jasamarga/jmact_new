@@ -50,6 +50,10 @@ class RoleController extends Controller
       ]);
       return $button;
     })
+    ->addColumn('regional_id', function ($data) use ($request) {
+      $button = ($data->regional) ? $data->regional->name : '-';
+      return $button;
+    })
     ->addColumn('active', function ($data) use ($request) {
       $button = getActive($data->active);
       return $button;
@@ -98,7 +102,6 @@ class RoleController extends Controller
   }
 
   public function store(){
-
     request()->validate(['name' => 'unique:roles,name']);
     $record = Role::saveData(request());
     request()['id'] = $record->id;

@@ -84,7 +84,6 @@
               <th width="24">No</th>
               <th>Name</th>
               <th>Username/NPP</th>
-              <th>Regional</th>
               <th>Unit</th>
               <th>Status</th>
               <th>Action</th>
@@ -108,7 +107,6 @@
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
       { data:'name', name:'name' },
       { data:'username', name:'username' },
-      { data:'regional_id', name:'regional_id' },
       { data:'unit_id', name:'unit_id' },
       { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false, orderable: false }
