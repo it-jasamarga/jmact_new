@@ -8,14 +8,36 @@
         <div class="row">
 
             <div class="col-md-12">
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="tahap" class="">{{ __('Tahap') }}</label>
                     <select class="form-control select2" name="tahap">
                         <option value="">( Pilih Tahapan )</option>
                         <option value="Negosiasi/Klarifikasi">Negosiasi/Klarifikasi</option>
                         <option value="Pembayaran">Pembayaran</option>
                     </select>
-                </div>
+                </div> --}}
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Tahap</label>
+                        <div class="col-9 col-form-label">
+                            <div class="checkbox-list">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="Checkboxes4"/>
+                                    <span></span>
+                                    Negosiasi dan Klarifikasi
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="Checkboxes4"/>
+                                    <span></span>
+                                    Pembayaran
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="Checkboxes4"/>
+                                    <span></span>
+                                    Pembayaran Selesai
+                                </label>
+                            </div>
+                        </div>
+                    </div>
             </div>
 
             <div class="col-md-12">
