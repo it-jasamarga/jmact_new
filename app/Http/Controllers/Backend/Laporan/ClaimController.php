@@ -112,9 +112,10 @@ class ClaimController extends Controller
   }
 
   public function store(ClaimPelangganRequest $request){
-    $recordData =  ClaimPelanggan::where('nama_pelanggan', $request->nama_pelanggan)
+    $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
+    $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_cust)'), 'like', '%'.strtoupper($request->nama_cust).'%')
     ->where('no_telepon', $request->no_telepon)
-    ->where('tanggal_kejadian', $request->tanggal_kejadian)
+    ->whereDate('tanggal_kejadian', $tglKejadian)
     ->where('jenis_claim_id', $request->jenis_claim_id)
     ->where('ruas_id', $request->ruas_id)->first();
 
