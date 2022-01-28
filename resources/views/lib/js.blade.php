@@ -320,17 +320,16 @@
                 });
 
                 $("html, body").animate({ scrollTop: 0 }, "slow");
-
                 Swal.fire({
                   type: 'info',
                   title: 'Terjadi Kesalahan',
-                //   html: showBoxValidation(resp),
+                  html: (response.messageBox) ? response.messageBox : '',
               });
             }else{
                 Swal.fire({
                   type: 'info',
                   title: 'Terjadi Kesalahan',
-                //   html: showBoxValidation(resp),
+                  html: (response.messageBox) ? response.messageBox : '',
               });
             }
             
