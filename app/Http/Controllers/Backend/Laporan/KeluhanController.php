@@ -159,9 +159,10 @@ class KeluhanController extends Controller
   }
 
   public function store(KeluhanPelangganRequest $request) {
-    $recordData =  KeluhanPelanggan::where('nama_cust', $request->nama_cust)
+    $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
+    $recordData =  KeluhanPelanggan::where('nama_cust', 'like', '%'.$request->nama_cust.'%')
     ->where('no_telepon', $request->no_telepon)
-    ->where('tanggal_kejadian', $request->tanggal_kejadian)
+    ->whereDate('tanggal_kejadian', $tglKejadian)
     ->where('bidang_id', $request->bidang_id)
     ->where('ruas_id', $request->ruas_id)->first();
 
