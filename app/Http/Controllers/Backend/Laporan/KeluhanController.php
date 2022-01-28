@@ -167,6 +167,7 @@ class KeluhanController extends Controller
 
     if ($recordData) {
       $noTiket = ($recordData) ? $recordData->no_tiket : '-';
+      $idData = ($recordData) ? $recordData->id : '-';
       // $noTiket = makeButton([
       //   'type' => 'url',
       //   'class' => 'btn btn-link mb-5 p-0',
@@ -175,7 +176,7 @@ class KeluhanController extends Controller
       // ]);
       return response([
         // 'messageBox' => 'Keluhan sedang di proses dengan no tiket '.$noTiket.'',
-        'messageBox' => "Keluhan Ini Sedang Di Proses No Tiket <a href='".url('keluhan/'.$recordData->first()->id)."'>".$recordData->first()->no_tiket."</a>",
+        'messageBox' => "Keluhan Ini Sedang Di Proses No Tiket <a href='".url('keluhan/'.$idData)."'>".$noTiket."</a>",
       ], 412);
     }
 
