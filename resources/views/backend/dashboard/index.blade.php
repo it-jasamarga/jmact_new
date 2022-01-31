@@ -3,8 +3,8 @@
 
 @section('styles')
 <style>
-  #listTables_wrapper>.dt-buttons { display: none; }
-  #listTables_filter { display: none; }
+  #x-listTables_wrapper>.dt-buttons { display: none; }
+  #x-listTables_filter { display: none; }
 </style>
 @endsection
 
@@ -101,7 +101,7 @@
 					</div>
 				</div>
 				<div class="col-6">
-					<canvas id="chart-status-pengerjaan-regional" width="auto" height="auto"></canvas>
+					<canvas id="chart-summary" width="auto" height="auto"></canvas>
 				</div>
 			</div>
 		</div>
@@ -182,7 +182,7 @@
 							<th>Bidang Keluhan</th>
 							<th>Golongan Kendaraan</th>
 							<th>Nama Pelanggan</th>
-							<th>Kontak Pelanggan</th>
+							<th>Nomor Telepon</th>
 							<th>Status</th>
 						</tr>
 					</thead>
@@ -209,6 +209,98 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
 
 <script defer>
+
+	let updateChartSummary = function(data) {
+		console.log('## Update Chart Summary', {data});
+
+		var chartBars = {
+			overtime: {
+				label: 'Overtime',
+				color: 'red'
+			},
+			onprogress: {
+				label: 'On Progress',
+				color: 'yellow'
+			},
+			ontime: {
+				label: 'On Time',
+				color: 'blue'
+			}
+		}
+
+		var chartData = {
+			labels: [],
+			datasets: []
+		};
+
+		var chartValues = {}
+		$.each(data.regional, function(index, name) {
+			chartData.labels.push(name.replace(/^Jasamarga (.*) Tol$/, '$1'))
+			$.each(chartBars, function(key, item) {
+				(typeof chartValues[key] === 'undefined') && (chartValues[key] = []);
+				var value = (typeof data.statistic[name] === 'undefined') ? 0 : data.statistic[name][key];
+				chartValues[key].push(value);
+			})
+		})
+
+		$.each(chartBars, function(key, item) {
+			var dataset = {
+				label: item.label,
+				data: chartValues[key],
+				borderColor: item.color,
+				backgroundColor: item.color
+			}
+			chartData.datasets.push(dataset);
+		})
+
+		console.log({chartData});
+
+		var ctx = document.getElementById('chart-summary').getContext('2d');
+
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			plugins: [ChartDataLabels],
+			data: chartData,
+			options: {
+				responsive: true,
+				plugins: {
+					datalabels: {
+						anchor: 'end', // remove this line to get label in middle of the bar
+						align: 'end',
+						// formatter: (val) => (`${val} Keluhan`),
+						labels: { value: { color: '#000' } }
+					},
+
+					legend: {
+						position: 'right',
+						align: 'middle'
+					},
+					title: {
+						display: true,
+						text: 'Status Pengerjaan Regional'
+					}
+				}
+			}
+		});
+
+	}
+
+	let loadChartSummary = function() {
+
+		let url = "lookup/data/chart/summary";
+		console.log('## Load Chart Summary @ '+url);
+		$.post( url, { "_token": "{{ csrf_token() }}" }, function(resp) {
+			// success
+		})
+		.done(function(resp) {
+			if (resp.status=='ok') {
+				updateChartSummary(resp.data);
+			}
+		})
+		.fail(function(resp) { console.log("## POST Error", resp); });
+
+	}
+
 	Chart.register(ChartDataLabels);
 
 	window.appVars = {
@@ -460,6 +552,8 @@
 		}, placeholderUpdateDelay);
 		*/
 
+		loadChartSummary();
+
 		$('#categorySelector').on('change', fillCategory);
 
 		$('.dashboard-filter-chart').on('change', function () {
@@ -478,16 +572,24 @@
 		loadList([
 			{ data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
 			{ data:'no_tiket', name:'no_tiket' },
-			{ data:'ruas_id', name:'ruas_id' },
+			{ data:'sumber_id', name:'sumber_id' },
 			{ data:'lokasi_kejadian', name:'lokasi_kejadian' },
 			{ data:'tanggal_kejadian', name:'tanggal_kejadian' },
-			{ data:'nama_cust', name:'nama_cust' },
-			{ data:'kontak_cust', name:'kontak_cust' },
-			{ data:'sumber_id', name:'sumber_id' },
 			{ data:'bidang_id', name:'bidang_id' },
 			{ data:'golongan_id', name:'golongan_id' },
+			{ data:'nama_cust', name:'nama_cust' },
+			{ data:'no_telepon', name:'no_telepon' },
 			{ data:'status_id', name:'status_id' },
-		]);
+		],[
+        {
+          extend: 'excelHtml5',
+          text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
+          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+          title: 'JMACT - Data Keluhan',
+          exportOptions: {
+            // columns: ':not(:last-child)',
+          }
+        }]);
 
 	});
 </script>
