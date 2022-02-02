@@ -15,7 +15,10 @@
             </div>
         </div>
         <div class="card-body">
-            <form>
+            <form action="{{ route($route.'.detailStatus',$record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
+                <input type="hidden" name="status" value="02">
                 <div class="row">
                     <div class="col-md-5">
                         <div class="alert alert-custom alert-default" role="alert"
@@ -211,17 +214,20 @@
                     <i class="flaticon-circle"></i>
                     Kembali
                 </a>
-
-                <div class="btn btn-light-success float-right">
+                {{-- dd({{$record->status}}) --}}
+                @if (($record->status->code != "00") && ($record->status->code != "02"))
+                    
+                <div class="btn btn-light-success float-right save" data-status="approve">
                     <i class="flaticon-plus"></i>
                     Approve
                 </div>
-
-                <div class="btn btn-light-danger float-right mr-2">
+                
+                <div class="btn btn-light-danger float-right mr-2 save" data-status="reject">
                     <i class="flaticon-cancel"></i>
                     Reject
                 </div>
-
+                
+                @endif
                 {{-- @if ($record->report->count() > 0)
     <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
       <i class="flaticon2-file"></i>
@@ -243,6 +249,11 @@
 @section('scripts')
     {{-- Page js files --}}
     <script>
-
+        $(document).on("click", ".save", function(){
+            var save = $(this).data("status")
+            if (save === "reject") {
+                $("[name='status']").val("00")
+            }
+        })
     </script>
 @endsection

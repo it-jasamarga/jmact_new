@@ -25,15 +25,39 @@ class StatusSeeder extends Seeder
                 'active' => 1
             ],
             [
-                'code' => '01',
-                'status' =>'Tiket di Input',
+                'code' => '02',
+                'status' =>'Tiket diteruskan',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '03',
+                'status' =>'On Progress',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '04',
+                'status' =>'Closed',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '05',
+                'status' =>'Overtime',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '00',
+                'status' =>'Reject',
                 'type' => 2,
                 'active' => 1
             ],
             [
-                'code' => '02',
-                'status' =>'Tiket diteruskan',
-                'type' => 1,
+                'code' => '01',
+                'status' =>'Tiket di Input',
+                'type' => 2,
                 'active' => 1
             ],
             [
@@ -44,20 +68,8 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '03',
-                'status' =>'On Progress',
-                'type' => 1,
-                'active' => 1
-            ],
-            [
-                'code' => '03',
                 'status' =>'Tiket diteruskan',
                 'type' => 2,
-                'active' => 1
-            ],
-            [
-                'code' => '04',
-                'status' =>'Closed',
-                'type' => 1,
                 'active' => 1
             ],
             [
@@ -68,18 +80,18 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '05',
-                'status' =>'Overtime',
-                'type' => 1,
-                'active' => 1
-            ],
-            [
-                'code' => '05',
                 'status' =>'Proses Pembayaran',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '06',
+                'status' =>'Pembayaran Selesai',
+                'type' => 2,
+                'active' => 1
+            ],
+            [
+                'code' => '07',
                 'status' =>'Closed',
                 'type' => 2,
                 'active' => 1

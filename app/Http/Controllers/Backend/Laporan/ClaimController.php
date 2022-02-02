@@ -113,7 +113,7 @@ class ClaimController extends Controller
 
   public function store(ClaimPelangganRequest $request){
     $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
-    $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_cust)'), 'like', '%'.strtoupper($request->nama_cust).'%')
+    $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_pelanggan)'), 'like', '%'.strtoupper($request->nama_pelanggan).'%')
     ->where('no_telepon', $request->no_telepon)
     ->whereDate('tanggal_kejadian', $tglKejadian)
     ->where('jenis_claim_id', $request->jenis_claim_id)
@@ -264,6 +264,29 @@ class ClaimController extends Controller
     ];
     
     return view('backend.laporan.claim.show', $data);
+  }
+
+  public function detailStatus($id) {
+    
+    $status = MasterStatus::where('code', request()->status)->where('type', 2)->first();
+
+    $record = ClaimPelanggan::findOrFail($id);
+    
+    $record->status_id = $status->id;
+
+    $record->save();
+
+    $data['status_id'] = $status->id;
+    $data['unit_id'] = $record->unit_id;
+    $data['regional_id'] = $record->regional_id;
+
+    $recordHistory = $record->history()->create($data);
+
+    return response([
+      'status' => true,
+      'message' => 'success',
+    ]);
+    
   }
 
 }
