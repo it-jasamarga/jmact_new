@@ -111,6 +111,11 @@
       table.draw();
     });
 
+    $('.dashboard-filter-chart').on('change', function(e) {
+      console.log({e});
+      table.draw();
+    });
+
     $('.clear').on('click', function(e) {
       $(".filter-control").val('');
       $('.filter-control').val(null).trigger('change');
