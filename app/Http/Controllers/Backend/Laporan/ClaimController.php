@@ -266,7 +266,44 @@ class ClaimController extends Controller
     return view('backend.laporan.claim.show', $data);
   }
 
-  public function detailStatus($id) {
+  public function claimApprove($id) {
+    
+    $status = MasterStatus::where('code', request()->status)->where('type', 2)->first();
+
+    $record = ClaimPelanggan::findOrFail($id);
+    
+    $record->status_id = $status->id;
+
+    $record->save();
+
+    $data['status_id'] = $status->id;
+    $data['unit_id'] = $record->unit_id;
+    $data['regional_id'] = $record->regional_id;
+
+    $recordHistory = $record->history()->create($data);
+
+    return response([
+      'status' => true,
+      'message' => 'success',
+    ]);
+    
+  }
+  
+  public function claimReject($id) {
+    $record = ClaimPelanggan::findOrFail($id);
+
+    $data = [
+      'title' => 'Reject Claim',
+      'breadcrumbs' => $this->breadcrumbs,
+      'route' => $this->route,
+      'record' => $record
+    ];
+
+    return view('backend.laporan.claim.reject', $data);
+  }
+
+  public function detailReject($id) {
+    dd(request()->all());
     
     $status = MasterStatus::where('code', request()->status)->where('type', 2)->first();
 

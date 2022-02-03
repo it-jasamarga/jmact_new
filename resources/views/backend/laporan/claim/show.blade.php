@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route($route.'.detailStatus',$record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
+            <form action="{{ route($route.'.claimApprove',$record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <input type="hidden" name="status" value="02">
@@ -217,12 +217,13 @@
                 {{-- dd({{$record->status}}) --}}
                 @if (($record->status->code != "00") && ($record->status->code != "02"))
                     
-                <div class="btn btn-light-success float-right save" data-status="approve">
+                {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
+                <div class="btn btn-light-success float-right save">
                     <i class="flaticon-plus"></i>
                     Approve
                 </div>
                 
-                <div class="btn btn-light-danger float-right mr-2 save" data-status="reject">
+                <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject" data-modal="#largeModal" data-url="claim/reject/{{$record->id}}">
                     <i class="flaticon-cancel"></i>
                     Reject
                 </div>
@@ -249,11 +250,11 @@
 @section('scripts')
     {{-- Page js files --}}
     <script>
-        $(document).on("click", ".save", function(){
-            var save = $(this).data("status")
-            if (save === "reject") {
-                $("[name='status']").val("00")
-            }
-        })
+        // $(document).on("click", ".save", function(){
+        //     var save = $(this).data("status")
+        //     if (save === "reject") {
+        //         $("[name='status']").val("00")
+        //     }
+        // })
     </script>
 @endsection

@@ -23,7 +23,7 @@ class DetailHistoryRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('keluhan_history')) ? ','.$id : '';
+      $unique = ($id = request()->route('detail_history')) ? ','.$id : '';
       return [
         'ruas_id' => 'required|string',
         'unit_id' => 'required|string|min:1|max:255'
