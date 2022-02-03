@@ -28,44 +28,44 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function list(KeluhanPelangganFilter $request) {
+    // public function list(KeluhanPelangganFilter $request) {
 
-        $data  = KeluhanPelanggan::query()->filter($request);
+    //     $data  = KeluhanPelanggan::query()->filter($request);
 
-        return datatables()->of($data)
-        ->addColumn('numSelect', function ($data) use ($request) {
-            $button = '';
-            $button .= makeButton([
-              'type' => 'deleteAll',
-              'value' => $data->id
-            ]);
-            return $button;
-          })
-        ->addColumn('regional_id', function ($data) use ($request) {
-            $button = ($data->regional) ? $data->regional->name : '-';
-            return $button;
-        })
-        ->addColumn('user_id', function ($data) use ($request) {
-            $button = ($data->user) ? $data->user->name : '-';
-            return $button;
-        })
-        ->addColumn('sumber_id', function ($data) use ($request) {
-            $button = ($data->sumber) ? $data->sumber->description : '-';
-            return $button;
-        })
-        ->addColumn('ruas_id', function ($data) use ($request) {
-            $button = ($data->ruas) ? $data->ruas->name : '-';
-            return $button;
-        })
-        ->addColumn('status_id', function ($data) use ($request) {
-        $button = ($data->status) ? $data->status->status : '-';
-        return $button;
-        })
-        ->rawColumns(['numSelect','action'])
-        ->addIndexColumn()
-        ->make(true);
+    //     return datatables()->of($data)
+    //     ->addColumn('numSelect', function ($data) use ($request) {
+    //         $button = '';
+    //         $button .= makeButton([
+    //           'type' => 'deleteAll',
+    //           'value' => $data->id
+    //         ]);
+    //         return $button;
+    //       })
+    //     ->addColumn('regional_id', function ($data) use ($request) {
+    //         $button = ($data->regional) ? $data->regional->name : '-';
+    //         return $button;
+    //     })
+    //     ->addColumn('user_id', function ($data) use ($request) {
+    //         $button = ($data->user) ? $data->user->name : '-';
+    //         return $button;
+    //     })
+    //     ->addColumn('sumber_id', function ($data) use ($request) {
+    //         $button = ($data->sumber) ? $data->sumber->description : '-';
+    //         return $button;
+    //     })
+    //     ->addColumn('ruas_id', function ($data) use ($request) {
+    //         $button = ($data->ruas) ? $data->ruas->name : '-';
+    //         return $button;
+    //     })
+    //     ->addColumn('status_id', function ($data) use ($request) {
+    //     $button = ($data->status) ? $data->status->status : '-';
+    //     return $button;
+    //     })
+    //     ->rawColumns(['numSelect','action'])
+    //     ->addIndexColumn()
+    //     ->make(true);
 
-    }
+    // }
 
     public function chart1(){
         // dd(request()->all());

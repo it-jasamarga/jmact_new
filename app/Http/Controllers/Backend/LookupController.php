@@ -16,7 +16,6 @@ class LookupController extends Controller
 
     public function list(KeluhanPelangganFilter $request)
     {
-  
         $data  = KeluhanPelanggan::with('history')
             ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
             ->select('*')

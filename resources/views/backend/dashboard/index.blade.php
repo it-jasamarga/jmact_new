@@ -114,14 +114,14 @@
 <div class="card card-custom" data-card="true">
 	<div class="card-header row pt-5">
 		<div class="col-2">
-			<select id="categorySelector" class="form-control select2" place-holder="Pilih Kategori">
+			<select id="categorySelector"  data-post="category" class="form-control filter-control select2" place-holder="Pilih Kategori">
 				<option value="regional">Regional</option>
 				<option value="ro">R.O</option>
 				<option value="ruas">Ruas</option>
 			</select>
 		</div>
 		<div class="col-3">
-			<select class="form-control dashboard-filter-chart select2" id="category_id" name="category_id" place-holder="">
+			<select class="form-control filter-control dashboard-filter-chart select2" data-post="category_id" id="category_id" name="category_id" place-holder="">
 				<option value=""></option>
 			</select>
 		</div>
@@ -209,6 +209,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
 
 <script defer>
+
+	window.firstTime = true;
 
 	let updateChartSummary = function(data) {
 		console.log('## Update Chart Summary', {data});
@@ -497,6 +499,31 @@
 			updateChart('sector', filters);
 		}
 
+		if (firstTime) {
+			firstTime = false;
+			loadList([
+				{ data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
+				{ data:'no_tiket', name:'no_tiket' },
+				{ data:'sumber_id', name:'sumber_id' },
+				{ data:'lokasi_kejadian', name:'lokasi_kejadian' },
+				{ data:'tanggal_kejadian', name:'tanggal_kejadian' },
+				{ data:'bidang_id', name:'bidang_id' },
+				{ data:'golongan_id', name:'golongan_id' },
+				{ data:'nama_cust', name:'nama_cust' },
+				{ data:'no_telepon', name:'no_telepon' },
+				{ data:'status_id', name:'status_id' },
+			],[
+			{
+			extend: 'excelHtml5',
+			text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
+			className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
+			title: 'JMACT - Data Keluhan',
+			exportOptions: {
+				// columns: ':not(:last-child)',
+			}
+			}]);		
+
+		}
 	}
 
 	let fillCategory = function() {
@@ -568,28 +595,6 @@
 		$('input[name="date_end"').val((new Date()).toISOString().slice(0, -14));
 
 		fillCategory();
-
-		loadList([
-			{ data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
-			{ data:'no_tiket', name:'no_tiket' },
-			{ data:'sumber_id', name:'sumber_id' },
-			{ data:'lokasi_kejadian', name:'lokasi_kejadian' },
-			{ data:'tanggal_kejadian', name:'tanggal_kejadian' },
-			{ data:'bidang_id', name:'bidang_id' },
-			{ data:'golongan_id', name:'golongan_id' },
-			{ data:'nama_cust', name:'nama_cust' },
-			{ data:'no_telepon', name:'no_telepon' },
-			{ data:'status_id', name:'status_id' },
-		],[
-        {
-          extend: 'excelHtml5',
-          text: "<i class='flaticon2-file'></i>Export Keluhan</a>",
-          className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-          title: 'JMACT - Data Keluhan',
-          exportOptions: {
-            // columns: ':not(:last-child)',
-          }
-        }]);
 
 	});
 </script>
