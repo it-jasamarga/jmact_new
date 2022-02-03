@@ -39,8 +39,8 @@
 
       <div class="col-md-6">
           <div class="form-group">
-              <label for="kontak_cust" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
-              <input id="kontak_cust" type="text" disabled="" class="form-control" name="kontak_cust" value="{{ $record->kontak_cust }}" required autocomplete="kontak_cust" autofocus placeholder="Kontak Pelanggan" maxlength="20">
+              <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span class="text-danger">*</span>
+              <input id="no_telepon" type="text" disabled="" class="form-control" name="no_telepon" value="{{ $record->no_telepon }}" required autocomplete="no_telepon" autofocus placeholder="No Telepon" maxlength="20">
           </div>
       </div>
 

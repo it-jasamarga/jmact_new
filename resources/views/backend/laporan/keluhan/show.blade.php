@@ -125,7 +125,7 @@
             <div class="form-group">
                 <label for="lokasi_kejadian" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
                 <select disabled="" class="form-control select2" name="bidang_id">
-                    {!! App\Models\MasterBk::options('bidang','id',['selected' => $record->bidang_id],'( Bidang Keluhan )') !!}
+                    {!! App\Models\MasterBk::options('keluhan','id',['selected' => $record->bidang_id],'( Bidang Keluhan )') !!}
                 </select>
             </div>
         </div>

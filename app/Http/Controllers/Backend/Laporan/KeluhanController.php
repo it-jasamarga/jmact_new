@@ -97,7 +97,7 @@ class KeluhanController extends Controller
         return $button;
     })
     ->addColumn('bidang_id', function ($data) use ($request) {
-        $button = ($data->bidang) ? $data->bidang->bidang : '-';
+        $button = ($data->bidang) ? $data->bidang->keluhan : '-';
         return $button;
     })
     ->addColumn('status_id', function ($data) use ($request) {
