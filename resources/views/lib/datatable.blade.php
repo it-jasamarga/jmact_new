@@ -90,7 +90,7 @@
       }
     });
 	
-	console.log('## ADR', {table});
+	// console.log('## ADR', {table});
 
 
     $('.group-checkable').on('change',function() {

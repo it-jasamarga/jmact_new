@@ -15,6 +15,7 @@
 <div class="card card-custom" data-card="true">
 	<div class="card-header">
 		<div class="card-title">
+			@if ($overtime['total'] > 0)
 			<span class="svg-icon svg-icon-warning svg-icon-3x">
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -25,7 +26,12 @@
 					</g>
 				</svg>
 			</span>
-			<h6 class="card-text pl-2">Tiket Keluhan Overtime berjumlah 10</h6>
+			@endif
+			<h6 class="card-text pl-2">
+			@if ($overtime['total'] > 0)
+				Tiket Keluhan Overtime berjumlah {{ $overtime['total'] }}
+			@endif
+			</h6>
 		</div>
 		<div class="card-toolbar">
 			<a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
@@ -37,67 +43,34 @@
 		<div class="form">
 			<div class="row px-4">
 				<div class="col-6 border pt-2">
-					<h6 class="card-text pl-2">Overtime : 10</h6>
+					<h6 class="card-text pl-2">Overtime : {{ $overtime['total'] }}</h6>
 					<div class="accordion accordion-toggle-arrow pb-4" id="accordionOvertime">
-					<div class="card">
+					@foreach ($overtime['regional'] as $regional => $regional_data)
+						<div class="card">
 							<div class="card-header">
-								<div class="card-title collapsed" data-toggle="collapse" data-target="#JNT">
-									Jasamarga Nusantara Tol
+								<div class="card-title collapsed" data-toggle="collapse" data-target="#OT_{{ str_replace(' ', '', $regional) }}">
+									{{ $regional }}
 									<div class="symbol symbol-35 symbol-light-warning ml-3">
-										<span class="symbol-label font-size-h6">0</span>
+										<span class="symbol-label font-size-h6">{{ $regional_data['total'] }}</span>
 									</div>
 								</div>
 							</div>
-							<div id="JNT" class="collapse" data-parent="#accordionOvertime">
+							<div id="OT_{{ str_replace(' ', '', $regional) }}" class="collapse" data-parent="#accordionOvertime">
 								<div class="card-body pl-10">
+								@if ($regional_data['total'] == 0)
 									Tidak terdapat overtime.
+								@else
+									@foreach ($regional_data['ruas'] as $ruas => $ruas_total)
+									<div class="row">
+										<div class="col-10">{{ $ruas }}</div>
+										<div class="col-2 fw-bold text-right"><p class="mr-5">{{ $ruas_total }}</p></div>
+									</div>
+									@endforeach
+								@endif
 								</div>
 							</div>
 						</div>
-						<div class="card">
-							<div class="card-header">
-								<div class="card-title collapsed" data-toggle="collapse" data-target="#JTT">
-									Jasamarga Transjawa Tol
-									<div class="symbol symbol-35 symbol-light-warning ml-3">
-										<span class="symbol-label font-size-h6">3</span>
-									</div>
-								</div>
-							</div>
-							<div id="JTT" class="collapse" data-parent="#accordionOvertime">
-								<div class="card-body pl-10">
-									<div class="row">
-										<div class="col-10">RO1 - Jakarta - Tangerang</div>
-										<div class="col-2 fw-bold text-right"><p class="mr-5">2</p></div>
-									</div>
-									<div class="row">
-										<div class="col-10">RO2 - Prof. DR. Ir. Soedijatmo</div>
-										<div class="col-2 fw-bold text-right"><p class="mr-5">1</p></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card">
-							<div class="card-header">
-								<div class="card-title collapsed" data-toggle="collapse" data-target="#JMT">
-									Jasamarga Metropolitan Tol
-									<div class="symbol symbol-35 symbol-light-warning ml-3">
-										<span class="symbol-label font-size-h6">7</span>
-									</div>
-								</div>
-							</div>
-							<div id="JMT" class="collapse" data-parent="#accordionOvertime">
-								<div class="card-body pl-10">
-									<div class="row">
-										<div class="col-10">RO1 - Palikanci</div>
-										<div class="col-2 fw-bold text-right"><p class="mr-5">5</p></div>
-									</div>
-									<div class="row">
-										<div class="col-10">RO2 - Semarang ABC</div>
-										<div class="col-2 fw-bold text-right"><p class="mr-5">2</p></div>
-									</div>
-								</div>
-							</div>
-						</div>
+					@endforeach
 					</div>
 				</div>
 				<div class="col-6">
@@ -202,9 +175,6 @@
 
 @section('scripts')
 
-@include('backend.dashboard.partials.chart-status-pengerjaan')
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
 
@@ -255,7 +225,7 @@
 			chartData.datasets.push(dataset);
 		})
 
-		console.log({chartData});
+		// console.log({chartData});
 
 		var ctx = document.getElementById('chart-summary').getContext('2d');
 
@@ -279,7 +249,7 @@
 					},
 					title: {
 						display: true,
-						text: 'Status Pengerjaan Regional'
+						text: ''	// Status Pengerjaan Regional'
 					}
 				}
 			}
