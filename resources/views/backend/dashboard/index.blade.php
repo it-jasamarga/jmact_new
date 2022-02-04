@@ -118,6 +118,11 @@
 	</div>
 	<div class="card-body pb-20">
 		<div class="form">
+			<div id="no-chart-data" class="row" style="display:none">
+				<div class="col-12 text-center" style="color:red;font-size:.85em">
+					no data to render chart
+				</div>
+			</div>
 			<div class="row mt-10">
 
 					<canvas id="chart-area" width="auto" height="auto"></canvas>
@@ -311,139 +316,149 @@
 
 		} else if (stage == 1) {
 
-			var maxValue = Math.max.apply(Math, Object.values(data[name]));
+			if (Object.entries(data).length == 0) {
+				$('#no-chart-data').show();
+				$(document.getElementById(chartName)).hide();
+				console.log('## Data empty => hide chart-'+name+' canvas');
+			} else {
+				$('#no-chart-data').hide();
+				$(document.getElementById(chartName)).show();
+				console.log('## Data available => show chart-'+name+' canvas');
 
-			var iColor = 0;
-			var datasets = [];
+				var maxValue = Math.max.apply(Math, Object.values(data[name]));
 
-			$.each(data[name], function(label, value) {
-				var colorRef = "";
-				switch (name) {
-					case 'area':
-						colorRef = $('#categorySelector').children("option:selected").val()=='ruas' ? ("Chart Area "+$('#category_id').children("option:selected").text()) : ("Chart Area "+$('#category_id').children("option:selected").text()+" - "+label);
-						break;
-					case 'source':
-						colorRef = ("Chart Source "+label);
-						break;
-					case 'sector':
-						colorRef = ("Chart Sector "+label);
-						break;
-				}
+				var iColor = 0;
+				var datasets = [];
 
-				var color = typeof appVars[colorRef] !== 'undefined' ? appVars[colorRef] : "RGBA(0,0,0,0.1)";
-				if (typeof appVars[colorRef] === 'undefined') console.log ('!! ERROR: No color for "'+ colorRef + '"')
-				// console.log('## ', colorRef, color);
+				$.each(data[name], function(label, value) {
+					var colorRef = "";
+					switch (name) {
+						case 'area':
+							colorRef = $('#categorySelector').children("option:selected").val()=='ruas' ? ("Chart Area "+$('#category_id').children("option:selected").text()) : ("Chart Area "+$('#category_id').children("option:selected").text()+" - "+label);
+							break;
+						case 'source':
+							colorRef = ("Chart Source "+label);
+							break;
+						case 'sector':
+							colorRef = ("Chart Sector "+label);
+							break;
+					}
+
+					var color = typeof appVars[colorRef] !== 'undefined' ? appVars[colorRef] : "RGBA(0,0,0,0.1)";
+					if (typeof appVars[colorRef] === 'undefined') console.log ('!! ERROR: No color for "'+ colorRef + '"')
+					// console.log('## ', colorRef, color);
+
+					if (type=='bar') {
+						var dataset = {};
+						var values = [];
+						values.push(value);
+						dataset['label'] = label;
+						dataset['data'] = values;
+						dataset['borderColor'] = color;
+						dataset['backgroundColor'] = color;
+						datasets.push(dataset);
+					}
+				})
+
+				// console.log({datasets});
+
+				let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "Octtober", "November", "December"];
+
+				var oChart = false;
+				var ctx = document.getElementById(chartName).getContext('2d');
 
 				if (type=='bar') {
-					var dataset = {};
-					var values = [];
-					values.push(value);
-					dataset['label'] = label;
-					dataset['data'] = values;
-					dataset['borderColor'] = color;
-					dataset['backgroundColor'] = color;
-					datasets.push(dataset);
-				}
-			})
-
-			// console.log({datasets});
-
-			let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "Octtober", "November", "December"];
-
-			var oChart = false;
-			var ctx = document.getElementById(chartName).getContext('2d');
-
-			if (type=='bar') {
-				var labels = [];
-				var title = 'Chart';
-				switch (name) {
-					case 'area':
-						title = $('#categorySelector').children("option:selected").text() +' '+ $('#category_id').children("option:selected").text();
-						break;
-					case 'source':
-						title = 'Grafik Sumber Laporan';
-						break;
-					case 'sector':
-						title = 'Grafik Bidang Keluhan';
-						break;
-				}
-				labels.push(title);	//+' - '+months[filters.month-1]+' '+filters.year);
-
-				var data = {
-					labels: labels,
-					datasets: datasets
-				};
-
-				var oChart = new Chart(ctx, {
-					type: 'bar',
-					plugins: [ChartDataLabels],
-					data: data,
-					options: {
-						"animation": {
-							"duration": 1,
-							"onComplete": function() {
-								// console.log('## Chart rendered', this);
-							}
-						},
-						showDatapoints: true,
-						responsive: true,
-						// events: [],
-						scales: {
-							y: { max: (maxValue+10) }
-						},
-						interaction: {
-							mode: 'index'
-						},
-						plugins: {
-
-							datalabels: {
-								anchor: 'end', // remove this line to get label in middle of the bar
-								align: 'end',
-								// formatter: (val) => (`${val} Keluhan`),
-								labels: { value: { color: '#000' } }
-							},
-
-							legend: { display: true, position: 'right' },
-							title: { display: false }
-						}
+					var labels = [];
+					var title = 'Chart';
+					switch (name) {
+						case 'area':
+							title = $('#categorySelector').children("option:selected").text() +' '+ $('#category_id').children("option:selected").text();
+							break;
+						case 'source':
+							title = 'Grafik Sumber Laporan';
+							break;
+						case 'sector':
+							title = 'Grafik Bidang Keluhan';
+							break;
 					}
-				});
-			} else if (type=='pie') {
-				var colors = [];
-				$.each(data[name], function(name, value) {
-					// console.log('==', 'Chart Sector '+name);
-					colors.push(appVars['Chart Sector '+name])
-				});
-				// console.log('==', {colors});
-				var oChart = new Chart(ctx, {
-					type: 'pie',
-					data: {
-						labels: Object.keys(data[name]),
-						datasets: [{
-							label: '',
-							data: Object.values(data[name]),
-							backgroundColor: colors,
-							hoverOffset: 4
-						}]
-					},
-					options: {
-						responsive: true,
-						plugins: {
-							legend: {
-								position: 'right',
+					labels.push(title);	//+' - '+months[filters.month-1]+' '+filters.year);
+
+					var data = {
+						labels: labels,
+						datasets: datasets
+					};
+
+					var oChart = new Chart(ctx, {
+						type: 'bar',
+						plugins: [ChartDataLabels],
+						data: data,
+						options: {
+							"animation": {
+								"duration": 1,
+								"onComplete": function() {
+									// console.log('## Chart rendered', this);
+								}
 							},
-							title: {
-								font: {weight: 'normal'},
-								position: 'bottom',
-								display: true,
-								text: 'Grafik Bidang Keluhan'
+							showDatapoints: true,
+							responsive: true,
+							// events: [],
+							scales: {
+								y: { max: (maxValue+10) }
+							},
+							interaction: {
+								mode: 'index'
+							},
+							plugins: {
+
+								datalabels: {
+									anchor: 'end', // remove this line to get label in middle of the bar
+									align: 'end',
+									// formatter: (val) => (`${val} Keluhan`),
+									labels: { value: { color: '#000' } }
+								},
+
+								legend: { display: true, position: 'right' },
+								title: { display: false }
 							}
 						}
-					}
-				});
+					});
+				} else if (type=='pie') {
+					var colors = [];
+					$.each(data[name], function(name, value) {
+						// console.log('==', 'Chart Sector '+name);
+						colors.push(appVars['Chart Sector '+name])
+					});
+					// console.log('==', {colors});
+					var oChart = new Chart(ctx, {
+						type: 'pie',
+						data: {
+							labels: Object.keys(data[name]),
+							datasets: [{
+								label: '',
+								data: Object.values(data[name]),
+								backgroundColor: colors,
+								hoverOffset: 4
+							}]
+						},
+						options: {
+							responsive: true,
+							plugins: {
+								legend: {
+									position: 'right',
+								},
+								title: {
+									font: {weight: 'normal'},
+									position: 'bottom',
+									display: true,
+									text: 'Grafik Bidang Keluhan'
+								}
+							}
+						}
+					});
+				}
+
+				if (oChart) window.charts[chartName] = oChart;
 			}
-
-			if (oChart) window.charts[chartName] = oChart;
 
 		}
 	}
