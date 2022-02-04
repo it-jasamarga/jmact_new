@@ -29,17 +29,17 @@
                             <div class="checkbox-list">
                                 <label class="checkbox">
                                     {{-- dd({{$record->status}}) --}}
-                                    <input type="checkbox" name="Checkboxes4" class="form-control" {{($record->status->code == "03") ? "" : "disabled"}}/>
+                                    <input type="checkbox" class="form-control" {{($record->status->code == "03") ? "" : "disabled"}} {{($record->status->code == "04") || ($record->status->code == "05") || ($record->status->code == "06") ? "checked" : ""}}/>
                                     <span></span>
                                     Negosiasi dan Klarifikasi
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="Checkboxes4" class="form-control" {{($record->status->code == "04") ? "" : "disabled"}}/>
+                                    <input type="checkbox" class="form-control" {{($record->status->code == "04") ? "" : "disabled"}} {{($record->status->code == "05") || ($record->status->code == "06") ? "checked" : ""}}/>
                                     <span></span>
-                                    Pembayaran
+                                    Proses Pembayaran
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="Checkboxes4" class="form-control" {{($record->status->code == "05") ? "" : "disabled"}}/>
+                                    <input type="checkbox" class="form-control" {{($record->status->code == "05") ? "" : "disabled"}} {{($record->status->code == "06") ? "checked" : ""}}/>
                                     <span></span>
                                     Pembayaran Selesai
                                 </label>
@@ -67,8 +67,11 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="nominal" class="">{{ __('Nominal Claim (Rp)') }}</label><span class="text-danger">*</span>
-                    <input id="nominal" type="text" class="form-control" name="nominal" value="{{ old('nominal') }}" required autocomplete="nominal" autofocus placeholder="Nominal Claim (Rp)" maxlength="30" {{($record->status->code == "03" || $record->status->code == "04") ? "disabled" : ""}}>
+                    <label for="nominal_final" class="">{{ __('Nominal Claim (Rp)') }}</label><span class="text-danger">*</span>
+                    <input id="nominal_final" type="text" class="form-control" name="nominal_final" value="{{$record->nominal_final}}" 
+                    required autocomplete="nominal_final" autofocus placeholder="Nominal Claim (Rp)" maxlength="30" 
+                    {{($record->status->code == "03" || $record->status->code == "04" || $record->status->code == "06") ? "disabled" : ""}}
+                    oninput="this.value = convertToRupiah(this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1'))">
                 </div>
             </div>
 

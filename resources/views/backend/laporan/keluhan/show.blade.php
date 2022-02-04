@@ -16,7 +16,7 @@
  <div class="card-body">
  <form >
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="alert alert-custom alert-default" role="alert" style="max-height: 350px;overflow-y:visible">
                 <div class="timeline timeline-2">
                     <div class="timeline-bar"></div>
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
 
         </div>
     </div>

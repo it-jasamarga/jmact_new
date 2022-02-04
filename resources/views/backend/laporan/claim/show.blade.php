@@ -15,12 +15,13 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route($route.'.claimApprove',$record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
+            <form action="{{ route($route . '.claimDetail', $record->id) }}" method="POST" id="formData"
+                enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <input type="hidden" name="status" value="02">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="alert alert-custom alert-default" role="alert"
                             style="max-height: 350px;overflow-y:visible">
                             <div class="timeline timeline-2">
@@ -42,8 +43,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7">
-
+                    <div class="col-md-6">
+                        @if ($record->checkStatusDynamic(['00']) === 'true')
+                            <div class="alert alert-custom alert-default" role="alert">
+                                <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
+                                <div class="alert-text">
+                                    {{ $record->keterangan_reject }}
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="separator separator-solid mt-2 mb-4"></div>
@@ -176,15 +184,15 @@
                                 name="keterangan_claim" value="{{ $record->keterangan_claim }}" required
                                 autocomplete="keterangan_claim" autofocus placeholder="Claim" maxlength="20">
                         </div> --}}
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="jenis_claim_id" class="">{{ __('Claim') }}</label><span
-                                    class="text-danger">*</span>
-                                <select disabled="" class="form-control select2" id="jenis_claim" name="jenis_claim_id">
-                                    {!! App\Models\MasterJenisClaim::options('jenis_claim', 'id', ['selected' => $record->jenis_claim_id], '( Ruas Jalan Tol )') !!}
-                                </select>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="jenis_claim_id" class="">{{ __('Claim') }}</label><span
+                                class="text-danger">*</span>
+                            <select disabled="" class="form-control select2" id="jenis_claim" name="jenis_claim_id">
+                                {!! App\Models\MasterJenisClaim::options('jenis_claim', 'id', ['selected' => $record->jenis_claim_id], '( Ruas Jalan Tol )') !!}
+                            </select>
                         </div>
+                    </div>
                     {{-- </div> --}}
 
                     <div class="col-md-6">
@@ -201,7 +209,8 @@
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="keterangan_claim" class="">{{ __('Keterangan Claim') }}</label><span
+                            <label for="keterangan_claim"
+                                class="">{{ __('Keterangan Claim') }}</label><span
                                 class="text-danger">*</span>
                             <textarea name="keterangan_claim" disabled="" class="form-control"
                                 placeholder="Keterangan Claim">{{ $record->keterangan_claim }}</textarea>
@@ -214,20 +223,21 @@
                     <i class="flaticon-circle"></i>
                     Kembali
                 </a>
-                {{-- dd({{$record->status}}) --}}
-                @if (($record->status->code != "00") && ($record->status->code != "02"))
-                    
-                {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
-                <div class="btn btn-light-success float-right save">
-                    <i class="flaticon-plus"></i>
-                    Approve
-                </div>
-                
-                <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject" data-modal="#largeModal" data-url="claim/reject/{{$record->id}}">
-                    <i class="flaticon-cancel"></i>
-                    Reject
-                </div>
-                
+                {{-- {{dd($record->checkStatus())}} --}}
+                @if ($record->checkStatus() === 'false')
+
+                    {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
+                    <div class="btn btn-light-success float-right save">
+                        <i class="flaticon-plus"></i>
+                        Approve
+                    </div>
+
+                    <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
+                        data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
+                        <i class="flaticon-cancel"></i>
+                        Reject
+                    </div>
+
                 @endif
                 {{-- @if ($record->report->count() > 0)
     <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
@@ -256,5 +266,8 @@
         //         $("[name='status']").val("00")
         //     }
         // })
+        $(document).ready(function() {
+            $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"))
+        })
     </script>
 @endsection

@@ -46,4 +46,26 @@ class ClaimPelanggan extends Model implements Auditable
 	public function history(){
 		return $this->hasMany(DetailHistory::class,'claim_id');
 	}
+
+	public function checkStatus(){
+		$return = "false";
+		$data = $this->history()->whereHas('status', function($q){
+			$q->whereIn('code',['00', '02'])->where('type', 2);
+		})->first();
+		if($data) {
+			$return = "true";
+		}
+		return $return;
+	}
+
+	public function checkStatusDynamic($code){
+		$return = "false";
+		$data = $this->history()->whereHas('status', function($q) use($code){
+			$q->whereIn('code',[$code])->where('type', 2);
+		})->first();
+		if($data) {
+			$return = "true";
+		}
+		return $return;
+	}
 }

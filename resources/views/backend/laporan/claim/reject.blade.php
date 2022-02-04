@@ -1,4 +1,4 @@
-<form action="{{ route($route.'.detailReject',$record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
+<form action="{{ route($route.'.claimDetail',$record->id) }}" method="POST" id="formDataReject" enctype="multipart/form-data">
     @method('PUT')
     @csrf
     <input type="hidden" name="status" value="00">
@@ -10,8 +10,8 @@
            
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="catatan_reject" class="">{{ __('Catatan Reject') }}</label><span class="text-danger">*</span>
-                    <textarea name="catatan_reject" class="form-control" placeholder="Catatan Reject" rows="4"></textarea>
+                    <label for="keterangan_reject" class="">{{ __('Catatan Reject') }}</label><span class="text-danger">*</span>
+                    <textarea name="keterangan_reject" class="form-control" placeholder="Catatan Reject" rows="4"></textarea>
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
         Tutup
     </button>
     {{-- @if(!$record->report()->orderByDesc('created_at')->first()) --}}
-    <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
+    <button type="button" class="btn btn-light-success font-weight-bold mr-2 save" data-form="formDataReject">
         <i class="flaticon-add-circular-button"></i>
         Simpan
     </button>
