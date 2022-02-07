@@ -90,7 +90,7 @@
       }
     });
 	
-	console.log('## ADR', {table});
+	// console.log('## ADR', {table});
 
 
     $('.group-checkable').on('change',function() {
@@ -108,6 +108,11 @@
     });
 
     $('.filter-data').on('click', function(e) {
+      table.draw();
+    });
+
+    $('.dashboard-filter-chart').on('change', function(e) {
+      console.log({e});
       table.draw();
     });
 

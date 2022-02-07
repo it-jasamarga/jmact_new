@@ -36,7 +36,7 @@
                                 class="text-danger">*</span>
                             <input id="nik_pelanggan" type="text" class="form-control" name="nik_pelanggan"
                                 value="{{ old('nik_pelanggan') }}" required autocomplete="off" autofocus
-                                placeholder="NIK Pelanggan" maxlength="20">
+                                placeholder="NIK Pelanggan" maxlength="16" oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@
                                 class="text-danger">*</span>
                             <input id="no_telepon" type="text" class="form-control" name="no_telepon"
                                 value="{{ old('no_telepon') }}" required autocomplete="off" autofocus
-                                placeholder="No Telepon" maxlength="20">
+                                placeholder="No Telepon" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>
                     </div>
 
@@ -183,7 +183,8 @@
                                 class="text-danger">*</span>
                             <input id="nominal_customer" type="text" class="form-control" name="nominal_customer"
                                 value="{{ old('nominal_customer') }}" required autocomplete="off" autofocus
-                                placeholder="Besaran claim yang diajukan" maxlength="20">
+                                placeholder="Besaran claim yang diajukan" maxlength="20" 
+                                oninput="this.value = convertToRupiah(this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1'))">
                         </div>
                     </div>
 
@@ -228,6 +229,10 @@
 @section('scripts')
     {{-- Page js files --}}
     <script>
-
+        // $(document).on("change", "#nominal_customer", function(){
+        //     var input = $(this).val()
+        //     console.log(input)
+        //     $("[name='nominal_customer']").val(convertToRupiah(input))
+        // })
     </script>
 @endsection

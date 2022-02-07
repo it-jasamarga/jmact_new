@@ -70,6 +70,8 @@ Route::group(['middleware' => 'auth'], function() {
   			Route::put('claim/teruskan/{id}', 'ClaimController@history')->name('claim.history');
   			Route::get('claim/{id}/edit-stage', 'ClaimController@editStage')->name('claim.editStage');
   			Route::put('claim/tahapan/{id}', 'ClaimController@historyStage')->name('claim.historyStage');
+  			Route::get('claim/reject/{id}', 'ClaimController@claimReject')->name('claim.claimReject');
+  			Route::put('claim/detail/{id}', 'ClaimController@claimDetail')->name('claim.claimDetail');
 			Route::get('claim/list', 'ClaimController@list')->name('claim.list');
 			Route::resource('claim', 'ClaimController');
 

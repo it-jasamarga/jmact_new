@@ -97,7 +97,7 @@ class KeluhanController extends Controller
         return $button;
     })
     ->addColumn('bidang_id', function ($data) use ($request) {
-        $button = ($data->bidang) ? $data->bidang->bidang : '-';
+        $button = ($data->bidang) ? $data->bidang->keluhan : '-';
         return $button;
     })
     ->addColumn('status_id', function ($data) use ($request) {
@@ -160,7 +160,7 @@ class KeluhanController extends Controller
 
   public function store(KeluhanPelangganRequest $request) {
     $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
-    $recordData =  KeluhanPelanggan::where('nama_cust', 'like', '%'.$request->nama_cust.'%')
+    $recordData =  KeluhanPelanggan::where(DB::raw('UPPER(nama_cust)'), 'like', '%'.strtoupper($request->nama_cust).'%')
     ->where('no_telepon', $request->no_telepon)
     ->whereDate('tanggal_kejadian', $tglKejadian)
     ->where('bidang_id', $request->bidang_id)

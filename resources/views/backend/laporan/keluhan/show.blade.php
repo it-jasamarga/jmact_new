@@ -16,7 +16,7 @@
  <div class="card-body">
  <form >
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="alert alert-custom alert-default" role="alert" style="max-height: 350px;overflow-y:visible">
                 <div class="timeline timeline-2">
                     <div class="timeline-bar"></div>
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
 
         </div>
     </div>
@@ -66,8 +66,8 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label for="kontak_cust" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
-                <input id="kontak_cust" type="text" disabled="" class="form-control" name="kontak_cust" value="{{ $record->kontak_cust }}" required autocomplete="kontak_cust" autofocus placeholder="Kontak Pelanggan" maxlength="20">
+                <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span class="text-danger">*</span>
+                <input id="no_telepon" type="text" disabled="" class="form-control" name="no_telepon" value="{{ $record->no_telepon }}" required autocomplete="no_telepon" autofocus placeholder="No Telepon" maxlength="20">
             </div>
         </div>
 
@@ -125,7 +125,7 @@
             <div class="form-group">
                 <label for="lokasi_kejadian" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
                 <select disabled="" class="form-control select2" name="bidang_id">
-                    {!! App\Models\MasterBk::options('bidang','id',['selected' => $record->bidang_id],'( Bidang Keluhan )') !!}
+                    {!! App\Models\MasterBk::options('keluhan','id',['selected' => $record->bidang_id],'( Bidang Keluhan )') !!}
                 </select>
             </div>
         </div>

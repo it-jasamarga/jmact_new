@@ -6,9 +6,12 @@ use Carbon\Carbon;
 
 class KeluhanPelangganFilter extends QueryFilters
 {
+    public $http;
+
     protected $request;
     public function __construct(Request $request)
     {
+        $this->http = $request;
         $this->request = $request;
         parent::__construct($request);
     }
@@ -37,6 +40,23 @@ class KeluhanPelangganFilter extends QueryFilters
 
     public function bidang_id($term) {
         return $this->builder->where('bidang_id', $term);
+    }
+
+    public function category($term) {
+        $dashfilter = [];
+        switch($term) {
+            case 'regional':
+                $ro = \App\Models\MasterRo::where('regional_id', $this->http->input('category_id'))->get(['id'])->pluck('id');
+                $dashfilter = \App\Models\MasterRuas::whereIn('ro_id', $ro)->get(['id'])->pluck('id');
+                break;
+            case 'ro':
+                $dashfilter = \App\Models\MasterRuas::where('ro_id', $this->http->input('category_id'))->get(['id'])->pluck('id');
+                break;
+            case 'ruas':
+                $dashfilter[] = $this->http->input('category_id');
+                break;
+        }
+        return $this->builder->whereIn('ruas_id', $dashfilter);
     }
 
     public function ruas_id($term) {
