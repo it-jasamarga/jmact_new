@@ -192,7 +192,7 @@ class ClaimController extends Controller
     $record = ClaimPelanggan::findOrFail($id);
     
     $request['status_id'] = MasterStatus::where('code','03')->where('type', 2)->first()->id;
-    $request['unit_id'] = $record->unit_id;
+    // $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
 
     $record->status_id = $request->status_id;

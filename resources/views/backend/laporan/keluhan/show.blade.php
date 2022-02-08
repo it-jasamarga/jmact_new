@@ -26,7 +26,7 @@
                                 <div class="timeline-badge bg-success"></div>
                                 <div class="timeline-content d-flex align-items-center justify-content-between">
                                     <span class="mr-3">
-                                        <a href="#">Status Tiket {{ $record->no_tiket }} {{ $value->status->status }} </a> 
+                                        <a href="#">Status Tiket {{ $record->no_tiket }} {{ $value->status->status }} oleh {{ $record->user->username }} </a> 
                                     </span>
                                     <span class="text-muted text-right">{{ $value->created_at }}</span>
                                 </div>

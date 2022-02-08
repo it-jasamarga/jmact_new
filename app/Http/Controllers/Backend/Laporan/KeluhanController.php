@@ -71,7 +71,7 @@ class KeluhanController extends Controller
     }
 
     if(auth()->user()->hasRole('Regional')){
-      $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
+      $regionalId = (auth()->user()) ? auth()->user()->first()->regional_id : null;
 
       $data  = KeluhanPelanggan::where('regional_id',$regionalId)
         ->orderByDesc('created_at')
