@@ -75,4 +75,4 @@ RUN chmod +x ./docker/run
 
 ENTRYPOINT ["bash", "docker/run"]
 
-EXPOSE 8181
+EXPOSE 8188
