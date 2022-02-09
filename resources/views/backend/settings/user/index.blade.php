@@ -81,12 +81,12 @@
                   <span></span>
                 </label>
               </th> --}}
-              <th width="24">No</th>
-              <th>Name</th>
-              <th>Username/NPP</th>
-              <th>Unit</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th id="listTables">No</th>
+              <th id="listTables">Name</th>
+              <th id="listTables">Username/NPP</th>
+              <th id="listTables">Unit</th>
+              <th id="listTables">Status</th>
+              <th id="listTables">Action</th>
             </tr>
           </thead>
 
