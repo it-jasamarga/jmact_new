@@ -6,12 +6,19 @@
   $(document).ready(function(){
         const firebaseConfig = {
             apiKey: "AIzaSyB86lcBroscc6kvR4GnOsPbQgQk7e1B6aI",
+
             authDomain: "jm-act.firebaseapp.com",
+
             projectId: "jm-act",
+
             storageBucket: "jm-act.appspot.com",
+
             messagingSenderId: "438056594649",
-            appId: "1:438056594649:web:cfd66d006f17a3f67ca2c8",
-            measurementId: "G-B1SMLNPGW3"
+
+            appId: "1:438056594649:web:523a0dca7003cb7a7ca2c8",
+
+            measurementId: "G-TRQ52YCDJE"
+
         };
 
         // Initialize Firebase
@@ -29,7 +36,7 @@
                 }).then(function(token) {
                     $.post('{{ route("users.device") }}', { _token: "{{ csrf_token() }}", device_id: token });
                 }).catch(function (err) {
-                    
+                    console.log('eerr',err)
                 });
             });
 

@@ -29,7 +29,7 @@ class KeluhanController extends Controller
 
   public function __construct(){
     $this->route = 'keluhan';
-    // $this->firebase = new HelperFirestore();
+    $this->firebase = new HelperFirestore();
   }
 
   public function index(Request $request)
@@ -39,7 +39,7 @@ class KeluhanController extends Controller
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];
-
+    
     return view('backend.laporan.keluhan.index', $data);
   }
 
@@ -199,11 +199,11 @@ class KeluhanController extends Controller
         'created_by' => $request->user_id
       ]);
       
-      // $this->firebase->sendGroup(
-      //   $record, 
-      //   'JMACT - Keluhan Kepada '.$record->unit->unit, 
-      //   'Proses Keluhan Dengan No Tiket '.$record->no_tiket
-      // );
+      $this->firebase->sendGroup(
+        $record, 
+        'JMACT - Keluhan Kepada '.$record->unit->unit, 
+        'Proses Keluhan Dengan No Tiket '.$record->no_tiket
+      );
       
       $record->history()->create([
         'ruas_id' => $record->ruas_id,
