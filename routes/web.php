@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Route::get('/test', function(Request $request) {
+// 	$description = $request->input('description');
+// 	if ($description) {
+// 		$ret = \App\Models\TicketCounter::reserve($description, 'K', 'A', '01');
+// 		if ($ret['result']) {
+// 			$no_tiket = $ret['data']['no_tiket'];
+// 			dd('no_tiket: '.$no_tiket);
+// 		} else {
+// 			dd('error', $ret);
+// 		}
+// 	} else {
+// 		dd('Required parameter: description');
+// 	}
+// });
+
 
 Route::post('forgot-password', 'Auth\ForgotPasswordController@store');
 Route::post('reset-password', 'Auth\ResetPasswordController@store');
