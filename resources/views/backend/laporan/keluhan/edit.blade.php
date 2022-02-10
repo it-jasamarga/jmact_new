@@ -15,11 +15,8 @@
                         $ro = ($q->ro) ? $q->ro->name : '-';
                         $regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
                             return $q->name.' - '.$ro.' - '.$regional;
-                        },'id',['filters' => [function($q) use($record){
-                            $q->whereHas('ro',function($q1) use($record){
-                                $q1->where('regional_id',$record->ruas->ro->regional->id);
-                            });
-                        }]],'( Ruas Jalan Tol )') !!}
+                        },'id',[],
+                        '( Ruas Jalan Tol )') !!}
                     </select>
                 </div>
             </div>
