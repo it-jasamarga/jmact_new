@@ -15,6 +15,11 @@
  </div>
  <div class="card-body">
  <form >
+     <div class="row">
+         <div class="col-12">
+             <canvas id="ann" class="col-12" height="auto" style="border:#EEE solid 1px" />
+         </div>
+     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="alert alert-custom alert-default" role="alert" style="max-height: 350px;overflow-y:visible">
@@ -171,7 +176,8 @@
 
 @section('scripts')
 {{-- Page js files --}}
-<script>
-  
+<script src="../js/ann.js"></script>
+<script defer>
+$(function () { ann.do("Agent", "Spv JMTC", "Service Provider", "Regional"); });
 </script>
 @endsection
