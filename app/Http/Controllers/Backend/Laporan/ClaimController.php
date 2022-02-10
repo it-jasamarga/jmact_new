@@ -227,6 +227,20 @@ class ClaimController extends Controller
 
   public function historyStage(Request $request, $id) {
     // dd(request()->all());
+    if(request()->status == '04'){
+      $this->validate($request,[
+        'negosiasi_dan_klarifikasi' => 'required'
+      ]);
+    }elseif(request()->status == '05'){
+      $this->validate($request,[
+        'proses_pembayaran' => 'required'
+      ]);
+    }elseif(request()->status == '06'){
+      $this->validate($request,[
+        'pembayaran_selesai' => 'required',
+        'nominal_final' => 'required'
+      ]);
+    }
     $record = ClaimPelanggan::findOrFail($id);
     
     $request['status_id'] = MasterStatus::where('code',$request->status)->where('type', 2)->first()->id;
@@ -240,6 +254,9 @@ class ClaimController extends Controller
     $record->save();
 
     unset($request['status']);
+    unset($request['negosiasi_dan_klarifikasi']);
+    unset($request['proses_pembayaran']);
+    unset($request['pembayaran_selesai']);
     unset($request['nominal_final']);
     $recordHistory = $record->history()->create($request->all());
     
@@ -273,6 +290,7 @@ class ClaimController extends Controller
   }
 
   public function claimDetail($id) {
+
     $status = MasterStatus::where('code', request()->status)->where('type', 2)->first();
 
     $record = ClaimPelanggan::findOrFail($id);

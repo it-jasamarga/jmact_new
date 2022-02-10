@@ -74,7 +74,7 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '04',
-                'status' =>'Tahap Klarifikasi dan Negosiasi',
+                'status' =>'Tahap Negosiasi dan Klarifikasi',
                 'type' => 2,
                 'active' => 1
             ],

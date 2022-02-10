@@ -58,8 +58,9 @@ class KeluhanController extends Controller
     }
 
     if(auth()->user()->hasRole('JMTC')){
-      $data  = KeluhanPelanggan::where('status_id','1')
-      ->orderByDesc('created_at')->select('*')->filter($request);
+      $data  = KeluhanPelanggan::
+      // where('status_id','1')
+      orderByDesc('created_at')->select('*')->filter($request);
     }
 
     if(auth()->user()->hasRole('Service Provider')){
@@ -71,7 +72,7 @@ class KeluhanController extends Controller
     }
 
     if(auth()->user()->hasRole('Regional')){
-      $regionalId = (auth()->user()) ? auth()->user()->first()->regional_id : null;
+      $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
       $data  = KeluhanPelanggan::where('regional_id',$regionalId)
         ->orderByDesc('created_at')
