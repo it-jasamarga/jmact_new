@@ -21,52 +21,72 @@ class SumberSeeder extends Seeder
         $array = [
             [
                 'code' => 'A',
-                'description' =>'Call Center 14080',
+                'description' => 'Call Center 14080',
+                'keluhan' => true,
+                'claim' => true,
                 'active' => 1
             ],
             [
                 'code' => 'B',
                 'description' =>'Travoy',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'C',
-                'description' =>'Twitter',
+                'description' => 'Twitter',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'D',
-                'description' =>'Instagram',
+                'description' => 'Instagram',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'E',
-                'description' =>'Facebook',
+                'description' => 'Facebook',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'F',
-                'description' =>'Youtube',
+                'description' => 'Youtube',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'G',
-                'description' =>'Media Cetak',
+                'description' => 'Media Cetak',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'H',
-                'description' =>'Laporan Petugas',
+                'description' => 'Laporan Petugas',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'I',
-                'description' =>'Whatsapp',
+                'description' => 'Whatsapp',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ],
             [
                 'code' => 'J',
-                'description' =>'Lain Lain',
+                'description' => 'Lain Lain',
+                'keluhan' => true,
+                'claim' => false,
                 'active' => 1
             ]
         ];

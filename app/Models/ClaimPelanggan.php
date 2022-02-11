@@ -24,7 +24,9 @@ class ClaimPelanggan extends Model implements Auditable
 	{
 		return 'ClaimPelanggan';
 	}
-
+	public function sumber(){
+		return $this->belongsTo(MasterSumber::class,'sumber_id');
+	}
 	public function jenisClaim(){
 		return $this->belongsTo(MasterJenisClaim::class,'jenis_claim_id');
 	}

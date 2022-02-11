@@ -100,7 +100,9 @@
                             <label for="sumber_id" class="">{{ __('Sumber') }}</label><span
                                 class="text-danger">*</span>
                             <select class="form-control select2" name="sumber_id">
-                                {!! App\Models\MasterSumber::options('description', 'id', [], '( Sumber )') !!}
+                                {!! App\Models\MasterSumber::options('description', 'id', ['filters' => [function($q){
+                                    $q->where('keluhan',1);
+                                }]], '( Sumber )') !!}
                             </select>
                         </div>
                     </div>

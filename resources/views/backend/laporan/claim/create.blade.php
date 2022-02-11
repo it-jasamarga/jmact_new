@@ -81,6 +81,18 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="sumber_id" class="">{{ __('Sumber') }}</label><span
+                                class="text-danger">*</span>
+                            <select class="form-control select2" name="sumber_id">
+                                {!! App\Models\MasterSumber::options('description', 'id', ['filters' => [function($q){
+                                    $q->where('claim',1);
+                                }]], '( Sumber )') !!}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="tanggal_kejadian"
                                 class="">{{ __('Tanggal Kejadian') }}</label><span
                                 class="text-danger">*</span>
@@ -201,12 +213,12 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="keterangan_claim"
                                 class="">{{ __('Keterangan Claim') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_claim" class="form-control"
+                            <textarea name="keterangan_claim" class="form-control" rows="1"
                                 placeholder="Keterangan Claim"></textarea>
                         </div>
                     </div>
@@ -234,5 +246,18 @@
         //     console.log(input)
         //     $("[name='nominal_customer']").val(convertToRupiah(input))
         // })
+        function formatState (state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var $state = $(
+            '<span>' + state.text + '</span>'
+        );
+        return $state;
+        };
+
+        $(".js-example-templating").select2({
+        templateResult: formatState
+        });
     </script>
 @endsection
