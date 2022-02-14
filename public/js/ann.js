@@ -190,7 +190,7 @@ window.ann = {
 
             let x = 100, y = 150, r = 70;
 
-            x = (c.w - (r*9)) /2;
+            x = (c.w - (r*11)) /2;
             y = (2*r) + (c.h - (r*6)) /2;
 
             context.lineWidth = 1;
