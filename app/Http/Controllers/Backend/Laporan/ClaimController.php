@@ -37,7 +37,48 @@ class ClaimController extends Controller
 
     public function list(ClaimPelangganFilter $request) {
 
-    $data  = ClaimPelanggan::query()->orderByDesc('created_at')->filter($request);
+    // $data  = ClaimPelanggan::query()->orderByDesc('created_at')->filter($request);
+
+    $data  = ClaimPelanggan::with('history')
+      ->whereHas('history', function ($q) {
+        $q->where('unit_id', auth()->user()->unit_id);
+      })
+      ->select('*')
+      ->filter($request);
+
+    if (auth()->user()->hasRole('Superadmin')) {
+      $data  = ClaimPelanggan::orderByDesc('created_at')->select('*')->filter($request);
+    }
+
+    if (auth()->user()->hasRole('JMTC')) {
+      $data  = ClaimPelanggan::
+        // where('status_id','1')
+        orderByDesc('created_at')->select('*')->filter($request);
+    }
+
+    if (auth()->user()->hasRole('Service Provider')) {
+      $data  = ClaimPelanggan::with('history')
+        ->where('unit_id', auth()->user()->unit_id)
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
+    }
+
+    if (auth()->user()->hasRole('Regional')) {
+      $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
+
+      // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+      $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($regionalId) {
+        $q1->whereHas('ro', function ($q2) use ($regionalId) {
+          $q2->whereHas('regional', function ($q3) use ($regionalId) {
+            $q3->where('id', $regionalId);
+          });
+        });
+      })
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
+    }
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
