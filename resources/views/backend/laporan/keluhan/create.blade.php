@@ -42,8 +42,10 @@
                         <div class="form-group">
                             <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="no_telepon" type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon') }}"
-                                required autocomplete="off" autofocus placeholder="No Telepon" maxlength="100">
+                            <input id="no_telepon" type="text" class="form-control" name="no_telepon"
+                                value="{{ old('no_telepon') }}" required autocomplete="off" autofocus
+                                placeholder="No Telepon" maxlength="12"
+                                oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>
                     </div>
 
@@ -100,19 +102,40 @@
                             <label for="sumber_id" class="">{{ __('Sumber') }}</label><span
                                 class="text-danger">*</span>
                             <select class="form-control select2" name="sumber_id">
-                                {!! App\Models\MasterSumber::options('description', 'id', ['filters' => [function($q){
-                                    $q->where('keluhan',1);
-                                }]], '( Sumber )') !!}
+                                {!! App\Models\MasterSumber::options(
+    'description',
+    'id',
+    [
+        'filters' => [
+            function ($q) {
+                $q->where('keluhan', 1);
+            },
+        ],
+    ],
+    '( Sumber )',
+) !!}
                             </select>
                         </div>
                     </div>
 
+                    @php
+                    $masterBk = App\Models\MasterBk::get()->groupBy('bidang');
+                    @endphp
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="bidang_id" class="">{{ __('Bidang Keluhan') }}</label><span
                                 class="text-danger">*</span>
                             <select class="form-control select2" name="bidang_id">
-                                {!! App\Models\MasterBk::options('keluhan', 'id', [], '( Bidang Keluhan )') !!}
+                                <option value="" selected>Pilih Data</option>
+                                @foreach ($masterBk as $k => $value)
+                                    <optgroup label="{{$k}}">
+                                        @if($value->count() > 0)
+                                            @foreach ($value as $item)
+                                                <option value="{{$item->id}}" >{{$item->keluhan}}</option>
+                                            @endforeach
+                                        @endif
+                                    </optgroup>
+                                @endforeach
                             </select>
                         </div>
                     </div>

@@ -246,18 +246,5 @@
         //     console.log(input)
         //     $("[name='nominal_customer']").val(convertToRupiah(input))
         // })
-        function formatState (state) {
-        if (!state.id) {
-            return state.text;
-        }
-        var $state = $(
-            '<span>' + state.text + '</span>'
-        );
-        return $state;
-        };
-
-        $(".js-example-templating").select2({
-        templateResult: formatState
-        });
     </script>
 @endsection
