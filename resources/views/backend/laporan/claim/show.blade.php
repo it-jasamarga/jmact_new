@@ -19,6 +19,11 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
+                <div class="row">
+                    <div class="col-12">
+                        <canvas id="ann" class="col-12" height="auto" style="border:#EEE solid 1px" />
+                    </div>
+                </div>
                 <input type="hidden" name="status" value="02">
                 <div class="row">
                     <div class="col-md-6">
@@ -259,6 +264,7 @@
 
 @section('scripts')
     {{-- Page js files --}}
+<script src="../js/ann.js"></script>
     <script>
         // $(document).on("click", ".save", function(){
         //     var save = $(this).data("status")
@@ -267,7 +273,8 @@
         //     }
         // })
         $(document).ready(function() {
-            $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"))
+            $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"));
+            ann.claim.draw(2, "CS JMTO", "Spv JMTO", "RO", "Service Provider", "Regional");
         })
     </script>
 @endsection
