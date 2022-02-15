@@ -87,12 +87,12 @@
 								</div>
 								<!--end::Info-->
 								<!--begin::Toolbar-->
-								<div class="d-flex align-items-center">
+								<div class="d-flex align-items-center mr-2">
 									<!--begin::Daterange-->
-									<a href="#" class="btn btn-sm btn-light font-weight-bold mr-2" >
+									{{-- <a href="#" class="btn btn-sm btn-light font-weight-bold mr-2" > --}}
 										<span class="text-muted font-size-base font-weight-bold mr-2" id="kt_dashboard_daterangepicker_title">Today</span>
 										<span class="text-primary font-size-base font-weight-bolder" id="kt_dashboard_daterangepicker_date">Aug 16</span>
-									</a>
+									{{-- </a> --}}
 									<!--end::Daterange-->
 									
 								</div>
