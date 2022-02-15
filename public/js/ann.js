@@ -37,6 +37,8 @@ window.media = {
             for(var i=3; i < length; i+=4) {    // RGBA
                 if ((tempData[i-3] == 255) && (tempData[i-2] == 255) && (tempData[i-1] == 255)) {    // each white color
                     tempData[i] = 0;   // set opacity to zero
+                } else if (color != '#000033') {
+                    tempData[i] = 48;   // set opacity for passives
                 }
             }
             tempImage.data = tempData;
@@ -53,11 +55,13 @@ window.media = {
                 context.fillText(caption, target.x + (w/2), target.y+h+10);
             }
 
+            /*
             if (status != null) {
                 context.font = "bold 14px Arial";
                 context.textAlign = "center";
                 context.fillText(status, target.x + (w/2), target.y+h+100);
             }
+            */
     
         };
         console.log('## loading '+url);
