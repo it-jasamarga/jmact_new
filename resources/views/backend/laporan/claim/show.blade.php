@@ -274,7 +274,9 @@
         // })
         $(document).ready(function() {
             $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"));
-            ann.claim.draw(2, "CS JMTO", "Spv JMTO", "RO", "Service Provider", "Regional");
+            let sc = {{ $record->status->code*1 }};
+            console.log('## status->code:', sc);
+            ann.claim.draw(sc, "CS JMTO", "Spv JMTO", "RO", "Service Provider", "Regional");
         })
     </script>
 @endsection
