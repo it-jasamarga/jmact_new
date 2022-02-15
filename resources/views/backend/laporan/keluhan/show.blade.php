@@ -178,6 +178,10 @@
 {{-- Page js files --}}
 <script src="../js/ann.js"></script>
 <script defer>
-$(function () { ann.keluhan.draw(1, "Diterima SPV JMTC", "Agent", "Spv JMTC", "Service Provider", "Regional"); });
+$(function () {
+    let sc = {{ $record->status->code*1 }};
+    console.log('## status->code:', sc);
+    ann.keluhan.draw(sc, "Diterima SPV JMTC", "Agent", "Spv JMTC", "Service Provider", "Regional");
+});
 </script>
 @endsection
