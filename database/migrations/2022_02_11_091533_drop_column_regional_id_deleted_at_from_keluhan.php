@@ -13,15 +13,15 @@ class DropColumnRegionalIdDeletedAtFromKeluhan extends Migration
      */
     public function up()
     {
-//        Schema::table('keluhan', function (Blueprint $table) {
-//            $table->dropColumn('deleted_at');
-//        });
+        Schema::table('keluhan', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
         Schema::table('keluhan', function (Blueprint $table) {
             $table->dropForeign('regional_id');
         });
-//        Schema::table('keluhan', function (Blueprint $table) {
-//            $table->dropColumn('regional_id');
-//        });
+        Schema::table('keluhan', function (Blueprint $table) {
+            $table->dropColumn('regional_id');
+        });
     }
 
     /**
