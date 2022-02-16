@@ -70,10 +70,9 @@ window.media = {
 }
 
 window.ann = {
+    path: '../image/',
     keluhan: {
         draw: function(column, status, inputerCaption, spvjmtcCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
-            let path = '../../image/keluhan/';
-
             let canvas = document.getElementById(id);
 
             html.canvas.normalize(canvas);
@@ -150,25 +149,22 @@ window.ann = {
 
             let ic = color.active;
 
-            media.loadImage(ic, canvas, x - (icon.inputer.size/2), y + 40, path+'inputer.jpg', icon.inputer.size, icon.inputer.size, inputerCaption)
+            media.loadImage(ic, canvas, x - (icon.inputer.size/2), y + 40, ann.path+'keluhan/inputer.jpg', icon.inputer.size, icon.inputer.size, inputerCaption)
     
             if (column < 2) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmtc.size/2), y+30, path+'spv-jmtc.jpg', icon.spvjmtc.size, icon.spvjmtc.size, spvjmtcCaption, status)
+            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmtc.size/2), y+30, ann.path+'keluhan/spv-jmtc.jpg', icon.spvjmtc.size, icon.spvjmtc.size, spvjmtcCaption, status)
     
             if (column < 3) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.serviceprovider.size/2), y - (2*r) +25, path+'service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
+            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.serviceprovider.size/2), y - (2*r) +25, ann.path+'keluhan/service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
     
-            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.regional.size/2), y + (2*r) +35, path+'regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
-
+            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.regional.size/2), y + (2*r) +35, ann.path+'keluhan/regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
 
         }
     },
     claim: {
         draw: function(column, csjmtoCaption, spvjmtoCaption, roCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
-            let path = '../../image/claim/';
-
             let canvas = document.getElementById(id);
 
             html.canvas.normalize(canvas);
@@ -257,20 +253,20 @@ window.ann = {
 
             let ic = color.active;
 
-            media.loadImage(ic, canvas, x - (icon.csjmto.size/2), y + 40, path+'customer.jpg', icon.csjmto.size, icon.csjmto.size, csjmtoCaption)
+            media.loadImage(ic, canvas, x - (icon.csjmto.size/2), y + 40, ann.path+'claim/customer.jpg', icon.csjmto.size, icon.csjmto.size, csjmtoCaption)
     
             if (column < 2) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmto.size/2), y+30, path+'spv-jmto.jpg', icon.spvjmto.size, icon.spvjmto.size, spvjmtoCaption, status)
+            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmto.size/2), y+30, ann.path+'claim/spv-jmto.jpg', icon.spvjmto.size, icon.spvjmto.size, spvjmtoCaption, status)
     
             if (column < 3) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (6 * r)) - (icon.ro.size/2), y+30, path+'ro.jpg', icon.ro.size, icon.ro.size, roCaption, status)
+            media.loadImage(ic, canvas, (x + (6 * r)) - (icon.ro.size/2), y+30, ann.path+'claim/ro.jpg', icon.ro.size, icon.ro.size, roCaption, status)
     
             if (column < 4) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.serviceprovider.size/2), y - (2*r) +25, path+'service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
-            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.regional.size/2), y + (2*r) +35, path+'regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
+            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.serviceprovider.size/2), y - (2*r) +25, ann.path+'claim/service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
+            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.regional.size/2), y + (2*r) +35, ann.path+'claim/regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
 
 
         }
