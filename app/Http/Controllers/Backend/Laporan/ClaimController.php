@@ -330,7 +330,13 @@ class ClaimController extends Controller
     return view('backend.laporan.claim.show', $data);
   }
 
-  public function claimDetail($id) {
+  public function claimDetail(Request $request, $id) {
+
+    if(request()->keterangan_reject == ''){
+      $this->validate($request,[
+        'keterangan_reject' => 'required',
+      ]);
+    }
 
     $status = MasterStatus::where('code', request()->status)->where('type', 2)->first();
 

@@ -60,7 +60,8 @@ class PencarianTiketController extends Controller
                 'url' => '#',
                 'onClick'   => 'ticket.detail.open(this)',
                 'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
-                'label'   => '<i class="flaticon2-arrow-down"></i>'
+                'label'   => '<i class="flaticon2-arrow-down"></i>',
+                'tooltip' => 'Histori'
               ]);
             }
             

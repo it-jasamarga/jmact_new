@@ -27,6 +27,8 @@ class MasterSumberRequest extends FormRequest
       return [
         'code' => 'required|string|max:255|min:1|unique:master_sumber,code'.$unique,
         // 'code' => 'required|string|max:255|min:1',
+        'keluhan' => 'required|boolean',
+        'claim' => 'required|boolean',
         'description' => 'max:5000'
       ];
     }
