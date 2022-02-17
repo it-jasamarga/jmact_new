@@ -24,10 +24,10 @@
 
                 <div class="row">
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="">{{ __('Role') }}</label><span
-                            class="text-danger">*</span>
+                                class="text-danger">*</span>
                             <input id="name" type="text" class="form-control" name="name" required autocomplete="off"
                                 autofocus placeholder="Role" maxlength="50">
                         </div>
@@ -36,11 +36,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="role" class="">{{ __('Status') }}</label><span
-                            class="text-danger">*</span>
+                                class="text-danger">*</span>
                             <select class="form-control select2" name="active">
                                 <option value="">Pilih Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Non-Active</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="regional" class="">{{ __('RO') }}</label>
+                            <select class="form-control select2" id="ro" name="ro_id">
+                                {!! App\Models\MasterRo::options('name', 'id', [], '( Pilih RO )') !!}
                             </select>
                         </div>
                     </div>

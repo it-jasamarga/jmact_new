@@ -13,8 +13,8 @@
                             class="text-danger">*</span>
                     </div>
                     <div class="col-9">
-                        <input id="code" type="text" class="form-control" name="code" value="{{ old('code') }}"
-                            required autocomplete="code" autofocus placeholder="Kode Unit" maxlength="30">
+                        <input id="code" type="text" class="form-control" name="code" required autocomplete="code"
+                            autofocus placeholder="Kode Unit" maxlength="30">
                     </div>
                 </div>
             </div>
@@ -26,9 +26,8 @@
                             class="text-danger">*</span>
                     </div>
                     <div class="col-9">
-                        <input id="description" type="text" class="form-control" name="description"
-                            value="{{ old('description') }}" required autocomplete="description" autofocus
-                            placeholder="Sumber" maxlength="50">
+                        <input id="description" type="text" class="form-control" name="description" required
+                            autocomplete="description" autofocus placeholder="Sumber" maxlength="50">
                     </div>
                 </div>
             </div>
@@ -37,18 +36,18 @@
                 <div class="col-3 col-form-label">
                     <label>Laporan Pelanggan</label><span class="text-danger">*</span>
                 </div>
-                    <div class="col-9 checkbox-inline" required>
-                        <label class="checkbox">
-                            <input type="checkbox" class="form-control" name="keluhan" />
-                            <span></span>
-                            Keluhan
-                        </label>
-                        <label class="checkbox">
-                            <input type="checkbox" class="form-control" name="claim" />
-                            <span></span>
-                            Claim
-                        </label>
-                    </div>
+                <div class="col-9 checkbox-inline" required>
+                    <label class="checkbox">
+                        <input type="checkbox" class="form-control" name="keluhan" value="1" />
+                        <span></span>
+                        Keluhan
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" class="form-control" name="claim" value="1" />
+                        <span></span>
+                        Claim
+                    </label>
+                </div>
             </div>
 
             <div class="col-md-12">

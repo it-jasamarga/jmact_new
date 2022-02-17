@@ -64,6 +64,19 @@ class ClaimController extends Controller
         ->filter($request);
     }
 
+    if (auth()->user()->hasRole('RO')) {
+      $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
+
+      $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
+        $q1->whereHas('ro', function ($q2) use ($roId) {
+            $q2->where('id', $roId);
+        });
+      })
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
+    }
+
     if (auth()->user()->hasRole('Regional')) {
       $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
