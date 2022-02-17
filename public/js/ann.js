@@ -72,7 +72,7 @@ window.media = {
 window.ann = {
     keluhan: {
         draw: function(column, status, inputerCaption, spvjmtcCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
-            let path = '../../image/keluhan/';
+            let path = '../image/keluhan/';
 
             let canvas = document.getElementById(id);
 
@@ -167,7 +167,7 @@ window.ann = {
     },
     claim: {
         draw: function(column, csjmtoCaption, spvjmtoCaption, roCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
-            let path = '../../image/claim/';
+            let path = '../image/claim/';
 
             let canvas = document.getElementById(id);
 
