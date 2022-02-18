@@ -13,7 +13,10 @@ class DorpColumnRegionalIdKeluhan extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('keluhan', function (Blueprint $table) {
+            $table->dropForeign(['regional_id']);
+            $table->dropColumn(['regional_id']);
+        });
     }
 
     /**
@@ -23,6 +26,9 @@ class DorpColumnRegionalIdKeluhan extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('keluhan', function (Blueprint $table) {
+            $table->unsignedBigInteger('regional_id')->nullable();
+            $table->foreign('regional_id')->references('id')->on('master_regional')->onDelete('cascade');
+        });
     }
 }
