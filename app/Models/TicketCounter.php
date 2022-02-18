@@ -22,7 +22,7 @@ class TicketCounter extends Model
     public function reserve($description, $type, $source, $unit, $year = null, $field = 'no_tiket') {
         $return = ['result' => false];
 
-        $counter = new TicketCounter();
+        // $counter = new TicketCounter();
         $year = $year ?? date("Y")*1;
         $year = $year % 1000;
 
@@ -48,7 +48,7 @@ class TicketCounter extends Model
                     $return['result'] = true;
                     $return['data']['no_tiket'] = $serial;
                     break;
-                };
+                }
                 $safe_loop++;
             }
             if ($safe_loop>1) {

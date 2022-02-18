@@ -223,9 +223,16 @@ function getTiket($record = null){
     if($record){
         $sumber = ($record->sumber) ? $record->sumber->code : null;
         $unit = ($record->user->unit) ? $record->user->unit->code : null;
-        $count = App\Models\KeluhanPelanggan::where('sumber_id', $record->sumber_id)
-            ->where('unit_id',$record->unit_id)->count() + 1;
-        $noTiket = $sumber.$unit.$count;
+        // $count = App\Models\KeluhanPelanggan::where('sumber_id', $record->sumber_id)
+        //     ->where('unit_id',$record->unit_id)->count() + 1;
+        //$noTiket = $sumber.$unit.$count;
+        $ret = \App\Models\TicketCounter::reserve($record->keterangan_keluhan, 'K', $sumber, $unit);
+        if ($ret['result']) {
+            $noTiket = $ret['data']['no_tiket'];
+            // dd('no_tiket: '.$noTiket);
+        } else {
+            dd('error', $ret);
+        }
     }
 
     return $noTiket;
@@ -234,10 +241,17 @@ function getTiket($record = null){
 function getTiketClaim($record = null){
     $noTiket = '-';
     if($record){
-        // $sumber = ($record->sumber) ? $record->sumber->code : null;
+        $sumber = ($record->sumber) ? $record->sumber->code : null;
         $unit = ($record->user->unit) ? $record->user->unit->code : null;
-        $count = App\Models\ClaimPelanggan::where('unit_id',$record->unit_id)->count() + 1;
-        $noTiket = $unit.$count;
+        // $count = App\Models\ClaimPelanggan::where('unit_id',$record->unit_id)->count() + 1;
+        // $noTiket = $unit.$count;
+        $ret = \App\Models\TicketCounter::reserve($record->keterangan_claim, 'C', $sumber, $unit);
+        if ($ret['result']) {
+            $noTiket = $ret['data']['no_tiket'];
+            // dd('no_tiket: '.$noTiket);
+        } else {
+            dd('error', $ret);
+        }
     }
 
     return $noTiket;

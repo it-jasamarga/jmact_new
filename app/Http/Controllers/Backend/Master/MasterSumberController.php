@@ -84,6 +84,19 @@ class MasterSumberController extends Controller
   }
 
   public function store(MasterSumberRequest $request){
+    if((!request()->keluhan) || (!request()->claim)){
+      $this->validate($request,[
+        'keluhan' => 'required'
+      ]);
+    }
+
+    if(!request()->keluhan) {
+      $request['keluhan'] = 0;
+    }
+    if(!request()->claim) {
+      $request['claim'] = 0;
+    }
+
     $record = MasterSumber::saveData($request);
 
     return response([

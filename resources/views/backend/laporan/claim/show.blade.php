@@ -19,9 +19,14 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
+                <div class="row">
+                    <div class="col-12">
+                        <canvas id="ann" class="col-12" height="auto" style="border:#EEE solid 1px" />
+                    </div>
+                </div>
                 <input type="hidden" name="status" value="02">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         <div class="alert alert-custom alert-default" role="alert"
                             style="max-height: 350px;overflow-y:visible">
                             <div class="timeline timeline-2">
@@ -32,8 +37,14 @@
                                             <div class="timeline-badge bg-success"></div>
                                             <div class="timeline-content d-flex align-items-center justify-content-between">
                                                 <span class="mr-3">
-                                                    <a href="#">Status Tiket {{ $record->no_tiket }}
-                                                        {{ $value->status->status }} oleh {{ $record->user->username }} </a>
+                                                    @if ($value->status->code == 03)
+                                                        {{ $value->status->status }} oleh {{ $record->user->username }}
+                                                        ke {{ $record->unit->unit }}
+                                                    @elseif($value->status->code == 01 || $value->status->code == 02)
+                                                        {{ $value->status->status }} oleh {{ $record->user->username }}
+                                                    @else
+                                                        {{ $value->status->status }}
+                                                    @endif
                                                 </span>
                                                 <span class="text-muted text-right">{{ $value->created_at }}</span>
                                             </div>
@@ -44,7 +55,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        @if ($record->checkStatusDynamic(['00']) === 'true')
+                        @if ($record->checkStatus(['00']) === 'true')
                             <div class="alert alert-custom alert-default" role="alert">
                                 <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
                                 <div class="alert-text">
@@ -223,8 +234,8 @@
                     <i class="flaticon-circle"></i>
                     Kembali
                 </a>
-                {{-- {{dd($record->checkStatus())}} --}}
-                @if ($record->checkStatus() === 'false')
+
+                @if ($record->checkStatus(['00', '02']) === 'false')
 
                     {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
                     <div class="btn btn-light-success float-right save">
@@ -259,6 +270,7 @@
 
 @section('scripts')
     {{-- Page js files --}}
+<script src="../js/ann.js"></script>
     <script>
         // $(document).on("click", ".save", function(){
         //     var save = $(this).data("status")
@@ -267,7 +279,10 @@
         //     }
         // })
         $(document).ready(function() {
-            $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"))
+            $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"));
+            let sc = {{ $record->status->code*1 }};
+            console.log('## status->code:', sc);
+            ann.claim.draw(sc, "CS JMTO", "Spv JMTO", "RO", "Service Provider", "Regional");
         })
     </script>
 @endsection

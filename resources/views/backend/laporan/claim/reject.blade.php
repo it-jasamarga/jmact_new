@@ -10,8 +10,8 @@
            
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keterangan_reject" class="">{{ __('Catatan Reject') }}</label><span class="text-danger">*</span>
-                    <textarea name="keterangan_reject" class="form-control" placeholder="Catatan Reject" rows="4"></textarea>
+                    <label for="keterangan_reject" class="">{{ __('Keterangan Reject') }}</label><span class="text-danger">*</span>
+                    <textarea name="keterangan_reject" class="form-control" placeholder="Keterangan Reject" rows="4" required></textarea>
                 </div>
             </div>
 
