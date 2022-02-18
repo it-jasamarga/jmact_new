@@ -31,6 +31,9 @@
                     </div>
                 </div>
             </div>
+            
+            <input type="hidden" name="type[keluhan]" value="0">
+            <input type="hidden" name="type[claim]" value="0">
 
             <div class="col-md-12 form-group row">
                 <div class="col-3 col-form-label">
@@ -38,12 +41,12 @@
                 </div>
                 <div class="col-9 checkbox-inline" required>
                     <label class="checkbox">
-                        <input type="checkbox" class="form-control" name="keluhan" value="1" />
+                        <input type="checkbox" class="form-control" name="type[keluhan]" value="1" />
                         <span></span>
                         Keluhan
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" class="form-control" name="claim" value="1" />
+                        <input type="checkbox" class="form-control" name="type[claim]" value="1" />
                         <span></span>
                         Claim
                     </label>
