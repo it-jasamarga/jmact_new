@@ -88,6 +88,20 @@ class SumberSeeder extends Seeder
                 'keluhan' => true,
                 'claim' => false,
                 'active' => 1
+            ],
+            [
+                'code' => 'K',
+                'description' => 'Customer Service JMTO',
+                'keluhan' => true,
+                'claim' => true,
+                'active' => 1
+            ],
+            [
+                'code' => 'L',
+                'description' => 'Customer Service JMTM',
+                'keluhan' => true,
+                'claim' => true,
+                'active' => 1
             ]
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

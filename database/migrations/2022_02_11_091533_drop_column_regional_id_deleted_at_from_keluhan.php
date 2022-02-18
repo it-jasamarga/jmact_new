@@ -15,12 +15,7 @@ class DropColumnRegionalIdDeletedAtFromKeluhan extends Migration
     {
         Schema::table('keluhan', function (Blueprint $table) {
             $table->dropColumn('deleted_at');
-        });
-        Schema::table('keluhan', function (Blueprint $table) {
             $table->dropForeign('regional_id');
-        });
-        Schema::table('keluhan', function (Blueprint $table) {
-            $table->dropColumn('regional_id');
         });
     }
 
@@ -32,7 +27,11 @@ class DropColumnRegionalIdDeletedAtFromKeluhan extends Migration
     public function down()
     {
         Schema::table('keluhan', function (Blueprint $table) {
-            //
+            $table->softDeletes();
+        });
+        
+        Schema::table('keluhan', function (Blueprint $table) {
+            $table->foreign('regional_id')->references('id')->on('master_regional')->onDelete('cascade');
         });
     }
 }
