@@ -188,17 +188,17 @@ class KeluhanController extends Controller
 
     DB::beginTransaction();
     try {
-      $dataRuas = MasterRuas::find($request->ruas_id);
+      // $dataRuas = MasterRuas::find($request->ruas_id);
 
-      if($dataRuas) {
-        $dataRo = $dataRuas->ro;
-        if ($dataRo) {
-          $dataRegional = $dataRo->regional;
-          if ($dataRegional) {
-            $request['regional_id'] = $dataRegional->id;
-          }
-        }
-      }
+      // if($dataRuas) {
+      //   $dataRo = $dataRuas->ro;
+      //   if ($dataRo) {
+      //     $dataRegional = $dataRo->regional;
+      //     if ($dataRegional) {
+      //       $request['regional_id'] = $dataRegional->id;
+      //     }
+      //   }
+      // }
 
       $request['user_id'] = auth()->user()->id;
       $request['status_id'] = MasterStatus::where('code', '01')->where('type', '1')->first()->id;
