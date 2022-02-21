@@ -15,27 +15,30 @@ use Carbon\Carbon;
 
 class ClaimController extends Controller
 {
-    public $breadcrumbs = [
-      ['name' => "Laporan Claim Pelanggan"], 
-      ['link' => "#", 'name' => "Laporan Pelanggan"],
-      ['link' => "claim", 'name' => "Claim"]
-    ];
-    
-    public function __construct() {
-        $this->route = 'claim';
-    }
-    
-    public function index(Request $request) {
-      $data = [
-        'title' => 'Claim',
-        'breadcrumbs' => $this->breadcrumbs,
-        'route' => $this->route,
-      ];
-  
-      return view('backend.laporan.claim.index', $data);
-    }
+  public $breadcrumbs = [
+    ['name' => "Laporan Claim Pelanggan"],
+    ['link' => "#", 'name' => "Laporan Pelanggan"],
+    ['link' => "claim", 'name' => "Claim"]
+  ];
 
-    public function list(ClaimPelangganFilter $request) {
+  public function __construct()
+  {
+    $this->route = 'claim';
+  }
+
+  public function index(Request $request)
+  {
+    $data = [
+      'title' => 'Claim',
+      'breadcrumbs' => $this->breadcrumbs,
+      'route' => $this->route,
+    ];
+
+    return view('backend.laporan.claim.index', $data);
+  }
+
+  public function list(ClaimPelangganFilter $request)
+  {
 
     // $data  = ClaimPelanggan::query()->orderByDesc('created_at')->filter($request);
 
@@ -69,7 +72,7 @@ class ClaimController extends Controller
 
       $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
         $q1->whereHas('ro', function ($q2) use ($roId) {
-            $q2->where('id', $roId);
+          $q2->where('id', $roId);
         });
       })
         ->orderByDesc('created_at')
@@ -94,98 +97,99 @@ class ClaimController extends Controller
     }
 
     return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('ruas_id', function ($data) use ($request) {
+      ->addColumn('numSelect', function ($data) use ($request) {
+        $button = '';
+        $button .= makeButton([
+          'type' => 'deleteAll',
+          'value' => $data->id
+        ]);
+        return $button;
+      })
+      ->addColumn('ruas_id', function ($data) use ($request) {
         $button = ($data->ruas) ? $data->ruas->name : '-';
         return $button;
-    })
-    ->addColumn('status_id', function ($data) use ($request) {
-      $button = ($data->status) ? $data->status->status : '-';
-      return $button;
-    })
-    ->addColumn('golongan_id', function ($data) use ($request) {
+      })
+      ->addColumn('status_id', function ($data) use ($request) {
+        $button = ($data->status) ? $data->status->status : '-';
+        return $button;
+      })
+      ->addColumn('golongan_id', function ($data) use ($request) {
         $button = ($data->golongan) ? $data->golongan->golongan : '-';
         return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
+      })
+      ->addColumn('action', function ($data) {
+        $buttons = "";
 
-      if(auth()->user()->can('claim.forward')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit',
-          'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-          'label'   => '<i class="flaticon2-paperplane"></i>',
-          'tooltip' => 'Teruskan'
-        ]);
-      }
+        if (auth()->user()->can('claim.forward')) {
+          $buttons .= makeButton([
+            'type' => 'modal',
+            'url'   => $this->route . '/' . $data->id . '/edit',
+            'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+            'label'   => '<i class="flaticon2-paperplane"></i>',
+            'tooltip' => 'Teruskan'
+          ]);
+        }
 
-      if(auth()->user()->can('claim.stage')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit-stage',
-          'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-          'label'   => '<i class="flaticon2-checking"></i>',
-          'tooltip' => 'Tahapan'
-        ]);
-      }
+        if (auth()->user()->can('claim.stage')) {
+          $buttons .= makeButton([
+            'type' => 'modal',
+            'url'   => $this->route . '/' . $data->id . '/edit-stage',
+            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+            'label'   => '<i class="flaticon2-checking"></i>',
+            'tooltip' => 'Tahapan'
+          ]);
+        }
 
-      if(auth()->user()->can('claim.detail')) {
-        $buttons .= makeButton([
-          'type' => 'url',
-          'url'   => $this->route.'/'.$data->id.'',
-          'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
-          'label'   => '<i class="flaticon2-list-1"></i>',
-          'tooltip' => 'Detail'
-        ]);
-      }
-      
-      return $buttons;
-    })
-    ->rawColumns(['numSelect','action'])
-    ->addIndexColumn()
-    ->make(true);
+        if (auth()->user()->can('claim.detail')) {
+          $buttons .= makeButton([
+            'type' => 'url',
+            'url'   => $this->route . '/' . $data->id . '',
+            'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+            'label'   => '<i class="flaticon2-list-1"></i>',
+            'tooltip' => 'Detail'
+          ]);
+        }
 
+        return $buttons;
+      })
+      ->rawColumns(['numSelect', 'action'])
+      ->addIndexColumn()
+      ->make(true);
   }
 
-  public function create() {
+  public function create()
+  {
     $data = [
-        'title' => 'Buat Data Claim',
-        'breadcrumbs' => $this->breadcrumbs,
-        'route' => $this->route,
-      ];
-    
+      'title' => 'Buat Data Claim',
+      'breadcrumbs' => $this->breadcrumbs,
+      'route' => $this->route,
+    ];
+
     return view('backend.laporan.claim.create', $data);
   }
 
-  public function store(ClaimPelangganRequest $request){
+  public function store(ClaimPelangganRequest $request)
+  {
     $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
-    $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_pelanggan)'), 'like', '%'.strtoupper($request->nama_pelanggan).'%')
-    ->where('no_telepon', $request->no_telepon)
-    ->whereDate('tanggal_kejadian', $tglKejadian)
-    ->where('jenis_claim_id', $request->jenis_claim_id)
-    ->where('ruas_id', $request->ruas_id)->first();
+    $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_pelanggan)'), 'like', '%' . strtoupper($request->nama_pelanggan) . '%')
+      ->where('no_telepon', $request->no_telepon)
+      ->whereDate('tanggal_kejadian', $tglKejadian)
+      ->where('jenis_claim_id', $request->jenis_claim_id)
+      ->where('ruas_id', $request->ruas_id)->first();
 
     if ($recordData) {
       $noTiket = ($recordData) ? $recordData->no_tiket : '-';
       $idData = ($recordData) ? $recordData->id : '-';
       return response([
-        'messageBox' => "Claim sedang di proses dengan no tiket <a href='".url('claim/'.$idData)."'>".$noTiket."</a>",
+        'messageBox' => "Claim sedang di proses dengan no tiket <a href='" . url('claim/' . $idData) . "'>" . $noTiket . "</a>",
       ], 412);
     }
 
     DB::beginTransaction();
     try {
       $dataRuas = MasterRuas::find($request->ruas_id);
-      
-      if($dataRuas) {
+
+      if ($dataRuas) {
         $dataRo = $dataRuas->ro;
         if ($dataRo) {
           $dataRegional = $dataRo->regional;
@@ -196,7 +200,7 @@ class ClaimController extends Controller
       }
 
       $request['user_id'] = auth()->user()->id;
-      $request['status_id'] = MasterStatus::where('code','01')->where('type', 2)->first()->id;
+      $request['status_id'] = MasterStatus::where('code', '01')->where('type', 2)->first()->id;
 
       $record = ClaimPelanggan::saveData($request);
       $record->no_tiket = getTiketClaim($record);
@@ -205,19 +209,18 @@ class ClaimController extends Controller
       //   'unit_id' => $record->unit_id,
       //   'created_by' => $request->user_id
       // ]);
-      
+
       $record->history()->create([
         'ruas_id' => $record->ruas_id,
         'regional_id' => $record->regional_id,
         'unit_id' => $record->unit_id,
-        'status_id' => MasterStatus::where('code','01')->where('type', 2)->first()->id
+        'status_id' => MasterStatus::where('code', '01')->where('type', 2)->first()->id
       ]);
       DB::commit();
       return response([
         'status' => true,
         'message' => 'success',
       ]);
-
     } catch (\Exception $e) {
       DB::rollback();
       return response([
@@ -242,10 +245,11 @@ class ClaimController extends Controller
     return view('backend.laporan.claim.edit', $data);
   }
 
-  public function history(DetailHistoryRequest $request, $id) {
+  public function history(DetailHistoryRequest $request, $id)
+  {
     $record = ClaimPelanggan::findOrFail($id);
-    
-    $request['status_id'] = MasterStatus::where('code','03')->where('type', 2)->first()->id;
+
+    $request['status_id'] = MasterStatus::where('code', '03')->where('type', 2)->first()->id;
     // $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
 
@@ -253,8 +257,8 @@ class ClaimController extends Controller
     $record->save();
 
     $recordHistory = $record->history()->create($request->all());
-    
-    $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
+
+    $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
     // $this->firebase->sendGroup(
     //   $record, 
@@ -266,10 +270,10 @@ class ClaimController extends Controller
       'status' => true,
       'message' => 'success',
     ]);
-
   }
 
-  public function editStage($id) {
+  public function editStage($id)
+  {
 
     $data = [
       'route' => $this->route,
@@ -279,25 +283,26 @@ class ClaimController extends Controller
     return view('backend.laporan.claim.edit-stage', $data);
   }
 
-  public function historyStage(Request $request, $id) {
+  public function historyStage(Request $request, $id)
+  {
     // dd(request()->all());
-    if(request()->status == '04'){
-      $this->validate($request,[
+    if (request()->status == '04') {
+      $this->validate($request, [
         'negosiasi_dan_klarifikasi' => 'required'
       ]);
-    }elseif(request()->status == '05'){
-      $this->validate($request,[
+    } elseif (request()->status == '05') {
+      $this->validate($request, [
         'proses_pembayaran' => 'required'
       ]);
-    }elseif(request()->status == '06'){
-      $this->validate($request,[
+    } elseif (request()->status == '06') {
+      $this->validate($request, [
         'pembayaran_selesai' => 'required',
         'nominal_final' => 'required'
       ]);
     }
     $record = ClaimPelanggan::findOrFail($id);
-    
-    $request['status_id'] = MasterStatus::where('code',$request->status)->where('type', 2)->first()->id;
+
+    $request['status_id'] = MasterStatus::where('code', $request->status)->where('type', 2)->first()->id;
     $request['unit_id'] = $record->unit_id;
     $request['regional_id'] = $record->regional_id;
     if ($request->nominal_final) {
@@ -313,7 +318,7 @@ class ClaimController extends Controller
     unset($request['pembayaran_selesai']);
     unset($request['nominal_final']);
     $recordHistory = $record->history()->create($request->all());
-    
+
     // $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
 
     // $this->firebase->sendGroup(
@@ -326,27 +331,28 @@ class ClaimController extends Controller
       'status' => true,
       'message' => 'success',
     ]);
-
   }
 
-  public function show($id) {
-    
+  public function show($id)
+  {
+
     $record = ClaimPelanggan::findOrFail($id);
 
-    $data =[
+    $data = [
       'title' => 'Detail Data Claim',
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
       'record' => $record
     ];
-    
+
     return view('backend.laporan.claim.show', $data);
   }
 
-  public function claimDetail(Request $request, $id) {
+  public function claimDetail(Request $request, $id)
+  {
 
-    if(request()->keterangan_reject == ''){
-      $this->validate($request,[
+    if (request()->keterangan_reject == '') {
+      $this->validate($request, [
         'keterangan_reject' => 'required',
       ]);
     }
@@ -354,7 +360,7 @@ class ClaimController extends Controller
     $status = MasterStatus::where('code', request()->status)->where('type', 2)->first();
 
     $record = ClaimPelanggan::findOrFail($id);
-    
+
     $record->status_id = $status->id;
 
     if (request()->keterangan_reject) {
@@ -373,10 +379,10 @@ class ClaimController extends Controller
       'status' => true,
       'message' => 'success',
     ]);
-    
   }
-  
-  public function claimReject($id) {
+
+  public function claimReject($id)
+  {
     $record = ClaimPelanggan::findOrFail($id);
 
     $data = [
@@ -388,5 +394,4 @@ class ClaimController extends Controller
 
     return view('backend.laporan.claim.reject', $data);
   }
-
 }
