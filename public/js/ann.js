@@ -73,11 +73,6 @@ window.ann = {
     path: '../image/',
     keluhan: {
         draw: function(column, status, inputerCaption, spvjmtcCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
-<<<<<<< HEAD
-            let path = '../image/keluhan/';
-
-=======
->>>>>>> a212cc5ab48a51914d66875f6d87bc2b51e465e1
             let canvas = document.getElementById(id);
 
             html.canvas.normalize(canvas);
@@ -170,11 +165,6 @@ window.ann = {
     },
     claim: {
         draw: function(column, csjmtoCaption, spvjmtoCaption, roCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
-<<<<<<< HEAD
-            let path = '../image/claim/';
-
-=======
->>>>>>> a212cc5ab48a51914d66875f6d87bc2b51e465e1
             let canvas = document.getElementById(id);
 
             html.canvas.normalize(canvas);
