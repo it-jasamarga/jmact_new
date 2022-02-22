@@ -204,7 +204,6 @@ class UserController extends Controller
         $registrationTokens = [
           request()->device_id
         ];
-        // dd($topic);
         $messaging->subscribeToTopic("".$topic."", $registrationTokens);
       }
 
