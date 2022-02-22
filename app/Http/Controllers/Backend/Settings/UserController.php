@@ -87,7 +87,7 @@ class UserController extends Controller
   }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.asdasdsa
      *
      * @return \Illuminate\Http\Response
      */
@@ -99,7 +99,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. sadsadasasdasd
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -204,7 +204,6 @@ class UserController extends Controller
         $registrationTokens = [
           request()->device_id
         ];
-        // dd($topic);
         $messaging->subscribeToTopic("".$topic."", $registrationTokens);
       }
 
