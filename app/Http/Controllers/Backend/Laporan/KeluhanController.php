@@ -170,7 +170,7 @@ class KeluhanController extends Controller
     return view('backend.laporan.keluhan.create', $data);
   }
 
-  public function store(KeluhanRequest $request)
+  public function store(KeluhanPelangganRequest $request)
   {
     
     $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
