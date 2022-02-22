@@ -220,6 +220,8 @@
 			})
 		})
 
+		var yMin = 0, yMax = 0;
+
 		$.each(chartBars, function(key, item) {
 			var dataset = {
 				label: item.label,
@@ -227,6 +229,8 @@
 				borderColor: item.color,
 				backgroundColor: item.color
 			}
+			if (Math.min(...chartValues[key]) < yMin) yMin = Math.min(...chartValues[key]);
+			if (Math.max(...chartValues[key]) > yMax) yMax = Math.max(...chartValues[key]);
 			chartData.datasets.push(dataset);
 		})
 
@@ -240,6 +244,17 @@
 			data: chartData,
 			options: {
 				responsive: true,
+
+				scales: {
+					y: {
+						min: yMin,
+						max: yMax,
+						ticks: {
+							stepSize: Math.ceil(yMax / 4)
+						}
+					}
+				},
+
 				plugins: {
 					datalabels: {
 						anchor: 'end', // remove this line to get label in middle of the bar

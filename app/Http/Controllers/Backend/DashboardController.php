@@ -25,29 +25,30 @@ class DashboardController extends Controller
     {
         $appVars = \App\Models\AppVar::where('name', 'LIKE', "Chart %")->get(['name', 'value'])->pluck('value', 'name');
 
-        $query = DB::table('keluhan')
-        ->select(
-            'master_regional.name AS regional', 'master_ruas.name AS ruas',
-            DB::raw('COUNT(keluhan.no_tiket) AS total'),
-        )
-        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
-        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
-        ->where('keluhan.status_id', '>=', DB::raw('(SELECT id FROM master_status WHERE status="On Progress" AND type=1)'))
-        ->where('keluhan.status_id', '<', DB::raw('(SELECT id FROM master_status WHERE status="Closed" AND type=1)'))
-        ->groupBy('master_regional.name', 'master_ruas.name', 'keluhan.status_id')
-        ->get();
+        // $query = DB::table('keluhan')
+        // ->select(
+        //     'master_regional.name AS regional', 'master_ruas.name AS ruas',
+        //     DB::raw('COUNT(keluhan.no_tiket) AS total'),
+        // )
+        // ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+        // ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+        // ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+        // ->where('keluhan.status_id', '>=', DB::raw('(SELECT id FROM master_status WHERE status="On Progress" AND type=1)'))
+        // ->where('keluhan.status_id', '<', DB::raw('(SELECT id FROM master_status WHERE status="Closed" AND type=1)'))
+        // ->where(DB::raw('DATEDIFF(NOW(), keluhan.created_at)'), '>', 3)
+        // ->groupBy('master_regional.name', 'master_ruas.name', 'keluhan.status_id')
+        // ->get();
 
-        $overtime = ['total' => $query->sum('total')];
+        $query = \App\Models\DashboardStat::get();
+
+        $overtime = ['total' => $query->where('group_info', "Overtime")->sum('total')];
         $regionals = \App\Models\MasterRegional::get(['name'])->pluck('name')->toArray();
         foreach ($regionals as $regional) {
             $overtime['regional'][$regional] = [
-                'total' => $query->where('regional', $regional)->sum('total'),
-                'ruas' => $query->where('regional', $regional)->pluck('total', 'ruas')->toArray()
+                'total' => $query->where('group_info', "Overtime")->where('regional', $regional)->sum('total'),
+                'ruas' => $query->where('group_info', "Overtime")->where('regional', $regional)->pluck('total', 'ruas')->toArray()
             ];
         }
-
-        // dd($overtime, $query->toArray());
 
         return view('backend.dashboard.index',[
             'breadcrumbs' => $this->breadcrumbs, 'appVars' => $appVars, 'overtime' => $overtime
