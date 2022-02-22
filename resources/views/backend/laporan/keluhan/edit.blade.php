@@ -10,14 +10,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="keluhan" class="">{{ __('Ruas') }}</label>
-                    <select class="form-control select2" name="ruas_id">
-                        {!! App\Models\MasterRuas::options(function($q){
-                        $ro = ($q->ro) ? $q->ro->name : '-';
-                        $regional = ($q->ro->regional) ? $q->ro->regional->name : '-';
-                            return $q->name.' - '.$ro.' - '.$regional;
-                        },'id',[],
-                        '( Ruas Jalan Tol )') !!}
-                    </select>
+                    @php
+                        $regional = $record->ruas->ro->regional->name;
+                        $ruas = $record->ruas->name;
+                        $ro = $record->ruas->ro->name;
+                        $ruasName = $regional.' - '.$ruas.' - '.$ro;
+                    @endphp
+                    <input id="ruas_id" type="text" readonly class="form-control" name="ruas_id" value="{{ $ruasName }}">
                 </div>
             </div>
 

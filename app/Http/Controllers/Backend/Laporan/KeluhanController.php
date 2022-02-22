@@ -41,7 +41,7 @@ class KeluhanController extends Controller
       'breadcrumbs' => $this->breadcrumbs,
       'route' => $this->route,
     ];
-    
+
     return view('backend.laporan.keluhan.index', $data);
   }
 
@@ -61,19 +61,29 @@ class KeluhanController extends Controller
 
     if (auth()->user()->hasRole('JMTC')) {
       $data  = KeluhanPelanggan::
-        // where('status_id','1')
-        orderByDesc('created_at')->select('*')->filter($request);
-    }
-
-    if (auth()->user()->hasRole('Service Provider')) {
-      $data  = KeluhanPelanggan::with('history')
-        ->where('unit_id', auth()->user()->unit_id)
+        whereHas('status', function ($q1) {
+          $q1->whereIn('code', ['01', '02'])
+            ->where('type', 1);
+        })
         ->orderByDesc('created_at')
         ->select('*')
         ->filter($request);
     }
 
-    if (auth()->user()->hasRole('Regional')) {
+    if (auth()->user()->hasRole('Service Provider')) {
+      $data  = KeluhanPelanggan::with('history')
+        ->where('unit_id', auth()->user()->unit_id)
+        ->whereHas('status', function ($q1) {
+          $q1->whereIn('code', ['02', '03', '04'])
+            ->where('type', 1);
+        })
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
+    }
+
+    // if (auth()->user()->hasRole('Regional')) {
+    if (@auth()->user()->roles()->first()->regional_id) {
       $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
       // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
@@ -82,6 +92,20 @@ class KeluhanController extends Controller
           $q2->whereHas('regional', function ($q3) use ($regionalId) {
             $q3->where('id', $regionalId);
           });
+        });
+      })
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
+    }
+
+    if (@auth()->user()->roles()->first()->ro_id) {
+      $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
+
+      // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+      $data  = KeluhanPelanggan::whereHas('ruas', function ($q1) use ($roId) {
+        $q1->whereHas('ro', function ($q2) use ($roId) {
+          $q2->where('id', $roId);
         });
       })
         ->orderByDesc('created_at')
@@ -172,7 +196,7 @@ class KeluhanController extends Controller
 
   public function store(KeluhanPelangganRequest $request)
   {
-    
+
     $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
     $recordData =  KeluhanPelanggan::where(DB::raw('UPPER(nama_cust)'), 'like', '%' . strtoupper($request->nama_cust) . '%')
       ->where('no_telepon', $request->no_telepon)
@@ -213,13 +237,13 @@ class KeluhanController extends Controller
       //   'unit_id' => $record->unit_id,
       //   'created_by' => $request->user_id
       // ]);
-      
+
       $this->firebase->sendGroup(
-        $record, 
-        'JMACT - Keluhan Kepada '.$record->unit->unit, 
-        'Proses Keluhan Dengan No Tiket '.$record->no_tiket
+        $record,
+        'JMACT - Keluhan Kepada ' . $record->unit->unit,
+        'Proses Keluhan Dengan No Tiket ' . $record->no_tiket
       );
-    
+
       $record->history()->create([
         'ruas_id' => $record->ruas_id,
         // 'regional_id' => $record->regional_id,
@@ -265,6 +289,7 @@ class KeluhanController extends Controller
     // $request['regional_id'] = $record->regional_id;
 
     $record->status_id = $request->status_id;
+    $record->unit_id = $request->unit_id;
     $record->save();
 
     $recordHistory = $record->history()->create($request->all());
@@ -272,9 +297,9 @@ class KeluhanController extends Controller
     $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
     $this->firebase->sendGroup(
-      $record, 
-      'JMACT - Keluhan Diteruskan Kepada Service Provider', 
-      'Diteruskan Ke '.$name
+      $record,
+      'JMACT - Keluhan Diteruskan Kepada Service Provider',
+      'Diteruskan Ke ' . $name
     );
 
     return response([
@@ -307,6 +332,7 @@ class KeluhanController extends Controller
 
   public function prosesSla($id)
   {
+    // dd(request()->all());
     // request()['status_id'] = MasterStatus::where('code','05')->first()->id;
     request()['status_id'] = MasterStatus::where('code', '03')->where('type', '1')->first()->id;
 
@@ -322,6 +348,8 @@ class KeluhanController extends Controller
     $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
     $record->unit_id = $unitHistory;
     $record->status_id = request()->status_id;
+    $record->mulai_pengerjaan = Carbon::now()->format('Y-m-d H:i:s');
+
     $record->save();
     request()['unit_id'] = $unitHistory;
     request()['ruas_id'] = $ruasHistory;
@@ -329,8 +357,8 @@ class KeluhanController extends Controller
     $recordHistory = $record->history()->create(request()->all());
 
     $this->firebase->sendGroup(
-      $record, 
-      'JMACT - Keluhan Dalam Proses SLA', 
+      $record,
+      'JMACT - Keluhan Dalam Proses SLA',
       'Estimasi Proses Dalam 3 Hari'
     );
     return response([
@@ -370,6 +398,7 @@ class KeluhanController extends Controller
     $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
     $record->unit_id = $unitHistory;
     $record->status_id = $request['status_id'];
+    $record->selesai_pengerjaan = Carbon::now()->format('Y-m-d H:i:s');
     $record->save();
     // dump($unitHistory);
     // dd($record->history()->get());
@@ -382,9 +411,9 @@ class KeluhanController extends Controller
     ]);
 
     $this->firebase->send(
-      $record, 
-      'JMACT - Pelaporan Tiket Keluhan No Tiket'.$record->no_tiket.'', 
-      'Pelaporan Keluhan Dengan No Tiket '.$record->no_tiket.' Telah Selesai Dikerjakan '
+      $record,
+      'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+      'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
     );
 
     return response([
