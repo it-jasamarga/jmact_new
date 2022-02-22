@@ -98,6 +98,7 @@ class LookupController extends Controller
                 (substr($record->StartSLA, 0, 4) != '9999') && ($data[$record->regional_name][$record->no_tiket]['start'] = $record->StartSLA);
                 (substr($record->EndSLA, 0, 4) != '1990') && ($data[$record->regional_name][$record->no_tiket]['end'] = $record->EndSLA);
             }
+            $dashstat = \App\Models\DashboardStat::get();
             foreach ($data as $regional_name => $regional_data) {
                 foreach ($regional_data as $no_tiket => $SLA) {
                     $startSLA = Carbon::createFromDate($SLA['start']);
@@ -107,9 +108,12 @@ class LookupController extends Controller
                     }
                 }
                 $collection = collect($data[$regional_name]);
-                $return['data']['statistic'][$regional_name]['ontime'] = $collection->where('status', 'Closed')->where('days', '<=', 3)->count();
-                $return['data']['statistic'][$regional_name]['onprogress'] = $collection->where('status', '<>', 'Closed')->where('days', '<=', 3)->count();
-                $return['data']['statistic'][$regional_name]['overtime'] = $collection->where('status', '<>', 'Closed')->where('days', '>', 3)->count();
+                // $return['data']['statistic'][$regional_name]['ontime'] = $collection->where('status', 'Closed')->where('days', '<=', 3)->count();
+                // $return['data']['statistic'][$regional_name]['onprogress'] = $collection->where('status', '<>', 'Closed')->where('days', '<=', 3)->count();
+                // $return['data']['statistic'][$regional_name]['overtime'] = $collection->where('status', '<>', 'Closed')->where('days', '>', 3)->count();
+                $return['data']['statistic'][$regional_name]['ontime'] = $dashstat->where('group_info', 'OnTime')->where('regional', $regional_name)->sum('total');
+                $return['data']['statistic'][$regional_name]['onprogress'] = $dashstat->where('group_info', 'OnProgress')->where('regional', $regional_name)->sum('total');
+                $return['data']['statistic'][$regional_name]['overtime'] = $dashstat->where('group_info', 'Overtime')->where('regional', $regional_name)->sum('total');
             }
             $return['data']['records'] = $data;
             $return['status'] = "ok";

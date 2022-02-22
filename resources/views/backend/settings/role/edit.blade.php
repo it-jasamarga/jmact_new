@@ -25,7 +25,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="">{{ __('Role') }}</label>
                             <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}"
@@ -40,6 +40,15 @@
                                 <option value="">Pilih Status</option>
                                 <option value="1" {{ $record->active == 1 ? 'selected' : '' }}>Active</option>
                                 <option value="0" {{ $record->active == 0 ? 'selected' : '' }}>Non-Active</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ro_id" class="">{{ __('RO') }}</label>
+                            <select class="form-control select2" id="ro" name="ro_id">
+                                {!! App\Models\MasterRo::options('name', 'id', ["selected" => $record->ro_id], '( Pilih RO )') !!}
                             </select>
                         </div>
                     </div>
