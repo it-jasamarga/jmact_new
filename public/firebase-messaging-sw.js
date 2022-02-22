@@ -1,3 +1,4 @@
+ 
 importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js');
 
@@ -14,9 +15,9 @@ firebase.initializeApp({
 
     messagingSenderId: "438056594649",
 
-    appId: "1:438056594649:web:523a0dca7003cb7a7ca2c8",
+    appId: "1:438056594649:web:ed98a89d39d196417ca2c8",
 
-    measurementId: "G-TRQ52YCDJE"
+    measurementId: "G-RDYLHFVMXX"
 });
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
@@ -31,7 +32,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
     body: 'Background Message body.',
     icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Video-Game-Controller-Icon-IDV-green.svg/249px-Video-Game-Controller-Icon-IDV-green.svg.png' //your logo here
   };
-
+  
   return self.registration.showNotification(notificationTitle,
       notificationOptions);
 });

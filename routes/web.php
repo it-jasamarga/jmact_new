@@ -31,6 +31,8 @@ use Illuminate\Http\Request;
 // });
 
 
+
+
 Route::post('forgot-password', 'Auth\ForgotPasswordController@store');
 Route::post('reset-password', 'Auth\ResetPasswordController@store');
 Route::get('forgot-password', 'Auth\ForgotPasswordController@index');

@@ -17,8 +17,12 @@ class Role extends RoleModel implements Auditable
 
 	protected $table = 'roles';
 	protected $guard_name = 'web';
-	protected $fillable = ['name', 'name_alias', 'regional_id', 'guard_name', 'active'];
+	protected $fillable = ['name', 'name_alias', 'ro_id', 'regional_id', 'guard_name', 'active'];
 
+	public function ro()
+	{
+		return $this->belongsTo(MasterRo::class, 'ro_id');
+	}
 	public function regional()
 	{
 		return $this->belongsTo(MasterRegional::class, 'regional_id');

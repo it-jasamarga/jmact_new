@@ -15,12 +15,13 @@ use App\Http\Requests\MasterSumberRequest;
 class MasterSumberController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Sumber"], 
+    ['name' => "Master Data Sumber"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-sumber", 'name' => "Master Sumber"]
   ];
 
-  public function __construct(){
+  public function __construct()
+  {
     $this->route = 'master-sumber';
   }
 
@@ -41,49 +42,66 @@ class MasterSumberController extends Controller
     $data  = MasterSumber::query()->filter($request);
 
     return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
-      if(auth()->user()->can('master-sumber.edit')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit'
+      ->addColumn('numSelect', function ($data) use ($request) {
+        $button = '';
+        $button .= makeButton([
+          'type' => 'deleteAll',
+          'value' => $data->id
         ]);
-      }
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
-      return $buttons;
-    })
-    // ->rawColumns(['numSelect','action'])
-    ->addIndexColumn()
-    ->make(true);
-
+        return $button;
+      })
+      ->addColumn('active', function ($data) use ($request) {
+        $button = getActive($data->active);
+        return $button;
+      })
+      ->addColumn('action', function ($data) {
+        $buttons = "";
+        if (auth()->user()->can('master-sumber.edit')) {
+          $buttons .= makeButton([
+            'type' => 'modal',
+            'url'   => $this->route . '/' . $data->id . '/edit'
+          ]);
+        }
+        // $buttons .= makeButton([
+        //   'type' => 'delete',
+        //   'id'   => $data->id
+        // ]);
+        return $buttons;
+      })
+      // ->rawColumns(['numSelect','action'])
+      ->addIndexColumn()
+      ->make(true);
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-sumber.create', $data);
   }
 
-  public function store(MasterSumberRequest $request){
+  public function store(MasterSumberRequest $request)
+  {
+    if ((request()->type['keluhan'] == 0) && (request()->type['claim'] == 0)) {
+      return response([
+        "message" => "The given data was invalid.",
+        "errors" => [
+          "type[keluhan]" => ["The keluhan or claim field is required"]
+        ]
+      ], 422);
+    }
+
+    if (request()->type['keluhan']) {
+      $request['keluhan'] = request()->type['keluhan'];
+    }
+    if (request()->type['claim']) {
+      $request['claim'] = request()->type['claim'];
+    }
+
+    unset($request['type']);
     $record = MasterSumber::saveData($request);
 
     return response([
@@ -91,7 +109,7 @@ class MasterSumberController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -105,8 +123,8 @@ class MasterSumberController extends Controller
 
   public function show($id)
   {
-    
-    $data =[
+
+    $data = [
       'route' => $this->route,
       'record' => MasterSumber::findOrFail($id)
     ];
@@ -114,7 +132,8 @@ class MasterSumberController extends Controller
     return view('backend.master.master-sumber.show', $data);
   }
 
-  public function update(MasterSumberRequest $request, $id){
+  public function update(MasterSumberRequest $request, $id)
+  {
     $record = MasterSumber::saveData($request);
 
     return response([
@@ -131,16 +150,15 @@ class MasterSumberController extends Controller
       'status' => true,
       'message' => 'success',
     ]);
-
   }
 
-  public function removeMulti(){
-    $record = MasterSumber::whereIn('id',request()->id)->delete();
+  public function removeMulti()
+  {
+    $record = MasterSumber::whereIn('id', request()->id)->delete();
 
     return response([
       'status' => true,
       'message' => 'success',
     ]);
   }
-
 }

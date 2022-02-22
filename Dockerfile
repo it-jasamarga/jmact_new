@@ -79,6 +79,6 @@ RUN chmod -R 777 bootstrap/cache
 
 RUN chmod +x ./docker/run
 
-ENTRYPOINT ["bash", "docker/run"]
-
 EXPOSE 8181
+
+ENTRYPOINT ["bash", "docker/run"]

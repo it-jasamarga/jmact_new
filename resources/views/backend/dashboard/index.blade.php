@@ -215,7 +215,7 @@
 			chartData.labels.push(name.replace(/^Jasamarga (.*) Tol$/, '$1'))
 			$.each(chartBars, function(key, item) {
 				(typeof chartValues[key] === 'undefined') && (chartValues[key] = []);
-				var value = (typeof data.statistic[name] === 'undefined') ? 0 : data.statistic[name][key];
+				var value = (((typeof data['statistic'] === 'undefined')) || (typeof data.statistic[name] === 'undefined')) ? 0 : data.statistic[name][key];
 				chartValues[key].push(value);
 			})
 		})

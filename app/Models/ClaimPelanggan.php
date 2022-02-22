@@ -24,7 +24,9 @@ class ClaimPelanggan extends Model implements Auditable
 	{
 		return 'ClaimPelanggan';
 	}
-
+	public function sumber(){
+		return $this->belongsTo(MasterSumber::class,'sumber_id');
+	}
 	public function jenisClaim(){
 		return $this->belongsTo(MasterJenisClaim::class,'jenis_claim_id');
 	}
@@ -47,18 +49,7 @@ class ClaimPelanggan extends Model implements Auditable
 		return $this->hasMany(DetailHistory::class,'claim_id');
 	}
 
-	public function checkStatus(){
-		$return = "false";
-		$data = $this->history()->whereHas('status', function($q){
-			$q->whereIn('code',['00', '02'])->where('type', 2);
-		})->first();
-		if($data) {
-			$return = "true";
-		}
-		return $return;
-	}
-
-	public function checkStatusDynamic($code){
+	public function checkStatus($code){
 		$return = "false";
 		$data = $this->history()->whereHas('status', function($q) use($code){
 			$q->whereIn('code',[$code])->where('type', 2);

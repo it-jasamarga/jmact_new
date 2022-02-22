@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Kreait\Firebase\Database;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Google\Cloud\Firestore\FirestoreClient;
+use Kreait\Firebase\Messaging\WebPushConfig;
 
 use App\Models\User;
 use App\Models\Notification;
@@ -52,7 +53,7 @@ class HelperFirestore
           'title' => $title, 
           'body' => $message, 
         ])->withData([
-          'image' => url('jmact.png'),
+          'image' => url('assets/media/logos/jm-logo.png'),
           "id" => $data->id,
           "type" => $data->filesMorphClass(),
           "click_action" => "FLUTTER_NOTIFICATION_CLICK",
@@ -78,7 +79,7 @@ class HelperFirestore
           'created_at' => Carbon::now()
         ];
         
-        $Notification = Notification::create($array);
+        // $Notification = Notification::create($array);
 
         $firestore = app('firebase.firestore');
         $dbFire = $firestore->database();
@@ -95,12 +96,13 @@ class HelperFirestore
         ->withNotification([
           'title' => $title, 
           'body' => $message, 
-          'image' => url('jmact.png'),
+          'image' => url('assets/media/logos/jm-logo.png'),
+          "click_action" => "https://my-server/some-page",
         ])->withData([
-          'image' => url('jmact.png'),
+          'image' => url('assets/media/logos/jm-logo.png'),
           "id" => $data->id,
           "type" => $data->filesMorphClass(),
-          "click_action" => "FLUTTER_NOTIFICATION_CLICK",
+          "click_action" => "https://my-server/some-page",
         ]);
         $messaging->send($CloudMessage);
 

@@ -27,47 +27,30 @@
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Tahap</label>
                     <div class="col-9 col-form-label">
-                        <div class="checkbox-list" required>
-                            <label class="checkbox" required>
+                        <div class="checkbox-list">
+                            <label class="checkbox">
                                 {{-- dd({{$record->status}}) --}}
-                                <input type="checkbox" class="form-control" required name="negosiasi_dan_klarifikasi" id="stage_one"
+                                <input type="checkbox" class="form-control" name="negosiasi_dan_klarifikasi"
                                     {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '03'? '': 'disabled' }}
                                     {{ $record->status->code == '04' || $record->status->code == '05' || $record->status->code == '06'? 'checked': '' }} />
                                 <span></span>
                                 Negosiasi dan Klarifikasi
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" class="form-control" required name="proses_pembayaran"
+                                <input type="checkbox" class="form-control" name="proses_pembayaran"
                                     {{ $record->status->code == '04' ? '' : 'disabled' }}
                                     {{ $record->status->code == '05' || $record->status->code == '06' ? 'checked' : '' }} />
                                 <span></span>
                                 Proses Pembayaran
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" class="form-control" required name="pembayaran_selesai"
+                                <input type="checkbox" class="form-control" name="pembayaran_selesai"
                                     {{ $record->status->code == '05' ? '' : 'disabled' }}
                                     {{ $record->status->code == '06' ? 'checked' : '' }} />
                                 <span></span>
                                 Pembayaran Selesai
                             </label>
                         </div>
-                        {{-- <div class="radio-list">
-                                <label class="radio">
-                                    <input type="radio"  name="radios4"/>
-                                    <span></span>
-                                    Negosiasi dan Klarifikasi
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" checked="checked" name="radios4"/>
-                                    <span></span>
-                                    Pembayaran
-                                </label>
-                                <label class="radio radio-disabled">
-                                    <input type="radio" disabled="disabled" name="radios4"/>
-                                    <span></span>
-                                    Pembayaran Selesai
-                                </label>
-                            </div> --}}
                     </div>
                 </div>
             </div>

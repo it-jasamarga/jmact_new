@@ -16,7 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use JWTAuth;
 use Auth;
 
-class User extends Authenticatable implements Auditable, JWTSubject
+class User extends Authenticatable implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use Utilities;
