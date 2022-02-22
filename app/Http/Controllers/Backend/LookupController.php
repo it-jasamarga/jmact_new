@@ -68,9 +68,6 @@ class LookupController extends Controller
         $params = $request->all();
         $return = ['status' => 'error', 'name' => $name, 'type' => "bar"];
 
-        // $month = $params['filters']['month'];
-        // $year = $params['filters']['year'];
-
         if ($name == 'summary') {
 
             $query = DB::table('detail_history')
@@ -80,18 +77,19 @@ class LookupController extends Controller
                     DB::raw('MIN(CASE WHEN master_status.status = "On Progress" AND master_status.type=1 THEN detail_history.created_at ELSE CAST("9999-12-31 23:59:59" AS DATETIME) END) AS StartSLA'),
                     DB::raw('MAX(CASE WHEN master_status.status = "Closed" AND master_status.type=1 THEN detail_history.created_at ELSE CAST("1990-01-01 00:00:00" AS DATETIME) END) AS EndSLA')
                 )
-                ->leftJoin('master_regional', 'master_regional.id', '=', 'detail_history.regional_id')
                 ->leftJoin('keluhan', 'keluhan.id', '=', 'detail_history.keluhan_id')
                 ->leftJoin('master_status', 'master_status.id', '=', 'detail_history.status_id')
+                ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                 ->where('master_status.type', 1)
                 ->where('master_status.status', '=', 'On Progress')
                 ->Orwhere('master_status.status', '=', 'Closed')
+                ->whereNotNull('keluhan.no_tiket')
                 ->groupBy('master_regional.name', 'keluhan.no_tiket', 'master_status.status', 'master_status.type')
                 ->orderBy('keluhan.no_tiket')
                 ->get();
-
             $return['data'] = [];
-
             $return['data']['regional'] = \App\Models\MasterRegional::where('active', 1)->get(['id', 'name'])->pluck('name', 'id');
             $return['status'] = \App\Models\MasterStatus::where('active', 1)->where('type', 1)->get(['id', 'status'])->pluck('status', 'id');
             $data = [];
@@ -113,9 +111,9 @@ class LookupController extends Controller
                 $return['data']['statistic'][$regional_name]['onprogress'] = $collection->where('status', '<>', 'Closed')->where('days', '<=', 3)->count();
                 $return['data']['statistic'][$regional_name]['overtime'] = $collection->where('status', '<>', 'Closed')->where('days', '>', 3)->count();
             }
-
             $return['data']['records'] = $data;
             $return['status'] = "ok";
+
         } else {
 
             $return['filters'] = $params['filters'];
@@ -124,62 +122,65 @@ class LookupController extends Controller
             
             if ($name == 'area') {
                 switch ($params['filters']['category']) {
+
                     case 'regional':
-                        $query = DB::table('master_ro')
+                        $query = DB::table('keluhan')
                         ->select(
                             'master_ro.name AS name',
                             DB::raw('COUNT(keluhan.no_tiket) AS total')
                         )
-                        ->leftJoin('master_ruas', 'master_ruas.ro_id', '=', 'master_ro.id')
-                        ->leftJoin('keluhan', 'keluhan.ruas_id', '=', 'master_ruas.id')
-                        ->where('master_ro.regional_id', $params['filters']['category_id'])
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                        ->where('master_regional.id', $params['filters']['category_id'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_ro.name', 'master_ro.regional_id')
                         ->orderBy('master_ro.name')
                         ->get();
-                        /* SELECT RO.name AS ro, COUNT(KE.no_tiket) AS total FROM master_ro RO LEFT JOIN master_ruas RU ON RU.ro_id = RO.id LEFT JOIN keluhan KE ON KE.ruas_id = RU.id GROUP BY ro, RO.regional_id HAVING RO.regional_id = 1 ORDER BY RO.name */                        
-                        // $query = \App\Models\MasterRo::where('active', 1)->where('regional_id', $params['filters']['category_id'])->get(['name']);
                         foreach ($query as $record) {
                             $return['data'][$name][$record->name] = $record->total;
                         }
                         $return['status'] = 'ok';
                         break;
+
                     case 'ro':
-                        $query = DB::table('master_ro')
+                        $query = DB::table('keluhan')
                         ->select(
                             'master_ruas.name AS name',
                             DB::raw('COUNT(keluhan.no_tiket) AS total')
                         )
-                        ->leftJoin('master_ruas', 'master_ruas.ro_id', '=', 'master_ro.id')
-                        ->leftJoin('keluhan', 'keluhan.ruas_id', '=', 'master_ruas.id')
+                        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                         ->where('master_ro.id', $params['filters']['category_id'])
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_ruas.name', 'master_ro.id')
                         ->orderBy('master_ruas.name')
                         ->get();
-                        /* SELECT RU.name AS ruas, COUNT(KE.no_tiket) AS total FROM master_ro RO LEFT JOIN master_ruas RU ON RU.ro_id = RO.id LEFT JOIN keluhan KE ON KE.ruas_id = RU.id GROUP BY ruas, RO.id HAVING RO.id = 1 ORDER BY RU.name */
-                        // $query = \App\Models\MasterRuas::where('active', 1)->where('ro_id', $params['filters']['category_id'])->get(['name']);
                         foreach ($query as $record) {
                             $return['data'][$name][$record->name] = $record->total;
                         }
                         $return['status'] = 'ok';
                         break;
+
                     case 'ruas':
-                        $query = DB::table('master_ruas')
+                        $query = DB::table('keluhan')
                         ->select(
                             'master_ruas.name AS name',
                             DB::raw('COUNT(keluhan.no_tiket) AS total')
                         )
-                        ->leftJoin('keluhan', 'keluhan.ruas_id', '=', 'master_ruas.id')
+                        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+
                         ->where('master_ruas.id', $params['filters']['category_id'])
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_ruas.name', 'master_ruas.id')
                         ->orderBy('master_ruas.name')
                         ->get();
-                        // $query = \App\Models\MasterRuas::where('active', 1)->where('id', $params['filters']['category_id'])->get(['name']);
                         foreach ($query as $record) {
                             $return['data'][$name][$record->name] = $record->total;
                         }
@@ -202,8 +203,8 @@ class LookupController extends Controller
                         ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
                         ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
                         ->whereIn('keluhan.ruas_id', $ruas)
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_sumber.description')
                         ->orderBy('master_sumber.description')
                         ->get();
@@ -225,8 +226,8 @@ class LookupController extends Controller
                         ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
                         ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
                         ->whereIn('keluhan.ruas_id', $ruas)
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_sumber.description')
                         ->orderBy('master_sumber.description')
                         ->get();
@@ -240,8 +241,8 @@ class LookupController extends Controller
                         ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
                         ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
                         ->where('keluhan.ruas_id', $params['filters']['category_id'])
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_sumber.description')
                         ->orderBy('master_sumber.description')
                         ->get();
@@ -267,8 +268,8 @@ class LookupController extends Controller
                         ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
                         ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
                         ->whereIn('keluhan.ruas_id', $ruas)
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_bk.bidang')
                         ->orderBy('master_bk.bidang')
                         ->get();
@@ -291,8 +292,8 @@ class LookupController extends Controller
                         ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
                         ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
                         ->whereIn('keluhan.ruas_id', $ruas)
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_bk.bidang')
                         ->orderBy('master_bk.bidang')
                         ->get();
@@ -307,8 +308,8 @@ class LookupController extends Controller
                         ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
                         ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
                         ->where('keluhan.ruas_id', $params['filters']['category_id'])
-                        ->where('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->where('keluhan.created_at', '<=', $params['filters']['date_end'])
+                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
                         ->groupBy('master_bk.bidang')
                         ->orderBy('master_bk.bidang')
                         ->get();

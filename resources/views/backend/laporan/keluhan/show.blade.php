@@ -89,6 +89,15 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="sosial_media" class="">{{ __('Sosial Media') }}</label>
+                            <input id="sosial_media" type="text" disabled="" class="form-control" name="sosial_media"
+                                value="{{ $record->sosial_media }}" required autocomplete="no_telepon" autofocus
+                                placeholder="Sosial Media" maxlength="20">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span
                                 class="text-danger">*</span>
                             <input id="no_telepon" type="text" disabled="" class="form-control" name="no_telepon"
@@ -174,6 +183,21 @@
                             <select disabled="" class="form-control select2" name="golongan_id">
                                 {!! App\Models\MasterGolken::options('golongan', 'id', ['selected' => $record->golongan_id], '( Golongan Kendaraan )') !!}
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="url_file" class="">{{ __('Lampiran') }}</label>
+                            <input id="url_file" type="text" disabled="" class="form-control "
+                                name="url_file" value="{{ $record->url_file }}" required
+                                autocomplete="url_file" autofocus placeholder="Pilih file" maxlength="20">
+                            {{-- <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="keluhan" name="url_file"
+                                    data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
+                                    data-default-file="" data-show-remove="true" required  disabled="" value="{{ $record->url_file }}" />
+                                <label class="custom-file-label" for="keluhan"></label>
+                            </div> --}}
                         </div>
                     </div>
 

@@ -13,7 +13,7 @@
 			<!--begin::Header-->
 			<div class="d-flex align-items-center mt-5">
 				<div class="symbol symbol-100 mr-5">
-					<div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/300_21.jpg')  }}')"></div>
+					<div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/default.jpg')  }}')"></div>
 					<i class="symbol-badge bg-success"></i>
 				</div>
 				<div class="d-flex flex-column">
@@ -22,7 +22,7 @@
 					<div class="navi mt-2">
 						<a href="#" class="navi-item">
 							<span class="navi-link p-0 pb-2">
-								<span class="navi-icon mr-1">
+								{{-- <span class="navi-icon mr-1">
 									<span class="svg-icon svg-icon-lg svg-icon-primary">
 										<!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-notification.svg-->
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -34,7 +34,7 @@
 										</svg>
 										<!--end::Svg Icon-->
 									</span>
-								</span>
+								</span> --}}
 								<span class="navi-text text-muted text-hover-primary">{{ auth()->user()->email }}</span>
 							</span>
 						</a>
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 			<!--end::Header-->
-			<!--begin::Separator-->
+			{{-- <!--begin::Separator-->
 			<div class="separator separator-dashed mt-8 mb-5"></div>
 			<!--end::Separator-->
 			<!--begin::Nav-->
@@ -84,7 +84,7 @@
 						@endforeach
 					@endif
 				</div>
-				<!--end::Notifications-->
+				<!--end::Notifications--> --}}
 			</div>
 			<!--end::Content-->
 		</div>
