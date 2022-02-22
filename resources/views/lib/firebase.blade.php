@@ -1,6 +1,6 @@
-<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-messaging.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <script>
   $(document).ready(function(){
@@ -10,8 +10,8 @@
             projectId: "jm-act",
             storageBucket: "jm-act.appspot.com",
             messagingSenderId: "438056594649",
-            appId: "1:438056594649:web:cfd66d006f17a3f67ca2c8",
-            measurementId: "G-B1SMLNPGW3"
+            appId: "1:438056594649:web:ed98a89d39d196417ca2c8",
+            // measurementId: "G-RDYLHFVMXX"
         };
 
         // Initialize Firebase
@@ -29,38 +29,42 @@
                 }).then(function(token) {
                     $.post('{{ route("users.device") }}', { _token: "{{ csrf_token() }}", device_id: token });
                 }).catch(function (err) {
-                    
+                    console.log('eerr',err)
                 });
             });
 
             
 // GET MESSAGE AND PUSH
-            messaging.onMessage(function(payload) {
-                
+            messaging.onMessage((payload) => {
+              console.log('Message received. ', payload);
+              // ...
                 var notify;
                 notify = new Notification(payload.notification.title,{
                     body: payload.notification.body,
                     icon: payload.notification.image,
                     tag: payload.data.type
                 });
-                self.addEventListener('notificationclick', function(event) { 
-                    
-                    event.notification.close();
-                });
+               
             });
+
+            self.addEventListener('notificationClick', function(event) { 
+                console.log('check')
+                // event.notification.close();
+            });
+            
 // READ / SHOW NOTIF
             var unitId = '{{ (\Auth::check()) ? auth()->user()->unit->id : null }}';
+
             if(unitId){
                 var htmlNotif = ``;
                 var dbFirestore = db.collection('notifications')
                 .where('status','==','Unread')
-                .where('unit_id','==', unitId)
+                .where('unit_id','==', parseInt(unitId))
                 .orderBy("created_at", "desc")
                 .limit(10);
 
                 dbFirestore.onSnapshot(function(querySnapshot) {
                     var htmlNotif = ``;
-
                     querySnapshot.forEach(function(doc) {
                         
                         

@@ -22,7 +22,8 @@ RUN apt-get update -y && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && apt install -y libmagickwand-dev --no-install-recommends \
     && pecl install imagick && docker-php-ext-enable imagick \
-    && pecl install grpc && docker-php-ext-enable grpc
+    && pecl install grpc && docker-php-ext-enable grpc \
+    && pecl install protobuf && docker-php-ext-enable protobuf
 
 
 
@@ -43,6 +44,11 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # update memory limit
 RUN echo 'memory_limit = -1' >> "$PHP_INI_DIR/conf.d/docker-php-ram-limit.ini"
+
+# add dll
+RUN echo 'extension=php_grpc.dll' >> "$PHP_INI_DIR/conf.d/docker-php-ram-limit.ini"
+RUN echo 'extension=protobuf.so' >> "$PHP_INI_DIR/conf.d/docker-php-ram-limit.ini"
+
 
 # run in verbose biar keliatan progressnya
 RUN composer update -vvv
@@ -76,4 +82,3 @@ RUN chmod +x ./docker/run
 EXPOSE 8181
 
 ENTRYPOINT ["bash", "docker/run"]
-

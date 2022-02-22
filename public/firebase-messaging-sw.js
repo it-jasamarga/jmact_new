@@ -1,16 +1,23 @@
-importScripts('https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/8.8.1/firebase-messaging.js');
+ 
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js');
 
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.
 firebase.initializeApp({
     apiKey: "AIzaSyB86lcBroscc6kvR4GnOsPbQgQk7e1B6aI",
+
     authDomain: "jm-act.firebaseapp.com",
+
     projectId: "jm-act",
+
     storageBucket: "jm-act.appspot.com",
+
     messagingSenderId: "438056594649",
-    appId: "1:438056594649:web:cfd66d006f17a3f67ca2c8",
-    measurementId: "G-B1SMLNPGW3"
+
+    appId: "1:438056594649:web:ed98a89d39d196417ca2c8",
+
+    measurementId: "G-RDYLHFVMXX"
 });
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
@@ -25,7 +32,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
     body: 'Background Message body.',
     icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Video-Game-Controller-Icon-IDV-green.svg/249px-Video-Game-Controller-Icon-IDV-green.svg.png' //your logo here
   };
-
+  
   return self.registration.showNotification(notificationTitle,
       notificationOptions);
 });

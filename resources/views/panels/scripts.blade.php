@@ -44,4 +44,5 @@ var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 12
 
 @yield('scripts')
 @include('lib.js')
+@include('lib.firebase')
 @include('lib.datatable')
