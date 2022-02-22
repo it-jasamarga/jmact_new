@@ -333,7 +333,7 @@ class KeluhanController extends Controller
   public function prosesSla($id)
   {
     // dd(request()->all());
-    // request()['status_id'] = MasterStatus::where('code','05')->first()->id;
+    // request()['status_id'] = MasterStatus::where('code','05')->first()->id;jancuk
     request()['status_id'] = MasterStatus::where('code', '03')->where('type', '1')->first()->id;
 
     $record = KeluhanPelanggan::findOrFail($id);
