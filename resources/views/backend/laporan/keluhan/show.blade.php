@@ -61,9 +61,8 @@
                         <div class="form-group">
                             <label for="no_tiket" class="">{{ __('No Tiket') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="no_tiket" type="text" disabled="" class="form-control" name="no_tiket"
-                                value="{{ $record->no_tiket }}" required autocomplete="no_tiket" autofocus
-                                placeholder="No Tiket" maxlength="20">
+                            <input id="no_tiket" type="text" class="form-control" name="no_tiket"
+                                value="{{ $record->no_tiket }}" readonly>
                         </div>
                     </div>
 
@@ -71,9 +70,8 @@
                         <div class="form-group">
                             <label for="inputer_pic" class="">{{ __('Inputer PIC') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="inputer_pic" type="text" disabled="" class="form-control" name="inputer_pic"
-                                value="{{ $record->creator ? $record->creator->username : '' }}" required
-                                autocomplete="inputer_pic" autofocus placeholder="Inputer PIC" maxlength="20">
+                            <input id="inputer_pic" type="text" class="form-control" name="inputer_pic"
+                                value="{{ $record->creator ? $record->creator->username : '' }}" readonly>
                         </div>
                     </div>
 
@@ -81,18 +79,16 @@
                         <div class="form-group">
                             <label for="nama_cust" class="">{{ __('Nama Pelanggan') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="nama_cust" type="text" disabled="" class="form-control" name="nama_cust"
-                                value="{{ $record->nama_cust }}" required autocomplete="nama_cust" autofocus
-                                placeholder="Nama Pelanggan" maxlength="20">
+                            <input id="nama_cust" type="text" class="form-control" name="nama_cust"
+                                value="{{ $record->nama_cust }}" readonly>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="sosial_media" class="">{{ __('Sosial Media') }}</label>
-                            <input id="sosial_media" type="text" disabled="" class="form-control" name="sosial_media"
-                                value="{{ $record->sosial_media }}" required autocomplete="no_telepon" autofocus
-                                placeholder="Sosial Media" maxlength="20">
+                            <input id="sosial_media" type="text" class="form-control" name="sosial_media"
+                                value="{{ $record->sosial_media }}" readonly>
                         </div>
                     </div>
 
@@ -100,9 +96,8 @@
                         <div class="form-group">
                             <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="no_telepon" type="text" disabled="" class="form-control" name="no_telepon"
-                                value="{{ $record->no_telepon }}" required autocomplete="no_telepon" autofocus
-                                placeholder="No Telepon" maxlength="20">
+                            <input id="no_telepon" type="text" class="form-control" name="no_telepon"
+                                value="{{ $record->no_telepon }}" readonly>
                         </div>
                     </div>
 
@@ -111,9 +106,8 @@
                             <label for="tanggal_kejadian"
                                 class="">{{ __('Tanggal Kejadian') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="tanggal_kejadian" type="text" disabled="" class="form-control "
-                                name="tanggal_kejadian" value="{{ $record->tanggal_kejadian }}" required
-                                autocomplete="tanggal_kejadian" autofocus placeholder="Tanggal Kejadian" maxlength="20">
+                            <input id="tanggal_kejadian" type="text" class="form-control "
+                                name="tanggal_kejadian" value="{{ $record->tanggal_kejadian }}" readonly>
                         </div>
                     </div>
 
@@ -121,9 +115,8 @@
                         <div class="form-group">
                             <label for="lokasi_kejadian" class="">{{ __('Lokasi Kejadian') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="lokasi_kejadian" type="text" disabled="" class="form-control"
-                                name="lokasi_kejadian" value="{{ $record->lokasi_kejadian }}" required
-                                autocomplete="lokasi_kejadian" autofocus placeholder="Lokasi Kejadian" maxlength="20">
+                            <input id="lokasi_kejadian" type="text" class="form-control"
+                                name="lokasi_kejadian" value="{{ $record->lokasi_kejadian }}" readonly>
                         </div>
                     </div>
 
@@ -149,7 +142,7 @@
                         <div class="form-group">
                             <label for="lokasi_kejadian" class="">{{ __('Ruas Jalan Tol') }}</label><span
                                 class="text-danger">*</span>
-                            <select disabled="" class="form-control select2" id="ruas" name="ruas_id">
+                            <select disabled class="form-control select2" id="ruas" name="ruas_id">
                                 {!! App\Models\MasterRuas::options('name', 'id', ['selected' => $record->ruas_id], '( Ruas Jalan Tol )') !!}
                             </select>
                         </div>
@@ -159,7 +152,7 @@
                         <div class="form-group">
                             <label for="lokasi_kejadian" class="">{{ __('Sumber') }}</label><span
                                 class="text-danger">*</span>
-                            <select disabled="" class="form-control select2" name="sumber_id">
+                            <select disabled class="form-control select2" name="sumber_id">
                                 {!! App\Models\MasterSumber::options('description', 'id', ['selected' => $record->sumber_id], '( Sumber )') !!}
                             </select>
                         </div>
@@ -169,7 +162,7 @@
                         <div class="form-group">
                             <label for="lokasi_kejadian" class="">{{ __('Bidang Keluhan') }}</label><span
                                 class="text-danger">*</span>
-                            <select disabled="" class="form-control select2" name="bidang_id">
+                            <select disabled class="form-control select2" name="bidang_id">
                                 {!! App\Models\MasterBk::options('keluhan', 'id', ['selected' => $record->bidang_id], '( Bidang Keluhan )') !!}
                             </select>
                         </div>
@@ -180,7 +173,7 @@
                             <label for="lokasi_kejadian"
                                 class="">{{ __('Golongan Kendaraan') }}</label><span
                                 class="text-danger">*</span>
-                            <select disabled="" class="form-control select2" name="golongan_id">
+                            <select class="form-control select2" name="golongan_id" disabled>
                                 {!! App\Models\MasterGolken::options('golongan', 'id', ['selected' => $record->golongan_id], '( Golongan Kendaraan )') !!}
                             </select>
                         </div>
@@ -189,9 +182,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" disabled="" class="form-control "
-                                name="url_file" value="{{ $record->url_file }}" required
-                                autocomplete="url_file" autofocus placeholder="Pilih file" maxlength="20">
+                            <input id="url_file" type="text" class="form-control "
+                                name="url_file" value="{{ $record->url_file }}" readonly>
                             {{-- <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="keluhan" name="url_file"
                                     data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
@@ -206,8 +198,8 @@
                             <label for="keterangan_keluhan"
                                 class="">{{ __('Keterangan Keluhan') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_keluhan" disabled="" class="form-control"
-                                placeholder="Keterangan Keluhan">{{ $record->keterangan_keluhan }}</textarea>
+                            <textarea name="keterangan_keluhan" class="form-control"
+                                placeholder="Keterangan Keluhan" readonly>{{ $record->keterangan_keluhan }}</textarea>
                         </div>
                     </div>
                 </div>
