@@ -420,11 +420,11 @@ class KeluhanController extends Controller
       'status_id' => MasterStatus::where('code', '04')->where('type', '1')->first()->id
     ]);
 
-    $this->firebase->send(
-      $record,
-      'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
-      'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
-    );
+    // $this->firebase->send(
+    //   $record,
+    //   'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+    //   'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
+    // );
 
     return response([
       'status' => true,
