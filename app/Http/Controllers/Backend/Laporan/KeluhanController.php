@@ -342,6 +342,16 @@ class KeluhanController extends Controller
       'estimate' => 3,
       'date' => Carbon::now()->addDays(3)
     ]);
+    
+    unset(request()['no_tiket']);
+    unset(request()['inputer_pic']);
+    unset(request()['nama_cust']);
+    unset(request()['sosial_media']);
+    unset(request()['no_telepon']);
+    unset(request()['tanggal_kejadian']);
+    unset(request()['lokasi_kejadian']);
+    unset(request()['url_file']);
+    unset(request()['keterangan_keluhan']);
 
     $history = $record->history()->orderByDesc('created_at')->first();
     $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
@@ -389,7 +399,7 @@ class KeluhanController extends Controller
 
     $record = KeluhanPelanggan::findOrFail($id);
     $record->report()->create(request()->all());
-
+    
     unset($request['keterangan']);
     unset($request['url_file']);
 
