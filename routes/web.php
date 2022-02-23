@@ -43,7 +43,11 @@ Route::group(['middleware' => 'auth'], function() {
   	Route::get('/logout', 'Auth\LoginController@logout');
 
 	Route::post('histori-tiket/{ticket}', function(Request $request, $ticket) {
-		$model = \App\Models\KeluhanPelanggan::where('no_tiket', $ticket)->with(['history' => function($query){ $query->with('status'); }])->first();
+		if (substr($ticket, 0, 1) == 'K') {
+			$model = \App\Models\KeluhanPelanggan::where('no_tiket', $ticket)->with(['history' => function($query){ $query->with('status'); }])->first();
+		} else {
+			$model = \App\Models\ClaimPelanggan::where('no_tiket', $ticket)->with(['history' => function($query){ $query->with('status'); }])->first();
+		}
 		return $model ? response()->json([
 			'status' => 'ok',
 			'data' => $model->toArray(),

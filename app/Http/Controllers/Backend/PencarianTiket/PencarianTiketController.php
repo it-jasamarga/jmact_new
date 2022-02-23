@@ -64,7 +64,7 @@ class PencarianTiketController extends Controller
             if(auth()->user()->can('pencarian-tiket.detail')) {
               $buttons .= makeButton([
                 'type' => 'url',
-                'url'   => $this->route.'/'.$data->id.'',
+                'url'   => ($data->type=='K' ? 'keluhan/' : 'claim/').$data->id,
                 'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
                 'label'   => '<i class="flaticon2-list-1"></i>',
                 'tooltip' => 'Detail Data'
