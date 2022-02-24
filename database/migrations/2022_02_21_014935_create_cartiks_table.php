@@ -22,6 +22,7 @@ class CreateCartiksTable extends Migration
         \DB::statement("
             CREATE VIEW `cartiks` AS
             SELECT 
+                `keluhan`.`id` AS `id`,
                 `keluhan`.`no_tiket` AS `no_tiket`,
                 `keluhan`.`status_id` AS `status_id`,
                 'K' AS `type`
@@ -29,6 +30,7 @@ class CreateCartiksTable extends Migration
                 `keluhan` 
             UNION
             SELECT 
+                `claim`.`id` AS `id`,
                 `claim`.`no_tiket` AS `no_tiket`,
                 `claim`.`status_id` AS `status_id`,
                 'C' AS `type`
