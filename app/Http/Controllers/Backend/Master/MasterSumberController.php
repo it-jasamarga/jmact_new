@@ -134,6 +134,24 @@ class MasterSumberController extends Controller
 
   public function update(MasterSumberRequest $request, $id)
   {
+    // dd(request()->all());
+    if ((request()->type['keluhan'] == 0) && (request()->type['claim'] == 0)) {
+      return response([
+        "message" => "The given data was invalid.",
+        "errors" => [
+          "type[keluhan]" => ["The keluhan or claim field is required"]
+        ]
+      ], 422);
+    }
+
+    if (request()->type['keluhan']) {
+      $request['keluhan'] = request()->type['keluhan'];
+    }
+    if (request()->type['claim']) {
+      $request['claim'] = request()->type['claim'];
+    }
+
+    unset($request['type']);
     $record = MasterSumber::saveData($request);
 
     return response([

@@ -56,7 +56,7 @@ class ClaimController extends Controller
     if (auth()->user()->hasRole('JMTC')) {
       $data  = ClaimPelanggan::
         whereHas('status', function ($q1) {
-          $q1->whereIn('code', ['01', '02'])
+          $q1->whereIn('code', ['00', '01', '02'])
             ->where('type', 1);
         })
         ->orderByDesc('created_at')
@@ -68,7 +68,7 @@ class ClaimController extends Controller
       $data  = ClaimPelanggan::with('history')
         ->where('unit_id', auth()->user()->unit_id)
         ->whereHas('status', function ($q1) {
-          $q1->whereIn('code', ['02', '03', '04'])
+          $q1->whereIn('code', ['03', '04', '05', '06', '07'])
             ->where('type', 1);
         })
         ->orderByDesc('created_at')
@@ -82,7 +82,11 @@ class ClaimController extends Controller
 
       $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
         $q1->whereHas('ro', function ($q2) use ($roId) {
-          $q2->where('id', $roId);
+          $q2->where('id', $roId)
+          ->whereHas('status', function ($q1) {
+            $q1->whereIn('code', ['02', '03'])
+              ->where('type', 1);
+          });
         });
       })
         ->orderByDesc('created_at')
@@ -263,13 +267,13 @@ class ClaimController extends Controller
     $request['status_id'] = MasterStatus::where('code', '03')->where('type', 2)->first()->id;
     // $request['unit_id'] = $record->unit_id;
     // $request['regional_id'] = $record->regional_id;
-
+    unset($request['ruas_id']);
     $record->status_id = $request->status_id;
     $record->save();
 
     $recordHistory = $record->history()->create($request->all());
 
-    $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+    // $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
     // $this->firebase->sendGroup(
     //   $record, 

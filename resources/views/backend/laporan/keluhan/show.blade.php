@@ -34,10 +34,14 @@
                                             <div class="timeline-content d-flex align-items-center justify-content-between">
                                                 <span class="mr-3">
                                                     @if ($value->status->code == 02)
-                                                        {{ $value->status->status }} oleh {{ $record->user->username }}
+                                                        {{ $value->status->status }} 
+                                                        oleh {{ $record->user->username }}
+                                                        {{-- oleh {{ $record->user->roles->name }} --}}
                                                         ke {{ $record->unit->unit }}
-                                                    @elseif($value->status->code == 01 || $value->status->code == 03 || $value->status->code == 04)
-                                                        {{ $value->status->status }} oleh {{ $record->user->username }}
+                                                        @elseif($value->status->code == 01 || $value->status->code == 03 || $value->status->code == 04)
+                                                        {{ $value->status->status }} 
+                                                        oleh {{ $record->user->username }}
+                                                        {{-- oleh {{ $record->user->roles->name }} --}}
                                                     @else
                                                         Tiket {{ $value->status->status }}
                                                     @endif
