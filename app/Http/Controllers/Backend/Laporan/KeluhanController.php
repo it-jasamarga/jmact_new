@@ -31,7 +31,7 @@ class KeluhanController extends Controller
   public function __construct()
   {
     $this->route = 'keluhan';
-    $this->firebase = new HelperFirestore();
+    // $this->firebase = new HelperFirestore();
   }
 
   public function index(Request $request)
@@ -245,7 +245,7 @@ class KeluhanController extends Controller
       // );
 
       $record->history()->create([
-        'ruas_id' => $record->ruas_id,
+        // 'ruas_id' => $record->ruas_id,
         // 'regional_id' => $record->regional_id,
         'unit_id' => $record->unit_id,
         'status_id' => MasterStatus::where('code', '01')->where('type', '1')->first()->id

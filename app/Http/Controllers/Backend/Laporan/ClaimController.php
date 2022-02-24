@@ -67,7 +67,8 @@ class ClaimController extends Controller
         ->filter($request);
     }
 
-    if (auth()->user()->hasRole('RO')) {
+    // if (auth()->user()->hasRole('RO')) {
+    if (@auth()->user()->roles()->first()->ro_id) {
       $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
 
       $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
@@ -80,7 +81,8 @@ class ClaimController extends Controller
         ->filter($request);
     }
 
-    if (auth()->user()->hasRole('Regional')) {
+    // if (auth()->user()->hasRole('Regional')) {
+    if (@auth()->user()->roles()->first()->regional_id) {
       $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
       // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
@@ -187,17 +189,17 @@ class ClaimController extends Controller
 
     DB::beginTransaction();
     try {
-      $dataRuas = MasterRuas::find($request->ruas_id);
+      // $dataRuas = MasterRuas::find($request->ruas_id);
 
-      if ($dataRuas) {
-        $dataRo = $dataRuas->ro;
-        if ($dataRo) {
-          $dataRegional = $dataRo->regional;
-          if ($dataRegional) {
-            $request['regional_id'] = $dataRegional->id;
-          }
-        }
-      }
+      // if ($dataRuas) {
+      //   $dataRo = $dataRuas->ro;
+      //   if ($dataRo) {
+      //     $dataRegional = $dataRo->regional;
+      //     if ($dataRegional) {
+      //       $request['regional_id'] = $dataRegional->id;
+      //     }
+      //   }
+      // }
 
       $request['user_id'] = auth()->user()->id;
       $request['status_id'] = MasterStatus::where('code', '01')->where('type', 2)->first()->id;
@@ -211,8 +213,8 @@ class ClaimController extends Controller
       // ]);
 
       $record->history()->create([
-        'ruas_id' => $record->ruas_id,
-        'regional_id' => $record->regional_id,
+        // 'ruas_id' => $record->ruas_id,
+        // 'regional_id' => $record->regional_id,
         'unit_id' => $record->unit_id,
         'status_id' => MasterStatus::where('code', '01')->where('type', 2)->first()->id
       ]);
@@ -251,7 +253,7 @@ class ClaimController extends Controller
 
     $request['status_id'] = MasterStatus::where('code', '03')->where('type', 2)->first()->id;
     // $request['unit_id'] = $record->unit_id;
-    $request['regional_id'] = $record->regional_id;
+    // $request['regional_id'] = $record->regional_id;
 
     $record->status_id = $request->status_id;
     $record->save();
@@ -304,7 +306,7 @@ class ClaimController extends Controller
 
     $request['status_id'] = MasterStatus::where('code', $request->status)->where('type', 2)->first()->id;
     $request['unit_id'] = $record->unit_id;
-    $request['regional_id'] = $record->regional_id;
+    // $request['regional_id'] = $record->regional_id;
     if ($request->nominal_final) {
       $record->nominal_final = $request->nominal_final;
     }
@@ -350,7 +352,6 @@ class ClaimController extends Controller
 
   public function claimDetail(Request $request, $id)
   {
-
     if (request()->keterangan_reject == '') {
       $this->validate($request, [
         'keterangan_reject' => 'required',
@@ -371,7 +372,7 @@ class ClaimController extends Controller
 
     $data['status_id'] = $status->id;
     $data['unit_id'] = $record->unit_id;
-    $data['regional_id'] = $record->regional_id;
+    // $data['regional_id'] = $record->regional_id;
 
     $recordHistory = $record->history()->create($data);
 
