@@ -288,13 +288,14 @@ class KeluhanController extends Controller
     // $request['unit_id'] = $record->unit_id;
     // $request['regional_id'] = $record->regional_id;
 
+    unset($request['ruas_id']);
     $record->status_id = $request->status_id;
     $record->unit_id = $request->unit_id;
     $record->save();
 
     $recordHistory = $record->history()->create($request->all());
 
-    $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+    // $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
     // $this->firebase->sendGroup(
     //   $record,

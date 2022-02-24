@@ -33,18 +33,21 @@
                 </div>
             </div>
 
+            <input type="hidden" name="type[keluhan]" value="0">
+            <input type="hidden" name="type[claim]" value="0">
+
             <div class="col-md-12 form-group row">
                 <div class="col-3 col-form-label">
                     <label>Laporan Pelanggan</label><span class="text-danger">*</span>
                 </div>
                 <div class="col-9 checkbox-inline" required>
                     <label class="checkbox">
-                        <input type="checkbox" class="form-control" name="keluhan" value="1" {{$record->keluhan == 1 ? 'checked' : ''}}/>
+                        <input type="checkbox" class="form-control" name="type[keluhan]" value="1" {{$record->keluhan == 1 ? 'checked' : ''}}/>
                         <span></span>
                         Keluhan
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" class="form-control" name="claim" value="1" {{ $record->claim == 1 ? 'checked' : ''}}/>
+                        <input type="checkbox" class="form-control" name="type[claim]" value="1" {{ $record->claim == 1 ? 'checked' : ''}}/>
                         <span></span>
                         Claim
                     </label>
@@ -72,11 +75,11 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            <i class="flaticon-circle"></i>
+            <em class="flaticon-circle"></em>
             Tutup
         </button>
         <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
-            <i class="flaticon-add-circular-button"></i>
+            <em class="flaticon-add-circular-button"></em>
             Simpan
         </button>
     </div>
