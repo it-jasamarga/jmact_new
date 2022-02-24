@@ -55,13 +55,22 @@ class ClaimController extends Controller
 
     if (auth()->user()->hasRole('JMTC')) {
       $data  = ClaimPelanggan::
-        // where('status_id','1')
-        orderByDesc('created_at')->select('*')->filter($request);
+        whereHas('status', function ($q1) {
+          $q1->whereIn('code', ['01', '02'])
+            ->where('type', 1);
+        })
+        ->orderByDesc('created_at')
+        ->select('*')
+        ->filter($request);
     }
 
     if (auth()->user()->hasRole('Service Provider')) {
       $data  = ClaimPelanggan::with('history')
         ->where('unit_id', auth()->user()->unit_id)
+        ->whereHas('status', function ($q1) {
+          $q1->whereIn('code', ['02', '03', '04'])
+            ->where('type', 1);
+        })
         ->orderByDesc('created_at')
         ->select('*')
         ->filter($request);
@@ -352,7 +361,7 @@ class ClaimController extends Controller
 
   public function claimDetail(Request $request, $id)
   {
-    if (request()->keterangan_reject == '') {
+    if (request()->keterangan_reject == '' && request()->status == 00) {
       $this->validate($request, [
         'keterangan_reject' => 'required',
       ]);

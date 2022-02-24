@@ -248,8 +248,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control "
-                                name="url_file" value="{{ $record->url_file }}" readonly>
+                            <input id="url_file" type="text" class="form-control " name="url_file"
+                                value="{{ $record->url_file }}" readonly>
                             {{-- <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="keluhan" name="url_file"
                                     data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
@@ -264,30 +264,32 @@
                             <label for="keterangan_claim"
                                 class="">{{ __('Keterangan Claim') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim" rows="1"
-                                readonly>{{ $record->keterangan_claim }}</textarea>
+                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim"
+                                rows="1" readonly>{{ $record->keterangan_claim }}</textarea>
                         </div>
                     </div>
 
                 </div>
 
                 <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
-                    <i class="flaticon-circle"></i>
+                    <em class="flaticon-circle"></em>
                     Kembali
                 </a>
 
-                @if ($record->checkStatus(['00', '02']) === 'false')
-                    {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
-                    <div class="btn btn-light-success float-right save">
-                        <em class="flaticon-plus"></em>
-                        Approve
-                    </div>
+                @if (auth()->user()->hasRole('SPV JMTO'))
+                    @if ($record->checkStatus(['00', '02']) === 'false')
+                        {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
+                        <div class="btn btn-light-success float-right save">
+                            <em class="flaticon-plus"></em>
+                            Approve
+                        </div>
 
-                    <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
-                        data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
-                        <em class="flaticon-cancel"></em>
-                        Reject
-                    </div>
+                        <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
+                            data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
+                            <em class="flaticon-cancel"></em>
+                            Reject
+                        </div>
+                    @endif
                 @endif
                 {{-- @if ($record->report->count() > 0)
     <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">

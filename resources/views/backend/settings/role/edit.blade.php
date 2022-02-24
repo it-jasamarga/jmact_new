@@ -48,7 +48,11 @@
                         <div class="form-group">
                             <label for="ro_id" class="">{{ __('RO') }}</label>
                             <select class="form-control select2" id="ro" name="ro_id">
-                                {!! App\Models\MasterRo::options('name', 'id', ["selected" => $record->ro_id], '( Pilih RO )') !!}
+                                {!! App\Models\MasterRo::options(
+                                    function ($q) {
+                                        $regional = $q->regional ? $q->regional->name : '-';
+                                        return $q->name . ' - ' . $regional;
+                                    }, 'id', ["selected" => $record->ro_id], '( Pilih RO )') !!}
                             </select>
                         </div>
                     </div>
