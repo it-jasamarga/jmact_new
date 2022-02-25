@@ -408,4 +408,18 @@ class ClaimController extends Controller
 
     return view('backend.laporan.claim.reject', $data);
   }
+
+  public function showAttachment($id)
+  {
+    $record = ClaimPelanggan::findOrFail($id);
+
+    $data = [
+      'title' => 'Detail Lampiran',
+      'breadcrumbs' => $this->breadcrumbs,
+      'route' => $this->route,
+      'record' => $record
+    ];
+
+    return view('backend.laporan.claim.show-attachment', $data);
+  }
 }

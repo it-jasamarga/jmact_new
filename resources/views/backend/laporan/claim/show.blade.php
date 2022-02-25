@@ -38,10 +38,10 @@
                                             <div class="timeline-content d-flex align-items-center justify-content-between">
                                                 <span class="mr-3">
                                                     @if ($value->status->code == 03)
-                                                        {{ $value->status->status }} oleh {{ $record->user->username }}
-                                                        ke {{ $record->unit->unit }}
+                                                        {{ $value->status->status }} oleh {{ $value->user->username }}
+                                                        ke {{ $value->unit->unit }}
                                                     @elseif($value->status->code == 01 || $value->status->code == 02)
-                                                        {{ $value->status->status }} oleh {{ $record->user->username }}
+                                                        {{ $value->status->status }} oleh {{ $value->user->username }}
                                                     @else
                                                         {{ $value->status->status }}
                                                     @endif
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         @if ($record->checkStatus(['00']) === 'true')
                             <div class="alert alert-custom alert-default" role="alert">
                                 <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
@@ -248,8 +248,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control " name="url_file"
-                                value="{{ $record->url_file }}" readonly>
+                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                                value="{{ $record->url_file }}" readonly data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge" style="cursor: pointer">
                             {{-- <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="keluhan" name="url_file"
                                     data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
@@ -270,6 +270,13 @@
                     </div>
 
                 </div>
+
+@if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="flaticon-circle"></i>
+                    Kembali
+                </a>
+@else
 
                 <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
                     <em class="flaticon-circle"></em>
@@ -304,6 +311,7 @@
             </div>
         @endif
     @endif --}}
+@endif
             </form>
         </div>
     </div>

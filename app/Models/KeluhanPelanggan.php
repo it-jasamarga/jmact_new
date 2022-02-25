@@ -28,9 +28,11 @@ class KeluhanPelanggan extends Model implements Auditable
 	public function sumber(){
 		return $this->belongsTo(MasterSumber::class,'sumber_id');
 	}
+
 	public function bidang(){
 		return $this->belongsTo(MasterBk::class,'bidang_id');
 	}
+	
 	public function ruas(){
 		return $this->belongsTo(MasterRuas::class,'ruas_id');
 	}
@@ -42,9 +44,11 @@ class KeluhanPelanggan extends Model implements Auditable
 	public function golongan(){
 		return $this->belongsTo(MasterGolken::class,'golongan_id');
 	}
+
 	public function status(){
 		return $this->belongsTo(MasterStatus::class,'status_id');
 	}
+
 	public function user(){
 		return $this->belongsTo(User::class,'user_id');
 	}

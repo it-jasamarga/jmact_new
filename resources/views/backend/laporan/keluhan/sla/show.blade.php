@@ -145,14 +145,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control " name="url_file"
-                                value="{{ $record->url_file }}" readonly>
-                            {{-- <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="keluhan" name="url_file"
-                                  data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
-                                  data-default-file="" data-show-remove="true" required  disabled="" value="{{ $record->url_file }}" />
-                              <label class="custom-file-label" for="keluhan"></label>
-                          </div> --}}
+                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                                value="{{ $record->url_file }}" readonly
+                                data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
+                                style="cursor: pointer">
                         </div>
                     </div>
 
@@ -169,11 +165,11 @@
 
                 </div>
                 <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
-                    <i class="flaticon-circle"></i>
+                    <em class="flaticon-circle"></em>
                     Kembali
                 </a>
                 <div class="btn btn-light-success save float-right">
-                    <i class="flaticon-add-circular-button"></i>
+                    <em class="flaticon-add-circular-button"></em>
                     Mulai Pengerjaan
                 </div>
             </form>

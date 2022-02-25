@@ -60,8 +60,7 @@ class KeluhanController extends Controller
     }
 
     if (auth()->user()->hasRole('JMTC')) {
-      $data  = KeluhanPelanggan::
-        whereHas('status', function ($q1) {
+      $data  = KeluhanPelanggan::whereHas('status', function ($q1) {
           $q1->whereIn('code', ['01', '02'])
             ->where('type', 1);
         })
@@ -343,7 +342,7 @@ class KeluhanController extends Controller
       'estimate' => 3,
       'date' => Carbon::now()->addDays(3)
     ]);
-    
+
     unset(request()['no_tiket']);
     unset(request()['inputer_pic']);
     unset(request()['nama_cust']);
@@ -400,7 +399,7 @@ class KeluhanController extends Controller
 
     $record = KeluhanPelanggan::findOrFail($id);
     $record->report()->create(request()->all());
-    
+
     unset($request['keterangan']);
     unset($request['url_file']);
 
@@ -476,5 +475,19 @@ class KeluhanController extends Controller
       'status' => true,
       'message' => 'success',
     ]);
+  }
+
+  public function showAttachment($id)
+  {
+    $record = KeluhanPelanggan::findOrFail($id);
+
+    $data = [
+      'title' => 'Detail Lampiran',
+      'breadcrumbs' => $this->breadcrumbs,
+      'route' => $this->route,
+      'record' => $record
+    ];
+
+    return view('backend.laporan.keluhan.show-attachment', $data);
   }
 }

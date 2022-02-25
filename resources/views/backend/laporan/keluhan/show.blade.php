@@ -34,14 +34,12 @@
                                             <div class="timeline-content d-flex align-items-center justify-content-between">
                                                 <span class="mr-3">
                                                     @if ($value->status->code == 02)
-                                                        {{ $value->status->status }} 
-                                                        oleh {{ $record->user->username }}
-                                                        {{-- oleh {{ $record->user->roles->name }} --}}
-                                                        ke {{ $record->unit->unit }}
-                                                        @elseif($value->status->code == 01 || $value->status->code == 03 || $value->status->code == 04)
-                                                        {{ $value->status->status }} 
-                                                        oleh {{ $record->user->username }}
-                                                        {{-- oleh {{ $record->user->roles->name }} --}}
+                                                        {{ $value->status->status }}
+                                                        oleh {{ $value->user->username }}
+                                                        ke {{ $value->unit->unit }}
+                                                    @elseif($value->status->code == 01 || $value->status->code == 03 || $value->status->code == 04)
+                                                        {{ $value->status->status }}
+                                                        oleh {{ $value->user->username }}
                                                     @else
                                                         Tiket {{ $value->status->status }}
                                                     @endif
@@ -110,8 +108,8 @@
                             <label for="tanggal_kejadian"
                                 class="">{{ __('Tanggal Kejadian') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="tanggal_kejadian" type="text" class="form-control "
-                                name="tanggal_kejadian" value="{{ $record->tanggal_kejadian }}" readonly>
+                            <input id="tanggal_kejadian" type="text" class="form-control " name="tanggal_kejadian"
+                                value="{{ $record->tanggal_kejadian }}" readonly>
                         </div>
                     </div>
 
@@ -119,8 +117,8 @@
                         <div class="form-group">
                             <label for="lokasi_kejadian" class="">{{ __('Lokasi Kejadian') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="lokasi_kejadian" type="text" class="form-control"
-                                name="lokasi_kejadian" value="{{ $record->lokasi_kejadian }}" readonly>
+                            <input id="lokasi_kejadian" type="text" class="form-control" name="lokasi_kejadian"
+                                value="{{ $record->lokasi_kejadian }}" readonly>
                         </div>
                     </div>
 
@@ -186,14 +184,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control "
-                                name="url_file" value="{{ $record->url_file }}" readonly>
-                            {{-- <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="keluhan" name="url_file"
-                                    data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
-                                    data-default-file="" data-show-remove="true" required  disabled="" value="{{ $record->url_file }}" />
-                                <label class="custom-file-label" for="keluhan"></label>
-                            </div> --}}
+                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                                value="{{ $record->url_file }}" readonly
+                                data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
+                                style="cursor: pointer">
                         </div>
                     </div>
 
@@ -202,20 +196,27 @@
                             <label for="keterangan_keluhan"
                                 class="">{{ __('Keterangan Keluhan') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_keluhan" class="form-control"
-                                placeholder="Keterangan Keluhan" readonly>{{ $record->keterangan_keluhan }}</textarea>
+                            <textarea name="keterangan_keluhan" class="form-control" placeholder="Keterangan Keluhan"
+                                readonly>{{ $record->keterangan_keluhan }}</textarea>
                         </div>
                     </div>
                 </div>
 
-                <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
+@if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
+                <a href="javascript:history.back()" class="btn btn-secondary">
                     <i class="flaticon-circle"></i>
+                    Kembali
+                </a>
+@else
+
+                <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
+                    <em class="flaticon-circle"></em>
                     Kembali
                 </a>
                 @if ($record->report->count() > 0)
                     <div class="btn btn-light-success float-right custome-modal"
                         data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
-                        <i class="flaticon2-file"></i>
+                        <em class="flaticon2-file"></em>
                         Detail Report
                     </div>
                     {{-- @else
@@ -226,6 +227,7 @@
             </div>
         @endif --}}
                 @endif
+@endif
             </form>
         </div>
     </div>

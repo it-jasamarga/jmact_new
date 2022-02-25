@@ -33,4 +33,12 @@ class DetailHistory extends Model implements Auditable
 	public function status(){
 		return $this->belongsTo(MasterStatus::class,'status_id');
 	}
+
+	public function user(){
+		return $this->belongsTo(User::class,'created_by');
+	}
+
+	public function unit(){
+		return $this->belongsTo(MasterUnit::class,'unit_id');
+	}
 }
