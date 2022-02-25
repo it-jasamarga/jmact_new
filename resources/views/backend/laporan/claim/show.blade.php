@@ -271,6 +271,13 @@
 
                 </div>
 
+@if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="flaticon-circle"></i>
+                    Kembali
+                </a>
+@else
+
                 <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
                     <em class="flaticon-circle"></em>
                     Kembali
@@ -304,6 +311,7 @@
             </div>
         @endif
     @endif --}}
+@endif
             </form>
         </div>
     </div>
