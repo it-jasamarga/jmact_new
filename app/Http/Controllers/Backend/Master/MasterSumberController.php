@@ -94,12 +94,9 @@ class MasterSumberController extends Controller
       ], 422);
     }
 
-    if (request()->type['keluhan']) {
-      $request['keluhan'] = request()->type['keluhan'];
-    }
-    if (request()->type['claim']) {
-      $request['claim'] = request()->type['claim'];
-    }
+    $request['keluhan'] = (request()->type['keluhan']) ? 1 : 0;
+
+    $request['claim'] = (request()->type['claim']) ? 1 : 0;
 
     unset($request['type']);
     $record = MasterSumber::saveData($request);
@@ -134,7 +131,6 @@ class MasterSumberController extends Controller
 
   public function update(MasterSumberRequest $request, $id)
   {
-    // dd(request()->all());
     if ((request()->type['keluhan'] == 0) && (request()->type['claim'] == 0)) {
       return response([
         "message" => "The given data was invalid.",
@@ -144,14 +140,12 @@ class MasterSumberController extends Controller
       ], 422);
     }
 
-    if (request()->type['keluhan']) {
-      $request['keluhan'] = request()->type['keluhan'];
-    }
-    if (request()->type['claim']) {
-      $request['claim'] = request()->type['claim'];
-    }
+    $request['keluhan'] = (request()->type['keluhan']) ? 1 : 0;
+
+    $request['claim'] = (request()->type['claim']) ? 1 : 0;
 
     unset($request['type']);
+
     $record = MasterSumber::saveData($request);
 
     return response([

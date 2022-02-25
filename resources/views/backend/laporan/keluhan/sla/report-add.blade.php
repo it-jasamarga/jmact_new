@@ -1,4 +1,4 @@
-<form action="{{ route($route.'.reportSla',$record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
+<form action="{{ route($route . '.reportSla', $record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
     @method('PUT')
     @csrf
     <div class="modal-header">
@@ -9,23 +9,30 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keluhan" class="">{{ __('Bukti Pengerjaan') }}</label><span class="text-danger">*</span>
-                    @if(@$record->report()->orderByDesc('created_at')->first())
-                        <iframe src="{{ asset('storage/'.@$record->report()->orderByDesc('created_at')->first()->url_file) }}" title="Detail" width="100%" height="340px"></iframe>
-                        {{-- <input type="file" name="url_file" class="dropify" data-max-file-size="10M" data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt" data-default-file="{{ asset('storage/'.@$record->report()->orderByDesc('created_at')->first()->url_file) }}" data-show-remove="false" disabled  > --}}
+                    <label for="keluhan" class="">{{ __('Bukti Pengerjaan') }}</label><span
+                        class="text-danger">*</span>
+                    @if (@$record->report()->orderByDesc('created_at')->first())
+                        <iframe
+                            src="{{ asset('storage/' .@$record->report()->orderByDesc('created_at')->first()->url_file) }}"
+                            title="Detail" width="100%" height="340px"></iframe>
                     @else
-                        <input type="file" name="url_file" class="dropify" data-max-file-size="10M" data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt" data-default-file="" data-show-remove="true" required  >
+                        <input type="file" name="url_file" class="dropify" data-max-file-size="10M"
+                            data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt"
+                            data-default-file="" data-show-remove="true" required>
                     @endif
                 </div>
             </div>
-           
+
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="bidang" class="">{{ __('Keterangan Pekerjaan') }}</label><span class="text-danger">*</span>
-                    @if(@$record->report()->orderByDesc('created_at')->first())
-                        <textarea name="keterangan" class="form-control" placeholder="Keterangan Pekerjaan" readonly>{{ @$record->report()->orderByDesc('created_at')->first()->keterangan }}</textarea>
+                    <label for="bidang" class="">{{ __('Keterangan Pekerjaan') }}</label><span
+                        class="text-danger">*</span>
+                    @if (@$record->report()->orderByDesc('created_at')->first())
+                        <textarea name="keterangan" class="form-control" placeholder="Keterangan Pekerjaan"
+                            readonly>{{ @$record->report()->orderByDesc('created_at')->first()->keterangan }}</textarea>
                     @else
-                        <textarea name="keterangan" class="form-control" placeholder="Keterangan Pekerjaan"></textarea>
+                        <textarea name="keterangan" class="form-control"
+                            placeholder="Keterangan Pekerjaan"></textarea>
                     @endif
                 </div>
             </div>
@@ -34,18 +41,18 @@
 
     </div>
 
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-        <i class="flaticon-circle"></i>
-        Tutup
-    </button>
-    @if(!$record->report()->orderByDesc('created_at')->first())
-    <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
-        <i class="flaticon-add-circular-button"></i>
-        Simpan
-    </button>
-    @endif
-</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <em class="flaticon-circle"></em>
+            Tutup
+        </button>
+        @if (!$record->report()->orderByDesc('created_at')->first())
+            <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
+                <em class="flaticon-add-circular-button"></em>
+                Simpan
+            </button>
+        @endif
+    </div>
 
 </form>
