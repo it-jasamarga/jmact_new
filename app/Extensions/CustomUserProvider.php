@@ -2,7 +2,7 @@
 
 namespace App\Extensions;
 
-use Illuminate\Auth\GenericUser;
+// use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Http;
@@ -13,50 +13,57 @@ class CustomUserProvider implements UserProvider
 {
     public function retrieveById($identifier)
     {
-        $user = (Request()->session()->get('adr:auth-method') == '') ? null : \App\Models\User::where(Request()->session()->get('adr:auth-method'), $identifier)->first(); 
+        // dd('retrieveById', $identifier);
+        $user = \App\Models\User::find($identifier);
         return $user;
     }
 
     public function retrieveByToken($identifier, $token)
     {
+        // dd('retrieveByToken', $identifier, $token);
         return null;
     }
 
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        //
+        // dd('updateRememberToken', $user, $token);
     }
 
     public function retrieveByCredentials(array $credentials)
     {
-        return new \App\Models\User([
-            'id' => $credentials['username'],
-            'email' => $credentials['username'],
-        ]);
+        Request()->session()->put('adr:auth-method', '');
+        $user = \App\Models\User::where('npp', $credentials['username'])->first();
+        if ($user) Request()->session()->put('adr:auth-method', 'npp');
+        else {
+            $user = \App\Models\User::where('username', $credentials['username'])->first();
+            if ($user) Request()->session()->put('adr:auth-method', 'username');
+        }
+        // dd('retrieveByCredentials', $credentials, $user);
+        return $user;
     }
 
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        $ret = false;
-        Request()->session()->put('adr:auth-method', '');
+        // dd('validateCredentials', $user, $credentials, Request()->session()->get('adr:auth-method'));
+        $auth = false;
 
         if (! array_key_exists('password', $credentials)) {
             return false;
         }
-
-        $response = Http::withOptions(['debug' => false, 'verify' => false ])->post(env('JMCLICK_AUTH_LOGIN'), $credentials);
-
-        if ($response->successful()) {
-            Request()->session()->put('adr:auth-method', 'npp');
-            $ret = true;
-        } else {
-            $user = \App\Models\User::where('username', $credentials['username'])->first();
-            $auth = (Hash::check($credentials['password'], $user->password));
-            if ($auth) {
-                Request()->session()->put('adr:auth-method', 'username');
-                $ret = true;
+        
+        if (Request()->session()->get('adr:auth-method') == 'npp') {
+            $url = env('JMCLICK_AUTH_LOGIN', false);
+            if ($url) {
+                $response = Http::withOptions(['debug' => false, 'verify' => false ])->post($url, $credentials);
+                $auth = $response->successful();
             }
         }
-        return $ret;
+        
+        if (Request()->session()->get('adr:auth-method') == 'username') {
+            $user = \App\Models\User::where('username', $credentials['username'])->first();
+            if ($user->active == 1) $auth = (Hash::check($credentials['password'], $user->password));
+        }
+
+        return $auth;
     }
 }
