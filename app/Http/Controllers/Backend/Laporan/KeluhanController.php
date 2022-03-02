@@ -352,6 +352,7 @@ class KeluhanController extends Controller
     unset(request()['lokasi_kejadian']);
     unset(request()['url_file']);
     unset(request()['keterangan_keluhan']);
+    // unset(request()['ruas_id']);
 
     $history = $record->history()->orderByDesc('created_at')->first();
     $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
@@ -362,7 +363,7 @@ class KeluhanController extends Controller
 
     $record->save();
     request()['unit_id'] = $unitHistory;
-    request()['ruas_id'] = $ruasHistory;
+    // request()['ruas_id'] = $ruasHistory;
     // request()['regional_id'] = $record->regional_id;
     $recordHistory = $record->history()->create(request()->all());
 
