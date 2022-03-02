@@ -54,26 +54,40 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $users = DB::table('users')->where('username', request()->username)->first();
-        
-        if($users){
-            if ($users->active == 1) {
-                $auth = Auth::attempt(request(['username', 'password']));
-                if (!$auth) {
-                    $message = ['password' => 'The password is not valid'];
-                    return redirect()->back()->withInput()->withErrors($message);
-                }
-                
-                return redirect('/');
-                
-            }else{
-                $message = ['message' => 'The credential is not valid, please contact administrator'];
-                return redirect()->back()->withInput()->withErrors($message);
-            }
+        $auth = Auth::attempt(request(['username', 'password']));
+
+        // dd($auth);
+
+        if ($auth) {
+            return redirect('/');
         }else{
-            $message = ['username' => 'The username is not valid'];
+
+            // $users = DB::table('users')->where('username', request()->username)->first();
+
+            $message = ['username' => 'The username or password is not valid'];
             return redirect()->back()->withInput()->withErrors($message);
         }
+
+        // $users = DB::table('users')->where('username', request()->username)->first();
+        
+        // if($users){
+        //     if ($users->active == 1) {
+        //         $auth = Auth::attempt(request(['username', 'password']));
+        //         if (!$auth) {
+        //             $message = ['password' => 'The password is not valid'];
+        //             return redirect()->back()->withInput()->withErrors($message);
+        //         }
+                
+        //         return redirect('/');
+                
+        //     }else{
+        //         $message = ['message' => 'The credential is not valid, please contact administrator'];
+        //         return redirect()->back()->withInput()->withErrors($message);
+        //     }
+        // }else{
+        //     $message = ['username' => 'The username is not valid'];
+        //     return redirect()->back()->withInput()->withErrors($message);
+        // }
 
     }
 

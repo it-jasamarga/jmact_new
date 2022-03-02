@@ -38,8 +38,13 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'custom',
         ],
+
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
 
         'api' => [
             'driver' => 'jwt',
@@ -74,6 +79,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'custom' => [
+            'driver' => 'custom',
+        ],
     ],
 
     /*
