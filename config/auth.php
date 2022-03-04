@@ -82,6 +82,7 @@ return [
 
         'custom' => [
             'driver' => 'custom',
+            'model' => App\Models\User::class,
         ],
     ],
 
