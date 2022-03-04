@@ -406,7 +406,7 @@ class KeluhanController extends Controller
 
     $history = $record->history()->orderByDesc('created_at')->first();
     $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
-    $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
+    // $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
     $record->unit_id = $unitHistory;
     $record->status_id = $request['status_id'];
     $record->selesai_pengerjaan = Carbon::now()->format('Y-m-d H:i:s');
@@ -417,7 +417,7 @@ class KeluhanController extends Controller
     $recordHistory = $record->history()->create([
       'unit_id' => $unitHistory,
       // 'regional_id' => $record->regional_id,
-      'ruas_id' => $ruasHistory,
+      // 'ruas_id' => $ruasHistory,
       'status_id' => MasterStatus::where('code', '04')->where('type', '1')->first()->id
     ]);
 
