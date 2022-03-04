@@ -21,9 +21,10 @@ window.media = {
         image.onload = (e) => {
             let image = e.path[0];
             let target = media.images[image.dataset.url];
-            console.log('## loaded '+url, image.data)
             let w = target.w == null ? image.width : target.w;
             let h = target.h == null ? image.height : target.h;
+
+            console.log('## loaded '+url, image.width +'x'+ image.height, 'resized to', w +'x'+ h);
 
             let tempCanvas = document.createElement("canvas");
             tempCanvas.width = w;
@@ -69,7 +70,9 @@ window.media = {
     }
 }
 
+// width 9r height 6r
 window.ann = {
+    dimension: 50,
     path: '../image/',
     keluhan: {
         draw: function(column, status, inputerCaption, spvjmtcCaption, serviceproviderCaption, regionalCaption, id = 'ann') {
@@ -84,21 +87,38 @@ window.ann = {
 
             let context = canvas.getContext("2d");
             let c = {
+                r: 6,
+                c: 9,
                 w: canvas.offsetWidth,
                 h: canvas.offsetHeight
             }
+            let raw = {
+                w: c.w / (c.c+1),
+                h: c.h / (c.r+1),
+            }
+            let calculated = {
+                w: Math.floor(c.w / (c.c+1)),
+                h: Math.floor(c.h / (c.r+1)),
+                l: Math.floor((c.w - (Math.floor(c.w / (c.c+1))*c.c)) / 2),
+                t: Math.floor((c.h - (Math.floor(c.h / (c.r+1))*c.r)) / 2)
+            }
+            c.d = Math.min(calculated.w, calculated.h);
+            c.l = Math.floor((c.w - (c.d*c.c)) /2);
+            c.t = Math.floor((c.h - (c.d*c.r)) /2);
+            ann.dimension = c.d;
             let icon = {
                 inputer: { size: 48 },
                 spvjmtc: { size: 64 },          
                 serviceprovider: { size: 64 },
                 regional: { size: 64 }
             }
-            console.log('## doing ann @'+c.w+'x'+c.h);
+            console.log('## doing ann @'+c.w+'x'+c.h, {c});
 
-            let x = 100, y = 150, r = 70;
+            // let x = 100, y = 150, r = 70;
+            let x = c.l+c.d, y = c.t+(2*c.d), r = c.d;
 
-            x = (c.w - (r*9)) /2;
-            y = (2*r) + (c.h - (r*6)) /2;
+            // x = (c.w - (r*9)) /2;
+            // y = (2*r) + (c.h - (r*6)) /2;
 
             context.lineWidth = 1;
             context.strokeStyle = color.active;
@@ -149,17 +169,17 @@ window.ann = {
 
             let ic = color.active;
 
-            media.loadImage(ic, canvas, x - (icon.inputer.size/2), y + 40, ann.path+'keluhan/inputer.jpg', icon.inputer.size, icon.inputer.size, inputerCaption)
+            media.loadImage(ic, canvas, x - (icon.inputer.size/2), y + 20, ann.path+'keluhan/inputer.jpg', icon.inputer.size, icon.inputer.size, inputerCaption)
     
             if (column < 2) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmtc.size/2), y+30, ann.path+'keluhan/spv-jmtc.jpg', icon.spvjmtc.size, icon.spvjmtc.size, spvjmtcCaption, status)
+            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmtc.size/2), y+10, ann.path+'keluhan/spv-jmtc.jpg', icon.spvjmtc.size, icon.spvjmtc.size, spvjmtcCaption, status)
     
             if (column < 3) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.serviceprovider.size/2), y - (2*r) +25, ann.path+'keluhan/service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
+            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.serviceprovider.size/2), y - (2*r) +5, ann.path+'keluhan/service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
     
-            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.regional.size/2), y + (2*r) +35, ann.path+'keluhan/regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
+            media.loadImage(ic, canvas, (x + (7 * r)) - (icon.regional.size/2), y + (2*r) +15, ann.path+'keluhan/regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
 
         }
     },
@@ -176,9 +196,25 @@ window.ann = {
 
             let context = canvas.getContext("2d");
             let c = {
+                r: 6,
+                c: 12,
                 w: canvas.offsetWidth,
                 h: canvas.offsetHeight
             }
+            let raw = {
+                w: c.w / (c.c+1),
+                h: c.h / (c.r+1),
+            }
+            let calculated = {
+                w: Math.floor(c.w / (c.c+1)),
+                h: Math.floor(c.h / (c.r+1)),
+                l: Math.floor((c.w - (Math.floor(c.w / (c.c+1))*c.c)) / 2),
+                t: Math.floor((c.h - (Math.floor(c.h / (c.r+1))*c.r)) / 2)
+            }
+            c.d = Math.min(calculated.w, calculated.h);
+            c.l = Math.floor((c.w - (c.d*c.c)) /2);
+            c.t = Math.floor((c.h - (c.d*c.r)) /2);
+            ann.dimension = c.d;
             let icon = {
                 csjmto: { size: 48 },
                 spvjmto: { size: 64 },          
@@ -186,12 +222,13 @@ window.ann = {
                 serviceprovider: { size: 64 },
                 regional: { size: 64 }
             }
-            console.log('## doing ann @'+c.w+'x'+c.h);
+            console.log('## doing ann @'+c.w+'x'+c.h, {c});
 
-            let x = 100, y = 150, r = 70;
+            // let x = 100, y = 150, r = 70;
+            let x = c.l+c.d, y = c.t+(2*c.d), r = c.d;
 
-            x = (c.w - (r*11)) /2;
-            y = (2*r) + (c.h - (r*6)) /2;
+            // x = (c.w - (r*11)) /2;
+            // y = (2*r) + (c.h - (r*6)) /2;
 
             context.lineWidth = 1;
             context.strokeStyle = color.active;
@@ -253,20 +290,20 @@ window.ann = {
 
             let ic = color.active;
 
-            media.loadImage(ic, canvas, x - (icon.csjmto.size/2), y + 40, ann.path+'claim/customer.jpg', icon.csjmto.size, icon.csjmto.size, csjmtoCaption)
+            media.loadImage(ic, canvas, x - (icon.csjmto.size/2), y + 20, ann.path+'claim/customer.jpg', icon.csjmto.size, icon.csjmto.size, csjmtoCaption)
     
             if (column < 2) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmto.size/2), y+30, ann.path+'claim/spv-jmto.jpg', icon.spvjmto.size, icon.spvjmto.size, spvjmtoCaption, status)
+            media.loadImage(ic, canvas, (x + (3 * r)) - (icon.spvjmto.size/2), y+10, ann.path+'claim/spv-jmto.jpg', icon.spvjmto.size, icon.spvjmto.size, spvjmtoCaption, status)
     
             if (column < 3) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (6 * r)) - (icon.ro.size/2), y+30, ann.path+'claim/ro.jpg', icon.ro.size, icon.ro.size, roCaption, status)
+            media.loadImage(ic, canvas, (x + (6 * r)) - (icon.ro.size/2), y+10, ann.path+'claim/ro.jpg', icon.ro.size, icon.ro.size, roCaption, status)
     
             if (column < 4) ic = color.passive;
 
-            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.serviceprovider.size/2), y - (2*r) +25, ann.path+'claim/service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
-            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.regional.size/2), y + (2*r) +35, ann.path+'claim/regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
+            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.serviceprovider.size/2), y - (2*r) +5, ann.path+'claim/service-provider.jpg', icon.serviceprovider.size, icon.serviceprovider.size, serviceproviderCaption)
+            media.loadImage(ic, canvas, (x + (10 * r)) - (icon.regional.size/2), y + (2*r) +15, ann.path+'claim/regional.jpg', icon.regional.size, icon.regional.size, regionalCaption)
 
 
         }
