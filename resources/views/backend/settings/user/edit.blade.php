@@ -15,6 +15,18 @@
                     <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="off" autofocus placeholder="Name" maxlength="50">
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="is_ldap" class="">{{ __('Authentication') }}</label>
+                    <label class="checkbox">
+                        <input type="checkbox" class="form-control" name="is_ldap" value="1" onchange="ann.x(this)" {{$record->is_ldap == 1 ? 'checked' : ''}} />
+                        <span></span>
+                        &nbsp; JM Click
+                    </label>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="username" class="">{{ __('Username') }}</label>
@@ -33,13 +45,13 @@
                     <input id="unit_id" type="text" class="form-control" name="unit_id" value="{{ $record->unit_id }}" required autocomplete="unit_id" autofocus placeholder="Unit" maxlength="13">
                 </div>
             </div> --}}
-            <div class="col-md-12">
+            <div class="col-md-12 x-ann">
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>
                     <input type="password" class="form-control" name="password" required placeholder="Password">
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 x-ann">
                 <div class="form-group">
                     <label>{{ __('Password Confirmation') }}</label>
                     <input type="password" class="form-control" name="password_confirmation" required placeholder="Password Confirmation">
@@ -63,7 +75,7 @@
             </div> --}}
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Role') }}</label>
+                    <label for="role" class="">{{ __('Role') }}</label>
                     <select class="form-control select2" name="role">
                         {!! App\Models\Role::options('name','id',["selected" => ($record->roles->first()) ? $record->roles->first()->id : ""],'( Pilih Role )') !!}
                     </select>
@@ -71,7 +83,7 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="user" class="">{{ __('Status') }}</label>
+                    <label for="active" class="">{{ __('Status') }}</label>
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
@@ -96,3 +108,21 @@
 </div>
 
 </form>
+
+<script>
+    window.ann = {
+        x: function(source) {
+            // console.log(source.name, source.checked);
+            if (source.checked) {
+                $('label[for="username"]').text('NPP');
+                $('input[name="username"]').attr('placeholder', 'NPP');
+                $('.x-ann').hide();
+            } else {
+                $('label[for="username"]').text('Username');
+                $('input[name="username"]').attr('placeholder', 'Username');
+                $('.x-ann').show();
+            }
+        }
+    }
+    ann.x($('input[name="is_ldap"]')[0]);
+</script>
