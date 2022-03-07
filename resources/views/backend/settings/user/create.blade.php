@@ -12,10 +12,22 @@
                     <input id="name" type="text" class="form-control" name="name" required autocomplete="off" autofocus placeholder="Name" maxlength="30">
                 </div>
             </div>
+
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="username" class="">{{ __('Username/NPP') }}</label>
-                    <input id="username" type="text" class="form-control" name="username"  required autocomplete="off" autofocus placeholder="Username/NPP" maxlength="30">
+                    <label for="is_ldap" class="">{{ __('Authentication') }}</label>
+                    <label class="checkbox">
+                        <input type="checkbox" class="form-control" name="is_ldap" value="1" onchange="ann.x(this)" />
+                        <span></span>
+                        &nbsp; JM Click
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="username" class="">{{ __('Username') }}</label>
+                    <input id="username" type="text" class="form-control" name="username"  required autocomplete="off" autofocus placeholder="Username" maxlength="30">
                 </div>
             </div>
             {{-- <div class="col-md-12">
@@ -30,13 +42,13 @@
                     <input id="unit_id" type="text" class="form-control" name="unit_id" value="{{ old('unit_id') }}" required autocomplete="unit_id" autofocus placeholder="Unit" maxlength="10">
                 </div>
             </div> --}}
-            <div class="col-md-12">
+            <div class="col-md-12 x-ann">
                 <div class="form-group">
                     <label>{{ __('Password') }}</label>
                     <input type="password" class="form-control" name="password" value="{{ old('password') }}" required placeholder="Password">
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 x-ann">
                 <div class="form-group">
                     <label>{{ __('Confirm Password') }}</label>
                     <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required placeholder="Confirm Password">
@@ -68,7 +80,7 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <label for="active" class="">{{ __('Status') }}</label>
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1">Active</option>
@@ -94,3 +106,20 @@
 </div>
 
 </form>
+
+<script>
+    window.ann = {
+        x: function(source) {
+            // console.log();
+            if (source.checked) {
+                $('label[for="username"]').text('NPP');
+                $('input[name="username"]').attr('placeholder', 'NPP');
+                $('.x-ann').hide();
+            } else {
+                $('label[for="username"]').text('Username');
+                $('input[name="username"]').attr('placeholder', 'Username');
+                $('.x-ann').show();
+            }
+        }
+    }
+</script>

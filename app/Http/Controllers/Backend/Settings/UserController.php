@@ -135,10 +135,28 @@ class UserController extends Controller
     public function store()
     {
       // dd(request()->all());
-      request()->validate([
-        'email' => 'unique:users,email',
-        'password' => 'required|string|min:6|max:250|confirmed'
-      ]);
+      $custom_message = [];
+
+      $validate = [
+        'name' => 'required|string|min:3|max:250',
+        'unit_id' => 'required',
+        'role' => 'required',
+        'active' => 'required'
+      ];
+
+      if (request()->is_ldap === '1') {
+        $validate['username'] = 'required|string|min:3|max:80|unique:users,npp';
+        $custom_message = ['username.required' => 'The npp field is required.'];
+        request()['npp'] = request()['username'];
+      } else {
+        $validate['username'] = 'required|string|min:3|max:80|unique:users,username';
+        $validate['password'] = 'required|string|min:6|max:250|confirmed';
+        request()['npp'] = null;
+        request()['is_ldap'] = 0;
+      } 
+
+      request()->validate($validate, $custom_message);
+
       $role = request()->role;
       unset(request()['role']);
       unset(request()['password_confirmation']);
@@ -164,12 +182,43 @@ class UserController extends Controller
 
     public function update($id)
     {
-      request()->validate(['email' => 'unique:users,email,'.$id]);
+      $custom_message = [];
+
+      $validate = [
+        'name' => 'required|string|min:3|max:250',
+        'unit_id' => 'required',
+        'role' => 'required',
+        'active' => 'required'
+      ];
+      
+      $record = User::find(request()->id);
+
+      if (request()->is_ldap === '1') {
+        if (request()->npp != request()->username) {
+          $validate['username'] = 'required|string|min:3|max:80|unique:users,username';
+        }
+        $validate['username'] = 'required|string|min:3|max:80|unique:users,npp';
+        $custom_message = ['username.required' => 'The npp field is required.'];
+        request()['npp'] = request()['username'];
+      } else {
+        if (request()->username != request()->username) {
+          $validate['username'] = 'required|string|min:3|max:80|unique:users,username';
+        }
+        if ((request()->password == '') && (!is_null($record->password))) {
+          unset(request()['password']);
+        } else {
+          $validate['password'] = 'required|string|min:6|max:250|confirmed';
+        }
+        request()['npp'] = null;
+        request()['is_ldap'] = 0;
+      } 
+
+      request()->validate($validate, $custom_message);
+
+      // request()->validate(['email' => 'unique:users,email,'.$id]);
       $role = request()->role;
       unset(request()['role']);
       unset(request()['password_confirmation']);
-      
-      $record = User::find(request()->id);
 
       $passwords = request()->password;
       if(request()->password){
