@@ -13,7 +13,7 @@
             </div>
             <div class="card-toolbar">
                 <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
-                    <i class="ki ki-arrow-down icon-nm"></i>
+                    <em class="ki ki-arrow-down icon-nm"></em>
                 </a>
             </div>
         </div>
@@ -25,7 +25,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="name" class="">{{ __('Role') }}</label>
                             <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}"
@@ -33,7 +33,17 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="type_id" class="">{{ __('Type') }}</label>
+                            <select class="form-control select2" name="type_id">
+                                <option value="">Pilih Type</option>
+                                {!! App\Models\MasterType::options('type', 'id', ['selected' => $record->type_id], '( Pilih Type )') !!}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="role" class="">{{ __('Status') }}</label>
                             <select class="form-control select2" name="active">
@@ -49,10 +59,14 @@
                             <label for="ro_id" class="">{{ __('RO') }}</label>
                             <select class="form-control select2" id="ro" name="ro_id">
                                 {!! App\Models\MasterRo::options(
-                                    function ($q) {
-                                        $regional = $q->regional ? $q->regional->name : '-';
-                                        return $q->name . ' - ' . $regional;
-                                    }, 'id', ["selected" => $record->ro_id], '( Pilih RO )') !!}
+    function ($q) {
+        $regional = $q->regional ? $q->regional->name : '-';
+        return $q->name . ' - ' . $regional;
+    },
+    'id',
+    ['selected' => $record->ro_id],
+    '( Pilih RO )',
+) !!}
                             </select>
                         </div>
                     </div>
@@ -61,7 +75,7 @@
                         <div class="form-group">
                             <label for="regional_id" class="">{{ __('Regional') }}</label>
                             <select class="form-control select2" name="regional_id">
-                                {!! App\Models\MasterRegional::options('name','id',["selected" => $record->regional_id],'( Pilih Regional )') !!}
+                                {!! App\Models\MasterRegional::options('name', 'id', ['selected' => $record->regional_id], '( Pilih Regional )') !!}
                             </select>
                         </div>
                     </div>
@@ -71,7 +85,9 @@
                 <input type="hidden" name="id" value="{{ $record->id }}">
                 {{-- <input type="hidden" name="name" value="{{ $record->name }}"> --}}
                 <div class="panel panel-default">
-                    @include('backend.settings.role.partial.edit-permission')
+                    @include(
+                        'backend.settings.role.partial.edit-permission'
+                    )
                 </div>
                 <div class="panel-footer pt-4">
                     {{-- <a href="{{ url()->previous() }}" class="btn btn-sm btn-default btn-addon">
@@ -95,7 +111,6 @@
         </div>
     </div>
     <br>
-
 @endsection
 
 @section('scripts')
