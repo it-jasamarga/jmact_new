@@ -14,12 +14,13 @@
 			<div class="d-flex align-items-center mt-5">
 				<div class="symbol symbol-100 mr-5">
 					<div class="symbol-label" style="background-image:url('{{ asset('assets/media/users/default.jpg')  }}')"></div>
-					<i class="symbol-badge bg-success"></i>
+					<em class="symbol-badge bg-success"></em>
 				</div>
 				<div class="d-flex flex-column">
-					<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ auth()->user()->username }}</a>
-					<div class="text-muted mt-1">{{ (auth()->user()->unit) ? auth()->user()->unit->unit : '' }}</div>
-					<div class="navi mt-2">
+					<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ auth()->user()->name }}</a>
+					<div class="text-muted">{{ auth()->user()->username }}</div>
+					<div class="text-muted">{{ (auth()->user()->unit) ? auth()->user()->unit->unit : '' }}</div>
+					<div class="navi mt-1">
 						<a href="#" class="navi-item">
 							<span class="navi-link p-0 pb-2">
 								{{-- <span class="navi-icon mr-1">

@@ -24,7 +24,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="name" class="">{{ __('Role') }}</label><span
                                 class="text-danger">*</span>
@@ -32,8 +32,17 @@
                                 autofocus placeholder="Role" maxlength="50">
                         </div>
                     </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="type_id" class="">{{ __('Type') }}</label>
+                            <select class="form-control select2" name="type_id">
+                                {!! App\Models\MasterType::options('type', 'id', [], '( Pilih Type )') !!}
+                            </select>
+                        </div>
+                    </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="role" class="">{{ __('Status') }}</label><span
                                 class="text-danger">*</span>
@@ -44,6 +53,7 @@
                             </select>
                         </div>
                     </div>
+
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -65,7 +75,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="regional_id" class="">{{ __('Regional') }}</label>
-                            <select class="form-control select2" name="regional_id">
+                            <select class="form-control select2" id="regional" name="regional_id">
                                 {!! App\Models\MasterRegional::options('name', 'id', [], '( Pilih Unit )') !!}
                             </select>
                         </div>
@@ -131,6 +141,20 @@
             });
 
             container.find(selector).prop('checked', !checked);
+        });
+
+        $(document).on('change', "[name='type_id']", function(e) {
+            var type = $("[name='type_id'] option:selected").text();
+            if (type == "Regional" ) {
+                $('#ro').attr('disabled', true);
+                $('#regional').attr('disabled', false);
+            } else if (type == "Representative Office" ) {
+                $('#ro').attr('disabled', false);
+                $('#regional').attr('disabled', true);
+            } else {
+                $('#ro').attr('disabled', false);
+                $('#regional').attr('disabled', false);
+            }
         });
     </script>
 @endsection
