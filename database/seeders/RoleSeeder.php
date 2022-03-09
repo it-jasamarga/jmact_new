@@ -24,30 +24,30 @@ class RoleSeeder extends Seeder
                 'name' => 'Superadmin',
                 'guard_name' => 'web'
             ],
-            [
-                'name' => 'User',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'Guest',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'JMTC',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'Regional',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'Inputer',
-                'guard_name' => 'web'
-            ],
-            [
-                'name' => 'Service Provider',
-                'guard_name' => 'web'
-            ]
+            // [
+            //     'name' => 'User',
+            //     'guard_name' => 'web'
+            // ],
+            // [
+            //     'name' => 'Guest',
+            //     'guard_name' => 'web'
+            // ],
+            // [
+            //     'name' => 'JMTC',
+            //     'guard_name' => 'web'
+            // ],
+            // [
+            //     'name' => 'Regional',
+            //     'guard_name' => 'web'
+            // ],
+            // [
+            //     'name' => 'Inputer',
+            //     'guard_name' => 'web'
+            // ],
+            // [
+            //     'name' => 'Service Provider',
+            //     'guard_name' => 'web'
+            // ]
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Role::insert($array);

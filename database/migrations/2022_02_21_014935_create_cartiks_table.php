@@ -20,7 +20,7 @@ class CreateCartiksTable extends Migration
 
 
         \DB::statement("
-            CREATE VIEW `cartiks` AS
+            CREATE OR REPLACE VIEW `cartiks` AS
             SELECT 
                 `keluhan`.`id` AS `id`,
                 `keluhan`.`no_tiket` AS `no_tiket`,
@@ -50,7 +50,7 @@ class CreateCartiksTable extends Migration
     {
         // Schema::dropIfExists('cartiks');
         \DB::statement("
-            DROP VIEW IF EXISTS `cartiks`
+            DROP VIEW cartiks
         ");
     }
 }
