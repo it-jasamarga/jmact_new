@@ -49,11 +49,13 @@ class ClaimController extends Controller
       ->select('*')
       ->filter($request);
 
-    if (auth()->user()->hasRole('Superadmin')) {
+    // if (auth()->user()->hasRole('Superadmin')) {
+    if (auth()->user()->roles()->first()->type == "Admin") {
       $data  = ClaimPelanggan::orderByDesc('created_at')->select('*')->filter($request);
     }
 
-    if (auth()->user()->hasRole('JMTC')) {
+    // if (auth()->user()->hasRole('JMTC')) {
+    if (auth()->user()->roles()->first()->type == "Supervisor JMTC") {
       $data  = ClaimPelanggan::
         whereHas('status', function ($q1) {
           $q1->whereIn('code', ['00', '01', '02'])
@@ -64,7 +66,8 @@ class ClaimController extends Controller
         ->filter($request);
     }
 
-    if (auth()->user()->hasRole('Service Provider')) {
+    // if (auth()->user()->hasRole('Service Provider')) {
+    if (auth()->user()->roles()->first()->type == "Service Provider") {
       $data  = ClaimPelanggan::with('history')
         ->where('unit_id', auth()->user()->unit_id)
         ->whereHas('status', function ($q1) {
