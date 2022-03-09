@@ -50,6 +50,10 @@ class RoleController extends Controller
       ]);
       return $button;
     })
+    ->addColumn('ro_id', function ($data) use ($request) {
+      $button = ($data->ro) ? $data->ro->name : '-';
+      return $button;
+    })
     ->addColumn('regional_id', function ($data) use ($request) {
       $button = ($data->regional) ? $data->regional->name : '-';
       return $button;
