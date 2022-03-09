@@ -60,6 +60,7 @@
               </th> --}}
                                 <th>No</th>
                                 <th>Role</th>
+                                <th>RO</th>
                                 <th>Regional</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -89,6 +90,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'ro_id',
+                    name: 'ro_id'
                 },
                 {
                     data: 'regional_id',
