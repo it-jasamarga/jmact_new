@@ -74,7 +74,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="regional_id" class="">{{ __('Regional') }}</label>
-                            <select class="form-control select2" name="regional_id">
+                            <select class="form-control select2" id="regional" name="regional_id">
                                 {!! App\Models\MasterRegional::options('name', 'id', ['selected' => $record->regional_id], '( Pilih Regional )') !!}
                             </select>
                         </div>
@@ -151,6 +151,20 @@
             });
 
             container.find(selector).prop('checked', !checked);
+        });
+
+        $(document).on('change', "[name='type_id']", function(e) {
+            var type = $("[name='type_id'] option:selected").text();
+            if (type == "Regional" ) {
+                $('#ro').attr('disabled', true);
+                $('#regional').attr('disabled', false);
+            } else if (type == "Representative Office" ) {
+                $('#ro').attr('disabled', false);
+                $('#regional').attr('disabled', true);
+            } else {
+                $('#ro').attr('disabled', false);
+                $('#regional').attr('disabled', false);
+            }
         });
     </script>
 @endsection
