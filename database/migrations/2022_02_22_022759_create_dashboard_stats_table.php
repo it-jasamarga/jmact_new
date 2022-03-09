@@ -20,7 +20,7 @@ class CreateDashboardStatsTable extends Migration
 
 
         \DB::statement("
-            CREATE VIEW `dashboard_stats` AS
+            CREATE OR REPLACE VIEW `dashboard_stats` AS
             SELECT
                 RE.name AS regional,
                 RU.name AS ruas,
@@ -67,7 +67,7 @@ class CreateDashboardStatsTable extends Migration
     {
         // Schema::dropIfExists('dashboard_stats');
         \DB::statement("
-            DROP VIEW IF EXISTS `dashboard_stats`
+            DROP VIEW `dashboard_stats`
         ");
     }
 }

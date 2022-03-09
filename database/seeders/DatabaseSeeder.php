@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             JenisClaimSeeder::class,
-            AppVarSeeder::class
+            AppVarSeeder::class,
+            TypeSeeder::class
         ]);
     }
 }
