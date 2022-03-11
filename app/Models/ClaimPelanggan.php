@@ -16,7 +16,7 @@ class ClaimPelanggan extends Model implements Auditable
 {
     use HasFactory, Filterable, Blameable, Utilities;
     use \OwenIt\Auditing\Auditable;
-	
+
     protected $table = 'claim';
  	protected $guarded = [];
 
@@ -56,7 +56,11 @@ class ClaimPelanggan extends Model implements Auditable
 	public function history(){
 		return $this->hasMany(DetailHistory::class,'claim_id');
 	}
-	
+
+    public function historyLast(){
+		return $this->hasOne(DetailHistory::class,'keluhan_id')->orderByDesc('id');
+	}
+
 	public function checkStatus($code){
 		$return = "false";
 		$data = $this->history()->whereHas('status', function($q) use($code){
@@ -67,4 +71,14 @@ class ClaimPelanggan extends Model implements Auditable
 		}
 		return $return;
 	}
+
+    public function setUrlFileAttribute($attribute){
+        $request = request();
+        if($request->url_file && is_file($request->url_file)){
+          $fileName = md5($request->url_file->getClientOriginalName().auth()->user()->id.''.strtotime('now')).'.'.$request->url_file->getClientOriginalExtension();
+          $request->file('url_file')->storeAs('Claim', $fileName, 'public');
+          $path = 'Claim/'.$fileName;
+          $this->attributes['url_file'] = $path;
+        }
+    }
 }

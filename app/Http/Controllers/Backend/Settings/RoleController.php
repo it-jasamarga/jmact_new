@@ -12,7 +12,7 @@ use JWTAuth;
 class RoleController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Manage Role"], 
+    ['name' => "Manage Role"],
     ['link' => "#", 'name' => "Settings"],
     ['link' => "setting/role", 'name' => "Role"]
   ];
@@ -36,7 +36,7 @@ class RoleController extends Controller
   {
 
     $data  = Role::query()->orderByDesc('created_at');
-    
+
     if($name = $request->name){
       $data = $data->where('name','like', '%' . $name . '%');
     }
@@ -93,7 +93,7 @@ class RoleController extends Controller
 
   }
 
-  
+
   public function create() {
     $permission = Permission::get();
     $data = [
@@ -101,7 +101,7 @@ class RoleController extends Controller
       'route' => $this->route,
       'permission' => $permission
     ];
-    
+
     return view('backend.settings.role.create', $data);
   }
 
@@ -117,7 +117,7 @@ class RoleController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -170,7 +170,7 @@ class RoleController extends Controller
         $record = Role::findById($role->id);
         $record->permissions()->sync($permsi);
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-      }   
+      }
     }else{
       $permsi = Permission::whereIn('name', [])->get()->pluck('id');
       $record = Role::findById($role->id);

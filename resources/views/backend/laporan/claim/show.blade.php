@@ -1,6 +1,11 @@
 @extends('layouts/app')
 
 @section('styles')
+<style>
+    a:hover {
+        color: orangered;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -82,6 +87,15 @@
                                 class="text-danger">*</span>
                             <input id="inputer_pic" type="text" class="form-control" name="inputer_pic"
                                 value="{{ $record->creator ? $record->creator->username : '' }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tanggal_input" class="">{{ __('Tanggal Input Claim') }}</label><span
+                                class="text-danger">*</span>
+                            <input id="tanggal_input" type="text" class="form-control" name="tanggal_input"
+                                value="{{ $record->created_at }}" readonly>
                         </div>
                     </div>
 
@@ -247,25 +261,30 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="keterangan_claim"
+                                class="">{{ __('Keterangan Claim') }}</label><span
+                                class="text-danger">*</span>
+                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim" rows="1"
+                                readonly>{{ $record->keterangan_claim }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
-                                value="{{ $record->url_file }}" readonly data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge" style="cursor: pointer">
+                            {{-- <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                                value="{{ $record->url_file }}" readonly data-url="claim/show-attachment/{{ $record->id }}" data-modal="#xlarge" style="cursor: pointer"> --}}
+                            <a class="custome-modal alert alert-custom alert-default" href="javascript:void(0)"
+                                id="url_file" data-url="claim/show-attachment/{{ $record->id }}" data-modal="#xlarge"
+                                style="cursor: pointer;">
+                                {{ $record->url_file }}
+                            </a>
                             {{-- <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="keluhan" name="url_file"
                                     data-max-file-size="2M" data-allowed-file-extensions="jpg png gif jpeg"
                                     data-default-file="" data-show-remove="true" required  disabled="" value="{{ $record->url_file }}" />
                                 <label class="custom-file-label" for="keluhan"></label>
                             </div> --}}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="keterangan_claim"
-                                class="">{{ __('Keterangan Claim') }}</label><span
-                                class="text-danger">*</span>
-                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim"
-                                rows="1" readonly>{{ $record->keterangan_claim }}</textarea>
                         </div>
                     </div>
 
@@ -283,7 +302,7 @@
                     Kembali
                 </a>
 
-                @if (auth()->user()->hasRole('SPV JMTO'))
+                @if (auth()->user()->roles()->first()->type == "Supervisor JMTO")
                     @if ($record->checkStatus(['00', '02']) === 'false')
                         {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
                         <div class="btn btn-light-success float-right save">

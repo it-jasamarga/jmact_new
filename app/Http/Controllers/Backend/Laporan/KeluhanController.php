@@ -83,7 +83,8 @@ class KeluhanController extends Controller
     }
 
     // if (auth()->user()->hasRole('Regional')) {
-    if (@auth()->user()->roles()->first()->regional_id) {
+    // if (@auth()->user()->roles()->first()->regional_id) {
+    if (auth()->user()->roles()->first()->type == "Regional") {
       $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
       // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
@@ -99,7 +100,8 @@ class KeluhanController extends Controller
         ->filter($request);
     }
 
-    if (@auth()->user()->roles()->first()->ro_id) {
+    // if (@auth()->user()->roles()->first()->ro_id) {
+    if (auth()->user()->roles()->first()->type == "Representative Office") {
       $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
 
       // $data  = KeluhanPelanggan::where('regional_id',$regionalId)

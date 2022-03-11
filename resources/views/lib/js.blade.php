@@ -34,7 +34,7 @@
                 }
             });
         }
-    });  
+    });
 
     // OPEN MODAL FOR CREATE DATA
     $(document).on('click', '.add-modal', function (e) {
@@ -45,16 +45,16 @@
             modal: modal,
         }, function (resp) {
             onShow();
-        }); 
+        });
     });
-    
+
     // OPEN PAGE FOR CREATE DATA
     $(document).on('click', '.add-page', function(event) {
         var url = $(this).data('url')
         window.location = url;
     });
 
-     // OPEN CUSTOM CREATE PAGE 
+     // OPEN CUSTOM CREATE PAGE
      $(document).on('click', '.add-custome-page', function(event) {
         url = $(this).data('url');
         window.location = url;
@@ -72,7 +72,7 @@
     $(document).on('click', '.custome-modal', function (e) {
         var modal = $(this).data('modal');
         var url = $(this).data('url');
-        
+
         loadModal({
             url: "{{ url('/') }}/" + url,
             modal: modal,
@@ -88,11 +88,11 @@
         var callback = $(this).data('callback');
             if(!form){
               form = 'formData';
-            } 
+            }
 
             if(!callback){
                 callback = null;
-            } 
+            }
         saveData(form,callback);
 
     });
@@ -119,7 +119,7 @@
 
     // FUNCTION ---------------------------------------------------------------------------------------------------------
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-    
+
     $(document).ready(function(){
         $('.pickadate').pickadate({
             format: 'yyyy-mm-dd',
@@ -157,10 +157,11 @@
                 var start = $('.pickadate-start').pickadate('picker');
                 start.set('max', new Date($('.pickadate-end').val()));
             }
-        }); 
+        });
 
         $('.datetimepicker').datetimepicker({
-            format:'Y-m-d h:i:s',
+            // format:'Y-m-d h:i:s',
+            format: 'Y-m-d H:m:s',
             useCurrent: false,
             autoclose: true
         });
@@ -170,13 +171,13 @@
             useCurrent: false,
             autoclose: true
         });
-        
+
         $(".select2").select2({
             dropdownAutoWidth: true,
             width: '100%',
             placeholder: "Pilih Data"
         });
-        
+
         $('.dropify').dropify();
 
         $('.summernote').summernote({
@@ -208,7 +209,7 @@
                   uploadImage(image[0]);
               }
           }
-      });    
+      });
 
     });
 
@@ -252,7 +253,7 @@
             })
           }
       })
-    } 
+    }
 
     // DYNAMIC SAVE DATA
     function saveData(formid, callback) {
@@ -332,7 +333,7 @@
                   html: (response.messageBox) ? response.messageBox : '',
               });
             }
-            
+
             var intrv = setInterval(function(){
                 $('.form-group .error-label').slideUp(500, function(e) {
                     $(this).remove();
@@ -346,7 +347,7 @@
     }
 
     // DELETED DATA
-    function deleteData(url, callback) 
+    function deleteData(url, callback)
     {
         Swal.fire({
             title: "Are You Sure To Delete Data?",
@@ -527,7 +528,7 @@
         }
         var elm = $("#dataForm").find('[name="' + key + '"]').closest('.field');
         $(elm).addClass('error');
-        
+
         var message = `<div class="ui basic red pointing prompt label transition visible">` + value + `</div>`;
 
         var showerror = $("#dataForm").find('[name="' + key + '"]').closest('.field');
@@ -541,7 +542,7 @@
             if (res[1] == 0) {
                 key = res[0] + '\\[\\]';
             }
-            // 
+            //
         }
         var elm = $("#" + formData).find('[name="' + key + '"]').closest('.form-group');
         $(elm).removeClass('has-error');
@@ -568,7 +569,7 @@
             month[11] = "Desember";
             var month = month[tgl.getMonth()];
             var day = tgl.getDate();
-            return  day + ' ' + month + ' ' + year; 
+            return  day + ' ' + month + ' ' + year;
         }else{
             return '';
         }
@@ -595,7 +596,7 @@
             var day = tgl.getDate();
             var hour = tgl.getHours();
             var minutes = tgl.getMinutes();
-            return  day + ' ' + month + ', ' + year +'<br/>'+ hour + '.' +minutes; 
+            return  day + ' ' + month + ', ' + year +'<br/>'+ hour + '.' +minutes;
         }else{
             return '';
         }

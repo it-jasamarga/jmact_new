@@ -85,6 +85,7 @@
               <th id="listTables">Name</th>
               <th id="listTables">Username/NPP</th>
               <th id="listTables">Unit</th>
+              {{-- <th id="listTables">Role</th> --}}
               <th id="listTables">Status</th>
               <th id="listTables">Action</th>
             </tr>
@@ -108,6 +109,7 @@
       { data:'name', name:'name' },
       { data:'username', name:'username' },
       { data:'unit_id', name:'unit_id' },
+    //   { data:'role_id', name:'role_id' },
       { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false, orderable: false }
     ],[
