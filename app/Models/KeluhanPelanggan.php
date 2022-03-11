@@ -16,7 +16,7 @@ class KeluhanPelanggan extends Model implements Auditable
 {
    	use HasFactory, Filterable, Blameable, Utilities;
     use \OwenIt\Auditing\Auditable;
-	
+
     protected $table = 'keluhan';
  	protected $guarded = [];
 
@@ -32,7 +32,7 @@ class KeluhanPelanggan extends Model implements Auditable
 	public function bidang(){
 		return $this->belongsTo(MasterBk::class,'bidang_id');
 	}
-	
+
 	public function ruas(){
 		return $this->belongsTo(MasterRuas::class,'ruas_id');
 	}
@@ -76,5 +76,15 @@ class KeluhanPelanggan extends Model implements Auditable
 	public function unit(){
 		return $this->belongsTo(MasterUnit::class,'unit_id');
 	}
+
+    public function setUrlFileAttribute($attribute){
+        $request = request();
+        if($request->url_file && is_file($request->url_file)){
+          $fileName = md5($request->url_file->getClientOriginalName().auth()->user()->id.''.strtotime('now')).'.'.$request->url_file->getClientOriginalExtension();
+          $request->file('url_file')->storeAs('Keluhan', $fileName, 'public');
+          $path = 'Keluhan/'.$fileName;
+          $this->attributes['url_file'] = $path;
+        }
+    }
 
 }

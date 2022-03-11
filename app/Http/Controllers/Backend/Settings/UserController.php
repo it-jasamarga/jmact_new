@@ -13,7 +13,7 @@ use JWTAuth;
 class UserController extends Controller
 {
   public $breadcrumbs = [
-      ['name' => "Manage User"], 
+      ['name' => "Manage User"],
       ['link' => "#", 'name' => "Settings"],
       ['link' => "setting/users", 'name' => "Users"]
   ];
@@ -33,32 +33,38 @@ class UserController extends Controller
 
   public function list(Request $request)
   {
-    
     $data  = User::query()->orderByDesc('created_at');
-
     if($name = $request->name){
       $data = $data->where('name','like', '%' . $name . '%');
-    } 
+    }
     if ($username = $request->username) {
       $data = $data->where('username','like', '%' . $username . '%');
-    } 
+    }
     if ($unit_id = $request->unit_id) {
       $data = $data->where('unit_id', $unit_id);
     }
-    
+    // if ($role_id = $request->role_id) {
+    //   $data = $data->where('role_id', $role_id);
+    // }
+
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
+        $button = '';
+        $button .= makeButton([
+            'type' => 'deleteAll',
+            'value' => $data->id
+        ]);
+        return $button;
     })
     ->addColumn('unit_id', function ($data) use ($request) {
-      $button = ($data->unit) ? $data->unit->unit : '-';
-      return $button;
+        $button = ($data->unit) ? $data->unit->unit : '-';
+        return $button;
     })
+    // ->addColumn('id', function ($data) use ($request) {
+    //     dd($data->roles);
+    //   $button = ($data->roles) ? $data->roles->id : '-';
+    //   return $button;
+    // })
     ->addColumn('active', function ($data) use ($request) {
       $button = getActive($data->active);
       return $button;
@@ -153,7 +159,7 @@ class UserController extends Controller
         $validate['password'] = 'required|string|min:6|max:250|confirmed';
         request()['npp'] = null;
         request()['is_ldap'] = 0;
-      } 
+      }
 
       request()->validate($validate, $custom_message);
 
@@ -161,7 +167,7 @@ class UserController extends Controller
       unset(request()['role']);
       unset(request()['password_confirmation']);
       $passwords = request()->password;
-      
+
       if(request()->password){
         request()['password'] = bcrypt($passwords);
       }
@@ -190,7 +196,7 @@ class UserController extends Controller
         'role' => 'required',
         'active' => 'required'
       ];
-      
+
       $record = User::find(request()->id);
 
       if (request()->is_ldap === '1') {
@@ -211,7 +217,7 @@ class UserController extends Controller
         }
         request()['npp'] = null;
         request()['is_ldap'] = 0;
-      } 
+      }
 
       request()->validate($validate, $custom_message);
 
@@ -226,7 +232,7 @@ class UserController extends Controller
       }else{
         request()['password'] = $record->password;
       }
-      
+
       $record = User::saveData(request());
 
       if($role){

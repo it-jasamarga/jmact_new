@@ -62,7 +62,7 @@
                     <input id="nominal_final" type="text" class="form-control" name="nominal_final"
                         value="{{ $record->nominal_final }}" required autocomplete="nominal_final" autofocus
                         placeholder="Nominal Claim (Rp)" maxlength="30"
-                        {{ $record->status->code == '01' ||$record->status->code == '03' ||$record->status->code == '04' ||$record->status->code == '06'? 'disabled': '' }}
+                        {{ $record->status->code == '01' || $record->status->code == '03' || $record->status->code == '04' || $record->status->code == '06'? 'disabled': '' }}
                         oninput="this.value = convertToRupiah(this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1'))">
                 </div>
             </div>
@@ -72,6 +72,12 @@
 
     </div>
     <div class="modal-footer">
+        @if( $record->status->code == '06' ) {
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <i class="flaticon-circle"></i>
+                Tutup
+            </button>
+        }
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
             <i class="flaticon-circle"></i>
             Tutup
@@ -80,6 +86,7 @@
             <i class="flaticon-add-circular-button"></i>
             Simpan
         </button>
+        @endif
     </div>
 
 </form>

@@ -69,18 +69,19 @@ class ClaimController extends Controller
     // if (auth()->user()->hasRole('Service Provider')) {
     if (auth()->user()->roles()->first()->type == "Service Provider") {
       $data  = ClaimPelanggan::with('history')
-        ->where('unit_id', auth()->user()->unit_id)
-        ->whereHas('status', function ($q1) {
-          $q1->whereIn('code', ['03', '04', '05', '06', '07'])
-            ->where('type', 1);
-        })
-        ->orderByDesc('created_at')
-        ->select('*')
-        ->filter($request);
+      ->where('unit_id', auth()->user()->unit_id)
+      ->whereHas('status', function ($q1) {
+        $q1->whereIn('code', ['03', '04', '05', '06', '07'])
+        ->where('type', 1);
+      })
+      ->orderByDesc('created_at')
+      ->select('*')
+      ->filter($request);
     }
 
     // if (auth()->user()->hasRole('RO')) {
-    if (@auth()->user()->roles()->first()->ro_id) {
+      // if (@auth()->user()->roles()->first()->ro_id) {
+    if (auth()->user()->roles()->first()->type == "Representative Office") {
       $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
 
       $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
@@ -98,7 +99,8 @@ class ClaimController extends Controller
     }
 
     // if (auth()->user()->hasRole('Regional')) {
-    if (@auth()->user()->roles()->first()->regional_id) {
+    // if (@auth()->user()->roles()->first()->regional_id) {
+      if (auth()->user()->roles()->first()->type == "Regional") {
       $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
       // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
@@ -279,8 +281,8 @@ class ClaimController extends Controller
     // $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
     // $this->firebase->sendGroup(
-    //   $record, 
-    //   'JMACT - Keluhan Diteruskan Kepada Service Provider', 
+    //   $record,
+    //   'JMACT - Keluhan Diteruskan Kepada Service Provider',
     //   'Diteruskan Ke '.$name
     // );
 
@@ -340,8 +342,8 @@ class ClaimController extends Controller
     // $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
 
     // $this->firebase->sendGroup(
-    //   $record, 
-    //   'JMACT - Keluhan Diteruskan Kepada Service Provider', 
+    //   $record,
+    //   'JMACT - Keluhan Diteruskan Kepada Service Provider',
     //   'Diteruskan Ke '.$name
     // );
 

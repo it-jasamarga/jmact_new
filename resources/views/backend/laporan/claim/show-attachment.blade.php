@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label for="url_file" class="">{{ __('Bukti Lampiran') }}</label>
                     <iframe
-                        src="{{ asset('storage/' .@$record->report()->orderByDesc('created_at')->first()->url_file) }}"
+                        src="{{ asset('storage/' .@$record->orderByDesc('created_at')->first()->url_file) }}"
                         title="Detail" width="100%" height="480px"></iframe>
                 </div>
             </div>

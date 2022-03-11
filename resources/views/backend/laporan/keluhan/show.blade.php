@@ -1,6 +1,11 @@
 @extends('layouts/app')
 
 @section('styles')
+    <style>
+        a:hover {
+            color: orangered;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -74,6 +79,15 @@
                                 class="text-danger">*</span>
                             <input id="inputer_pic" type="text" class="form-control" name="inputer_pic"
                                 value="{{ $record->creator ? $record->creator->username : '' }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tanggal_input" class="">{{ __('Tanggal Input Keluhan') }}</label><span
+                                class="text-danger">*</span>
+                            <input id="tanggal_input" type="text" class="form-control" name="tanggal_input"
+                                value="{{ $record->created_at }}" readonly>
                         </div>
                     </div>
 
@@ -184,14 +198,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                            {{-- <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
                                 value="{{ $record->url_file }}" readonly
                                 data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
-                                style="cursor: pointer">
+                                style="cursor: pointer;"> --}}
+                            {{-- <br /> --}}
+                            <a class="custome-modal alert alert-custom alert-default" href="javascript:void(0)"
+                                id="url_file" data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
+                                style="cursor: pointer;">
+                                {{ $record->url_file }}
+                            </a>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="keterangan_keluhan"
                                 class="">{{ __('Keterangan Keluhan') }}</label><span
@@ -202,32 +222,31 @@
                     </div>
                 </div>
 
-@if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
-                <a href="javascript:history.back()" class="btn btn-secondary">
-                    <i class="flaticon-circle"></i>
-                    Kembali
-                </a>
-@else
-
-                <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
-                    <em class="flaticon-circle"></em>
-                    Kembali
-                </a>
-                @if ($record->report->count() > 0)
-                    <div class="btn btn-light-success float-right custome-modal"
-                        data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
-                        <em class="flaticon2-file"></em>
-                        Detail Report
-                    </div>
-                    {{-- @else
+                @if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="flaticon-circle"></i>
+                        Kembali
+                    </a>
+                @else
+                    <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
+                        <em class="flaticon-circle"></em>
+                        Kembali
+                    </a>
+                    @if ($record->report->count() > 0)
+                        <div class="btn btn-light-success float-right custome-modal"
+                            data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
+                            <em class="flaticon2-file"></em>
+                            Detail Report
+                        </div>
+                        {{-- @else
         @if ($record->report->count() == 0 && $record->mulaiSla->count() == 0)
             <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
                 <i class="flaticon2-file"></i>
                 Teruskan Jenis Keluhan
             </div>
         @endif --}}
+                    @endif
                 @endif
-@endif
             </form>
         </div>
     </div>
