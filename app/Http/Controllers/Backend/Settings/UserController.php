@@ -60,11 +60,10 @@ class UserController extends Controller
         $button = ($data->unit) ? $data->unit->unit : '-';
         return $button;
     })
-    // ->addColumn('id', function ($data) use ($request) {
-    //     dd($data->roles);
-    //   $button = ($data->roles) ? $data->roles->id : '-';
-    //   return $button;
-    // })
+    ->addColumn('role_id', function ($data) use ($request) {
+      $button = ($data->roles->first()) ? $data->roles->first()->name : '-';
+      return $button;
+    })
     ->addColumn('active', function ($data) use ($request) {
       $button = getActive($data->active);
       return $button;
