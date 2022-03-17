@@ -77,6 +77,17 @@ class KeluhanPelanggan extends Model implements Auditable
 		return $this->belongsTo(MasterUnit::class,'unit_id');
 	}
 
+    public function checkStatus($code){
+		$return = "false";
+		$data = $this->history()->whereHas('status', function($q) use($code){
+			$q->whereIn('code',[$code])->where('type', 1);
+		})->first();
+		if($data) {
+			$return = "true";
+		}
+		return $return;
+	}
+
     public function setUrlFileAttribute($attribute){
         $request = request();
         if($request->url_file && is_file($request->url_file)){

@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="regional" class="">{{ __('Regional') }}</label>
-                    <select class="form-control option-ajax select2" data-child="ro" name="regional_id">
+                    <select class="form-control option-ajax select2" data-child="regional" name="regional_id">
                         {!! App\Models\MasterRegional::options('name','id',['selected' => $record->ro->regional_id],'( Pilih Regional )') !!}
                     </select>
                 </div>

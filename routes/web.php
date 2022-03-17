@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::get('keluhan/sla/{id}', 'KeluhanController@sla')->name('keluhan.sla');
 			Route::put('keluhan/sla/report/{id}', 'KeluhanController@prosesReportSla')->name('keluhan.prosesReportSla');
 			Route::get('keluhan/sla/report/{id}', 'KeluhanController@reportSla')->name('keluhan.reportSla');
+			Route::put('keluhan/sla/konfirmasi/{id}', 'KeluhanController@prosesKonfirmasiPelanggan')->name('keluhan.prosesKonfirmasiPelanggan');
+			Route::get('keluhan/sla/konfirmasi/{id}', 'KeluhanController@konfirmasiPelanggan')->name('keluhan.konfirmasiPelanggan');
 
 			Route::put('keluhan/teruskan/{id}', 'KeluhanController@history')->name('keluhan.history');
 			Route::delete('keluhan/removeMulti', 'KeluhanController@removeMulti')->name('keluhan.removeMulti');

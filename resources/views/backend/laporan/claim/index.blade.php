@@ -3,7 +3,7 @@
 @section('styles')
 @endsection
 
-@section('toolbars')  
+@section('toolbars')
 {{-- <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a> --}}
 @endsection
 
@@ -112,7 +112,7 @@
               <th id="listTables">No Tiket</th>
               <th id="listTables">Ruas</th>
               <th id="listTables">Lokasi</th>
-              <th id="listTables">Waktu Kejadian</th>
+              <th id="listTables">Waktu Pelaporan</th>
               <th id="listTables">Nama Pelanggan</th>
               <th id="listTables">No Telepon</th>
               <th id="listTables">Claim</th>
@@ -140,7 +140,7 @@
       { data:'no_tiket', name:'no_tiket' },
       { data:'ruas_id', name:'ruas_id' },
       { data:'lokasi_kejadian', name:'lokasi_kejadian' },
-      { data:'tanggal_kejadian', name:'tanggal_kejadian' },
+      { data:'tanggal_pelaporan', name:'tanggal_pelaporan' },
       { data:'nama_pelanggan', name:'nama_pelanggan' },
       { data:'no_telepon', name:'no_telepon' },
       { data:'keterangan_claim', name:'keterangan_claim' },

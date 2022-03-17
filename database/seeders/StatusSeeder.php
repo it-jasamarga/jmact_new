@@ -20,7 +20,7 @@ class StatusSeeder extends Seeder
         $array = [
             [
                 'code' => '01',
-                'status' =>'Tiket di Input',
+                'status' =>'Tiket diinput',
                 'type' => 1,
                 'active' => 1
             ],
@@ -38,60 +38,78 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '04',
+                'status' =>'Submit Report',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '05',
+                'status' =>'Konfirmasi Pelanggan',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '06',
+                'status' =>'Follow Up Feedback Pelanggan',
+                'type' => 1,
+                'active' => 1
+            ],
+            [
+                'code' => '07',
                 'status' =>'Closed',
                 'type' => 1,
                 'active' => 1
             ],
             [
-                'code' => '05',
+                'code' => '08',
                 'status' =>'Overtime',
                 'type' => 1,
                 'active' => 1
             ],
             [
-                'code' => '00',
-                'status' =>'Reject',
-                'type' => 2,
-                'active' => 1
-            ],
-            [
                 'code' => '01',
-                'status' =>'Tiket di Input',
+                'status' =>'Tiket diinput',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '02',
-                'status' =>'Tiket di approve',
+                'status' =>'Approved',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '03',
-                'status' =>'Tiket diteruskan',
+                'status' =>'Rejected',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '04',
-                'status' =>'Tahap Negosiasi dan Klarifikasi',
+                'status' =>'Tiket diteruskan',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '05',
-                'status' =>'Proses Pembayaran',
+                'status' =>'Klarifikasi & Negosiasi',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '06',
-                'status' =>'Pembayaran Selesai',
+                'status' =>'Proses Pembayaran',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '07',
+                'status' =>'Feedback',
+                'type' => 2,
+                'active' => 1
+            ],
+            [
+                'code' => '08',
                 'status' =>'Closed',
                 'type' => 2,
                 'active' => 1

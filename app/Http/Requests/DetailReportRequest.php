@@ -23,7 +23,7 @@ class DetailReportRequest extends FormRequest
      */
     public function rules()
     {
-      $unique = ($id = request()->route('keluhan_report')) ? ','.$id : '';
+      $unique = ($id = request()->route('detail_report')) ? ','.$id : '';
       return [
         'url_file' => 'required|max:500000',
         'keterangan' => 'required|max:10000'

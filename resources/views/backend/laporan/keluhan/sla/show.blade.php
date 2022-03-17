@@ -66,11 +66,11 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tanggal_kejadian"
-                                class="">{{ __('Tanggal Kejadian') }}</label><span
+                            <label for="tanggal_pelaporan"
+                                class="">{{ __('Tanggal Pelaporan') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="tanggal_kejadian" type="text" class="form-control " name="tanggal_kejadian"
-                                value="{{ $record->tanggal_kejadian }}" readonly>
+                            <input id="tanggal_pelaporan" type="text" class="form-control " name="tanggal_pelaporan"
+                                value="{{ $record->tanggal_pelaporan }}" readonly>
                         </div>
                     </div>
 
@@ -103,7 +103,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lokasi_kejadian" class="">{{ __('Ruas Jalan Tol') }}</label><span
+                            <label for="ruas_id" class="">{{ __('Ruas Jalan Tol') }}</label><span
                                 class="text-danger">*</span>
                             <select disabled="" class="form-control select2" id="ruas" name="ruas_id">
                                 {!! App\Models\MasterRuas::options('name', 'id', ['selected' => $record->ruas_id], '( Ruas Jalan Tol )') !!}
@@ -113,7 +113,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lokasi_kejadian" class="">{{ __('Sumber') }}</label><span
+                            <label for="sumber_id" class="">{{ __('Sumber') }}</label><span
                                 class="text-danger">*</span>
                             <select disabled="" class="form-control select2" name="sumber_id">
                                 {!! App\Models\MasterSumber::options('description', 'id', ['selected' => $record->sumber_id], '( Sumber )') !!}
@@ -123,7 +123,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lokasi_kejadian" class="">{{ __('Bidang Keluhan') }}</label><span
+                            <label for="bidang_id" class="">{{ __('Bidang Keluhan') }}</label><span
                                 class="text-danger">*</span>
                             <select disabled class="form-control select2" name="bidang_id">
                                 {!! App\Models\MasterBk::options('keluhan', 'id', ['selected' => $record->bidang_id], '( Bidang Keluhan )') !!}
@@ -133,7 +133,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lokasi_kejadian"
+                            <label for="golongan_id"
                                 class="">{{ __('Golongan Kendaraan') }}</label><span
                                 class="text-danger">*</span>
                             <select disabled="" class="form-control select2" name="golongan_id">
