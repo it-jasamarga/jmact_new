@@ -119,11 +119,11 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tanggal_kejadian"
-                                class="">{{ __('Tanggal Kejadian') }}</label><span
+                            <label for="tanggal_pelaporan"
+                                class="">{{ __('Tanggal Pelaporan') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="tanggal_kejadian" type="text" class="form-control " name="tanggal_kejadian"
-                                value="{{ $record->tanggal_kejadian }}" readonly>
+                            <input id="tanggal_pelaporan" type="text" class="form-control " name="tanggal_pelaporan"
+                                value="{{ $record->tanggal_pelaporan }}" readonly>
                         </div>
                     </div>
 

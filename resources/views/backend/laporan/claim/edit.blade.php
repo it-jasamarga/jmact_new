@@ -23,10 +23,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="bidang" class="">{{ __('Service Provider') }}</label>
-                    <select class="form-control select2" name="unit_id">
+                    {{-- <select class="form-control select2" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit','id',['filters' => [function($q){
                             $q->where('type',1);
                         }]],'( Ruas Jalan Tol )') !!}
+                    </select> --}}
+                    <select class="form-control option-ajax select2" id="unit" name="unit_id">
+                        {!! App\Models\MasterUnit::options('unit','id',['selected' => $record->unit_id, 'filters' => ['unit_id' => $record->unit->unit_id]],'( Pilih Unit)') !!}
                     </select>
                 </div>
             </div>

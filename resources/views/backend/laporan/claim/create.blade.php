@@ -93,12 +93,12 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tanggal_kejadian"
-                                class="">{{ __('Tanggal Kejadian') }}</label><span
+                            <label for="tanggal_pelaporan"
+                                class="">{{ __('Tanggal Pelaporan') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="tanggal_kejadian" type="text" class="form-control datetimepicker"
-                                name="tanggal_kejadian" value="{{ old('tanggal_kejadian') }}" required autocomplete="off"
-                                autofocus placeholder="Tanggal Kejadian" maxlength="20">
+                            <input id="tanggal_pelaporan" type="text" class="form-control datetimepicker"
+                                name="tanggal_pelaporan" value="{{ old('tanggal_pelaporan') }}" required autocomplete="off"
+                                autofocus placeholder="Tanggal Pelaporan" maxlength="20">
                         </div>
                     </div>
 
@@ -195,7 +195,7 @@
                                 class="text-danger">*</span>
                             <input id="nominal_customer" type="text" class="form-control" name="nominal_customer"
                                 value="{{ old('nominal_customer') }}" required autocomplete="off" autofocus
-                                placeholder="Besaran claim yang diajukan" maxlength="20" 
+                                placeholder="Besaran claim yang diajukan" maxlength="20"
                                 oninput="this.value = convertToRupiah(this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1'))">
                         </div>
                     </div>

@@ -16,6 +16,7 @@ use App\Http\Requests\DetailHistoryRequest;
 use App\Http\Requests\DetailReportRequest;
 
 use App\Helpers\HelperFirestore;
+use App\Models\DetailReport;
 use App\Models\MasterRuas;
 use DB;
 use Carbon\Carbon;
@@ -199,10 +200,10 @@ class KeluhanController extends Controller
   public function store(KeluhanPelangganRequest $request)
   {
 
-    $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
+    $tglPeloporan = Carbon::parse($request->tanggal_pelaporan)->format('Y-m-d');
     $recordData =  KeluhanPelanggan::where(DB::raw('UPPER(nama_cust)'), 'like', '%' . strtoupper($request->nama_cust) . '%')
       ->where('no_telepon', $request->no_telepon)
-      ->whereDate('tanggal_kejadian', $tglKejadian)
+      ->whereDate('tanggal_pelaporan', $tglPeloporan)
       ->where('bidang_id', $request->bidang_id)
       ->where('ruas_id', $request->ruas_id)->first();
 
@@ -351,7 +352,7 @@ class KeluhanController extends Controller
     unset(request()['nama_cust']);
     unset(request()['sosial_media']);
     unset(request()['no_telepon']);
-    unset(request()['tanggal_kejadian']);
+    unset(request()['tanggal_pelaporan']);
     unset(request()['lokasi_kejadian']);
     unset(request()['url_file']);
     unset(request()['keterangan_keluhan']);
@@ -435,6 +436,62 @@ class KeluhanController extends Controller
       'message' => 'success',
     ]);
   }
+
+  public function konfirmasiPelanggan($id)
+  {
+    $record = KeluhanPelanggan::findOrFail($id);
+
+    $data = [
+      'title' => 'SLA',
+      'breadcrumbs' => $this->breadcrumbs,
+      'route' => $this->route,
+      'record' => $record
+    ];
+
+    return view('backend.laporan.keluhan.sla.konfirmasi-add', $data);
+  }
+
+  public function prosesKonfirmasiPelanggan($id)
+  {
+    //   dd(request()->all());
+      $recordReport = DetailReport::findOrFail($id);
+      $recordReport->kontak_pelanggan = request()->kontak_pelanggan;
+      $recordReport->konfirmasi_pelanggan = request()->konfirmasi_pelanggan;
+      $recordReport->save();
+
+    $request['status_id'] = MasterStatus::where('code', '05')->where('type', '1')->first()->id;
+
+    $record = KeluhanPelanggan::findOrFail($id);
+    $record->report()->create(request()->all());
+
+    $history = $record->history()->orderByDesc('created_at')->first();
+    $unitHistory = ($history) ? $history->unit_id : $record->unit_id;
+    // $ruasHistory = ($history) ? $history->ruas_id : $record->ruas_id;
+    $record->unit_id = $unitHistory;
+    $record->status_id = $request['status_id'];
+    // $record->selesai_pengerjaan = Carbon::now()->format('Y-m-d H:i:s');
+    $record->save();
+
+    $recordHistory = $record->history()->create([
+      'unit_id' => $unitHistory,
+      // 'regional_id' => $record->regional_id,
+      // 'ruas_id' => $ruasHistory,
+      'status_id' => MasterStatus::where('code', '05')->where('type', '1')->first()->id
+    ]);
+
+    // $this->firebase->send(
+    //   $record,
+    //   'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+    //   'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
+    // );
+
+    return response([
+      'status' => true,
+      'message' => 'success',
+    ]);
+  }
+
+
   // END SLA
 
   public function show($id)

@@ -63,11 +63,11 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tanggal_kejadian"
-                                class="">{{ __('Tanggal Kejadian') }}</label><span
+                            <label for="tanggal_pelaporan"
+                                class="">{{ __('Tanggal Pelaporan') }}</label><span
                                 class="text-danger">*</span>
-                            <input id="tanggal_kejadian" type="text" class="form-control " name="tanggal_kejadian"
-                                value="{{ $record->tanggal_kejadian }}" readonly>
+                            <input id="tanggal_pelaporan" type="text" class="form-control " name="tanggal_pelaporan"
+                                value="{{ $record->tanggal_pelaporan }}" readonly>
                         </div>
                     </div>
 
@@ -166,13 +166,18 @@
                     Kembali
                 </a>
                 @if ($record->report->count() > 0)
-                    <div class="btn btn-light-success float-right custome-modal"
+                    {{-- <div class="btn btn-light-success float-right custome-modal"
                         data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
                         <em class="flaticon2-file"></em>
                         Detail Report
+                    </div> --}}
+                    <div class="btn btn-light-primary float-right custome-modal"
+                        data-url="keluhan/sla/konfirmasi/{{ $record->id }}" data-modal="#largeModal">
+                        <em class="flaticon2-list-1"></em>
+                        Konfirmasi Pelanggan
                     </div>
                 @else
-                    <div class="btn btn-light-success float-right custome-modal"
+                    <div class="btn btn-light-success float-right custome-modal mr-2"
                         data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
                         <em class="flaticon2-file"></em>
                         Submit Report

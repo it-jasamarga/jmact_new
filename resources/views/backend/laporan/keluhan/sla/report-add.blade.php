@@ -9,7 +9,22 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keluhan" class="">{{ __('Bukti Pengerjaan') }}</label><span
+                    <label for="penyelesaian" class="">{{ __('Tipe Penyelesaian') }}</label>
+                    @if (@$record->report()->orderByDesc('created_at')->first())
+                    <input id="tipe_penyelesaian" type="text" readonly class="form-control" name="tipe_penyelesaian" value="{{ @$record->report()->orderByDesc('created_at')->first()->tipe_penyelesaian }}">
+                    @else
+                    <select class="form-control select2" name="tipe_penyelesaian">
+                        <option value="">Pilih Tipe Penyelesaian</option>
+                        <option value="Penyelesaian Langsung" {{ (@$record->report()->tipe_penyelesaian == "Penyelesaian Langsung") ? "selected" : ""}}>Penyelesaian Langsung</option>
+                        <option value="Penyelesaian Tidak Langsung" {{ (@$record->report()->tipe_penyelesaian == "Penyelesaian Tidak Langsung") ? "selected" : ""}}>Penyelesaian Tidak Langsung</option>
+                    </select>
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="url_file" class="">{{ __('Bukti Pengerjaan') }}</label><span
                         class="text-danger">*</span>
                     @if (@$record->report()->orderByDesc('created_at')->first())
                         <iframe
@@ -25,7 +40,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="bidang" class="">{{ __('Keterangan Pekerjaan') }}</label><span
+                    <label for="keterangan" class="">{{ __('Keterangan Pekerjaan') }}</label><span
                         class="text-danger">*</span>
                     @if (@$record->report()->orderByDesc('created_at')->first())
                         <textarea name="keterangan" class="form-control" placeholder="Keterangan Pekerjaan"

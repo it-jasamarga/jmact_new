@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddKontakKonfirmasiTipeToDetailReport extends Migration
+class AddKontakPelangganKonfirmasiPelangganToDetailReport extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,9 @@ class AddKontakKonfirmasiTipeToDetailReport extends Migration
     public function up()
     {
         Schema::table('detail_report', function (Blueprint $table) {
-            $table->longText('keterangan_reject')->nullable()->after('keterangan');
-            $table->string('kontak_pelanggan', 225)->nullable()->after('keterangan_reject');
+            $table->longText('konfirmasi_pelanggan')->nullable()->after('keterangan');
+            $table->unsignedBigInteger('kontak_pelanggan')->after('konfirmasi_pelanggan');
             $table->string('tipe_penyelesaian', 225)->nullable()->after('kontak_pelanggan');
-            //
         });
     }
 
@@ -29,8 +28,8 @@ class AddKontakKonfirmasiTipeToDetailReport extends Migration
     public function down()
     {
         Schema::table('detail_report', function (Blueprint $table) {
+            $table->dropColumn(['konfirmasi_pelanggan']);
             $table->dropColumn(['kontak_pelanggan']);
-            $table->dropColumn(['keterangan_reject']);
             $table->dropColumn(['tipe_penyelesaian']);
         });
     }

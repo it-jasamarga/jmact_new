@@ -23,10 +23,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="bidang" class="">{{ __('Service Provider') }}</label>
-                    <select class="form-control select2" name="unit_id">
+                    {{-- <select class="form-control select2" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit','id',['filters' => [function($q){
                             $q->where('type',1);
                         }]],'( Ruas Jalan Tol )') !!}
+                    </select> --}}
+                    <select class="form-control option-ajax select2" id="unit" name="unit_id">
+                        {!! App\Models\MasterUnit::options('unit','id',['selected' => $record->unit_id, 'filters' => ['unit_id' => $record->unit->unit_id]],'( Pilih Unit)') !!}
                     </select>
                 </div>
             </div>
@@ -38,11 +41,11 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">
-        <i class="flaticon-circle"></i>
+        <em class="flaticon-circle"></em>
         Tutup
     </button>
     <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
-        <i class="flaticon-add-circular-button"></i>
+        <em class="flaticon-add-circular-button"></em>
         Simpan
     </button>
 </div>
