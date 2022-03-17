@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             JenisClaimSeeder::class,
             AppVarSeeder::class,
+            FeedbackUnsatisfactionSeeder::class,
             TypeSeeder::class
         ]);
     }
