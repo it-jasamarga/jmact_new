@@ -133,8 +133,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="golongan_id"
-                                class="">{{ __('Golongan Kendaraan') }}</label><span
+                            <label for="golongan_id" class="">{{ __('Golongan Kendaraan') }}</label><span
                                 class="text-danger">*</span>
                             <select disabled="" class="form-control select2" name="golongan_id">
                                 {!! App\Models\MasterGolken::options('golongan', 'id', ['selected' => $record->golongan_id], '( Golongan Kendaraan )') !!}
@@ -145,10 +144,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                            {{-- <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
                                 value="{{ $record->url_file }}" readonly
                                 data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
-                                style="cursor: pointer">
+                                style="cursor: pointer"> --}}
+                            <a class="custome-modal alert alert-custom alert-default" href="javascript:void(0)"
+                                id="url_file" data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
+                                style="cursor: pointer;">
+                                {{ $record->url_file }}
+                            </a>
                         </div>
                     </div>
 

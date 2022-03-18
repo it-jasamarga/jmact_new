@@ -454,15 +454,15 @@ class KeluhanController extends Controller
   public function prosesKonfirmasiPelanggan($id)
   {
     //   dd(request()->all());
-      $recordReport = DetailReport::findOrFail($id);
-      $recordReport->kontak_pelanggan = request()->kontak_pelanggan;
-      $recordReport->konfirmasi_pelanggan = request()->konfirmasi_pelanggan;
-      $recordReport->save();
+    $recordReport = DetailReport::where('keluhan_id', $id)->orderByDesc('created_at')->first();
+    $recordReport->kontak_pelanggan = request()->kontak_pelanggan;
+    $recordReport->konfirmasi_pelanggan = request()->konfirmasi_pelanggan;
+    $recordReport->save();
 
     $request['status_id'] = MasterStatus::where('code', '05')->where('type', '1')->first()->id;
 
     $record = KeluhanPelanggan::findOrFail($id);
-    $record->report()->create(request()->all());
+    // $record->report()->create(request()->all());
 
     $history = $record->history()->orderByDesc('created_at')->first();
     $unitHistory = ($history) ? $history->unit_id : $record->unit_id;

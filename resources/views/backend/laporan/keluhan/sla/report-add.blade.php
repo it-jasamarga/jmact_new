@@ -1,59 +1,141 @@
-<form action="{{ route($route . '.reportSla', $record->id) }}" method="POST" id="formData" enctype="multipart/form-data">
+<form action="{{ route($route . '.reportSla', $record->id) }}" method="POST" id="formData"
+    enctype="multipart/form-data">
     @method('PUT')
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Report Pengerjaan</h3>
+        <h3 class="modal-title">
+            @if (@$record->report()->orderByDesc('created_at')->first())
+                Detail Report Pengerjaan
+            @else
+                Report Pengerjaan
+            @endif
+        </h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="penyelesaian" class="">{{ __('Tipe Penyelesaian') }}</label>
-                    @if (@$record->report()->orderByDesc('created_at')->first())
-                    <input id="tipe_penyelesaian" type="text" readonly class="form-control" name="tipe_penyelesaian" value="{{ @$record->report()->orderByDesc('created_at')->first()->tipe_penyelesaian }}">
+                <div class="form-group row">
+                    <div class="col-3 col-form-label">
+                        <label for="penyelesaian" class="">{{ __('Tipe Penyelesaian') }}</label>
+                    </div>
+                    <div class="col-9 col-form-label">
+                        @if (@$record->report()->orderByDesc('created_at')->first())
+                            <input id="tipe_penyelesaian" type="text" readonly class="form-control"
+                                name="tipe_penyelesaian"
+                                value="{{ @$record->report()->orderByDesc('created_at')->first()->tipe_penyelesaian }}">
+                        @else
+                            <select class="form-control select2" name="tipe_penyelesaian">
+                                <option value="">Pilih Tipe Penyelesaian</option>
+                                <option value="Penyelesaian Langsung"
+                                    {{ @$record->report()->tipe_penyelesaian == 'Penyelesaian Langsung' ? 'selected' : '' }}>
+                                    Penyelesaian Langsung</option>
+                                <option value="Penyelesaian Tidak Langsung"
+                                    {{ @$record->report()->tipe_penyelesaian == 'Penyelesaian Tidak Langsung' ? 'selected' : '' }}>
+                                    Penyelesaian Tidak Langsung</option>
+                            </select>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-3 col-form-label">
+                        <label for="url_file" class="">{{ __('Bukti Pengerjaan') }}</label><span
+                            class="text-danger">*</span>
+                    </div>
+                    <div class="col-9 col-form-label">
+                        @if (@$record->report()->orderByDesc('created_at')->first())
+                            <iframe
+                                src="{{ asset('storage/' .@$record->report()->orderByDesc('created_at')->first()->url_file) }}"
+                                title="Detail" width="100%" height="340px"></iframe>
+                        @else
+                            <input type="file" name="url_file" class="dropify" data-max-file-size="10M"
+                                data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt"
+                                data-default-file="" data-show-remove="true" required>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-3 col-form-label">
+                        <label for="keterangan" class="">{{ __('Keterangan Pengerjaan') }}</label><span
+                            class="text-danger">*</span>
+                    </div>
+                    <div class="col-9 col-form-label">
+                        @if (@$record->report()->orderByDesc('created_at')->first())
+                            <textarea name="keterangan" class="form-control" placeholder="Keterangan Pengerjaan"
+                                readonly>{{ @$record->report()->orderByDesc('created_at')->first()->keterangan }}</textarea>
+                        @else
+                            <textarea name="keterangan" class="form-control" placeholder="Keterangan Pengerjaan"></textarea>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            @if(@$record->checkStatus(['05']) == 'true')
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label for="kontak_pelanggan" class="col-3 col-form-label">{{ __('Kontak Pelanggan') }}</label>
+                    @if (@$record->report()->orderByDesc('created_at')->first() && @$record->checkStatus(['05']) == 'true')
+                        <div class="col-9 col-form-label">
+                            <div class="radio-list">
+                                <label class="radio">
+                                    <input type="radio" name="kontak_pelanggan"
+                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == '1'? 'checked disabled': '' }} />
+                                    <span></span>
+                                    Ya
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="kontak_pelanggan"
+                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == '1'? 'checked disabled': '' }} />
+                                    <span></span>
+                                    Tidak
+                                </label>
+                            </div>
+                        </div>
                     @else
-                    <select class="form-control select2" name="tipe_penyelesaian">
-                        <option value="">Pilih Tipe Penyelesaian</option>
-                        <option value="Penyelesaian Langsung" {{ (@$record->report()->tipe_penyelesaian == "Penyelesaian Langsung") ? "selected" : ""}}>Penyelesaian Langsung</option>
-                        <option value="Penyelesaian Tidak Langsung" {{ (@$record->report()->tipe_penyelesaian == "Penyelesaian Tidak Langsung") ? "selected" : ""}}>Penyelesaian Tidak Langsung</option>
-                    </select>
+                        <div class="col-9 col-form-label">
+                            <div class="radio-list">
+                                <label class="radio">
+                                    <input type="radio" name="kontak_pelanggan" value="1" />
+                                    <span></span>
+                                    Ya
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="kontak_pelanggan" value="0" />
+                                    <span></span>
+                                    Tidak
+                                </label>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
 
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="url_file" class="">{{ __('Bukti Pengerjaan') }}</label><span
-                        class="text-danger">*</span>
-                    @if (@$record->report()->orderByDesc('created_at')->first())
-                        <iframe
-                            src="{{ asset('storage/' .@$record->report()->orderByDesc('created_at')->first()->url_file) }}"
-                            title="Detail" width="100%" height="340px"></iframe>
-                    @else
-                        <input type="file" name="url_file" class="dropify" data-max-file-size="10M"
-                            data-allowed-file-extensions="jpg png gif jpeg ico doc docx xls xlsx pdf txt"
-                            data-default-file="" data-show-remove="true" required>
-                    @endif
+                <div class="form-group row">
+                    <div class="col-3 col-form-label">
+                        <label for="konfirmasi_pelanggan"
+                            class="">{{ __('Konfirmasi Pelanggan') }}</label><span
+                            class="text-danger">*</span>
+                    </div>
+                    <div class="col-9 col-form-label">
+                        @if (@$record->report()->orderByDesc('created_at')->first() && @$record->checkStatus(['05']) == 'true')
+                            <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"
+                                readonly>{{ @$record->report()->orderByDesc('created_at')->first()->konfirmasi_pelanggan }}</textarea>
+                        @else
+                            <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"></textarea>
+                        @endif
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="keterangan" class="">{{ __('Keterangan Pekerjaan') }}</label><span
-                        class="text-danger">*</span>
-                    @if (@$record->report()->orderByDesc('created_at')->first())
-                        <textarea name="keterangan" class="form-control" placeholder="Keterangan Pekerjaan"
-                            readonly>{{ @$record->report()->orderByDesc('created_at')->first()->keterangan }}</textarea>
-                    @else
-                        <textarea name="keterangan" class="form-control"
-                            placeholder="Keterangan Pekerjaan"></textarea>
-                    @endif
-                </div>
-            </div>
+            @endif
 
         </div>
-
     </div>
 
     </div>
