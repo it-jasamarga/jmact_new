@@ -142,11 +142,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url_file" class="">{{ __('Lampiran') }}</label>
-                            <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
+                            {{-- <input id="url_file" type="text" class="form-control custome-modal" name="url_file"
                                 value="{{ $record->url_file }}" readonly
                                 data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
-                                style="cursor: pointer">
-                        </div>
+                                style="cursor: pointer"> --}}
+                                <a class="custome-modal alert alert-custom alert-default" href="javascript:void(0)"
+                                id="url_file" data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
+                                style="cursor: pointer;">
+                                {{ $record->url_file }}
+                            </a>
+                            </div>
                     </div>
 
                     <div class="col-md-12">
@@ -165,12 +170,13 @@
                     <em class="flaticon-circle"></em>
                     Kembali
                 </a>
-                @if ($record->report->count() > 0)
-                    {{-- <div class="btn btn-light-success float-right custome-modal"
+                @if ($record->report->count() > 0 && $record->checkStatus(['06']) == 'true')
+                    <div class="btn btn-light-success float-right custome-modal"
                         data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
                         <em class="flaticon2-file"></em>
                         Detail Report
-                    </div> --}}
+                    </div>
+                @elseif($record->report->count() > 0 && $record->checkStatus(['05']) == 'true')
                     <div class="btn btn-light-primary float-right custome-modal"
                         data-url="keluhan/sla/konfirmasi/{{ $record->id }}" data-modal="#largeModal">
                         <em class="flaticon2-list-1"></em>

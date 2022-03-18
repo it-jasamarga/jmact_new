@@ -19,9 +19,9 @@ class CreateFeedbackTable extends Migration
             $table->string('no_tiket');
             $table->string('no_telepon_sosial_media');
             $table->smallInteger('rating');
-            $table->json('ketidakpuasan');
+            $table->text('ketidakpuasan');
             $table->text('saran_masukan');
-            $table->json('attribute')->nullable();
+            $table->text('attribute')->nullable();
 
             $table->timestamps();
         });

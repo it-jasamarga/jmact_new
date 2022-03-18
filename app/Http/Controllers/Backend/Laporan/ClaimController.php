@@ -190,10 +190,10 @@ class ClaimController extends Controller
 
   public function store(ClaimPelangganRequest $request)
   {
-    $tglKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
+    $tglPelaporan = Carbon::parse($request->tanggal_pelaporan)->format('Y-m-d');
     $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_pelanggan)'), 'like', '%' . strtoupper($request->nama_pelanggan) . '%')
       ->where('no_telepon', $request->no_telepon)
-      ->whereDate('tanggal_kejadian', $tglKejadian)
+      ->whereDate('tanggal_pelaporan', $tglPelaporan)
       ->where('jenis_claim_id', $request->jenis_claim_id)
       ->where('ruas_id', $request->ruas_id)->first();
 
@@ -269,7 +269,7 @@ class ClaimController extends Controller
   {
     $record = ClaimPelanggan::findOrFail($id);
 
-    $request['status_id'] = MasterStatus::where('code', '03')->where('type', 2)->first()->id;
+    $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
     // $request['unit_id'] = $record->unit_id;
     // $request['regional_id'] = $record->regional_id;
     unset($request['ruas_id']);
@@ -306,15 +306,15 @@ class ClaimController extends Controller
   public function historyStage(Request $request, $id)
   {
     // dd(request()->all());
-    if (request()->status == '04') {
+    if (request()->status == '05') {
       $this->validate($request, [
         'negosiasi_dan_klarifikasi' => 'required'
       ]);
-    } elseif (request()->status == '05') {
+    } elseif (request()->status == '06') {
       $this->validate($request, [
         'proses_pembayaran' => 'required'
       ]);
-    } elseif (request()->status == '06') {
+    } elseif (request()->status == '07') {
       $this->validate($request, [
         'pembayaran_selesai' => 'required',
         'nominal_final' => 'required'
