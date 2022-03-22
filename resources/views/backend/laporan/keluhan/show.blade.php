@@ -213,6 +213,16 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="created_at"
+                                class="">{{ __('Tanggal Submit Pelaporan') }}</label><span
+                                class="text-danger">*</span>
+                            <input id="created_at" type="text" class="form-control " name="created_at"
+                                value="{{ $record->report->first()->created_at }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="keterangan_keluhan"
                                 class="">{{ __('Keterangan Keluhan') }}</label><span
                                 class="text-danger">*</span>
