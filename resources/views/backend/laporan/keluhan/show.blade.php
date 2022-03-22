@@ -217,7 +217,7 @@
                                 class="">{{ __('Tanggal Submit Pelaporan') }}</label><span
                                 class="text-danger">*</span>
                             <input id="created_at" type="text" class="form-control " name="created_at"
-                                value="{{ $record->report->first()->created_at }}" readonly>
+                                value="{{ ($record->report->first()) ? $record->report->first()->created_at : '-' }}" readonly>
                         </div>
                     </div>
 

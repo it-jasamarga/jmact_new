@@ -170,13 +170,13 @@
                     <em class="flaticon-circle"></em>
                     Kembali
                 </a>
-                @if ($record->report->count() > 0 && $record->checkStatus(['06']) == 'true')
+                @if ($record->report->count() > 0 && $record->checkStatus(['05']) == 'true')
                     <div class="btn btn-light-success float-right custome-modal"
                         data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#largeModal">
                         <em class="flaticon2-file"></em>
                         Detail Report
                     </div>
-                @elseif($record->report->count() > 0 && $record->checkStatus(['05']) == 'true')
+                @elseif($record->checkStatus(['04']) == 'true')
                     <div class="btn btn-light-primary float-right custome-modal"
                         data-url="keluhan/sla/konfirmasi/{{ $record->id }}" data-modal="#largeModal">
                         <em class="flaticon2-list-1"></em>
