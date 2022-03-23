@@ -19,8 +19,6 @@ class CreateFeedbackContactTrackersTable extends Migration
             $table->string('no_tiket');
             $table->datetime('last_contact_at');
             $table->foreignId('last_contact_by');
-
-            $table->timestamps();
         });
     }
 

@@ -27,13 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	}
 
 	// TODO: token verification
-	$pair = "C352";
-	if ($DATA['token'] != $pair) {
-		header($_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized", true, 401);
-		echo '<div style="width:600px;margin: auto"><h1>401 Unauthorized</h1>';
-		echo '<p>Mohon maaf nomor tiket tidak dapat diakses, periksa kembali link Anda.</p></div>';
-		exit;
-	}
+	$pair = substr(strtoupper(MD5($DATA["no_tiket"])), -4);
+	$auth = ($DATA['token'] == $pair);
+
+	// echo "<pre>";
+	// var_dump($DATA, $pair);
+	// exit;
 
 	$conn = new mysqli($DATA['DB_SERVER'], $DATA['DB_USERNAME'], $DATA['DB_PASSWORD'], $DATA['DB_NAME']);
 
@@ -41,6 +40,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		header($_SERVER["SERVER_PROTOCOL"]." 503 Service Temporarily Unavailable", true, 503);
 		echo '<div style="width:600px;margin: auto"><h1>503 Service Temporarily Unavailable</h1>';
 		echo '<p>Mohon maaf untuk saat ini layanan database tidak dapat diakses.</p></div>';
+		exit;
+	}
+
+	if (! $auth) {
+		$sql = "SELECT no_telepon FROM ". ($IS_KELUHAN ? "keluhan" : "claim") ." WHERE no_tiket=\"".$DATA['no_tiket']."\";";
+		$qry = $conn->query($sql);
+		if ($qry->num_rows > 0) {
+			$row = $qry->fetch_assoc();
+			if (! is_null($row['no_telepon'])) {
+				if (preg_match("/[0-9]+([0-9]{4})/", $row['no_telepon'], $matches)) {
+					if (strlen($matches[1]) == 4) {
+						$auth = ($DATA['token'] == $matches[1]);
+					}
+				}
+			}
+		}
+	}
+
+	if (! $auth) {
+		header($_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized", true, 401);
+		echo '<div style="width:600px;margin: auto"><h1>401 Unauthorized</h1>';
+		echo '<p>Mohon maaf nomor tiket tidak dapat diakses, periksa kembali link Anda.</p></div>';
 		exit;
 	}
 

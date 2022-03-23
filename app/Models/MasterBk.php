@@ -14,9 +14,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class MasterBk extends Model implements Auditable
 {
-   	use HasFactory, Filterable, Blameable, Utilities;
+    use HasFactory, Filterable, Blameable, Utilities;
     use \OwenIt\Auditing\Auditable;
-    
-	protected $table = 'master_bk';
- 	protected $guarded = [];
+
+    protected $table = 'master_bk';
+    protected $guarded = [];
+
+    public function unit()
+    {
+        return $this->belongsTo(MasterUnit::class, 'unit_id');
+    }
 }
