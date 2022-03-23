@@ -1,0 +1,122 @@
+<?php
+
+namespace App\Http\Controllers\Backend\Feedback;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
+
+class FeedbackController extends Controller
+{
+    public $breadcrumbs = [
+        ['name' => "Feedback Pelanggan"], 
+        ['link' => "#", 'name' => "Feedback Pelanggan"],
+        ['link' => "feedback-pelanggan", 'name' => "Feedback Pelanggan"]
+    ];
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->route = 'feedback-pelanggan';
+    }
+
+    public function index()
+    {
+        $data = [
+            'title' => 'Feedback Pelanggan',
+            'breadcrumbs' => $this->breadcrumbs,
+            'route' => $this->route,
+        ];
+        return view('backend.feedback-pelanggan.index', $data);
+    }
+
+    private function humanDateDiff($date) {
+      $diff = (new \DateTime($date))->diff(new \DateTime());
+      
+      $lookup = [
+          'y' => 'tahun',
+          'm' => 'bulan',
+          'd' => 'hari',
+          'h' => 'jam',
+          'i' => 'menit',
+      ];
+      
+      foreach ($lookup as $property => $word) {
+          if ($diff->$property) {
+              if ($property === 'd' && $diff->$property >= 7) {
+                  $diff->w = (int)($diff->$property / 7);
+                  $property = 'w';
+                  $word = 'minggu';
+              }
+              $output = "{$diff->$property} $word yang lalu";
+              // $output = "{$diff->$property} $word yang lalu" . ($diff->$property !== 1 ? 's' : '');
+              break;
+          }
+      }
+
+      return $output ?? 'beberapa detik yang lalu';      
+    }
+
+    public function list(Request $request) {  // FeedbackFilter $request
+        $data = DB::table('keluhan')
+          ->select(
+              'keluhan.no_tiket', 'keluhan.nama_cust AS nama_pelanggan',
+              DB::raw('CONCAT(keluhan.no_telepon, "/", keluhan.sosial_media) AS no_telepon_sosial_media'),
+              'feedback_contact_trackers.last_contact_at', 'users.username AS last_contact_by', 'feedback.id'
+          )
+          ->leftJoin(DB::raw("(SELECT no_tiket, MAX(id) AS last_id FROM feedback_contact_trackers GROUP BY no_tiket) link"), 'link.no_tiket', '=', 'keluhan.no_tiket')
+          ->leftJoin('feedback_contact_trackers', 'feedback_contact_trackers.id', '=', 'link.last_id')
+          ->leftJoin('users', 'users.id', '=', 'feedback_contact_trackers.last_contact_by')
+          ->leftJoin('feedback', 'feedback.no_tiket', '=', 'keluhan.no_tiket')
+          ->get();
+/*
+      SELECT
+        K.no_tiket,
+          K.nama_cust AS nama_pelanggan,
+          CONCAT(K.no_telepon, "/", K.sosial_media) AS no_telepon_sosial_media,
+          X.last_contact_at,
+          U.username AS last_contact_by
+      FROM
+        keluhan K
+          LEFT JOIN (SELECT no_tiket, MAX(id) AS last_id FROM feedback_contact_trackers GROUP BY no_tiket) T ON T.no_tiket = K.no_tiket
+          LEFT JOIN feedback_contact_trackers X ON X.id = T.last_id
+          LEFT JOIN users U ON U.id = X.last_contact_by
+*/    
+        return datatables()->of($data)
+        ->addColumn('url_feedback', function ($data) use ($request) { return "feedback.php?".$data->no_tiket.":C352"; })
+        ->addColumn('last_contact', function ($data) use ($request) {
+          return is_null($data->id) ? (is_null($data->last_contact_at) ? "belum pernah" : $this->humanDateDiff($data->last_contact_at) .' oleh '. $data->last_contact_by) : "feedback selesai";
+        })
+        ->addColumn('action', function($data) {
+            $buttons = "";
+            if(auth()->user()->can('feedback-pelanggan.contact') && is_null($data->id)) {
+              $buttons .= makeButton([
+                'type' => 'url',
+                'url'   => 'feedback-pelanggan/contact/'.$data->no_tiket,
+                'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                'label'   => '<i class="flaticon2-phone"></i>',
+                'tooltip' => 'Contact'
+              ]);
+            }
+            
+            if(auth()->user()->can('feedback-pelanggan.detail') && !is_null($data->id)) {
+              $buttons .= makeButton([
+                'type' => 'url',
+                'url' => '#',
+                'onClick'   => 'ticket.detail.open(this)',
+                'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                'label'   => '<i class="flaticon2-list-1"></i>',
+                'tooltip' => 'Detail Feedback'
+              ]);
+            }
+            
+            return $buttons;
+          })
+        ->rawColumns(['action'])
+        ->addIndexColumn()
+        ->make(true);
+    }
+
+
+}

@@ -84,6 +84,11 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::resource('pencarian-tiket', 'PencarianTiketController');
 		});
 
+		Route::group(['namespace' => 'Feedback'], function () {
+			Route::get('feedback-pelanggan/list', 'FeedbackController@list')->name('feedback-pelanggan.list');
+			Route::resource('feedback-pelanggan', 'FeedbackController');
+		});
+
 		Route::group(['namespace' => 'Laporan'], function () {
 
 			Route::put('keluhan/sla/{id}', 'KeluhanController@prosesSla')->name('keluhan.prosesSla');
