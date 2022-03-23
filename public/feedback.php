@@ -3,8 +3,8 @@
 $DATA = [
 	'DB_SERVER'		=> "127.0.0.1",
 	'DB_NAME'		=> "jm_act",
-	'DB_USERNAME'	=> "jm_dev",
-	'DB_PASSWORD'	=> "P@ssword"
+	'DB_USERNAME'	=> "admin",
+	'DB_PASSWORD'	=> "Mysql@123"
 ];
 
 // mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
