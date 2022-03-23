@@ -31,6 +31,23 @@ class FeedbackController extends Controller
         return view('backend.feedback-pelanggan.index', $data);
     }
 
+    public function detail(Request $request, $no_tiket)
+    {
+      $data = [
+        'route' => $this->route,
+        'kepuasan' => [
+          1 => "sangat tidak puas",
+          2 => "tidak puas",
+          3 => "cukup puas",
+          4 => "puas",
+          5 => "sangat puas",
+        ],
+        'record' => \App\Models\Feedback::where('no_tiket', $no_tiket)->first()
+      ];
+
+      return view('backend.feedback-pelanggan.detail', $data);
+    }
+
     private function humanDateDiff($date) {
       $diff = (new \DateTime($date))->diff(new \DateTime());
       
@@ -123,10 +140,9 @@ class FeedbackController extends Controller
             
             if(auth()->user()->can('feedback-pelanggan.detail') && !is_null($data->id)) {
               $buttons .= makeButton([
-                'type' => 'url',
-                'url' => '#',
-                'onClick'   => 'ticket.detail.open(this)',
-                'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                'type' => 'modal',
+                'url'   => 'feedback-pelanggan/detail/'.$data->no_tiket,
+                'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light custome-modal',
                 'label'   => '<i class="flaticon2-list-1"></i>',
                 'tooltip' => 'Detail Feedback'
               ]);

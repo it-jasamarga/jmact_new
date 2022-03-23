@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(['namespace' => 'Feedback'], function () {
 			Route::get('feedback-pelanggan/list', 'FeedbackController@list')->name('feedback-pelanggan.list');
 			Route::get('feedback-pelanggan/contact/{no_tiket}', 'FeedbackController@contact')->name('feedback-pelanggan.contact');
-			Route::get('feedback-pelanggan/detail/{no_tiket}', 'FeedbackController@contact')->name('feedback-pelanggan.detail');
+			Route::get('feedback-pelanggan/detail/{no_tiket}', 'FeedbackController@detail')->name('feedback-pelanggan.detail');
 			Route::resource('feedback-pelanggan', 'FeedbackController');
 		});
 
