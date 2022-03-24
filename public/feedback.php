@@ -7,6 +7,8 @@ $DATA = [
 	'DB_PASSWORD'	=> "Mysql@123"
 ];
 
+$local = (PHP_OS == 'WINNT') ? "id-ID" : "id_ID";
+
 // mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 // mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
 mysqli_report(MYSQLI_REPORT_OFF);
@@ -66,6 +68,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		exit;
 	}
 
+	$sql = 'SELECT created_at FROM detail_history WHERE status_id IN (SELECT id FROM master_status WHERE status LIKE "%Feedback%" OR status LIKE "%Konfirmasi%" OR status LIKE "%Pembayaran%") AND '.($IS_KELUHAN ? "keluhan" : "claim").'_id IN (SELECT id FROM '.($IS_KELUHAN ? "keluhan" : "claim").' WHERE no_tiket="'.$DATA['no_tiket'].'")';
+	$qry = $conn->query($sql);
+	if ($qry->num_rows > 0) {
+		$row = $qry->fetch_assoc();
+		setlocale (LC_TIME, $local);
+		$DATA['SOLVED'] = strftime("hari %A, tanggal %e %B %Y", strtotime($row['created_at']));
+		// $DATA['SOLVED'] = strftime("hari %A, tanggal %e %B %Y jam %R", strtotime($row['created_at']));
+	}
+	// echo "<pre>";
+	// var_dump($sql);
+	// exit;
+
 	$sql = "SELECT * FROM feedback WHERE no_tiket=\"".$DATA['no_tiket']."\";";
 	$qry = $conn->query($sql);
 	if ($qry->num_rows > 0) {
@@ -73,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		$DATA['NEW'] = false;
 		$DATA['EXIST'] = true;
 		$DATA['FEEDBACK'] = $row['created_at'];
-		$local = (PHP_OS == 'WINNT') ? "id-ID" : "id_ID";
 		setlocale (LC_TIME, $local);
 		$DATA['FEEDBACK'] = strftime("hari %A, tanggal %e %B %Y jam %R", strtotime($row['created_at']));
 	}
@@ -273,7 +286,7 @@ input[type="radio"] {
 <?php if (($_SERVER['REQUEST_METHOD'] === 'GET') && (! isset($DATA['FEEDBACK']))) { ?>
 		Salam pelanggan jalan tol Jasa Marga Group yang terhormat,
 		<p>Anda telah terdaftar di sistem kami sebagai pelanggan yang menggunakan fasilitas pelayanan jalan tol dari petugas Jasa Marga. informasi dan masukan yang anda berikan sangat berarti untuk perbaikan pelayanan kami ke depannya.</p>
-		<p class="highlight"><?= $IS_KELUHAN ? "Keluhan" : "Claim" ?> Anda sudah diselesaikan pada tanggal 1 Jan 2022</p>
+		<p class="highlight"><?= $IS_KELUHAN ? "Keluhan" : "Claim" ?> Anda sudah diselesaikan pada <?= $DATA['SOLVED']; ?></p>
 		<p>Nomor Tiket <span class="informative"><?= $DATA['RECORD']['no_tiket'] ?></span></p>
 		<p><?= $IS_KELUHAN ? "Keluhan" : "Jenis Claim" ?>: <span class="informative"><?= $DATA['RECORD']['bidang'] ?></span></p>
 		<p>Keterangan:<br><span class="informative"><?= $DATA['RECORD']['keterangan'] ?></span></p>
