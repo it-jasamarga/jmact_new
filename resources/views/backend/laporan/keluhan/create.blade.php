@@ -40,8 +40,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span
-                                class="text-danger">*</span>
+                            <label for="no_telepon" class="">{{ __('No Telepon') }}</label>
                             <input id="no_telepon" type="text" class="form-control" name="no_telepon"
                                 value="{{ old('no_telepon') }}" required autocomplete="off" autofocus
                                 placeholder="No Telepon" maxlength="12"

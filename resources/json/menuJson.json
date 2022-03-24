@@ -147,14 +147,14 @@
           "roles" : ["admin","superadmin"],
           "perms": "log-auth",
           "name": "Log Authentication",
-          "action" : [""]
+          "action" : ["index"]
         },
         {
           "url": "log-audit",
           "roles" : ["admin","superadmin"],
           "perms": "log-audit",
           "name": "Log Audit",
-          "action" : [""]
+          "action" : ["index"]
         },
         {
           "url": "bug-report",

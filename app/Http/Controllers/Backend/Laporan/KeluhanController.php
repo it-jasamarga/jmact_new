@@ -200,6 +200,13 @@ class KeluhanController extends Controller
   public function store(KeluhanPelangganRequest $request)
   {
 
+    if (request()->sosial_media == '' && request()->no_telepon == '') {
+        $this->validate($request, [
+          'sosial_media' => 'required',
+          'no_telepon' => 'required',
+        ]);
+      }
+
     $tglPeloporan = Carbon::parse($request->tanggal_pelaporan)->format('Y-m-d');
     $recordData =  KeluhanPelanggan::where(DB::raw('UPPER(nama_cust)'), 'like', '%' . strtoupper($request->nama_cust) . '%')
       ->where('no_telepon', $request->no_telepon)
