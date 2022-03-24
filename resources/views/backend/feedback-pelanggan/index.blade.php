@@ -75,7 +75,13 @@
                                 <th>Nama Pelanggan</th>
                                 <th>No Telepon/Sosial Media</th>
                                 <th>Terakhir dihubungi</th>
+                                <th>Terakhir dihubungi (Date)</th>
                                 <th>URL Feedback</th>
+                                <th>Waktu Pengisian Feedback</th>
+                                <th>No Telepon/Sosial Media (dari Feedback)</th>
+                                <th>Layanan dari petugas</th>
+                                <th>Ketidakpuasan</th>
+                                <th>Saran dan Masukan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -96,7 +102,13 @@
                 { data: 'nama_pelanggan', name: 'nama_pelanggan' },
                 { data: 'no_telepon_sosial_media', name: 'no_telepon_sosial_media' },
                 { data: 'last_contact', name: 'last_contact' },
+                { data: 'last_contact_date', name: 'last_contact_date', visible:false, searchable: false, orderable: false },
                 { data: 'url_feedback', name: 'url_feedback' },
+                { data: 'feedback_at', name: 'feedback_at', visible:false, searchable: false, orderable: false },
+                { data: 'feedback_ntsm', name: 'feedback_ntsm', visible:false, searchable: false, orderable: false },
+                { data: 'rating', name: 'rating', visible:false, searchable: false, orderable: false },
+                { data: 'ketidakpuasan', name: 'ketidakpuasan', visible:false, searchable: false, orderable: false },
+                { data: 'saran_masukan', name: 'saran_masukan', visible:false, searchable: false, orderable: false },
                 { data: 'action', name: 'action', searchable: false, orderable: false }
             ], [{
                     extend: 'excelHtml5',
