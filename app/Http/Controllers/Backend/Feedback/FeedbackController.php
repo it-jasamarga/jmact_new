@@ -19,6 +19,7 @@ class FeedbackController extends Controller
     {
         $this->middleware('auth');
         $this->route = 'feedback-pelanggan';
+        setlocale(LC_TIME, 'ID_id');
     }
 
     public function index()
