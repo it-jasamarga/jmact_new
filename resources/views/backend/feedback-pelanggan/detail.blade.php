@@ -3,7 +3,7 @@
     margin-bottom: 15px;
 }
 input, ul, textarea {
-    font-weight: bold;
+    font-weight: bold!important;
 }
 ul {
     padding-left: 15px;
