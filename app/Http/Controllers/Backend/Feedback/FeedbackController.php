@@ -79,7 +79,7 @@ class FeedbackController extends Controller
     public function contact(Request $request, $no_tiket) {
       $IS_KELUHAN = strtoupper($no_tiket[0]) == "K";
       $status = \App\Models\MasterStatus::where('status', 'LIKE', "%Feedback%")->where('type', '=', $IS_KELUHAN ? 1 : 2)->first(['id']);
-      $model = $IS_KELUHAN ? "\\App\\Models\\KeluhanPelanggan" : "\\App\\Models\\Claim";
+      $model = $IS_KELUHAN ? "\\App\\Models\\KeluhanPelanggan" : "\\App\\Models\\ClaimPelanggan";
       $query = $model::where('no_tiket', $no_tiket)->where('status_id', '=', $status->id)->first();
       // dd($status->toArray(), $query->toArray());
       if ($query) {
