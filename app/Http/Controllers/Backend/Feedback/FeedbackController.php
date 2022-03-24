@@ -19,6 +19,7 @@ class FeedbackController extends Controller
     {
         $this->middleware('auth');
         $this->route = 'feedback-pelanggan';
+        setlocale(LC_TIME, 'ID_id');
     }
 
     public function index()
@@ -78,7 +79,7 @@ class FeedbackController extends Controller
     public function contact(Request $request, $no_tiket) {
       $IS_KELUHAN = strtoupper($no_tiket[0]) == "K";
       $status = \App\Models\MasterStatus::where('status', 'LIKE', "%Feedback%")->where('type', '=', $IS_KELUHAN ? 1 : 2)->first(['id']);
-      $model = $IS_KELUHAN ? "\\App\\Models\\KeluhanPelanggan" : "\\App\\Models\\Claim";
+      $model = $IS_KELUHAN ? "\\App\\Models\\KeluhanPelanggan" : "\\App\\Models\\ClaimPelanggan";
       $query = $model::where('no_tiket', $no_tiket)->where('status_id', '=', $status->id)->first();
       // dd($status->toArray(), $query->toArray());
       if ($query) {
@@ -92,6 +93,7 @@ class FeedbackController extends Controller
     }
 
     public function list(Request $request) {  // FeedbackFilter $request
+      // dd($request->input('no_tiket'), $request->input('status'));
         $keluhan = DB::table('keluhan')
           ->select(
               'keluhan.no_tiket', 'keluhan.nama_cust AS nama_pelanggan',
@@ -101,8 +103,22 @@ class FeedbackController extends Controller
           ->leftJoin(DB::raw("(SELECT no_tiket, MAX(id) AS last_id FROM feedback_contact_trackers GROUP BY no_tiket) link"), 'link.no_tiket', '=', 'keluhan.no_tiket')
           ->leftJoin('feedback_contact_trackers', 'feedback_contact_trackers.id', '=', 'link.last_id')
           ->leftJoin('users', 'users.id', '=', 'feedback_contact_trackers.last_contact_by')
-          ->leftJoin('feedback', 'feedback.no_tiket', '=', 'keluhan.no_tiket')
-          ->where('keluhan.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Feedback%" AND type=1 LIMIT 1)'));
+          ->leftJoin('feedback', 'feedback.no_tiket', '=', 'keluhan.no_tiket');
+        if (! is_null($request->input('no_tiket'))) {
+          $keluhan = $keluhan->where('keluhan.no_tiket', 'LIKE', "%".$request->input('no_tiket')."%");
+        }
+        if (! is_null($request->input('status'))) {
+          switch($request->input('status')) {
+            case "outstanding":
+              $keluhan = $keluhan->where('keluhan.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Feedback%" AND type=1 LIMIT 1)'));
+              break;
+            case "closed":
+              $keluhan = $keluhan->where('keluhan.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "Closed" AND type=1 LIMIT 1)'));
+              break;
+          }
+        } else {
+          $keluhan = $keluhan->where('keluhan.status_id', '>=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Feedback%" AND type=1 LIMIT 1)'));
+        }
 
         $claim = DB::table('claim')
           ->select(
@@ -113,8 +129,22 @@ class FeedbackController extends Controller
           ->leftJoin(DB::raw("(SELECT no_tiket, MAX(id) AS last_id FROM feedback_contact_trackers GROUP BY no_tiket) link"), 'link.no_tiket', '=', 'claim.no_tiket')
           ->leftJoin('feedback_contact_trackers', 'feedback_contact_trackers.id', '=', 'link.last_id')
           ->leftJoin('users', 'users.id', '=', 'feedback_contact_trackers.last_contact_by')
-          ->leftJoin('feedback', 'feedback.no_tiket', '=', 'claim.no_tiket')
-          ->where('claim.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Feedback%" AND type=2 LIMIT 1)'));
+          ->leftJoin('feedback', 'feedback.no_tiket', '=', 'claim.no_tiket');
+        if (! is_null($request->input('no_tiket'))) {
+          $claim = $claim->where('claim.no_tiket', 'LIKE', "%".$request->input('no_tiket')."%");
+        }
+        if (! is_null($request->input('status'))) {
+          switch($request->input('status')) {
+            case "outstanding":
+              $claim = $claim->where('claim.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Feedback%" AND type=2 LIMIT 1)'));
+              break;
+            case "closed":
+              $claim = $claim->where('claim.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "Closed" AND type=2 LIMIT 1)'));
+              break;
+          }
+        } else {
+          $claim = $claim->where('claim.status_id', '>=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Feedback%" AND type=2 LIMIT 1)'));
+        }
         
         $data = $keluhan->union($claim)->get();
 

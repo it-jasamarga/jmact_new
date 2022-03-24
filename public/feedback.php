@@ -8,7 +8,8 @@ $DATA = [
 ];
 
 // mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-// mysqli_report(MYSQLI_REPORT_OFF);
+// mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
+mysqli_report(MYSQLI_REPORT_OFF);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
@@ -111,6 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		exit;
 	}
 
+	$IS_KELUHAN = strtoupper($_POST['no_tiket'][0]) == "K";
+
 	$sql = "SELECT created_at FROM feedback WHERE no_tiket=\"".$_POST['no_tiket']."\";";
 	$qry = $conn->query($sql);
 
@@ -124,7 +127,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	} else {
 		$DATA['NEW'] = true;
 		$DATA['EXIST'] = false;
-		// echo "<pre>";
 		$DATA['POSTED'] = $_POST;
 		$DATA['POSTED']['ketidakpuasan'] = json_encode($_POST['ketidakpuasan']);
 		$DATA['POSTED']['attribute'] = json_encode(['ip_address' => $_SERVER['REMOTE_ADDR']]);
@@ -144,6 +146,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 			$DATA['RESULT'] = ($stmt->affected_rows == 1);
 		}
 
+		if ($DATA['RESULT']) {
+			$sql = 'SELECT id FROM '.($IS_KELUHAN ? "keluhan" : "claim").' WHERE no_tiket="'.$DATA['POSTED']['no_tiket'].'";';
+			$qry = $conn->query($sql);
+			$id = 0;
+			if ($qry->num_rows > 0) { $row = $qry->fetch_assoc(); $id = $row['id']; }
+			if ($id > 0) {
+				$sql = 'SELECT id FROM master_status WHERE type='.($IS_KELUHAN ? 1 : 2).' AND status="Closed" LIMIT 1';
+				$qry = $conn->query($sql);
+				$status_id = 0;
+				if ($qry->num_rows > 0) { $row = $qry->fetch_assoc(); $status_id = $row['id']; }
+				if ($status_id > 0) {
+					$sql = 'UPDATE '.($IS_KELUHAN ? "keluhan" : "claim").' SET status_id='.$status_id.' WHERE no_tiket="'.$DATA['POSTED']['no_tiket'].'";';
+					if ($stmt = $conn->prepare($sql)) $stmt->execute();
+					$sql = 'INSERT INTO detail_history ('.($IS_KELUHAN ? "keluhan" : "claim").'_id, status_id, created_at, updated_at) VALUES ('.$id.', '.$status_id.', now(), now());';
+					if ($stmt = $conn->prepare($sql)) $stmt->execute();
+				}
+			}
+		}
+
+		// echo "<pre>";
 		// var_dump($DATA);
 
 		$sql = "SELECT * FROM feedback WHERE no_tiket=\"".$_POST['no_tiket']."\";";
@@ -291,12 +313,25 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 		echo '<input type="checkbox" name="ketidakpuasan[]" value="'.$item.'">'.$item.'<br>';
 	}
 ?>
-			<input onclick="document.getElementById('other').style.display = this.checked ? '' : 'none'" type="checkbox">lainnya<span id="other" style="display: none"> : <input type="text" name="ketidakpuasan[]" autocomplete="off" required style="min-width: 400px"></span>
+			<input onclick="theother(this)" type="checkbox">lainnya<span id="other-wrapper" style="display: none"> : <input id="other-input" type="text" name="ketidakpuasan[]" autocomplete="off"></span>
 		</p>
 		<p>Saran dan Masukan :<br><input type="text" name="saran_masukan" autocomplete="off" required style="min-width: 500px"></p>
 		<p><input type="submit" value="Submit"></p>
 	</div>
 	</form>
 <?php } ?>
+<script>
+	let theother = function(other) {
+		let wrapper = document.getElementById('other-wrapper');
+		let input = document.getElementById('other-input');
+		if (other.checked) {
+			wrapper.style.display = '';
+			input.setAttribute("required", "required");
+		} else {
+			wrapper.style.display = 'none';
+			input.removeAttribute("required");
+		}
+	}
+</script>
 </body>
 </html>

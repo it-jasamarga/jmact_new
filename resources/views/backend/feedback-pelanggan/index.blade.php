@@ -1,13 +1,9 @@
 @extends('layouts/app')
 
-@section('styles')
-@endsection
-
-@section('toolbars')
-    <!-- <a href="" class="btn btn-light-warning font-weight-bolder btn-sm" data-modal="#mediumModal">Create Data</a> -->
-@endsection
-
 @section('content')
+<style>
+#listTables_filter { display: none }
+</style>
     <div class="card card-custom" data-card="true" id="kt_card_4">
         <div class="card-header">
             <div class="card-title">
@@ -30,7 +26,7 @@
                     </div>
                     <div class="col-6">
                         <label for="status">Status</label>
-                        <select class="form-control select2" name="status">
+                        <select class="form-control filter-control select2" name="status" data-post="status">
                             <option value="">( Pilih Status )</option>
                             <option value="outstanding">Outstanding</option>
                             <option value="closed">Closed</option>
