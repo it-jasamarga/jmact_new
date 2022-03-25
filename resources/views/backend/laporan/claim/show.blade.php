@@ -1,11 +1,12 @@
 @extends('layouts/app')
 
 @section('styles')
-<style>
-    a:hover {
-        color: orangered;
-    }
-</style>
+    <style>
+        a:hover {
+            color: orangered;
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -92,7 +93,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tanggal_input" class="">{{ __('Tanggal Input Claim') }}</label><span
+                            <label for="tanggal_input"
+                                class="">{{ __('Tanggal Input Claim') }}</label><span
                                 class="text-danger">*</span>
                             <input id="tanggal_input" type="text" class="form-control" name="tanggal_input"
                                 value="{{ $record->created_at }}" readonly>
@@ -290,21 +292,19 @@
 
                 </div>
 
-@if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
-                <a href="javascript:history.back()" class="btn btn-secondary">
-                    <i class="flaticon-circle"></i>
-                    Kembali
-                </a>
-@else
+                @if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="flaticon-circle"></i>
+                        Kembali
+                    </a>
+                @else
+                    <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
+                        <em class="flaticon-circle"></em>
+                        Kembali
+                    </a>
 
-                <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
-                    <em class="flaticon-circle"></em>
-                    Kembali
-                </a>
-
-                @if (auth()->user()->roles()->first()->type == "Supervisor JMTO")
-                    @if ($record->checkStatus(['00', '02']) === 'false')
-                        {{-- <div class="btn btn-light-success float-right save" data-status="approve"> --}}
+                    {{-- @if (auth()->user()->roles()->first()->type == 'Supervisor JMTO' && $record->checkStatus(['02', '03']) == "false") --}}
+                        @if ($record->checkStatus(['02', '03']) == "false")
                         <div class="btn btn-light-success float-right save">
                             <em class="flaticon-plus"></em>
                             Approve
@@ -315,22 +315,9 @@
                             <em class="flaticon-cancel"></em>
                             Reject
                         </div>
-                    @endif
+                        @endif
+                    {{-- @endif --}}
                 @endif
-                {{-- @if ($record->report->count() > 0)
-    <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
-      <i class="flaticon2-file"></i>
-      Detail Report
-    </div>
-    @else
-        @if ($record->report->count() == 0 && $record->mulaiSla->count() == 0)
-            <div class="btn btn-light-success float-right custome-modal" data-url="keluhan/sla/report/{{ $record->id }}" data-modal="#mediumModal">
-                <i class="flaticon2-file"></i>
-                Teruskan Jenis Keluhan
-            </div>
-        @endif
-    @endif --}}
-@endif
             </form>
         </div>
     </div>

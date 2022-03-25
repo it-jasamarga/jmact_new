@@ -16,7 +16,12 @@ class MasterJenisClaim extends Model implements Auditable
 {
     use HasFactory, Filterable, Blameable, Utilities;
     use \OwenIt\Auditing\Auditable;
-    
-	protected $table = 'master_jenis_claim';
- 	protected $guarded = [];
+
+    protected $table = 'master_jenis_claim';
+    protected $guarded = [];
+
+    public function unit()
+    {
+        return $this->belongsTo(MasterUnit::class, 'unit_id');
+    }
 }
