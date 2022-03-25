@@ -125,6 +125,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		exit;
 	}
 
+	$other = isset($_POST['other']);
+
+	$posted = $_POST;
+
+	$ketidakpuasan = [];
+	if (! $other) {
+		$sql = "SELECT ketidakpuasan FROM feedback_unsatisfactions;";
+		$qry = $conn->query($sql);
+		while($row = $qry->fetch_assoc()) $ketidakpuasan[] = $row['ketidakpuasan'];
+		foreach($posted['ketidakpuasan'] as $index => $value) {
+			if (! in_array($value, $ketidakpuasan)) {
+				unset($_POST['ketidakpuasan'][$index]);
+			}
+		}
+	}
+
+	// echo "<pre>"; var_dump($posted); var_dump($ketidakpuasan); var_dump($_POST); exit;
+
 	$IS_KELUHAN = strtoupper($_POST['no_tiket'][0]) == "K";
 
 	$sql = "SELECT created_at FROM feedback WHERE no_tiket=\"".$_POST['no_tiket']."\";";
@@ -326,7 +344,7 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 		echo '<input type="checkbox" name="ketidakpuasan[]" value="'.$item.'">'.$item.'<br>';
 	}
 ?>
-			<input onclick="theother(this)" type="checkbox">lainnya<span id="other-wrapper" style="display: none"> : <input id="other-input" type="text" name="ketidakpuasan[]" autocomplete="off"></span>
+			<input onclick="theother(this)" name="other" type="checkbox">lainnya<span id="other-wrapper" style="display: none"> : <input id="other-input" type="text" name="ketidakpuasan[]" autocomplete="off"></span>
 		</p>
 		<p>Saran dan Masukan :<br><input type="text" name="saran_masukan" autocomplete="off" required style="min-width: 500px"></p>
 		<p><input type="submit" value="Submit"></p>
