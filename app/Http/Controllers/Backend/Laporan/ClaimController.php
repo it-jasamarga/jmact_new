@@ -45,12 +45,12 @@ class ClaimController extends Controller
         $data  = ClaimPelanggan::with('history')
             ->whereHas('history', function ($q) {
                 $q->where('unit_id', auth()->user()->unit_id);
-            })
+            })->orderByDesc('created_at')
             ->select('*')
             ->filter($request);
 
-        // if (auth()->user()->hasRole('Superadmin')) {
-        if (auth()->user()->roles()->first()->type == "Admin") {
+        if (auth()->user()->hasRole('Superadmin')) {
+        // if (auth()->user()->roles()->first()->type == "Admin") {
             $data  = ClaimPelanggan::orderByDesc('created_at')->select('*')->filter($request);
         }
 
