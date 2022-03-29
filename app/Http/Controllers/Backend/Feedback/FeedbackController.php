@@ -28,9 +28,9 @@ class FeedbackController extends Controller
     public function __construct(Request $request)
     {
       $this->middleware(function ($request, $next) {
-        if (($request->route()->getName() != 'feedback-pelanggan.index') && ($request->route()->getName() != 'feedback-pelanggan.list') && (! auth()->user()->hasPermissionTo($request->route()->getName()))) {
-            abort(403);
-        }
+        $can_feedback = auth()->user()->hasPermissionTo('feedback-pelanggan.detail') || auth()->user()->hasPermissionTo('feedback-pelanggan.contact');
+        try { if (! auth()->user()->hasPermissionTo($request->route()->getName())) abort(403); }
+        catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) { if (! $can_feedback) abort(403); }
         return $next($request);
       });
 
