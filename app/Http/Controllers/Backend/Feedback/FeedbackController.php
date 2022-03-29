@@ -29,7 +29,7 @@ class FeedbackController extends Controller
     {
       $this->middleware(function ($request, $next) {
         if (($request->route()->getName() != 'feedback-pelanggan.index') && ($request->route()->getName() != 'feedback-pelanggan.list') && (! auth()->user()->hasPermissionTo($request->route()->getName()))) {
-            return redirect()->route('home')->withFlashMessage('You are not authorized to access that page.')->withFlashType('warning');
+            abort(403);
         }
         return $next($request);
       });
