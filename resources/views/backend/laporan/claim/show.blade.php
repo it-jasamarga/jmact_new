@@ -302,9 +302,10 @@
                         <em class="flaticon-circle"></em>
                         Kembali
                     </a>
-
-                    {{-- @if (auth()->user()->roles()->first()->type == 'Supervisor JMTO' && $record->checkStatus(['02', '03']) == "false") --}}
-                        @if ($record->checkStatus(['02', '03']) == "false")
+                    {{-- {{dd($record->checkStatus(['02', '03']) == "false")}} --}}
+                    @if (auth()->user()->hasRole('Supervisor JMTO'))
+                    {{-- @if (auth()->user()->roles()->first()->type == 'Supervisor JMTO') --}}
+                        {{-- @if ($record->checkStatus(['01']) == "true") --}}
                         <div class="btn btn-light-success float-right save">
                             <em class="flaticon-plus"></em>
                             Approve
@@ -315,8 +316,8 @@
                             <em class="flaticon-cancel"></em>
                             Reject
                         </div>
-                        @endif
-                    {{-- @endif --}}
+                        {{-- @endif --}}
+                    @endif
                 @endif
             </form>
         </div>
