@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class FeedbackController extends Controller
 {
+    private $route = 'feedback-pelanggan';
+
     private $kepuasan = [
       1 => "sangat tidak puas",
       2 => "tidak puas",
@@ -23,21 +25,27 @@ class FeedbackController extends Controller
         ['link' => "feedback-pelanggan", 'name' => "Feedback Pelanggan"]
     ];
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware('auth');
-        $this->route = 'feedback-pelanggan';
-        setlocale(LC_TIME, 'ID_id');
+      $this->middleware(function ($request, $next) {
+        $can_feedback = auth()->user()->hasPermissionTo('feedback-pelanggan.detail') || auth()->user()->hasPermissionTo('feedback-pelanggan.contact');
+        try { if (! auth()->user()->hasPermissionTo($request->route()->getName())) abort(403); }
+        catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) { if (! $can_feedback) abort(403); }
+        return $next($request);
+      });
+
+      // $this->middleware('auth');
+      setlocale(LC_TIME, 'ID_id');
     }
 
     public function index()
     {
-        $data = [
-            'title' => 'Feedback Pelanggan',
-            'breadcrumbs' => $this->breadcrumbs,
-            'route' => $this->route,
-        ];
-        return view('backend.feedback-pelanggan.index', $data);
+      $data = [
+          'title' => 'Feedback Pelanggan',
+          'breadcrumbs' => $this->breadcrumbs,
+          'route' => $this->route,
+      ];
+      return view('backend.feedback-pelanggan.index', $data);
     }
 
     public function detail(Request $request, $no_tiket)
@@ -113,7 +121,8 @@ class FeedbackController extends Controller
         $keluhan = DB::table('keluhan')
           ->select(
               'keluhan.no_tiket', 'keluhan.nama_cust AS nama_pelanggan',
-              DB::raw('CONCAT(keluhan.no_telepon, "/", keluhan.sosial_media) AS no_telepon_sosial_media'),
+              'keluhan.no_telepon', 'keluhan.sosial_media',
+              // DB::raw('CONCAT(keluhan.no_telepon, "/", keluhan.sosial_media) AS no_telepon_sosial_media'),
               'feedback_contact_trackers.last_contact_at', 'users.username AS last_contact_by', 'feedback.id',
               'feedback.saran_masukan', 'feedback.created_at AS feedback_at', 'feedback.no_telepon_sosial_media AS feedback_ntsm',
               'feedback.rating', 'feedback.ketidakpuasan'
@@ -145,7 +154,8 @@ class FeedbackController extends Controller
         $claim = DB::table('claim')
           ->select(
               'claim.no_tiket', 'claim.nama_pelanggan',
-              DB::raw('CONCAT(claim.no_telepon, "/", claim.sosial_media) AS no_telepon_sosial_media'),
+              'claim.no_telepon', 'claim.sosial_media',
+              // DB::raw('CONCAT(claim.no_telepon, "/", claim.sosial_media) AS no_telepon_sosial_media'),
               'feedback_contact_trackers.last_contact_at', 'users.username AS last_contact_by', 'feedback.id',
               'feedback.saran_masukan', 'feedback.created_at AS feedback_at', 'feedback.no_telepon_sosial_media AS feedback_ntsm',
               'feedback.rating', 'feedback.ketidakpuasan'
@@ -183,6 +193,9 @@ class FeedbackController extends Controller
         })
         ->addColumn('rating', function ($data) use ($request) {
           return is_null($data->rating) ? "" : $this->kepuasan[$data->rating];
+        })
+        ->addColumn('no_telepon_sosial_media', function ($data) use ($request) {
+          return ($data->no_telepon ?? "-") .'/'. ($data->sosial_media ?? "-");
         })
         ->addColumn('url_feedback', function ($data) use ($request) {
           $pair = substr(strtoupper(MD5($data->no_tiket)), -4);

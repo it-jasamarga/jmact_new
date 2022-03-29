@@ -15,7 +15,8 @@ use App\Http\Requests\MasterBkRequest;
 
 class PencarianTiketController extends Controller
 {
-    //
+    private $route = 'pencarian-tiket';
+
     public $breadcrumbs = [
         ['name' => "Pencarian Tiket"], 
         ['link' => "#", 'name' => "Pencarian Tiket"],
@@ -23,7 +24,13 @@ class PencarianTiketController extends Controller
     ];
 
     public function __construct() {
-        $this->route = 'pencarian-tiket';
+      $this->middleware(function ($request, $next) {
+        $can_cartik = auth()->user()->hasPermissionTo('pencarian-tiket.detail') || auth()->user()->hasPermissionTo('pencarian-tiket.expand');
+        try { if (! auth()->user()->hasPermissionTo($request->route()->getName())) abort(403); }
+        catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) { if (! $can_cartik) abort(403); }
+        return $next($request);
+      });
+
     }
     
     public function index(Request $request) {
