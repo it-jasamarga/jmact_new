@@ -15,7 +15,7 @@ use App\Http\Requests\MasterStatusRequest;
 class MasterStatusController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Status"], 
+    ['name' => "Master Data Status"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-status", 'name' => "Master Status"]
   ];
@@ -38,7 +38,7 @@ class MasterStatusController extends Controller
   public function list(MasterStatusFilter $request)
   {
 
-    $data  = MasterStatus::query()->filter($request);
+    $data  = MasterStatus::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -71,13 +71,13 @@ class MasterStatusController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-status.create', $data);
   }
 
@@ -89,7 +89,7 @@ class MasterStatusController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -103,7 +103,7 @@ class MasterStatusController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterStatus::findOrFail($id)

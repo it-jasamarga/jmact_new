@@ -15,7 +15,7 @@ use App\Http\Requests\MasterRoRequest;
 class MasterRoController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Ro"], 
+    ['name' => "Master Data Ro"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-ro", 'name' => "Master Ro"]
   ];
@@ -38,7 +38,7 @@ class MasterRoController extends Controller
   public function list(MasterRoFilter $request)
   {
 
-    $data  = MasterRo::query()->filter($request);
+    $data  = MasterRo::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -76,13 +76,13 @@ class MasterRoController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-ro.create', $data);
   }
 
@@ -94,7 +94,7 @@ class MasterRoController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -108,7 +108,7 @@ class MasterRoController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterRo::findOrFail($id)

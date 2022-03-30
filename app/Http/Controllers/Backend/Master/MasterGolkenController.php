@@ -15,7 +15,7 @@ use App\Http\Requests\MasterGolkenRequest;
 class MasterGolkenController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Golongan Kendaraan"], 
+    ['name' => "Master Data Golongan Kendaraan"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-golken", 'name' => "Master Golongan Kendaraan"]
   ];
@@ -38,7 +38,7 @@ class MasterGolkenController extends Controller
   public function list(MasterGolkenFilter $request)
   {
 
-    $data  = MasterGolken::query()->filter($request);
+    $data  = MasterGolken::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -73,13 +73,13 @@ class MasterGolkenController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-golken.create', $data);
   }
 
@@ -91,7 +91,7 @@ class MasterGolkenController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -105,7 +105,7 @@ class MasterGolkenController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterGolken::findOrFail($id)

@@ -15,7 +15,7 @@ use App\Http\Requests\MasterUnitRequest;
 class MasterUnitController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Unit"], 
+    ['name' => "Master Data Unit"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-unit", 'name' => "Master Unit"]
   ];
@@ -38,7 +38,7 @@ class MasterUnitController extends Controller
   public function list(MasterUnitFilter $request)
   {
 
-    $data  = MasterUnit::query()->filter($request);
+    $data  = MasterUnit::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -73,13 +73,13 @@ class MasterUnitController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-unit.create', $data);
   }
 
@@ -91,7 +91,7 @@ class MasterUnitController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -105,7 +105,7 @@ class MasterUnitController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterUnit::findOrFail($id)

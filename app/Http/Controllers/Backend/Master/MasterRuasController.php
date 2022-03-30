@@ -15,7 +15,7 @@ use App\Http\Requests\MasterRuasRequest;
 class MasterRuasController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Ruas"], 
+    ['name' => "Master Data Ruas"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-ruas", 'name' => "Master Ruas"]
   ];
@@ -38,7 +38,7 @@ class MasterRuasController extends Controller
   public function list(MasterRuasFilter $request)
   {
 
-    $data  = MasterRuas::query()->filter($request);
+    $data  = MasterRuas::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -81,13 +81,13 @@ class MasterRuasController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-ruas.create', $data);
   }
 
@@ -99,7 +99,7 @@ class MasterRuasController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -113,7 +113,7 @@ class MasterRuasController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterRuas::findOrFail($id)

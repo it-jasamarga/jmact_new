@@ -15,7 +15,7 @@ use App\Http\Requests\MasterBkRequest;
 class MasterBkController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Bidang Keluhan"], 
+    ['name' => "Master Data Bidang Keluhan"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-bk", 'name' => "Master Bidang Keluhan"]
   ];
@@ -38,7 +38,7 @@ class MasterBkController extends Controller
   public function list(MasterBkFilter $request)
   {
 
-    $data  = MasterBk::query()->filter($request);
+    $data  = MasterBk::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -73,13 +73,13 @@ class MasterBkController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-bk.create', $data);
   }
 
@@ -91,7 +91,7 @@ class MasterBkController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -105,7 +105,7 @@ class MasterBkController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterBk::findOrFail($id)

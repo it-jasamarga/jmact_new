@@ -15,7 +15,7 @@ use App\Http\Requests\MasterRegionalRequest;
 class MasterRegionalController extends Controller
 {
   public $breadcrumbs = [
-    ['name' => "Master Data Regional"], 
+    ['name' => "Master Data Regional"],
     ['link' => "#", 'name' => "Master"],
     ['link' => "master-regional", 'name' => "Master Regional"]
   ];
@@ -38,7 +38,7 @@ class MasterRegionalController extends Controller
   public function list(MasterRegionalFilter $request)
   {
 
-    $data  = MasterRegional::query()->filter($request);
+    $data  = MasterRegional::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
     ->addColumn('numSelect', function ($data) use ($request) {
@@ -71,13 +71,13 @@ class MasterRegionalController extends Controller
 
   }
 
-  
+
   public function create()
   {
     $data = [
       'route' => $this->route
     ];
-    
+
     return view('backend.master.master-regional.create', $data);
   }
 
@@ -89,7 +89,7 @@ class MasterRegionalController extends Controller
       'message' => 'success',
     ]);
   }
-  
+
   public function edit($id)
   {
 
@@ -103,7 +103,7 @@ class MasterRegionalController extends Controller
 
   public function show($id)
   {
-    
+
     $data =[
       'route' => $this->route,
       'record' => MasterRegional::findOrFail($id)

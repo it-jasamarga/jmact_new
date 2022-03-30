@@ -11,15 +11,15 @@ use Illuminate\Http\Request;
 class MasterJenisClaimController extends Controller
 {
     public $breadcrumbs = [
-        ['name' => "Master Jenis Claim"], 
+        ['name' => "Master Jenis Claim"],
         ['link' => "#", 'name' => "Master"],
         ['link' => "master-claim", 'name' => "Master Claim"]
     ];
-    
+
     public function __construct() {
         $this->route = 'master-claim';
     }
-    
+
     public function index(Request $request) {
       $data = [
         'title' => 'Jenis Claim',
@@ -32,7 +32,7 @@ class MasterJenisClaimController extends Controller
 
     public function list(MasterJenisClaimFilter $request) {
 
-        $data  = MasterJenisClaim::query()->filter($request);
+        $data  = MasterJenisClaim::query()->orderByDesc('created_at')->filter($request);
 
         return datatables()->of($data)
         ->addColumn('numSelect', function ($data) use ($request) {
@@ -71,61 +71,61 @@ class MasterJenisClaimController extends Controller
         $data = [
         'route' => $this->route
         ];
-        
+
         return view('backend.master.master-claim.create', $data);
     }
 
     public function store(MasterJenisClaimRequest $request) {
         $record = MasterJenisClaim::saveData($request);
-    
+
         return response([
           'status' => true,
           'message' => 'success',
         ]);
     }
-      
+
     public function edit($id) {
-    
+
         $data = [
           'route' => $this->route,
           'record' => MasterJenisClaim::findOrFail($id)
         ];
-    
+
         return view('backend.master.master-claim.edit', $data);
     }
-    
+
     public function show($id) {
-        
+
         $data =[
           'route' => $this->route,
           'record' => MasterJenisClaim::findOrFail($id)
         ];
-    
+
         return view('backend.master.master-claim.show', $data);
     }
 
     public function update(MasterJenisClaimRequest $request, $id){
         $record = MasterJenisClaim::saveData($request);
-    
+
         return response([
           'status' => true,
           'message' => 'success',
         ]);
     }
-    
+
     public function destroy($id) {
         $record = MasterJenisClaim::destroy($id);
-    
+
         return response([
           'status' => true,
           'message' => 'success',
         ]);
-    
+
     }
-    
+
     public function removeMulti() {
         $record = MasterJenisClaim::whereIn('id',request()->id)->delete();
-    
+
         return response([
           'status' => true,
           'message' => 'success',
