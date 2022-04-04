@@ -59,7 +59,8 @@ class MasterSumberController extends Controller
         if (auth()->user()->can('master-sumber.edit')) {
           $buttons .= makeButton([
             'type' => 'modal',
-            'url'   => $this->route . '/' . $data->id . '/edit'
+            'url'   => $this->route . '/' . $data->id . '/edit',
+            'tooltip' => 'Edit',
           ]);
         }
         // $buttons .= makeButton([

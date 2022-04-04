@@ -78,7 +78,7 @@ class RoleController extends Controller
           'url'   => route($this->route.'.permission',$data->id),
           'class' => 'btn btn-icon btn-warning btn-sm btn-hover-light',
           'label'   => '<i class="flaticon-edit-1"></i>',
-          'tooltip' => 'Edit'
+          'tooltip' => 'Edit Role'
         ]);
       }
       // $buttons .= makeButton([
@@ -97,7 +97,8 @@ class RoleController extends Controller
   public function create() {
     $permission = Permission::get();
     $data = [
-      'title' => 'Buat Data Role Permission',
+    //   'title' => 'Buat Data Role Permission',
+      'title' => 'Add Role',
       'route' => $this->route,
       'permission' => $permission
     ];
@@ -106,7 +107,10 @@ class RoleController extends Controller
   }
 
   public function store(){
-    request()->validate(['name' => 'unique:roles,name']);
+    request()->validate(['name' => 'required|unique:roles,name']);
+    request()->validate(['type_id' => 'required']);
+    request()->validate(['active' => 'required']);
+
     $record = Role::saveData(request());
     request()['id'] = $record->id;
 
@@ -131,6 +135,9 @@ class RoleController extends Controller
 
   public function update($id){
     request()->validate(['name' => 'unique:roles,name,'.$id]);
+    request()->validate(['type_id' => 'required']);
+    request()->validate(['active' => 'required']);
+
     $record = Role::saveData(request());
     $this->storePermission();
     return response([

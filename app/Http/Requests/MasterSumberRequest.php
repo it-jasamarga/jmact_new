@@ -29,7 +29,8 @@ class MasterSumberRequest extends FormRequest
         // 'code' => 'required|string|max:255|min:1',
         'keluhan' => 'boolean',
         'claim' => 'boolean',
-        'description' => 'max:5000'
+        'description' => 'required|max:5000',
+        'active' => 'required'
       ];
     }
   }

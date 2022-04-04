@@ -74,13 +74,13 @@
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Waktu Dari</label>
-          <fieldset class="form-group ">
+          <label for="users-list-role">Tanggal Pelaporan Dari</label>
+          <fieldset class="form-group">
             <input type="text" data-post="tanggal_awal" id="dataFilter" class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Waktu Sampai</label>
+          <label for="users-list-role">Tanggal Pelaporan Sampai</label>
           <fieldset class="form-group">
             <input type="text" data-post="tanggal_akhir" id="dataFilter" class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
           </fieldset>
@@ -112,9 +112,10 @@
               <th id="listTables">No Tiket</th>
               <th id="listTables">Ruas</th>
               <th id="listTables">Lokasi</th>
-              <th id="listTables">Waktu Pelaporan</th>
+              <th id="listTables">Tanggal Pelaporan</th>
               <th id="listTables">Nama Pelanggan</th>
               <th id="listTables">No Telepon</th>
+              <th id="listTables">Sosial Media</th>
               <th id="listTables">Claim</th>
               <th id="listTables">Golongan Kendaraan</th>
               <th id="listTables">Status</th>
@@ -143,6 +144,7 @@
       { data:'tanggal_pelaporan', name:'tanggal_pelaporan' },
       { data:'nama_pelanggan', name:'nama_pelanggan' },
       { data:'no_telepon', name:'no_telepon' },
+      { data:'sosial_media', name:'sosial_media' },
       { data:'keterangan_claim', name:'keterangan_claim' },
       { data:'golongan_id', name:'golongan_id' },
       { data:'status_id', name:'status_id' },

@@ -27,7 +27,8 @@ class MasterGolkenRequest extends FormRequest
       return [
         'golongan' => 'required|string|max:255|min:1|unique:master_golken,golongan'.$unique,
         // 'golongan' => 'required|string|max:255|min:1',
-        'description' => 'max:5000',
+        'description' => 'required|max:5000',
+        'active' => 'required'
       ];
     }
   }

@@ -50,16 +50,16 @@ class ClaimController extends Controller
             ->filter($request);
 
         if (auth()->user()->hasRole('Superadmin')) {
-        // if (auth()->user()->roles()->first()->type == "Admin") {
+            // if (auth()->user()->roles()->first()->type == "Admin") {
             $data  = ClaimPelanggan::orderByDesc('created_at')->select('*')->filter($request);
         }
 
         // if (auth()->user()->hasRole('JMTC')) {
         if (auth()->user()->roles()->first()->type == "Supervisor JMTC") {
             $data  = ClaimPelanggan::whereHas('status', function ($q1) {
-                    $q1->whereIn('code', ['00', '01', '02'])
-                        ->where('type', 1);
-                })
+                $q1->whereIn('code', ['00', '01', '02'])
+                    ->where('type', 1);
+            })
                 ->orderByDesc('created_at')
                 ->select('*')
                 ->filter($request);
@@ -138,35 +138,68 @@ class ClaimController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $buttons = "";
+                if ($data->status->code == '08') {
+                    if (auth()->user()->can('claim.detail')) {
+                        $buttons .= makeButton([
+                            'type' => 'url',
+                            'url'   => $this->route . '/' . $data->id . '',
+                            'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                            'label'   => '<i class="flaticon2-list-1"></i>',
+                            'tooltip' => 'Detail'
+                        ]);
+                    }
+                } else {
 
-                if (auth()->user()->can('claim.forward')) {
-                    $buttons .= makeButton([
-                        'type' => 'modal',
-                        'url'   => $this->route . '/' . $data->id . '/edit',
-                        'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-                        'label'   => '<i class="flaticon2-paperplane"></i>',
-                        'tooltip' => 'Teruskan'
-                    ]);
-                }
+                    if (auth()->user()->can('claim.forward')) {
+                        if (auth()->user()->roles()->first()->type == "Supervisor JMTC" && $data->status->code == '01') {
+                            $buttons .= makeButton([
+                                'type' => 'modal',
+                                'url'   => $this->route . '/' . $data->id . '/edit',
+                                'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+                                'label'   => '<i class="flaticon2-paperplane"></i>',
+                                'tooltip' => 'Teruskan'
+                            ]);
+                        }
 
-                if (auth()->user()->can('claim.stage')) {
-                    $buttons .= makeButton([
-                        'type' => 'modal',
-                        'url'   => $this->route . '/' . $data->id . '/edit-stage',
-                        'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-                        'label'   => '<i class="flaticon2-checking"></i>',
-                        'tooltip' => 'Tahapan'
-                    ]);
-                }
+                        if (auth()->user()->roles()->first()->type == "Service Provider" && ($data->status->code == '01' || $data->status->code == '04')) {
+                            $buttons .= makeButton([
+                                'type' => 'modal',
+                                'url'   => $this->route . '/' . $data->id . '/edit',
+                                'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+                                'label'   => '<i class="flaticon2-paperplane"></i>',
+                                'tooltip' => 'Teruskan'
+                            ]);
+                        }
 
-                if (auth()->user()->can('claim.detail')) {
-                    $buttons .= makeButton([
-                        'type' => 'url',
-                        'url'   => $this->route . '/' . $data->id . '',
-                        'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
-                        'label'   => '<i class="flaticon2-list-1"></i>',
-                        'tooltip' => 'Detail'
-                    ]);
+                        $buttons .= makeButton([
+                            'type' => 'modal',
+                            'url'   => $this->route . '/' . $data->id . '/edit',
+                            'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+                            'label'   => '<i class="flaticon2-paperplane"></i>',
+                            'tooltip' => 'Teruskan'
+                        ]);
+
+                    }
+
+                    if (auth()->user()->can('claim.stage')) {
+                        $buttons .= makeButton([
+                            'type' => 'modal',
+                            'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                            'label'   => '<i class="flaticon2-checking"></i>',
+                            'tooltip' => 'Tahapan'
+                        ]);
+                    }
+
+                    if (auth()->user()->can('claim.detail')) {
+                        $buttons .= makeButton([
+                            'type' => 'url',
+                            'url'   => $this->route . '/' . $data->id . '',
+                            'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                            'label'   => '<i class="flaticon2-list-1"></i>',
+                            'tooltip' => 'Detail'
+                        ]);
+                    }
                 }
 
                 return $buttons;
@@ -179,7 +212,7 @@ class ClaimController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Buat Data Claim',
+            'title' => 'Add Data Claim',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
         ];

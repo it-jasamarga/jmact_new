@@ -3,29 +3,29 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Golongan Kendaraan</h3>
+        <h3 class="modal-title">Edit Golongan Kendaraan</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="golongan" class="">{{ __('Golongan') }}</label>
+                    <label for="golongan" class="">{{ __('Golongan') }}</label><span class="text-danger">*</span>
                     <input id="golongan" type="text" class="form-control" name="golongan" value="{{ $record->golongan }}" required autocomplete="golongan" autofocus placeholder="Golongan" maxlength="20" readonly>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description" class="">{{ __('Deskripsi') }}</label>
-                    <textarea name="description" class="form-control" cols="4" rows="4" placeholder="Deskripsi">{{ $record->description }}</textarea>
+                    <label for="description" class="">{{ __('Deskripsi') }}</label><span class="text-danger">*</span>
+                    <textarea name="description" class="form-control" cols="4" rows="4" placeholder="Deskripsi" required>{{ $record->description }}</textarea>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Status') }}</label>
-                    <select class="form-control select2" name="active">
+                    <label for="regional" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
+                    <select class="form-control select2" name="active" required>
                         <option value="">Pilih Status</option>
                         <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
                         <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>Non-Active</option>

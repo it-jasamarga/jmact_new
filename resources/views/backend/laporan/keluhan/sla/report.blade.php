@@ -8,7 +8,7 @@
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">{{ $title }}
-                    <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span>
+                    {{-- <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span> --}}
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -54,8 +54,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="no_telepon" class="">{{ __('No Telepon') }}</label><span
-                                class="text-danger">*</span>
+                            <label for="no_telepon" class="">{{ __('No Telepon') }}</label>
                             <input id="no_telepon" type="text" class="form-control" name="no_telepon"
                                 value="{{ $record->no_telepon }}" readonly>
                         </div>

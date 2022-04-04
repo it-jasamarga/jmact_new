@@ -1,7 +1,7 @@
 <form action="{{ route($route . '.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Tambah Sumber</h3>
+        <h3 class="modal-title">Add Sumber</h3>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <input type="hidden" name="type[keluhan]" value="0">
             <input type="hidden" name="type[claim]" value="0">
 
@@ -56,10 +56,10 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
-                        <label for="status" class="">{{ __('Status') }}</label>
+                        <label for="status" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
                     </div>
                     <div class="col-9">
-                        <select class="form-control select2" name="active">
+                        <select class="form-control select2" name="active" required>
                             <option value="">Pilih Status</option>
                             <option value="1">Active</option>
                             <option value="0">Non-Active</option>

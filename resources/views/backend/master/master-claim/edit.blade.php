@@ -3,23 +3,22 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Jenis Claim</h3>
+        <h3 class="modal-title">Edit Jenis Claim</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="form-group">
-                    <label for="code" class="">{{ __('Kode Status') }}</label>
+                    <label for="code" class="">{{ __('Kode Status') }}</label><span class="text-danger">*</span>
                     <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}"
                         required autocomplete="code" autofocus placeholder="Kode Status" maxlength="10">
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="jenis_claim" class="">{{ __('Jenis Claim') }}</label><span
-                        class="text-danger">*</span>
+                    <label for="jenis_claim" class="">{{ __('Jenis Claim') }}</label><span class="text-danger">*</span>
                     <input id="jenis_claim" type="text" class="form-control" name="jenis_claim"
                         value="{{ $record->jenis_claim }}" required autocomplete="off" autofocus
                         placeholder="Jenis Claim" maxlength="50">
@@ -28,7 +27,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="unit_id" class="">{{ __('Unit') }}</label>
+                    <label for="unit_id" class="">{{ __('Unit') }}</label><span class="text-danger">*</span>
                     <select class="form-control select2" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit', 'id', ['selected' => $record->unit_id], '( Pilih Unit )') !!}
                     </select>
@@ -37,7 +36,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Status') }}</label>
+                    <label for="active" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
                     <select class="form-control select2" name="active">
                         <option value="">Pilih Status</option>
                         <option value="1" {{ $record->active == 1 ? 'selected' : '' }}>Active</option>

@@ -54,7 +54,7 @@
                   <span></span>
                 </label>
               </th> --}}
-              <th width="32">#</th>
+              <th>No</th>
               <th>Ruas</th>
               <th>Ro</th>
               <th>Regional</th>

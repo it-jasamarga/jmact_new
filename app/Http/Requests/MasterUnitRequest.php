@@ -27,7 +27,8 @@ class MasterUnitRequest extends FormRequest
       return [
         'code' => 'required|string|max:255|min:1|unique:master_unit,code'.$unique,
         // 'code' => 'required|string|max:255|min:1',
-        'unit' => 'required|string|min:1|max:255'
+        'unit' => 'required|string|min:1|max:255',
+        'active' => 'required'
       ];
     }
   }

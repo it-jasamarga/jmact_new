@@ -145,37 +145,48 @@ class KeluhanController extends Controller
                 $button = ($data->golongan) ? $data->golongan->golongan : '-';
                 return $button;
             })
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($request) {
                 $buttons = "";
+                if ($data->status->code == '07') {
+                    if (auth()->user()->can('keluhan.detail')) {
+                        $buttons .= makeButton([
+                            'type' => 'url',
+                            'url'   => $this->route . '/' . $data->id . '',
+                            'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                            'label'   => '<i class="flaticon2-list-1"></i>',
+                            'tooltip' => 'Detail'
+                        ]);
+                    }
+                } else {
+                    if (auth()->user()->can('keluhan.forward')) {
+                        $buttons .= makeButton([
+                            'type' => 'modal',
+                            'url'   => $this->route . '/' . $data->id . '/edit',
+                            'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+                            'label'   => '<i class="flaticon2-paperplane"></i>',
+                            'tooltip' => 'Teruskan'
+                        ]);
+                    }
 
-                if (auth()->user()->can('keluhan.forward')) {
-                    $buttons .= makeButton([
-                        'type' => 'modal',
-                        'url'   => $this->route . '/' . $data->id . '/edit',
-                        'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-                        'label'   => '<i class="flaticon2-paperplane"></i>',
-                        'tooltip' => 'Teruskan'
-                    ]);
-                }
+                    if (auth()->user()->can('keluhan.sla')) {
+                        $buttons .= makeButton([
+                            'type' => 'url',
+                            'url'   => $this->route . '/sla/' . $data->id . '',
+                            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
+                            'label'   => '<i class="flaticon-edit-1"></i>',
+                            'tooltip' => 'Pengerjaan Keluhan'
+                        ]);
+                    }
 
-                if (auth()->user()->can('keluhan.sla')) {
-                    $buttons .= makeButton([
-                        'type' => 'url',
-                        'url'   => $this->route . '/sla/' . $data->id . '',
-                        'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
-                        'label'   => '<i class="flaticon-edit-1"></i>',
-                        'tooltip' => 'Input SLA'
-                    ]);
-                }
-
-                if (auth()->user()->can('keluhan.detail')) {
-                    $buttons .= makeButton([
-                        'type' => 'url',
-                        'url'   => $this->route . '/' . $data->id . '',
-                        'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
-                        'label'   => '<i class="flaticon2-list-1"></i>',
-                        'tooltip' => 'Detail'
-                    ]);
+                    if (auth()->user()->can('keluhan.detail')) {
+                        $buttons .= makeButton([
+                            'type' => 'url',
+                            'url'   => $this->route . '/' . $data->id . '',
+                            'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
+                            'label'   => '<i class="flaticon2-list-1"></i>',
+                            'tooltip' => 'Detail'
+                        ]);
+                    }
                 }
 
                 return $buttons;
@@ -189,7 +200,7 @@ class KeluhanController extends Controller
     {
 
         $data = [
-            'title' => 'Buat Data Keluhan',
+            'title' => 'Add Data Keluhan',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
         ];
@@ -371,6 +382,9 @@ class KeluhanController extends Controller
         $record->unit_id = $unitHistory;
         $record->status_id = request()->status_id;
         $record->mulai_pengerjaan = Carbon::now()->format('Y-m-d H:i:s');
+
+        $sla = $record->bidang->sla;
+        $record->deadline = Carbon::now()->addHours($sla)->format('Y-m-d H:i:s');
 
         $record->save();
         request()['unit_id'] = $unitHistory;

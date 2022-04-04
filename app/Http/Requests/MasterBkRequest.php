@@ -26,7 +26,11 @@ class MasterBkRequest extends FormRequest
       $unique = ($id = request()->route('master_bk')) ? ','.$id : '';
       return [
         'bidang' => 'required|string|max:255|min:1',
-        'keluhan' => 'required|string|max:255'
+        'keluhan' => 'required|string|max:255',
+        'tipe_layanan_keluhan' => 'required|string|max:255',
+        'unit_id' => 'required',
+        'sla' => 'required',
+        'active' => 'required'
       ];
     }
   }

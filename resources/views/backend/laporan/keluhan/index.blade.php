@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">{{ "Filter Data $title" }}
-                    <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span>
+                    {{-- <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span> --}}
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -101,14 +101,14 @@
                         </fieldset>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <label for="users-list-role">Waktu Dari</label>
+                        <label for="users-list-role">Tanggal Pelaporan Dari</label>
                         <fieldset class="form-group ">
                             <input type="text" data-post="tanggal_awal" id="dataFilter"
                                 class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
                         </fieldset>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <label for="users-list-role">Waktu Sampai</label>
+                        <label for="users-list-role">Tanggal Pelaporan Sampai</label>
                         <fieldset class="form-group">
                             <input type="text" data-post="tanggal_akhir" id="dataFilter"
                                 class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
@@ -141,9 +141,10 @@
                                 <th id="listTables">No Tiket</th>
                                 <th id="listTables">Ruas</th>
                                 <th id="listTables">Lokasi</th>
-                                <th id="listTables">Waktu Pelaporan</th>
+                                <th id="listTables">Tanggal Pelaporan</th>
                                 <th id="listTables">Nama Pelanggan</th>
                                 <th id="listTables">No Telepon</th>
+                                <th id="listTables">Sosial Media</th>
                                 <th id="listTables">Sumber</th>
                                 <th id="listTables">Bidang Keluhan</th>
                                 <th id="listTables">Golongan Kendaraan</th>
@@ -194,6 +195,10 @@
                 {
                     data: 'no_telepon',
                     name: 'no_telepon'
+                },
+                {
+                    data: 'sosial_media',
+                    name: 'sosial_media'
                 },
                 {
                     data: 'sumber_id',

@@ -8,7 +8,7 @@
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">{{ $title }}
-                    <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span>
+                    {{-- <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span> --}}
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -32,11 +32,11 @@
                                 autofocus placeholder="Role" maxlength="50">
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="type_id" class="">{{ __('Type') }}</label>
-                            <select class="form-control select2" name="type_id">
+                            <label for="type_id" class="">{{ __('Type') }}</label><span class="text-danger">*</span>
+                            <select class="form-control select2" name="type_id" required>
                                 {!! App\Models\MasterType::options('type', 'id', [], '( Pilih Type )') !!}
                             </select>
                         </div>
@@ -44,9 +44,9 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="role" class="">{{ __('Status') }}</label><span
+                            <label for="active" class="">{{ __('Status') }}</label><span
                                 class="text-danger">*</span>
-                            <select class="form-control select2" name="active">
+                            <select class="form-control select2" name="active" required>
                                 <option value="">Pilih Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Non-Active</option>

@@ -58,7 +58,8 @@ class MasterBkController extends Controller
       if(auth()->user()->can('master-bk.edit')) {
         $buttons .= makeButton([
           'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit'
+          'url'   => $this->route.'/'.$data->id.'/edit',
+          'tooltip' => 'Edit',
         ]);
       }
       // $buttons .= makeButton([

@@ -8,7 +8,7 @@
  <div class="card-header">
   <div class="card-title">
     <h3 class="card-label">{{ $title }}
-    <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span></h3>
+    {{-- <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span></h3> --}}
   </div>
   <div class="card-toolbar">
    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">

@@ -76,7 +76,8 @@ class UserController extends Controller
       if(auth()->user()->can('user-account.edit')) {
         $buttons .= makeButton([
             'type' => 'modal',
-            'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit'
+            'url'   => 'setting/'.$this->route.'/'.$data->id.'/edit',
+            'tooltip' => 'Edit',
         ]);
       }
         // $buttons .= makeButton([
@@ -144,6 +145,7 @@ class UserController extends Controller
 
       $validate = [
         'name' => 'required|string|min:3|max:250',
+        'username' => 'required|string|min:3|max:250',
         'unit_id' => 'required',
         'role' => 'required',
         'active' => 'required'
@@ -191,6 +193,7 @@ class UserController extends Controller
 
       $validate = [
         'name' => 'required|string|min:3|max:250',
+        'username' => 'required|string|min:3|max:250',
         'unit_id' => 'required',
         'role' => 'required',
         'active' => 'required'

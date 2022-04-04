@@ -1,7 +1,7 @@
 <form action="{{ route($route.'.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Tambah Regional</h3>
+        <h3 class="modal-title">Add Regional</h3>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -15,8 +15,8 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Status') }}</label>
-                    <select class="form-control select2" name="active">
+                    <label for="regional" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
+                    <select class="form-control select2" name="active" required>
                         <option value="">Pilih Status</option>
                         <option value="1">Active</option>
                         <option value="0">Non-Active</option>

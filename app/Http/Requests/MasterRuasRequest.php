@@ -27,7 +27,9 @@ class MasterRuasRequest extends FormRequest
       return [
         'name' => 'required|string|max:255|min:1|unique:master_ruas,name'.$unique,
         // 'name' => 'required|string|max:255|min:1',
-        'ro_id' => 'required'
+        // 'regional_id' => 'required',
+        'ro_id' => 'required',
+        'active' => 'required'
       ];
     }
   }

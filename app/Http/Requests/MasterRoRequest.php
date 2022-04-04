@@ -27,7 +27,8 @@ class MasterRoRequest extends FormRequest
       return [
         'name' => 'required|string|max:255|min:1|unique:master_ro,name'.$unique,
         // 'name' => 'required|string|max:255|min:1',
-        'regional_id' => 'required'
+        'regional_id' => 'required',
+        'active' => 'required'
       ];
     }
   }

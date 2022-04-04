@@ -54,8 +54,8 @@
                   <span></span>
                 </label>
               </th> --}}
-              <th width="32">No</th>
-              <th>Kode</th>
+              <th>No</th>
+              {{-- <th>Kode</th> --}}
               <th>Jenis Claim</th>
               <th>Status</th>
               <th>Action</th>
@@ -77,7 +77,7 @@
     loadList([
       // { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
-      { data:'code', name:'code' },
+    //   { data:'code', name:'code' },
       { data:'jenis_claim', name:'jenis_claim' },
       { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false, orderable: false }

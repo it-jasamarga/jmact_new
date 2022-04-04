@@ -8,7 +8,7 @@
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">{{ $title }}
-                    <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span>
+                    {{-- <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span> --}}
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="sosial_media" class="">{{ __('Sosial Media') }}</label>
                             <input id="sosial_media" type="text" class="form-control" name="sosial_media"
-                                value="{{ old('sosial_media') }}" required autocomplete="off" autofocus
+                                value="{{ old('sosial_media') }}" autocomplete="off" autofocus
                                 placeholder="Kontak Pelanggan" maxlength="100">
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="no_telepon" class="">{{ __('No Telepon') }}</label>
                             <input id="no_telepon" type="text" class="form-control" name="no_telepon"
-                                value="{{ old('no_telepon') }}" required autocomplete="off" autofocus
+                                value="{{ old('no_telepon') }}" autocomplete="off" autofocus
                                 placeholder="No Telepon" maxlength="12"
                                 oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>

@@ -3,7 +3,7 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Data</h3>
+        <h3 class="modal-title">Edit Data</h3>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
-                        <label for="code" class="">{{ __('Kode Aduan') }}</label>
+                        <label for="code" class="">{{ __('Kode Aduan') }}</label><span class="text-danger">*</span>
                     </div>
                     <div class="col-9">
                         <input id="code" type="text" class="form-control" name="code" value="{{ $record->code }}"
@@ -23,7 +23,7 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
-                        <label for="description" class="">{{ __('Sumber') }}</label>
+                        <label for="description" class="">{{ __('Sumber') }}</label><span class="text-danger">*</span>
                     </div>
                     <div class="col-9">
                         <input id="description" type="text" class="form-control" name="description"
@@ -57,10 +57,10 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
-                        <label for="status" class="">{{ __('Status') }}</label>
+                        <label for="status" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
                     </div>
                     <div class="col-9">
-                        <select class="form-control select2" name="active">
+                        <select class="form-control select2" name="active" required>
                             <option value="">Pilih Status</option>
                             <option value="1" {{ $record->active == 1 ? 'selected' : '' }}>Active</option>
                             <option value="0" {{ $record->active == 0 ? 'selected' : '' }}>Non-Active</option>

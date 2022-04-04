@@ -3,22 +3,22 @@
     @csrf
     <input type="hidden" name="id" value="{{ $record->id }}">
     <div class="modal-header">
-        <h3 class="modal-title">Ubah Regional</h3>
+        <h3 class="modal-title">Edit Regional</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="name" class="">{{ __('Regional') }}</label>
+                    <label for="name" class="">{{ __('Regional') }}</label><span class="text-danger">*</span>
                     <input id="name" type="text" class="form-control" name="name" value="{{ $record->name }}" required autocomplete="name" autofocus placeholder="Regional" maxlength="50">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Status') }}</label>
-                    <select class="form-control select2" name="active">
+                    <label for="regional" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
+                    <select class="form-control select2" name="active" required>
                         <option value="">Pilih Status</option>
                         <option value="1" {{ ($record->active == 1) ? "selected" : ""}}>Active</option>
                         <option value="0" {{ ($record->active == 0) ? "selected" : ""}}>Non-Active</option>

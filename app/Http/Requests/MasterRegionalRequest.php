@@ -25,7 +25,8 @@ class MasterRegionalRequest extends FormRequest
     {
       $unique = ($id = request()->route('master_regional')) ? ','.$id : '';
       return [
-        'name' => 'required|string|max:255|min:1|unique:master_regional,name'.$unique
+        'name' => 'required|string|max:255|min:1|unique:master_regional,name'.$unique,
+        'active' => 'required'
       ];
     }
   }

@@ -1,19 +1,19 @@
 <form action="{{ route($route . '.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Tambah Jenis Claim</h3>
+        <h3 class="modal-title">Add Jenis Claim</h3>
     </div>
     <div class="modal-body">
         <div class="row">
 
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <div class="form-group">
                     <label for="code" class="">{{ __('Kode Status') }}</label><span
                         class="text-danger">*</span>
                     <input id="code" type="text" class="form-control" name="code" required autocomplete="off" autofocus
                         placeholder="Kode Status" maxlength="10">
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-md-12">
                 <div class="form-group">
@@ -26,7 +26,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="unit_id" class="">{{ __('Unit') }}</label>
+                    <label for="unit_id" class="">{{ __('Unit') }}</label><span class="text-danger">*</span>
                     <select class="form-control select2" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit', 'id', [], '( Pilih Unit )') !!}
                     </select>
@@ -35,8 +35,8 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="regional" class="">{{ __('Status') }}</label>
-                    <select class="form-control select2" name="active">
+                    <label for="regional" class="">{{ __('Status') }}</label><span class="text-danger">*</span>
+                    <select class="form-control select2" name="active" required>
                         <option value="">Pilih Status</option>
                         <option value="1">Active</option>
                         <option value="0">Non-Active</option>

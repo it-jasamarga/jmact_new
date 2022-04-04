@@ -151,6 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 
 		Route::group(['namespace' => 'Master'], function () {
+        // Route::group(['middleware' => ['role:superadmin']], function () {
 			// Master BK
 			Route::delete('master-bk/removeMulti', 'MasterBkController@removeMulti')->name('master-bk.removeMulti');
 			Route::get('master-bk/list', 'MasterBkController@list')->name('master-bk.list');

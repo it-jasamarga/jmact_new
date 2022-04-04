@@ -54,9 +54,11 @@
                   <span></span>
                 </label>
               </th> --}}
-              <th width="32">No</th>
-              <th>Bidang Keluhan</th>
+              <th>No</th>
+              <th>Keluhan</th>
               <th>Bidang</th>
+              <th>Tipe Layanan Keluhan</th>
+              <th>SLA (Jam)</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -79,6 +81,8 @@
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
       { data:'keluhan', name:'keluhan' },
       { data:'bidang', name:'bidang' },
+      { data:'tipe_layanan_keluhan', name:'tipe_layanan_keluhan' },
+      { data:'sla', name:'sla' },
       { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false, orderable: false }
       ],
