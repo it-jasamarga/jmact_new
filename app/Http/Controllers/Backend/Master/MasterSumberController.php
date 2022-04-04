@@ -39,7 +39,7 @@ class MasterSumberController extends Controller
   public function list(MasterSumberFilter $request)
   {
 
-    $data  = MasterSumber::query()->filter($request);
+    $data  = MasterSumber::query()->orderByDesc('created_at')->filter($request);
 
     return datatables()->of($data)
       ->addColumn('numSelect', function ($data) use ($request) {
