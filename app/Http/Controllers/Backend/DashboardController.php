@@ -110,19 +110,19 @@ class DashboardController extends Controller
 
         if($month = request()->month){
         
-            $record->whereMonth('tanggal_kejadian',$month);        
+            $record->whereMonth('tanggal_pelaporan',$month);        
         }
 
         if($year = request()->year){
         
-            $record->whereDate('tanggal_kejadian',$year);        
+            $record->whereDate('tanggal_pelaporan',$year);        
         }
 
         $record = $record->get();
 
         if($record->count() > 0){
             foreach($record as $k => $value){
-                dd($value->tanggal_kejadian->format('Y'));
+                dd($value->tanggal_pelaporan->format('Y'));
             }
         }
     }

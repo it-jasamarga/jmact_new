@@ -74,7 +74,7 @@ class PencarianTiketController extends Controller
                 'url'   => ($data->type=='K' ? 'keluhan/' : 'claim/').$data->id,
                 'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light',
                 'label'   => '<i class="flaticon2-list-1"></i>',
-                'tooltip' => 'Detail Data'
+                'tooltip' => 'Detail'
               ]);
             }
             
@@ -85,7 +85,7 @@ class PencarianTiketController extends Controller
                 'onClick'   => 'ticket.detail.open(this)',
                 'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light',
                 'label'   => '<i class="flaticon2-arrow-down"></i>',
-                'tooltip' => 'Histori'
+                'tooltip' => 'History/Riwayat'
               ]);
             }
             
