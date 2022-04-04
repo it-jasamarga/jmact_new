@@ -156,11 +156,12 @@
 							<th>No Tiket</th>
 							<th>Sumber</th>
 							<th>Lokasi</th>
-							<th>Waktu Kejadian</th>
+							<th>Tanggal Pelaporan</th>
 							<th>Bidang Keluhan</th>
 							<th>Golongan Kendaraan</th>
 							<th>Nama Pelanggan</th>
 							<th>Nomor Telepon</th>
+							<th>Sosial Media</th>
 							<th>Status</th>
 						</tr>
 					</thead>
@@ -506,11 +507,12 @@
 				{ data:'no_tiket', name:'no_tiket' },
 				{ data:'sumber_id', name:'sumber_id' },
 				{ data:'lokasi_kejadian', name:'lokasi_kejadian' },
-				{ data:'tanggal_kejadian', name:'tanggal_kejadian' },
+				{ data:'tanggal_pelaporan', name:'tanggal_pelaporan' },
 				{ data:'bidang_id', name:'bidang_id' },
 				{ data:'golongan_id', name:'golongan_id' },
 				{ data:'nama_cust', name:'nama_cust' },
 				{ data:'no_telepon', name:'no_telepon' },
+				{ data:'sosial_media', name:'sosial_media' },
 				{ data:'status_id', name:'status_id' },
 			],[
 			{

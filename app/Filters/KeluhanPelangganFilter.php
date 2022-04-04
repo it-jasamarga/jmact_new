@@ -26,12 +26,12 @@ class KeluhanPelangganFilter extends QueryFilters
 
     public function tanggal_awal($term) {
         $tanggal_awal = Carbon::parse($term)->format('Y-m-d');
-        return $this->builder->whereDate('tanggal_kejadian','>=',$tanggal_awal);
+        return $this->builder->whereDate('tanggal_pelaporan','>=',$tanggal_awal);
     }
 
     public function tanggal_akhir($term) {
         $tanggal_akhir = Carbon::parse($term)->format('Y-m-d');
-        return $this->builder->whereDate('tanggal_kejadian','<=',$tanggal_akhir);
+        return $this->builder->whereDate('tanggal_pelaporan','<=',$tanggal_akhir);
     }
 
     public function sumber_id($term) {
