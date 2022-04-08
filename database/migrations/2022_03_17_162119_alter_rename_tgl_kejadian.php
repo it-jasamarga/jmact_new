@@ -29,10 +29,10 @@ class AlterRenameTglKejadian extends Migration
     public function down()
     {
         Schema::table('keluhan', function (Blueprint $table) {
-            $table->renameColumn('tanggal_kejadian','tanggal_pelaporan')->nullable();
+            $table->renameColumn('tanggal_pelaporan', 'tanggal_kejadian')->nullable();
         });
         Schema::table('claim', function (Blueprint $table) {
-            $table->renameColumn('tanggal_kejadian','tanggal_pelaporan')->nullable();
+            $table->renameColumn('tanggal_pelaporan', 'tanggal_kejadian')->nullable();
         });
     }
 }
