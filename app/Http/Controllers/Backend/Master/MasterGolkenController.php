@@ -14,134 +14,136 @@ use App\Http\Requests\MasterGolkenRequest;
 
 class MasterGolkenController extends Controller
 {
-  public $breadcrumbs = [
-    ['name' => "Master Data Golongan Kendaraan"],
-    ['link' => "#", 'name' => "Master"],
-    ['link' => "master-golken", 'name' => "Master Golongan Kendaraan"]
-  ];
 
-  public function __construct(){
-    $this->route = 'master-golken';
-  }
-
-  public function index(Request $request)
-  {
-    $data = [
-      'title' => 'Golongan Kendaraan',
-      'breadcrumbs' => $this->breadcrumbs,
-      'route' => $this->route,
+    public $breadcrumbs = [
+        ['name' => "Master Data Golongan Kendaraan"],
+        ['link' => "#", 'name' => "Master"],
+        ['link' => "master-golken", 'name' => "Master Golongan Kendaraan"]
     ];
 
-    return view('backend.master.master-golken.index', $data);
-  }
+    public function __construct()
+    {
+        $this->route = 'master-golken';
+    }
 
-  public function list(MasterGolkenFilter $request)
-  {
+    public function index(Request $request)
+    {
+        $data = [
+            'title' => 'Golongan Kendaraan',
+            'breadcrumbs' => $this->breadcrumbs,
+            'route' => $this->route,
+        ];
 
-    $data  = MasterGolken::query()->orderByDesc('created_at')->filter($request);
+        return view('backend.master.master-golken.index', $data);
+    }
 
-    return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
-      if(auth()->user()->can('master-golken.edit')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit',
-          'tooltip' => 'Edit',
+    public function list(MasterGolkenFilter $request)
+    {
+
+        $data  = MasterGolken::query()->orderByDesc('created_at')->filter($request);
+
+        return datatables()->of($data)
+            ->addColumn('numSelect', function ($data) use ($request) {
+                $button = '';
+                $button .= makeButton([
+                    'type' => 'deleteAll',
+                    'value' => $data->id
+                ]);
+                return $button;
+            })
+            ->addColumn('active', function ($data) use ($request) {
+                $button = getActive($data->active);
+                return $button;
+            })
+            ->addColumn('action', function ($data) {
+                $buttons = "";
+                if (auth()->user()->can('master-golken.edit')) {
+                    $buttons .= makeButton([
+                        'type' => 'modal',
+                        'url'   => $this->route . '/' . $data->id . '/edit',
+                        'tooltip' => 'Edit',
+                    ]);
+                }
+                // $buttons .= makeButton([
+                //   'type' => 'delete',
+                //   'id'   => $data->id
+                // ]);
+                return $buttons;
+            })
+            // ->rawColumns(['numSelect','action'])
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+
+    public function create()
+    {
+        $data = [
+            'route' => $this->route
+        ];
+
+        return view('backend.master.master-golken.create', $data);
+    }
+
+    public function store(MasterGolkenRequest $request)
+    {
+        $record = MasterGolken::saveData($request);
+
+        return response([
+            'status' => true,
+            'message' => 'success',
         ]);
-      }
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
-      return $buttons;
-    })
-    // ->rawColumns(['numSelect','action'])
-    ->addIndexColumn()
-    ->make(true);
+    }
 
-  }
+    public function edit($id)
+    {
 
+        $data = [
+            'route' => $this->route,
+            'record' => MasterGolken::findOrFail($id)
+        ];
 
-  public function create()
-  {
-    $data = [
-      'route' => $this->route
-    ];
+        return view('backend.master.master-golken.edit', $data);
+    }
 
-    return view('backend.master.master-golken.create', $data);
-  }
+    public function show($id)
+    {
 
-  public function store(MasterGolkenRequest $request){
-    $record = MasterGolken::saveData($request);
+        $data = [
+            'route' => $this->route,
+            'record' => MasterGolken::findOrFail($id)
+        ];
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return view('backend.master.master-golken.show', $data);
+    }
 
-  public function edit($id)
-  {
+    public function update(MasterGolkenRequest $request, $id)
+    {
+        $record = MasterGolken::saveData($request);
 
-    $data = [
-      'route' => $this->route,
-      'record' => MasterGolken::findOrFail($id)
-    ];
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-    return view('backend.master.master-golken.edit', $data);
-  }
+    public function destroy($id)
+    {
+        $record = MasterGolken::destroy($id);
 
-  public function show($id)
-  {
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-    $data =[
-      'route' => $this->route,
-      'record' => MasterGolken::findOrFail($id)
-    ];
+    public function removeMulti()
+    {
+        $record = MasterGolken::whereIn('id', request()->id)->delete();
 
-    return view('backend.master.master-golken.show', $data);
-  }
-
-  public function update(MasterGolkenRequest $request, $id){
-    $record = MasterGolken::saveData($request);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
-  public function destroy($id)
-  {
-    $record = MasterGolken::destroy($id);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-
-  }
-
-  public function removeMulti(){
-    $record = MasterGolken::whereIn('id',request()->id)->delete();
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 }

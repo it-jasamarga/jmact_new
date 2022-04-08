@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public $breadcrumbs = [
-        ['name' => "Dashboard"], 
-        ['link' => "/", 'name' => "Dashboard"], 
+        ['name' => "Dashboard"],
+        ['link' => "/", 'name' => "Dashboard"],
     ];
 
     public function __construct()
     {
-        $this->middleware('auth');
-        // $this->route = 'dashboard';
+        // $this->middleware('auth');
+        $this->route = 'home';
     }
 
     public function index()
@@ -100,22 +100,22 @@ class DashboardController extends Controller
         $record = KeluhanPelanggan::with('history')->select('*');
 
         if($ruas_id = request()->ruas_id){
-            $record->where('ruas_id',$ruas_id);            
+            $record->where('ruas_id',$ruas_id);
         }
 
         if($regional_id = request()->regional_id){
-        
-            $record->where('regional_id',$regional_id);        
+
+            $record->where('regional_id',$regional_id);
         }
 
         if($month = request()->month){
-        
-            $record->whereMonth('tanggal_pelaporan',$month);        
+
+            $record->whereMonth('tanggal_pelaporan',$month);
         }
 
         if($year = request()->year){
-        
-            $record->whereDate('tanggal_pelaporan',$year);        
+
+            $record->whereDate('tanggal_pelaporan',$year);
         }
 
         $record = $record->get();

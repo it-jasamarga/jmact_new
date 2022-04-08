@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class MasterJenisClaimController extends Controller
 {
+
     public $breadcrumbs = [
         ['name' => "Master Jenis Claim"],
         ['link' => "#", 'name' => "Master"],

@@ -17,7 +17,8 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
-                        <label for="penyelesaian" class="">{{ __('Tipe Penyelesaian') }}</label>
+                        <label for="penyelesaian" class="">{{ __('Tipe Penyelesaian') }}</label><span
+                            class="text-danger">*</span>
                     </div>
                     <div class="col-9 col-form-label">
                         @if (@$record->report()->orderByDesc('created_at')->first())
@@ -25,7 +26,7 @@
                                 name="tipe_penyelesaian"
                                 value="{{ @$record->report()->orderByDesc('created_at')->first()->tipe_penyelesaian }}">
                         @else
-                            <select class="form-control select2" name="tipe_penyelesaian">
+                            <select class="form-control select2" name="tipe_penyelesaian" required>
                                 <option value="">Pilih Tipe Penyelesaian</option>
                                 <option value="Penyelesaian Langsung"
                                     {{ @$record->report()->tipe_penyelesaian == 'Penyelesaian Langsung' ? 'selected' : '' }}>
@@ -76,63 +77,66 @@
                 </div>
             </div>
 
-            @if(@$record->checkStatus(['05']) == 'true')
-            <div class="col-md-12">
-                <div class="form-group row">
-                    <label for="kontak_pelanggan" class="col-3 col-form-label">{{ __('Kontak Pelanggan') }}</label>
-                    @if (@$record->report()->orderByDesc('created_at')->first() && @$record->checkStatus(['05']) == 'true')
-                        <div class="col-9 col-form-label">
-                            <div class="radio-list">
-                                <label class="radio">
-                                    <input type="radio" name="kontak_pelanggan"
-                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == '1'? 'checked disabled': '' }} />
-                                    <span></span>
-                                    Ya
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="kontak_pelanggan"
-                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == '1'? 'checked disabled': '' }} />
-                                    <span></span>
-                                    Tidak
-                                </label>
-                            </div>
-                        </div>
-                    @else
-                        <div class="col-9 col-form-label">
-                            <div class="radio-list">
-                                <label class="radio">
-                                    <input type="radio" name="kontak_pelanggan" value="1" />
-                                    <span></span>
-                                    Ya
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="kontak_pelanggan" value="0" />
-                                    <span></span>
-                                    Tidak
-                                </label>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
 
-            <div class="col-md-12">
-                <div class="form-group row">
-                    <div class="col-3 col-form-label">
-                        <label for="konfirmasi_pelanggan"
-                            class="">{{ __('Konfirmasi Pelanggan') }}</label><span
-                            class="text-danger">*</span>
-                    </div>
-                    <div class="col-9 col-form-label">
-                        @if (@$record->report()->orderByDesc('created_at')->first() && @$record->checkStatus(['05']) == 'true')
-                            <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"
-                                readonly>{{ @$record->report()->orderByDesc('created_at')->first()->konfirmasi_pelanggan }}</textarea>
+            @if (@$record->status->code == '05')
+                <input type="hidden" name="kontak_pelanggan" value="0">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="kontak_pelanggan"
+                            class="col-3 col-form-label">{{ __('Kontak Pelanggan') }}</label>
+                        @if (@$record->report()->orderByDesc('created_at')->first())
+                            <div class="col-9 col-form-label">
+                                <div class="radio-list">
+                                    <label class="radio">
+                                        <input type="radio" name="kontak_pelanggan"
+                                            {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == 1? 'checked disabled': '' }} />
+                                        <span></span>
+                                        Ya
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="kontak_pelanggan"
+                                            {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == 0? 'checked disabled': '' }} />
+                                        <span></span>
+                                        Tidak
+                                    </label>
+                                </div>
+                            </div>
                         @else
-                            <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"></textarea>
+                            <div class="col-9 col-form-label">
+                                <div class="radio-list">
+                                    <label class="radio">
+                                        <input type="radio" name="kontak_pelanggan" value="1" />
+                                        <span></span>
+                                        Ya
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="kontak_pelanggan" value="0" />
+                                        <span></span>
+                                        Tidak
+                                    </label>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
-            </div>
+
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <div class="col-3 col-form-label">
+                            <label for="konfirmasi_pelanggan"
+                                class="">{{ __('Konfirmasi Pelanggan') }}</label><span
+                                class="text-danger">*</span>
+                        </div>
+                        <div class="col-9 col-form-label">
+                            @if (@$record->report()->orderByDesc('created_at')->first() && @$record->status->code == '05')
+                                <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"
+                                    readonly>{{ @$record->report()->orderByDesc('created_at')->first()->konfirmasi_pelanggan }}</textarea>
+                            @else
+                                <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"></textarea>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             @endif
 
         </div>

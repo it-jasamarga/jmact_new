@@ -15,6 +15,8 @@ use Carbon\Carbon;
 
 class ClaimController extends Controller
 {
+    // private $route = 'claim';
+
     public $breadcrumbs = [
         ['name' => "Laporan Claim Pelanggan"],
         ['link' => "#", 'name' => "Laporan Pelanggan"],
@@ -24,6 +26,15 @@ class ClaimController extends Controller
     public function __construct()
     {
         $this->route = 'claim';
+        // $this->middleware(function ($request, $next) {
+        //     $claim = (auth()->user()->hasPermissionTo('claim.create') || auth()->user()->hasPermissionTo('claim.detail') || auth()->user()->hasPermissionTo('claim.forward') || auth()->user()->hasPermissionTo('claim.stage'));
+        //     try {
+        //         if (!auth()->user()->hasPermissionTo($request->route()->getName())) abort(403);
+        //     } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+        //         if (!$claim) abort(403);
+        //     }
+        //     return $next($request);
+        // });
     }
 
     public function index(Request $request)
@@ -138,7 +149,7 @@ class ClaimController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $buttons = "";
-                if ($data->status->code == '08') {
+                if ($data->status->code == '07' || $data->status->code == '08') {
                     if (auth()->user()->can('claim.detail')) {
                         $buttons .= makeButton([
                             'type' => 'url',
@@ -151,7 +162,7 @@ class ClaimController extends Controller
                 } else {
 
                     if (auth()->user()->can('claim.forward')) {
-                        if (auth()->user()->roles()->first()->type == "Supervisor JMTC" && $data->status->code == '01') {
+                        if ($data->status->code == '02' || $data->status->code == '03') {
                             $buttons .= makeButton([
                                 'type' => 'modal',
                                 'url'   => $this->route . '/' . $data->id . '/edit',
@@ -160,35 +171,18 @@ class ClaimController extends Controller
                                 'tooltip' => 'Teruskan'
                             ]);
                         }
-
-                        if (auth()->user()->roles()->first()->type == "Service Provider" && ($data->status->code == '01' || $data->status->code == '04')) {
-                            $buttons .= makeButton([
-                                'type' => 'modal',
-                                'url'   => $this->route . '/' . $data->id . '/edit',
-                                'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-                                'label'   => '<i class="flaticon2-paperplane"></i>',
-                                'tooltip' => 'Teruskan'
-                            ]);
-                        }
-
-                        $buttons .= makeButton([
-                            'type' => 'modal',
-                            'url'   => $this->route . '/' . $data->id . '/edit',
-                            'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-                            'label'   => '<i class="flaticon2-paperplane"></i>',
-                            'tooltip' => 'Teruskan'
-                        ]);
-
                     }
 
                     if (auth()->user()->can('claim.stage')) {
-                        $buttons .= makeButton([
-                            'type' => 'modal',
-                            'url'   => $this->route . '/' . $data->id . '/edit-stage',
-                            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-                            'label'   => '<i class="flaticon2-checking"></i>',
-                            'tooltip' => 'Tahapan'
-                        ]);
+                        if ($data->status->code == '04' || $data->status->code == '05' || $data->status->code == '06') {
+                            $buttons .= makeButton([
+                                'type' => 'modal',
+                                'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                                'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                                'label'   => '<i class="flaticon2-checking"></i>',
+                                'tooltip' => 'Tahapan'
+                            ]);
+                        }
                     }
 
                     if (auth()->user()->can('claim.detail')) {
@@ -344,7 +338,7 @@ class ClaimController extends Controller
     public function historyStage(Request $request, $id)
     {
         // dd(request()->all());
-        if (request()->status == '05') {
+        if (!request()->status == '05') {
             $this->validate($request, [
                 'negosiasi_dan_klarifikasi' => 'required'
             ]);
@@ -408,7 +402,8 @@ class ClaimController extends Controller
 
     public function claimDetail(Request $request, $id)
     {
-        if (request()->keterangan_reject == '' && request()->status == 00) {
+        // dd(request()->all());
+        if (request()->keterangan_reject == '' && request()->status == 03) {
             $this->validate($request, [
                 'keterangan_reject' => 'required',
             ]);

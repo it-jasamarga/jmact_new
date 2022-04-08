@@ -14,132 +14,135 @@ use App\Http\Requests\MasterStatusRequest;
 
 class MasterStatusController extends Controller
 {
-  public $breadcrumbs = [
-    ['name' => "Master Data Status"],
-    ['link' => "#", 'name' => "Master"],
-    ['link' => "master-status", 'name' => "Master Status"]
-  ];
+    // private $route = 'master-status';
 
-  public function __construct(){
-    $this->route = 'master-status';
-  }
-
-  public function index(Request $request)
-  {
-    $data = [
-      'title' => 'Status',
-      'breadcrumbs' => $this->breadcrumbs,
-      'route' => $this->route,
+    public $breadcrumbs = [
+        ['name' => "Master Data Status"],
+        ['link' => "#", 'name' => "Master"],
+        ['link' => "master-status", 'name' => "Master Status"]
     ];
 
-    return view('backend.master.master-status.index', $data);
-  }
+    public function __construct()
+    {
+        $this->route = 'master-status';
+    }
 
-  public function list(MasterStatusFilter $request)
-  {
+    public function index(Request $request)
+    {
+        $data = [
+            'title' => 'Status',
+            'breadcrumbs' => $this->breadcrumbs,
+            'route' => $this->route,
+        ];
 
-    $data  = MasterStatus::query()->orderByDesc('created_at')->filter($request);
+        return view('backend.master.master-status.index', $data);
+    }
 
-    return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
-      $buttons .= makeButton([
-        'type' => 'modal',
-        'url'   => $this->route.'/'.$data->id.'/edit',
-        'tooltip' => 'Edit',
-      ]);
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
-      return $buttons;
-    })
-    // ->rawColumns(['numSelect','action'])
-    ->addIndexColumn()
-    ->make(true);
+    public function list(MasterStatusFilter $request)
+    {
 
-  }
+        $data  = MasterStatus::query()->orderByDesc('created_at')->filter($request);
+
+        return datatables()->of($data)
+            ->addColumn('numSelect', function ($data) use ($request) {
+                $button = '';
+                $button .= makeButton([
+                    'type' => 'deleteAll',
+                    'value' => $data->id
+                ]);
+                return $button;
+            })
+            ->addColumn('active', function ($data) use ($request) {
+                $button = getActive($data->active);
+                return $button;
+            })
+            ->addColumn('action', function ($data) {
+                $buttons = "";
+                $buttons .= makeButton([
+                    'type' => 'modal',
+                    'url'   => $this->route . '/' . $data->id . '/edit',
+                    'tooltip' => 'Edit',
+                ]);
+                // $buttons .= makeButton([
+                //   'type' => 'delete',
+                //   'id'   => $data->id
+                // ]);
+                return $buttons;
+            })
+            // ->rawColumns(['numSelect','action'])
+            ->addIndexColumn()
+            ->make(true);
+    }
 
 
-  public function create()
-  {
-    $data = [
-      'route' => $this->route
-    ];
+    public function create()
+    {
+        $data = [
+            'route' => $this->route
+        ];
 
-    return view('backend.master.master-status.create', $data);
-  }
+        return view('backend.master.master-status.create', $data);
+    }
 
-  public function store(MasterStatusRequest $request){
-    $record = MasterStatus::saveData($request);
+    public function store(MasterStatusRequest $request)
+    {
+        $record = MasterStatus::saveData($request);
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-  public function edit($id)
-  {
+    public function edit($id)
+    {
 
-    $data = [
-      'route' => $this->route,
-      'record' => MasterStatus::findOrFail($id)
-    ];
+        $data = [
+            'route' => $this->route,
+            'record' => MasterStatus::findOrFail($id)
+        ];
 
-    return view('backend.master.master-status.edit', $data);
-  }
+        return view('backend.master.master-status.edit', $data);
+    }
 
-  public function show($id)
-  {
+    public function show($id)
+    {
 
-    $data =[
-      'route' => $this->route,
-      'record' => MasterStatus::findOrFail($id)
-    ];
+        $data = [
+            'route' => $this->route,
+            'record' => MasterStatus::findOrFail($id)
+        ];
 
-    return view('backend.master.master-status.show', $data);
-  }
+        return view('backend.master.master-status.show', $data);
+    }
 
-  public function update(MasterStatusRequest $request, $id){
-    $record = MasterStatus::saveData($request);
+    public function update(MasterStatusRequest $request, $id)
+    {
+        $record = MasterStatus::saveData($request);
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-  public function destroy($id)
-  {
-    $record = MasterStatus::destroy($id);
+    public function destroy($id)
+    {
+        $record = MasterStatus::destroy($id);
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-  }
+    public function removeMulti()
+    {
+        $record = MasterStatus::whereIn('id', request()->id)->delete();
 
-  public function removeMulti(){
-    $record = MasterStatus::whereIn('id',request()->id)->delete();
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 }

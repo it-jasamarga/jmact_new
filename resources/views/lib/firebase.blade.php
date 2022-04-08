@@ -19,21 +19,21 @@
         const messaging = firebase.messaging();
         const db = firebase.firestore();
 
-        if('serviceWorker' in navigator) { 
+        if('serviceWorker' in navigator) {
             navigator.serviceWorker.register("{{asset('firebase-messaging-sw.js')}}").then(function(registration) {
-                
-                messaging.useServiceWorker(registration);  
+
+                messaging.useServiceWorker(registration);
 // CHECK AUTH
                 messaging.requestPermission().then(function (data) {
                     return messaging.getToken()
                 }).then(function(token) {
-                    $.post('{{ route("users.device") }}', { _token: "{{ csrf_token() }}", device_id: token });
+                    $.post('{{ route("user-account.device") }}', { _token: "{{ csrf_token() }}", device_id: token });
                 }).catch(function (err) {
                     console.log('eerr',err)
                 });
             });
 
-            
+
 // GET MESSAGE AND PUSH
             messaging.onMessage((payload) => {
               console.log('Message received. ', payload);
@@ -44,14 +44,14 @@
                     icon: payload.notification.image,
                     tag: payload.data.type
                 });
-               
+
             });
 
-            self.addEventListener('notificationClick', function(event) { 
+            self.addEventListener('notificationClick', function(event) {
                 console.log('check')
                 // event.notification.close();
             });
-            
+
 // READ / SHOW NOTIF
             var unitId = '{{ (\Auth::check()) ? auth()->user()->unit->id : null }}';
 
@@ -66,8 +66,8 @@
                 dbFirestore.onSnapshot(function(querySnapshot) {
                     var htmlNotif = ``;
                     querySnapshot.forEach(function(doc) {
-                        
-                        
+
+
                         htmlNotif += `
                             <div class="d-flex align-items-center mb-6">
                                 <!--begin::Symbol-->
@@ -96,7 +96,7 @@
                             </div>
                         `;
                     });
-                    
+
                     var notifLength = querySnapshot.docs.length;
                     console.log('notifLength',notifLength)
                     if(notifLength > 0){
@@ -128,7 +128,7 @@
                     window.location = url;
                 });
             });
-            
+
         }
 
 

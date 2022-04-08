@@ -14,8 +14,9 @@ class AddKontakPelangganKonfirmasiPelangganToDetailReport extends Migration
     public function up()
     {
         Schema::table('detail_report', function (Blueprint $table) {
-            $table->renameColumn('keterangan_reject', 'konfirmasi_pelanggan')->nullable()->after('keterangan');
-            $table->unsignedBigInteger('kontak_pelanggan')->change();
+            $table->longText('konfirmasi_pelanggan')->nullable()->after('keterangan');
+            $table->unsignedBigInteger('kontak_pelanggan')->nullable()->after('konfirmasi_pelanggan');
+            $table->string('tipe_penyelesaian', 225)->nullable()->after('kontak_pelanggan');
         });
     }
 

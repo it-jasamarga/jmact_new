@@ -14,134 +14,136 @@ use App\Http\Requests\MasterBkRequest;
 
 class MasterBkController extends Controller
 {
-  public $breadcrumbs = [
-    ['name' => "Master Data Bidang Keluhan"],
-    ['link' => "#", 'name' => "Master"],
-    ['link' => "master-bk", 'name' => "Master Bidang Keluhan"]
-  ];
 
-  public function __construct(){
-    $this->route = 'master-bk';
-  }
-
-  public function index(Request $request)
-  {
-    $data = [
-      'title' => 'Bidang Keluhan',
-      'breadcrumbs' => $this->breadcrumbs,
-      'route' => $this->route,
+    public $breadcrumbs = [
+        ['name' => "Master Data Bidang Keluhan"],
+        ['link' => "#", 'name' => "Master"],
+        ['link' => "master-bk", 'name' => "Master Bidang Keluhan"]
     ];
 
-    return view('backend.master.master-bk.index', $data);
-  }
+    public function __construct()
+    {
+        $this->route = 'master-bk';
+    }
 
-  public function list(MasterBkFilter $request)
-  {
+    public function index(Request $request)
+    {
+        $data = [
+            'title' => 'Bidang Keluhan',
+            'breadcrumbs' => $this->breadcrumbs,
+            'route' => $this->route,
+        ];
 
-    $data  = MasterBk::query()->orderByDesc('created_at')->filter($request);
+        return view('backend.master.master-bk.index', $data);
+    }
 
-    return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
-      if(auth()->user()->can('master-bk.edit')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit',
-          'tooltip' => 'Edit',
+    public function list(MasterBkFilter $request)
+    {
+
+        $data  = MasterBk::query()->orderByDesc('created_at')->filter($request);
+
+        return datatables()->of($data)
+            ->addColumn('numSelect', function ($data) use ($request) {
+                $button = '';
+                $button .= makeButton([
+                    'type' => 'deleteAll',
+                    'value' => $data->id
+                ]);
+                return $button;
+            })
+            ->addColumn('active', function ($data) use ($request) {
+                $button = getActive($data->active);
+                return $button;
+            })
+            ->addColumn('action', function ($data) {
+                $buttons = "";
+                if (auth()->user()->can('master-bk.edit')) {
+                    $buttons .= makeButton([
+                        'type' => 'modal',
+                        'url'   => $this->route . '/' . $data->id . '/edit',
+                        'tooltip' => 'Edit',
+                    ]);
+                }
+                // $buttons .= makeButton([
+                //   'type' => 'delete',
+                //   'id'   => $data->id
+                // ]);
+                return $buttons;
+            })
+            // ->rawColumns(['numSelect','action'])
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+
+    public function create()
+    {
+        $data = [
+            'route' => $this->route
+        ];
+
+        return view('backend.master.master-bk.create', $data);
+    }
+
+    public function store(MasterBkRequest $request)
+    {
+        $record = MasterBk::saveData($request);
+
+        return response([
+            'status' => true,
+            'message' => 'success',
         ]);
-      }
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
-      return $buttons;
-    })
-    // ->rawColumns(['numSelect','action'])
-    ->addIndexColumn()
-    ->make(true);
+    }
 
-  }
+    public function edit($id)
+    {
 
+        $data = [
+            'route' => $this->route,
+            'record' => MasterBk::findOrFail($id)
+        ];
 
-  public function create()
-  {
-    $data = [
-      'route' => $this->route
-    ];
+        return view('backend.master.master-bk.edit', $data);
+    }
 
-    return view('backend.master.master-bk.create', $data);
-  }
+    public function show($id)
+    {
 
-  public function store(MasterBkRequest $request){
-    $record = MasterBk::saveData($request);
+        $data = [
+            'route' => $this->route,
+            'record' => MasterBk::findOrFail($id)
+        ];
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return view('backend.master.master-bk.show', $data);
+    }
 
-  public function edit($id)
-  {
+    public function update(MasterBkRequest $request, $id)
+    {
+        $record = MasterBk::saveData($request);
 
-    $data = [
-      'route' => $this->route,
-      'record' => MasterBk::findOrFail($id)
-    ];
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-    return view('backend.master.master-bk.edit', $data);
-  }
+    public function destroy($id)
+    {
+        $record = MasterBk::destroy($id);
 
-  public function show($id)
-  {
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-    $data =[
-      'route' => $this->route,
-      'record' => MasterBk::findOrFail($id)
-    ];
+    public function removeMulti()
+    {
+        $record = MasterBk::whereIn('id', request()->id)->delete();
 
-    return view('backend.master.master-bk.show', $data);
-  }
-
-  public function update(MasterBkRequest $request, $id){
-    $record = MasterBk::saveData($request);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
-  public function destroy($id)
-  {
-    $record = MasterBk::destroy($id);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-
-  }
-
-  public function removeMulti(){
-    $record = MasterBk::whereIn('id',request()->id)->delete();
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 }

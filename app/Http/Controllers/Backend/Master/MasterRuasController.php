@@ -14,142 +14,145 @@ use App\Http\Requests\MasterRuasRequest;
 
 class MasterRuasController extends Controller
 {
-  public $breadcrumbs = [
-    ['name' => "Master Data Ruas"],
-    ['link' => "#", 'name' => "Master"],
-    ['link' => "master-ruas", 'name' => "Master Ruas"]
-  ];
+    // private $route = 'master-ruas';
 
-  public function __construct(){
-    $this->route = 'master-ruas';
-  }
-
-  public function index(Request $request)
-  {
-    $data = [
-      'title' => 'Ruas',
-      'breadcrumbs' => $this->breadcrumbs,
-      'route' => $this->route,
+    public $breadcrumbs = [
+        ['name' => "Master Data Ruas"],
+        ['link' => "#", 'name' => "Master"],
+        ['link' => "master-ruas", 'name' => "Master Ruas"]
     ];
 
-    return view('backend.master.master-ruas.index', $data);
-  }
+    public function __construct()
+    {
+        $this->route = 'master-ruas';
+    }
 
-  public function list(MasterRuasFilter $request)
-  {
+    public function index(Request $request)
+    {
+        $data = [
+            'title' => 'Ruas',
+            'breadcrumbs' => $this->breadcrumbs,
+            'route' => $this->route,
+        ];
 
-    $data  = MasterRuas::query()->orderByDesc('created_at')->filter($request);
+        return view('backend.master.master-ruas.index', $data);
+    }
 
-    return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('ro_id', function ($data) use ($request) {
-      $button = ($data->ro) ? $data->ro->name : '-';
-      return $button;
-    })
-    ->addColumn('regional_id', function ($data) use ($request) {
-      $button = ($data->ro->regional) ? $data->ro->regional->name : '-';
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
-      if(auth()->user()->can('master-ruas.edit')) {
-        $buttons .= makeButton([
-          'type' => 'modal',
-          'url'   => $this->route.'/'.$data->id.'/edit',
-          'tooltip' => 'Edit',
+    public function list(MasterRuasFilter $request)
+    {
+
+        $data  = MasterRuas::query()->orderByDesc('created_at')->filter($request);
+
+        return datatables()->of($data)
+            ->addColumn('numSelect', function ($data) use ($request) {
+                $button = '';
+                $button .= makeButton([
+                    'type' => 'deleteAll',
+                    'value' => $data->id
+                ]);
+                return $button;
+            })
+            ->addColumn('ro_id', function ($data) use ($request) {
+                $button = ($data->ro) ? $data->ro->name : '-';
+                return $button;
+            })
+            ->addColumn('regional_id', function ($data) use ($request) {
+                $button = ($data->ro->regional) ? $data->ro->regional->name : '-';
+                return $button;
+            })
+            ->addColumn('active', function ($data) use ($request) {
+                $button = getActive($data->active);
+                return $button;
+            })
+            ->addColumn('action', function ($data) {
+                $buttons = "";
+                if (auth()->user()->can('master-ruas.edit')) {
+                    $buttons .= makeButton([
+                        'type' => 'modal',
+                        'url'   => $this->route . '/' . $data->id . '/edit',
+                        'tooltip' => 'Edit',
+                    ]);
+                }
+                // $buttons .= makeButton([
+                //   'type' => 'delete',
+                //   'id'   => $data->id
+                // ]);
+                return $buttons;
+            })
+            // ->rawColumns(['numSelect','regional_id','action'])
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+
+    public function create()
+    {
+        $data = [
+            'route' => $this->route
+        ];
+
+        return view('backend.master.master-ruas.create', $data);
+    }
+
+    public function store(MasterRuasRequest $request)
+    {
+        $record = MasterRuas::saveData($request);
+
+        return response([
+            'status' => true,
+            'message' => 'success',
         ]);
-      }
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
-      return $buttons;
-    })
-    // ->rawColumns(['numSelect','regional_id','action'])
-    ->addIndexColumn()
-    ->make(true);
+    }
 
-  }
+    public function edit($id)
+    {
 
+        $data = [
+            'route' => $this->route,
+            'record' => MasterRuas::findOrFail($id)
+        ];
 
-  public function create()
-  {
-    $data = [
-      'route' => $this->route
-    ];
+        return view('backend.master.master-ruas.edit', $data);
+    }
 
-    return view('backend.master.master-ruas.create', $data);
-  }
+    public function show($id)
+    {
 
-  public function store(MasterRuasRequest $request){
-    $record = MasterRuas::saveData($request);
+        $data = [
+            'route' => $this->route,
+            'record' => MasterRuas::findOrFail($id)
+        ];
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return view('backend.master.master-ruas.show', $data);
+    }
 
-  public function edit($id)
-  {
+    public function update(MasterRuasRequest $request, $id)
+    {
+        $record = MasterRuas::saveData($request);
 
-    $data = [
-      'route' => $this->route,
-      'record' => MasterRuas::findOrFail($id)
-    ];
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-    return view('backend.master.master-ruas.edit', $data);
-  }
+    public function destroy($id)
+    {
+        $record = MasterRuas::destroy($id);
 
-  public function show($id)
-  {
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-    $data =[
-      'route' => $this->route,
-      'record' => MasterRuas::findOrFail($id)
-    ];
+    public function removeMulti()
+    {
+        $record = MasterRuas::whereIn('id', request()->id)->delete();
 
-    return view('backend.master.master-ruas.show', $data);
-  }
-
-  public function update(MasterRuasRequest $request, $id){
-    $record = MasterRuas::saveData($request);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
-  public function destroy($id)
-  {
-    $record = MasterRuas::destroy($id);
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-
-  }
-
-  public function removeMulti(){
-    $record = MasterRuas::whereIn('id',request()->id)->delete();
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 }

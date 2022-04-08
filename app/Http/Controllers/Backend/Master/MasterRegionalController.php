@@ -14,132 +14,134 @@ use App\Http\Requests\MasterRegionalRequest;
 
 class MasterRegionalController extends Controller
 {
-  public $breadcrumbs = [
-    ['name' => "Master Data Regional"],
-    ['link' => "#", 'name' => "Master"],
-    ['link' => "master-regional", 'name' => "Master Regional"]
-  ];
 
-  public function __construct(){
-    $this->route = 'master-regional';
-  }
-
-  public function index(Request $request)
-  {
-    $data = [
-      'title' => 'Regional',
-      'breadcrumbs' => $this->breadcrumbs,
-      'route' => $this->route,
+    public $breadcrumbs = [
+        ['name' => "Master Data Regional"],
+        ['link' => "#", 'name' => "Master"],
+        ['link' => "master-regional", 'name' => "Master Regional"]
     ];
 
-    return view('backend.master.master-regional.index', $data);
-  }
+    public function __construct()
+    {
+        $this->route = 'master-regional';
+    }
 
-  public function list(MasterRegionalFilter $request)
-  {
+    public function index(Request $request)
+    {
+        $data = [
+            'title' => 'Regional',
+            'breadcrumbs' => $this->breadcrumbs,
+            'route' => $this->route,
+        ];
 
-    $data  = MasterRegional::query()->orderByDesc('created_at')->filter($request);
+        return view('backend.master.master-regional.index', $data);
+    }
 
-    return datatables()->of($data)
-    ->addColumn('numSelect', function ($data) use ($request) {
-      $button = '';
-      $button .= makeButton([
-        'type' => 'deleteAll',
-        'value' => $data->id
-      ]);
-      return $button;
-    })
-    ->addColumn('active', function ($data) use ($request) {
-      $button = getActive($data->active);
-      return $button;
-    })
-    ->addColumn('action', function($data){
-      $buttons = "";
-      $buttons .= makeButton([
-        'type' => 'modal',
-        'url'   => $this->route.'/'.$data->id.'/edit',
-        'tooltip' => 'Edit',
-      ]);
-      // $buttons .= makeButton([
-      //   'type' => 'delete',
-      //   'id'   => $data->id
-      // ]);
-      return $buttons;
-    })
-    // ->rawColumns(['numSelect','action'])
-    ->addIndexColumn()
-    ->make(true);
+    public function list(MasterRegionalFilter $request)
+    {
 
-  }
+        $data  = MasterRegional::query()->orderByDesc('created_at')->filter($request);
+
+        return datatables()->of($data)
+            ->addColumn('numSelect', function ($data) use ($request) {
+                $button = '';
+                $button .= makeButton([
+                    'type' => 'deleteAll',
+                    'value' => $data->id
+                ]);
+                return $button;
+            })
+            ->addColumn('active', function ($data) use ($request) {
+                $button = getActive($data->active);
+                return $button;
+            })
+            ->addColumn('action', function ($data) {
+                $buttons = "";
+                $buttons .= makeButton([
+                    'type' => 'modal',
+                    'url'   => $this->route . '/' . $data->id . '/edit',
+                    'tooltip' => 'Edit',
+                ]);
+                // $buttons .= makeButton([
+                //   'type' => 'delete',
+                //   'id'   => $data->id
+                // ]);
+                return $buttons;
+            })
+            // ->rawColumns(['numSelect','action'])
+            ->addIndexColumn()
+            ->make(true);
+    }
 
 
-  public function create()
-  {
-    $data = [
-      'route' => $this->route
-    ];
+    public function create()
+    {
+        $data = [
+            'route' => $this->route
+        ];
 
-    return view('backend.master.master-regional.create', $data);
-  }
+        return view('backend.master.master-regional.create', $data);
+    }
 
-  public function store(MasterRegionalRequest $request){
-    $record = MasterRegional::saveData($request);
+    public function store(MasterRegionalRequest $request)
+    {
+        $record = MasterRegional::saveData($request);
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-  public function edit($id)
-  {
+    public function edit($id)
+    {
 
-    $data = [
-      'route' => $this->route,
-      'record' => MasterRegional::findOrFail($id)
-    ];
+        $data = [
+            'route' => $this->route,
+            'record' => MasterRegional::findOrFail($id)
+        ];
 
-    return view('backend.master.master-regional.edit', $data);
-  }
+        return view('backend.master.master-regional.edit', $data);
+    }
 
-  public function show($id)
-  {
+    public function show($id)
+    {
 
-    $data =[
-      'route' => $this->route,
-      'record' => MasterRegional::findOrFail($id)
-    ];
+        $data = [
+            'route' => $this->route,
+            'record' => MasterRegional::findOrFail($id)
+        ];
 
-    return view('backend.master.master-regional.show', $data);
-  }
+        return view('backend.master.master-regional.show', $data);
+    }
 
-  public function update(MasterRegionalRequest $request, $id){
-    $record = MasterRegional::saveData($request);
+    public function update(MasterRegionalRequest $request, $id)
+    {
+        $record = MasterRegional::saveData($request);
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-  public function destroy($id)
-  {
-    $record = MasterRegional::destroy($id);
+    public function destroy($id)
+    {
+        $record = MasterRegional::destroy($id);
 
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 
-  }
+    public function removeMulti()
+    {
+        $record = MasterRegional::whereIn('id', request()->id)->delete();
 
-  public function removeMulti(){
-    $record = MasterRegional::whereIn('id',request()->id)->delete();
-
-    return response([
-      'status' => true,
-      'message' => 'success',
-    ]);
-  }
-
+        return response([
+            'status' => true,
+            'message' => 'success',
+        ]);
+    }
 }

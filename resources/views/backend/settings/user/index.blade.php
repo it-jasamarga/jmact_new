@@ -46,7 +46,7 @@
         <div class="col-12 col-sm-6 col-lg-4">
           <div class="form-group">
               <label for="users-list-role" class="">{{ __('Unit') }}</label>
-              <select class="form-control filter-control select2" name="unit_id" data-post="unit_id">
+              <select class="form-control filter-control select2" data-post="unit_id">
                   {!! App\Models\MasterUnit::options('unit','id',[],'( Pilih Unit )') !!}
               </select>
           </div>

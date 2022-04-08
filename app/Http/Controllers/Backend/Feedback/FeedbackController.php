@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class FeedbackController extends Controller
 {
-    private $route = 'feedback-pelanggan';
+    // private $route = 'feedback-pelanggan';
 
     private $kepuasan = [
       1 => "sangat tidak puas",
@@ -20,21 +20,22 @@ class FeedbackController extends Controller
     ];
 
     public $breadcrumbs = [
-        ['name' => "Feedback Pelanggan"], 
+        ['name' => "Feedback Pelanggan"],
         ['link' => "#", 'name' => "Feedback Pelanggan"],
         ['link' => "feedback-pelanggan", 'name' => "Feedback Pelanggan"]
     ];
 
     public function __construct(Request $request)
     {
-      $this->middleware(function ($request, $next) {
-        $can_feedback = auth()->user()->hasPermissionTo('feedback-pelanggan.detail') || auth()->user()->hasPermissionTo('feedback-pelanggan.contact');
-        try { if (! auth()->user()->hasPermissionTo($request->route()->getName())) abort(403); }
-        catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) { if (! $can_feedback) abort(403); }
-        return $next($request);
-      });
+    //   $this->middleware(function ($request, $next) {
+    //     $can_feedback = auth()->user()->hasPermissionTo('feedback-pelanggan.detail') || auth()->user()->hasPermissionTo('feedback-pelanggan.contact');
+    //     try { if (! auth()->user()->hasPermissionTo($request->route()->getName())) abort(403); }
+    //     catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) { if (! $can_feedback) abort(403); }
+    //     return $next($request);
+    //   });
 
       // $this->middleware('auth');
+      $this->route = 'feedback-pelanggan';
       setlocale(LC_TIME, 'ID_id');
     }
 
@@ -61,7 +62,7 @@ class FeedbackController extends Controller
 
     private function humanDateDiff($date) {
       $diff = (new \DateTime($date))->diff(new \DateTime());
-      
+
       $lookup = [
           'y' => 'tahun',
           'm' => 'bulan',
@@ -69,7 +70,7 @@ class FeedbackController extends Controller
           'h' => 'jam',
           'i' => 'menit',
       ];
-      
+
       foreach ($lookup as $property => $word) {
           if ($diff->$property) {
               if ($property === 'd' && $diff->$property >= 7) {
@@ -83,7 +84,7 @@ class FeedbackController extends Controller
           }
       }
 
-      return $output ?? 'beberapa detik yang lalu';      
+      return $output ?? 'beberapa detik yang lalu';
     }
 
     public function contact(Request $request, $no_tiket) {
@@ -111,7 +112,7 @@ class FeedbackController extends Controller
           \App\Models\DetailHistory::create($history);
           $query->update(['status_id' => $status_id]);
         }
-        
+
       }
       return redirect()->back();
     }
@@ -183,7 +184,7 @@ class FeedbackController extends Controller
         } else {
           $claim = $claim->where('claim.status_id', '>=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "%Pembayaran%" AND type=2 LIMIT 1)'));
         }
-        
+
         $data = $keluhan->union($claim)->get();
 
         return datatables()->of($data)
@@ -218,7 +219,7 @@ class FeedbackController extends Controller
                 'tooltip' => 'Contact'
               ]);
             }
-            
+
             if(auth()->user()->can('feedback-pelanggan.detail') && !is_null($data->id)) {
               $buttons .= makeButton([
                 'type' => 'modal',
@@ -228,7 +229,7 @@ class FeedbackController extends Controller
                 'tooltip' => 'Detail Feedback'
               ]);
             }
-            
+
             return $buttons;
           })
         ->rawColumns(['action'])

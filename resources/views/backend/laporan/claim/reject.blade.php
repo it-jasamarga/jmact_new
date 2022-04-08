@@ -1,13 +1,13 @@
 <form action="{{ route($route.'.claimDetail',$record->id) }}" method="POST" id="formDataReject" enctype="multipart/form-data">
     @method('PUT')
     @csrf
-    <input type="hidden" name="status" value="00">
+    <input type="hidden" name="status" value="03">
     <div class="modal-header">
         <h3 class="modal-title">Reject Claim</h3>
     </div>
     <div class="modal-body">
         <div class="row">
-           
+
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="keterangan_reject" class="">{{ __('Keterangan Reject') }}</label><span class="text-danger">*</span>

@@ -14,7 +14,7 @@
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">{{ $title }}
-                    <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span>
+                    {{-- <span class="text-muted pt-2 font-size-sm d-block">pengelolahan data </span> --}}
                 </h3>
             </div>
             <div class="card-toolbar">
@@ -61,9 +61,9 @@
                         </div>
                     </div>
                     <div class="col-md-6 mt-3">
-                        @if ($record->checkStatus(['00']) === 'true')
+                        @if ($record->status->code == '03')
                             <div class="alert alert-custom alert-default" role="alert">
-                                <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
+                                <div class="alert-icon"><em class="flaticon-warning text-primary"></em></div>
                                 <div class="alert-text">
                                     {{ $record->keterangan_reject }}
                                 </div>
@@ -294,7 +294,7 @@
 
                 @if (substr(Request::server('HTTP_REFERER'), -15) == 'pencarian-tiket')
                     <a href="javascript:history.back()" class="btn btn-secondary">
-                        <i class="flaticon-circle"></i>
+                        <em class="flaticon-circle"></em>
                         Kembali
                     </a>
                 @else
@@ -302,22 +302,20 @@
                         <em class="flaticon-circle"></em>
                         Kembali
                     </a>
-                    {{-- {{dd($record->checkStatus(['02', '03']) == "false")}} --}}
-                    @if (auth()->user()->hasRole('Supervisor JMTO'))
-                    {{-- @if (auth()->user()->roles()->first()->type == 'Supervisor JMTO') --}}
-                        {{-- @if ($record->checkStatus(['01']) == "true") --}}
-                        <div class="btn btn-light-success float-right save">
-                            <em class="flaticon-plus"></em>
-                            Approve
-                        </div>
+                        @if ($record->status->code == '01')
+                            @if (auth()->user()->hasRole('Supervisor JMTO') || auth()->user()->hasRole('Superadmin'))
+                                <div class="btn btn-light-success float-right save">
+                                    <em class="flaticon-plus"></em>
+                                    Approve
+                                </div>
 
-                        <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
-                            data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
-                            <em class="flaticon-cancel"></em>
-                            Reject
-                        </div>
-                        {{-- @endif --}}
-                    @endif
+                                <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
+                                    data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
+                                    <em class="flaticon-cancel"></em>
+                                    Reject
+                                </div>
+                            @endif
+                        @endif
                 @endif
             </form>
         </div>

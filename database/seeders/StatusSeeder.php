@@ -98,13 +98,13 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '06',
-                'status' =>'Proses Pembayaran',
+                'status' =>'Pembayaran Selesai',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '07',
-                'status' =>'Feedback',
+                'status' =>'Follow Up Feedback Pelanggan',
                 'type' => 2,
                 'active' => 1
             ],

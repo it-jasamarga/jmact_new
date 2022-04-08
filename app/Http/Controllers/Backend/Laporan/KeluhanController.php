@@ -23,6 +23,8 @@ use Carbon\Carbon;
 
 class KeluhanController extends Controller
 {
+    // private $route = 'keluhan';
+
     public $breadcrumbs = [
         ['name' => "Laporan Keluhan Pelanggan"],
         ['link' => "#", 'name' => "Laporan Pelanggan"],
@@ -33,6 +35,15 @@ class KeluhanController extends Controller
     {
         $this->route = 'keluhan';
         // $this->firebase = new HelperFirestore();
+        // $this->middleware(function ($request, $next) {
+        //     $keluhan = (auth()->user()->hasPermissionTo('keluhan.create') || auth()->user()->hasPermissionTo('keluhan.detail') || auth()->user()->hasPermissionTo('keluhan.forward') || auth()->user()->hasPermissionTo('keluhan.sla'));
+        //     try {
+        //         if (!auth()->user()->hasPermissionTo($request->route()->getName())) abort(403);
+        //     } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+        //         if (!$keluhan) abort(403);
+        //     }
+        //     return $next($request);
+        // });
     }
 
     public function index(Request $request)
@@ -147,7 +158,7 @@ class KeluhanController extends Controller
             })
             ->addColumn('action', function ($data) use ($request) {
                 $buttons = "";
-                if ($data->status->code == '07') {
+                if ($data->status->code == '08') {
                     if (auth()->user()->can('keluhan.detail')) {
                         $buttons .= makeButton([
                             'type' => 'url',
@@ -159,13 +170,15 @@ class KeluhanController extends Controller
                     }
                 } else {
                     if (auth()->user()->can('keluhan.forward')) {
-                        $buttons .= makeButton([
-                            'type' => 'modal',
-                            'url'   => $this->route . '/' . $data->id . '/edit',
-                            'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
-                            'label'   => '<i class="flaticon2-paperplane"></i>',
-                            'tooltip' => 'Teruskan'
-                        ]);
+                        if ($data->status->code == '01') {
+                            $buttons .= makeButton([
+                                'type' => 'modal',
+                                'url'   => $this->route . '/' . $data->id . '/edit',
+                                'class'   => 'btn btn-icon btn-warning btn-sm btn-hover-light custome-modal',
+                                'label'   => '<i class="flaticon2-paperplane"></i>',
+                                'tooltip' => 'Teruskan'
+                            ]);
+                        }
                     }
 
                     if (auth()->user()->can('keluhan.sla')) {
@@ -474,7 +487,28 @@ class KeluhanController extends Controller
 
     public function prosesKonfirmasiPelanggan($id)
     {
-        //   dd(request()->all());
+        // dd(request()->all());
+        // if (request()->kontak_pelanggan == null || request()->konfirmasi_pelanggan == null) {
+        //     $this->validate($request, [
+        //         'kontak_pelanggan' => 'required',
+        //         'konfirmasi_pelanggan' => 'required',
+        //     ]);
+        // }
+        if ((request()->kontak_pelanggan == 0) || request()->konfirmasi_pelanggan == null) {
+            return response([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "kontak_pelanggan" => ["The kontak pelanggan field is required"],
+                    "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
+                ]
+            ], 422);
+        }
+
+        // $request['ya'] = (request()->kontak_pelanggan['ya']) ? 1 : 0;
+
+        // $request['tidak'] = (request()->kontak_pelanggan['tidak']) ? 1 : 0;
+
+        // unset($request['kontak_pelanggan']);
         $recordReport = DetailReport::where('keluhan_id', $id)->orderByDesc('created_at')->first();
         $recordReport->kontak_pelanggan = request()->kontak_pelanggan;
         $recordReport->konfirmasi_pelanggan = request()->konfirmasi_pelanggan;

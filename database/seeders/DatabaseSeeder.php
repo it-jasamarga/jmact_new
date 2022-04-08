@@ -14,22 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $this->call([
             RegionalSeeder::class,
             RoSeeder::class,
             RuasSeeder::class,
-            BidangKeluhanSeeder::class,
+            UnitSeeder::class,
             GolonganKendaraanSeeder::class,
             SumberSeeder::class,
-            UnitSeeder::class,
             StatusSeeder::class,
+            TypeSeeder::class,
+            BidangKeluhanSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             JenisClaimSeeder::class,
             AppVarSeeder::class,
             FeedbackUnsatisfactionSeeder::class,
-            TypeSeeder::class
         ]);
     }
 }

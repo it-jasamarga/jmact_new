@@ -10,7 +10,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="keluhan" class="">{{ __('Bidang Keluhan') }}</label><span class="text-danger">*</span>
+                    <label for="keluhan" class="">{{ __('Keluhan') }}</label><span class="text-danger">*</span>
                     <input id="keluhan" type="text" class="form-control" name="keluhan"
                         value="{{ $record->keluhan }}" required autocomplete="keluhan" autofocus
                         placeholder="Bidang Keluhan" maxlength="50">
@@ -28,7 +28,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="tipe_layanan_keluhan"
-                        class="">{{ __('Tipe Layanan Keluhann') }}</label><span class="text-danger">*</span>
+                        class="">{{ __('Tipe Layanan Keluhan') }}</label><span class="text-danger">*</span>
                     <input id="tipe_layanan_keluhan" type="text" class="form-control" name="tipe_layanan_keluhan"
                         value="{{ $record->tipe_layanan_keluhan }}" required autocomplete="off" autofocus
                         placeholder="Tipe Layanan Keluhan" maxlength="30">
@@ -46,8 +46,8 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="sla" class="">{{ __('SLA') }}</label><span class="text-danger">*</span>
-                    <input id="sla" type="text" class="form-control" name="sla" value="{{ $record->sla }}" required
+                    <label for="sla" class="">{{ __('SLA (Jam)') }}</label><span class="text-danger">*</span>
+                    <input id="sla" type="number" class="form-control" name="sla" value="{{ $record->sla }}" required
                         autocomplete="off" autofocus placeholder="Dalam satuan waktu (jam)" maxlength="30">
                 </div>
             </div>

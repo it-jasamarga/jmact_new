@@ -25,6 +25,7 @@ class DetailReportRequest extends FormRequest
     {
       $unique = ($id = request()->route('detail_report')) ? ','.$id : '';
       return [
+        'tipe_penyelesaian' => 'required',
         'url_file' => 'required|max:500000',
         'keterangan' => 'required|max:10000'
       ];

@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="sla" class="">{{ __('SLA (Jam)') }}</label><span class="text-danger">*</span>
-                    <input id="sla" type="text" class="form-control" name="sla" required autocomplete="off" autofocus
+                    <input id="sla" type="number" class="form-control" name="sla" autocomplete="off" autofocus
                         placeholder="Dalam satuan waktu (jam)" maxlength="30" required>
                 </div>
             </div>

@@ -119,14 +119,14 @@
       "action" : ["create","edit","show","delete"],
       "submenu": [
         {
-          "url": "setting/users",
+          "url": "user-account",
           "roles" : ["admin","superadmin"],
           "perms": "user-account",
           "name": "User Account",
           "action" : ["create","edit"]
         },
         {
-          "url": "setting/role",
+          "url": "role",
           "roles" : ["admin","superadmin"],
           "perms": "role",
           "name": "Roles",
