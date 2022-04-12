@@ -20,9 +20,12 @@ class MasterRo extends Model implements Auditable
 	protected $table = 'master_ro';
 
  	protected $guarded = [];
-
 	 
 	public function regional(){
 		return $this->belongsTo(MasterRegional::class, 'regional_id');
+	}
+
+	public function ruas() {
+		return $this->hasMany(MasterRuas::class, 'id', 'ro_id');
 	}
 }

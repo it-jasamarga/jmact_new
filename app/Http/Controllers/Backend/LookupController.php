@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\KeluhanPelanggan;
-use App\Filters\KeluhanPelangganFilter;
+use App\Models\ClaimPelanggan;
+use App\Filters\DashboardFilter;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,61 +15,193 @@ use Illuminate\Support\Facades\DB;
 class LookupController extends Controller
 {
 
-    public function list(KeluhanPelangganFilter $request)
+    public function list(DashboardFilter $request)
     {
-        $data  = KeluhanPelanggan::with('history')
-            ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
-            ->select('*')
-            ->filter($request);
-  
-        if(auth()->user()->hasRole('Superadmin')){
-            $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
-        }
+        if ($request->request->input('dashscope') == 'keluhan') {
 
-        if(auth()->user()->hasRole('JMTC')){
-            $data  = KeluhanPelanggan::where('status_id','1')
-                ->orderByDesc('created_at')->select('*')->filter($request);
-        }
-
-        if(auth()->user()->hasRole('Service Provider')){
             $data  = KeluhanPelanggan::with('history')
-                ->where('unit_id',auth()->user()->unit_id)
-                ->orderByDesc('created_at')
+                ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
                 ->select('*')
                 ->filter($request);
+    
+            if(auth()->user()->hasRole('Superadmin')){
+                $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
+            }
+
+            if(auth()->user()->hasRole('JMTC')){
+                $data  = KeluhanPelanggan::where('status_id','1')
+                    ->orderByDesc('created_at')->select('*')->filter($request);
+            }
+
+            if(auth()->user()->hasRole('Service Provider')){
+                $data  = KeluhanPelanggan::with('history')
+                    ->where('unit_id',auth()->user()->unit_id)
+                    ->orderByDesc('created_at')
+                    ->select('*')
+                    ->filter($request);
+            }
+
+            if(auth()->user()->hasRole('Regional')){
+                $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
+                $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+                    ->orderByDesc('created_at')
+                    ->select('*')
+                    ->filter($request);
+            }
+    
+            return datatables()->of($data)
+                ->addColumn('sumber_id', function ($data) use ($request) {
+                    return ($data->sumber) ? $data->sumber->description : '-';
+                })
+                ->addColumn('bidang_id', function ($data) use ($request) {
+                    return ($data->bidang) ? $data->bidang->bidang : '-';
+                })
+                ->addColumn('golongan_id', function ($data) use ($request) {
+                    return ($data->golongan) ? $data->golongan->golongan : '-';
+                })
+                ->addColumn('status_id', function ($data) use ($request) {
+                    return ($data->status) ? $data->status->status : '-';
+                })
+                ->addIndexColumn()
+                ->make(true);
+
+        } else if ($request->request->input('dashscope') == 'claim') {
+
+            if (auth()->user()->hasRole('Superadmin')) $data = ClaimPelanggan::where('id', '>', 0);
+            else if (auth()->user()->hasRole('JMTC')) $data = ClaimPelanggan::where('status_id','1');
+            else if (auth()->user()->hasRole('Service Provider')) $data = KeluhanPelanggan::with('history')->where('unit_id',auth()->user()->unit_id);
+            else if (auth()->user()->hasRole('Regional')) $data = KeluhanPelanggan::where('regional_id', (auth()->user()) ? auth()->user()->regional_id : null);
+            else $data = ClaimPelanggan::with('history')->whereHas('history', function($q) { $q->where('unit_id', auth()->user()->unit_id); });
+
+            // dd($request, $data->orderByDesc('created_at')->select('*')->filter($request)->get()->toArray());
+    
+            return datatables()->of($data->orderByDesc('created_at')->select('*')->filter($request))
+                ->addColumn('tipe_claim', function ($data) use ($request) {
+                    return ($data->jenisClaim) ? $data->JenisClaim->jenis_claim : '-';
+                })
+                ->addColumn('service_provider', function ($data) use ($request) {
+                    return ($data->unit) ? $data->unit->unit : '-';
+                })
+                ->addColumn('nilai_claim_diajukan', function ($data) use ($request) {
+                    return $data->nominal_customer;
+                })
+                ->addColumn('nilai_claim_dibayarkan', function ($data) use ($request) {
+                    return $data->nominal_final;
+                })
+                ->addColumn('status', function ($data) use ($request) {
+                    return ($data->status) ? $data->status->status : '-';
+                })
+                ->addIndexColumn()
+                ->make(true);
+
         }
 
-        if(auth()->user()->hasRole('Regional')){
-            $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
-            $data  = KeluhanPelanggan::where('regional_id',$regionalId)
-                ->orderByDesc('created_at')
-                ->select('*')
-                ->filter($request);
-        }
-  
-        return datatables()->of($data)
-            ->addColumn('sumber_id', function ($data) use ($request) {
-                return ($data->sumber) ? $data->sumber->description : '-';
-            })
-            ->addColumn('bidang_id', function ($data) use ($request) {
-                return ($data->bidang) ? $data->bidang->bidang : '-';
-            })
-            ->addColumn('golongan_id', function ($data) use ($request) {
-                return ($data->golongan) ? $data->golongan->golongan : '-';
-            })
-            ->addColumn('status_id', function ($data) use ($request) {
-                return ($data->status) ? $data->status->status : '-';
-            })
-            ->addIndexColumn()
-            ->make(true);
     }
   
 
     public function dataChart(Request $request, $name) {
-        $params = $request->all();
-        $return = ['status' => 'error', 'name' => $name, 'type' => "bar"];
+        $return = ['status' => 'error', 'name' => $name];
+        if ($name == 'dashboard') {
 
-        if ($name == 'summary') {
+            $params = $request->all();
+            foreach ($params['filters'] as $fname => $fvalue) {
+                if (preg_match('/^([^_]+)_(.*)$/', $fname, $matches)) {
+                    $params['filters'][$matches[2]] = $fvalue;
+                    unset($params['filters'][$fname]);
+                }
+            }
+
+
+/*
+            SELECT	master_regional.name AS regional, master_ruas.name AS ruas, COUNT(claim.no_tiket) AS total
+            FROM	claim
+                    LEFT JOIN master_ruas ON master_ruas.id = claim.ruas_id
+                    LEFT JOIN master_ro ON master_ro.id = master_ruas.ro_id
+                    LEFT JOIN master_regional ON master_regional.id = master_ro.regional_id
+            WHERE	claim.ruas_id IN (
+                        SELECT	master_ruas.id
+                        FROM	master_ruas
+                                LEFT JOIN master_ro ON master_ro.id = master_ruas.ro_id
+                                LEFT JOIN master_regional ON master_regional.id = master_ro.regional_id
+                        WHERE	master_regional.id = 3)
+                    AND claim.created_at > '2022-01-01 00:00:00'
+                    AND claim.created_at < '2022-04-01 00:00:00'
+                    
+            GROUP BY
+                    master_regional.name, master_ruas.name
+*/
+
+            $ruas = DB::table('master_ruas')
+                ->select('master_ruas.id')
+                ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id');
+
+            switch ($params['filters']['category']) {
+                case 'regional':
+                    $ruas = $ruas->where('master_regional.id', $params['filters']['category_id']);
+                    $field = 'master_ro.name';
+                    break;
+                case 'ro':
+                    $ruas = $ruas->where('master_ro.id', $params['filters']['category_id']);
+                    $field = 'master_ruas.name';
+                    break;
+                case 'ruas':
+                    $ruas = $ruas->where('master_ruas.id', $params['filters']['category_id']);
+                    $field = 'master_ruas.name';
+                    break;
+            }
+
+            $ruas = $ruas->get(['id'])->pluck('id');
+
+            if ($params['filters']['scope'] == 'claim') {
+                $query = DB::table('claim')
+                    ->select($field, DB::raw('COUNT(claim.no_tiket) AS value'))
+                    ->leftJoin('master_ruas', 'master_ruas.id', '=', 'claim.ruas_id')
+                    ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                    ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                    ->whereIn('claim.ruas_id', $ruas)
+                    ->whereDate('claim.created_at', '>=', $params['filters']['date_start'])
+                    ->whereDate('claim.created_at', '<=', $params['filters']['date_end'])
+                    ->groupBy($field)
+                    ->orderBy($field)
+                    ->get();
+                $return['charts']['count']['data'] = $query->toArray();
+                $return['charts']['count']['title'] = "Jumlah Claim";
+
+                $query = DB::table('claim')
+                    ->select($field, DB::raw('SUM(claim.nominal_customer) AS value'))
+                    ->leftJoin('master_ruas', 'master_ruas.id', '=', 'claim.ruas_id')
+                    ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                    ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                    ->whereIn('claim.ruas_id', $ruas)
+                    ->whereDate('claim.created_at', '>=', $params['filters']['date_start'])
+                    ->whereDate('claim.created_at', '<=', $params['filters']['date_end'])
+                    ->groupBy($field)
+                    ->orderBy($field)
+                    ->get();
+                $return['charts']['value']['data'] = $query->toArray();
+                $return['charts']['value']['title'] = "Nilai Claim";
+
+                $query = DB::table('claim')
+                    ->select('master_jenis_claim.jenis_claim AS name', DB::raw('COUNT(claim.no_tiket) AS value'))
+                    ->leftJoin('master_ruas', 'master_ruas.id', '=', 'claim.ruas_id')
+                    ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                    ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                    ->leftJoin('master_jenis_claim', 'master_jenis_claim.id', '=', 'claim.jenis_claim_id')
+                    ->whereIn('claim.ruas_id', $ruas)
+                    ->whereDate('claim.created_at', '>=', $params['filters']['date_start'])
+                    ->whereDate('claim.created_at', '<=', $params['filters']['date_end'])
+                    ->groupBy('master_jenis_claim.jenis_claim')
+                    ->orderBy('master_jenis_claim.jenis_claim')
+                    ->get();
+                $return['charts']['type']['data'] = $query->toArray();
+                $return['charts']['type']['title'] = "Tipe Claim";
+
+            }
+
+            $return['params'] = $params;
+            $return['status'] = "ok";
+        } else if ($name == 'summary') {
 
             $query = DB::table('detail_history')
                 ->select(
@@ -120,212 +253,225 @@ class LookupController extends Controller
 
         } else {
 
+            $params = $request->all();
+            foreach ($params['filters'] as $fname => $fvalue) {
+                if (preg_match('/^([^_]+)_(.*)$/', $fname, $matches)) {
+                    $params['filters'][$matches[2]] = $fvalue;
+                    unset($params['filters'][$fname]);
+                }
+            }
             $return['filters'] = $params['filters'];
             $date_start = $params['filters']['date_start'];
             $date_end = $params['filters']['date_end'];
-            
-            if ($name == 'area') {
-                switch ($params['filters']['category']) {
 
-                    case 'regional':
-                        $query = DB::table('keluhan')
-                        ->select(
-                            'master_ro.name AS name',
-                            DB::raw('COUNT(keluhan.no_tiket) AS total')
-                        )
-                        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
-                        ->where('master_regional.id', $params['filters']['category_id'])
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_ro.name', 'master_ro.regional_id')
-                        ->orderBy('master_ro.name')
-                        ->get();
-                        foreach ($query as $record) {
-                            $return['data'][$name][$record->name] = $record->total;
-                        }
-                        $return['status'] = 'ok';
-                        break;
+            if ($params['filters']['scope'] == 'keluhan') {
 
-                    case 'ro':
-                        $query = DB::table('keluhan')
-                        ->select(
-                            'master_ruas.name AS name',
-                            DB::raw('COUNT(keluhan.no_tiket) AS total')
-                        )
-                        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
-                        ->where('master_ro.id', $params['filters']['category_id'])
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_ruas.name', 'master_ro.id')
-                        ->orderBy('master_ruas.name')
-                        ->get();
-                        foreach ($query as $record) {
-                            $return['data'][$name][$record->name] = $record->total;
-                        }
-                        $return['status'] = 'ok';
-                        break;
+                if ($name == 'area') {
+                    switch ($params['filters']['category']) {
 
-                    case 'ruas':
-                        $query = DB::table('keluhan')
-                        ->select(
-                            'master_ruas.name AS name',
-                            DB::raw('COUNT(keluhan.no_tiket) AS total')
-                        )
-                        ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                        case 'regional':
+                            $query = DB::table('keluhan')
+                            ->select(
+                                'master_ro.name AS name',
+                                DB::raw('COUNT(keluhan.no_tiket) AS total')
+                            )
+                            ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                            ->where('master_regional.id', $params['filters']['category_id'])
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_ro.name', 'master_ro.regional_id')
+                            ->orderBy('master_ro.name')
+                            ->get();
+                            foreach ($query as $record) {
+                                $return['data'][$name][$record->name] = $record->total;
+                            }
+                            $return['status'] = 'ok';
+                            break;
 
-                        ->where('master_ruas.id', $params['filters']['category_id'])
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_ruas.name', 'master_ruas.id')
-                        ->orderBy('master_ruas.name')
-                        ->get();
-                        foreach ($query as $record) {
-                            $return['data'][$name][$record->name] = $record->total;
-                        }
-                        $return['status'] = 'ok';
-                        break;
+                        case 'ro':
+                            $query = DB::table('keluhan')
+                            ->select(
+                                'master_ruas.name AS name',
+                                DB::raw('COUNT(keluhan.no_tiket) AS total')
+                            )
+                            ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                            ->where('master_ro.id', $params['filters']['category_id'])
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_ruas.name', 'master_ro.id')
+                            ->orderBy('master_ruas.name')
+                            ->get();
+                            foreach ($query as $record) {
+                                $return['data'][$name][$record->name] = $record->total;
+                            }
+                            $return['status'] = 'ok';
+                            break;
+
+                        case 'ruas':
+                            $query = DB::table('keluhan')
+                            ->select(
+                                'master_ruas.name AS name',
+                                DB::raw('COUNT(keluhan.no_tiket) AS total')
+                            )
+                            ->leftJoin('master_ruas', 'master_ruas.id', '=', 'keluhan.ruas_id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+
+                            ->where('master_ruas.id', $params['filters']['category_id'])
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_ruas.name', 'master_ruas.id')
+                            ->orderBy('master_ruas.name')
+                            ->get();
+                            foreach ($query as $record) {
+                                $return['data'][$name][$record->name] = $record->total;
+                            }
+                            $return['status'] = 'ok';
+                            break;
+                    }
+                } else if ($name == 'source') {
+
+                    switch ($params['filters']['category']) {
+                        case 'regional':
+                            $ruas = DB::table('master_ruas')
+                            ->select('master_ruas.id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->where('master_ro.regional_id', $params['filters']['category_id'])
+                            ->get(['id'])
+                            ->pluck('id')
+                            ->toArray();
+
+                            $query = DB::table('master_sumber')
+                            ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
+                            ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
+                            ->whereIn('keluhan.ruas_id', $ruas)
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_sumber.description')
+                            ->orderBy('master_sumber.description')
+                            ->get();
+
+                            foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
+
+                            $return['status'] = 'ok';
+                            break;
+                        case 'ro':
+                            $ruas = DB::table('master_ruas')
+                            ->select('master_ruas.id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->where('master_ro.id', $params['filters']['category_id'])
+                            ->get(['id'])
+                            ->pluck('id')
+                            ->toArray();
+
+                            $query = DB::table('master_sumber')
+                            ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
+                            ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
+                            ->whereIn('keluhan.ruas_id', $ruas)
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_sumber.description')
+                            ->orderBy('master_sumber.description')
+                            ->get();
+
+                            foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
+
+                            $return['status'] = 'ok';
+                            break;
+                        case 'ruas':
+                            $query = DB::table('master_sumber')
+                            ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
+                            ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
+                            ->where('keluhan.ruas_id', $params['filters']['category_id'])
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_sumber.description')
+                            ->orderBy('master_sumber.description')
+                            ->get();
+
+                            foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
+
+                            $return['status'] = 'ok';
+                            break;
+                    }
+                } else if ($name == 'sector') {
+
+                    switch ($params['filters']['category']) {
+                        case 'regional':
+                            $ruas = DB::table('master_ruas')
+                            ->select('master_ruas.id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->where('master_ro.regional_id', $params['filters']['category_id'])
+                            ->get(['id'])
+                            ->pluck('id')
+                            ->toArray();
+
+                            $query = DB::table('master_bk')
+                            ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
+                            ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
+                            ->whereIn('keluhan.ruas_id', $ruas)
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_bk.bidang')
+                            ->orderBy('master_bk.bidang')
+                            ->get();
+
+                            foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
+
+                            $return['type'] = "pie";
+                            $return['status'] = 'ok';
+                            break;
+                        case 'ro':
+                            $ruas = DB::table('master_ruas')
+                            ->select('master_ruas.id')
+                            ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->where('master_ro.id', $params['filters']['category_id'])
+                            ->get(['id'])
+                            ->pluck('id')
+                            ->toArray();
+
+                            $query = DB::table('master_bk')
+                            ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
+                            ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
+                            ->whereIn('keluhan.ruas_id', $ruas)
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_bk.bidang')
+                            ->orderBy('master_bk.bidang')
+                            ->get();
+
+                            foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
+
+                            $return['type'] = "pie";
+                            $return['status'] = 'ok';
+                            break;
+                        case 'ruas':
+                            $query = DB::table('master_bk')
+                            ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
+                            ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
+                            ->where('keluhan.ruas_id', $params['filters']['category_id'])
+                            ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
+                            ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
+                            ->groupBy('master_bk.bidang')
+                            ->orderBy('master_bk.bidang')
+                            ->get();
+
+                            foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
+
+                            $return['type'] = "pie";
+                            $return['status'] = 'ok';
+                            break;
+
+
+                    }
                 }
-            } else if ($name == 'source') {
 
-                switch ($params['filters']['category']) {
-                    case 'regional':
-                        $ruas = DB::table('master_ruas')
-                        ->select('master_ruas.id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->where('master_ro.regional_id', $params['filters']['category_id'])
-                        ->get(['id'])
-                        ->pluck('id')
-                        ->toArray();
-
-                        $query = DB::table('master_sumber')
-                        ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
-                        ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
-                        ->whereIn('keluhan.ruas_id', $ruas)
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_sumber.description')
-                        ->orderBy('master_sumber.description')
-                        ->get();
-
-                        foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
-
-                        $return['status'] = 'ok';
-                        break;
-                    case 'ro':
-                        $ruas = DB::table('master_ruas')
-                        ->select('master_ruas.id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->where('master_ro.id', $params['filters']['category_id'])
-                        ->get(['id'])
-                        ->pluck('id')
-                        ->toArray();
-
-                        $query = DB::table('master_sumber')
-                        ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
-                        ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
-                        ->whereIn('keluhan.ruas_id', $ruas)
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_sumber.description')
-                        ->orderBy('master_sumber.description')
-                        ->get();
-
-                        foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
-
-                        $return['status'] = 'ok';
-                        break;
-                    case 'ruas':
-                        $query = DB::table('master_sumber')
-                        ->select('master_sumber.description AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
-                        ->leftJoin('keluhan', 'keluhan.sumber_id', '=', 'master_sumber.id')
-                        ->where('keluhan.ruas_id', $params['filters']['category_id'])
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_sumber.description')
-                        ->orderBy('master_sumber.description')
-                        ->get();
-
-                        foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
-
-                        $return['status'] = 'ok';
-                        break;
-                }
-            } else if ($name == 'sector') {
-
-                switch ($params['filters']['category']) {
-                    case 'regional':
-                        $ruas = DB::table('master_ruas')
-                        ->select('master_ruas.id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->where('master_ro.regional_id', $params['filters']['category_id'])
-                        ->get(['id'])
-                        ->pluck('id')
-                        ->toArray();
-
-                        $query = DB::table('master_bk')
-                        ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
-                        ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
-                        ->whereIn('keluhan.ruas_id', $ruas)
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_bk.bidang')
-                        ->orderBy('master_bk.bidang')
-                        ->get();
-
-                        foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
-
-                        $return['type'] = "pie";
-                        $return['status'] = 'ok';
-                        break;
-                    case 'ro':
-                        $ruas = DB::table('master_ruas')
-                        ->select('master_ruas.id')
-                        ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                        ->where('master_ro.id', $params['filters']['category_id'])
-                        ->get(['id'])
-                        ->pluck('id')
-                        ->toArray();
-
-                        $query = DB::table('master_bk')
-                        ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
-                        ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
-                        ->whereIn('keluhan.ruas_id', $ruas)
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_bk.bidang')
-                        ->orderBy('master_bk.bidang')
-                        ->get();
-
-                        foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
-
-                        $return['type'] = "pie";
-                        $return['status'] = 'ok';
-                        break;
-                    case 'ruas':
-                        $query = DB::table('master_bk')
-                        ->select('master_bk.bidang AS name', DB::raw('COUNT(keluhan.no_tiket) AS total'))
-                        ->leftJoin('keluhan', 'keluhan.bidang_id', '=', 'master_bk.id')
-                        ->where('keluhan.ruas_id', $params['filters']['category_id'])
-                        ->whereDate('keluhan.created_at', '>=', $params['filters']['date_start'])
-                        ->whereDate('keluhan.created_at', '<=', $params['filters']['date_end'])
-                        ->groupBy('master_bk.bidang')
-                        ->orderBy('master_bk.bidang')
-                        ->get();
-
-                        foreach ($query as $record) $return['data'][$name][$record->name] = $record->total;
-
-                        $return['type'] = "pie";
-                        $return['status'] = 'ok';
-                        break;
-
-
-                }
+            } else {
+                // TODO: claim
             }
         }
         
