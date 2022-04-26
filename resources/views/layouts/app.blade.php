@@ -17,20 +17,20 @@
 		<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 			<!--begin::Logo-->
 			<a href="index.html">
-				<img alt="Logo" src="{{ asset('assets/media/logos/logo-light.png') }}" />
+				<img alt="Logo" src="{{ asset('assets/media/logos/logo-jmact.png') }}" />
 			</a>
 			<!--end::Logo-->
 			<!--begin::Toolbar-->
-			{{-- <div class="d-flex align-items-center">
+			<div class="d-flex align-items-center">
 				<!--begin::Aside Mobile Toggle-->
 				<button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
 					<span></span>
 				</button>
 				<!--end::Aside Mobile Toggle-->
 				<!--begin::Header Menu Mobile Toggle-->
-				<button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
+				{{-- <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
 					<span></span>
-				</button>
+				</button> --}}
 				<!--end::Header Menu Mobile Toggle-->
 				<!--begin::Topbar Mobile Toggle-->
 				<button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
@@ -47,14 +47,14 @@
 					</span>
 				</button>
 				<!--end::Topbar Mobile Toggle-->
-			</div> --}}
+			</div>
 			<!--end::Toolbar-->
 		</div>
 		<!--end::Header Mobile-->
 		<div class="d-flex flex-column flex-root">
 			<!--begin::Page-->
 			<div class="d-flex flex-row flex-column-fluid page">
-				
+
 				@include('panels.sidebar')
 				<!--begin::Wrapper-->
 				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
@@ -96,7 +96,7 @@
 										</span>
 									{{-- </a> --}}
 									<!--end::Daterange-->
-									
+
 								</div>
 								<!--end::Toolbar-->
 							</div>
@@ -122,8 +122,8 @@
 		@include('panels.partials.modal')
 		@include('panels/scripts')
 
-		
-	    
+
+
 	</body>
 
 </html>
