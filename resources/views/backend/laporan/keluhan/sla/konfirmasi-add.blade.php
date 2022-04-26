@@ -13,20 +13,21 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
-                        <label for="kontak_pelanggan" class="">{{ __('Kontak Pelanggan') }}</label><span class="text-danger">*</span>
+                        <label for="kontak_pelanggan" class="">{{ __('Kontak Pelanggan') }}</label><span
+                            class="text-danger">*</span>
                     </div>
                     @if (@$record->report()->orderByDesc('created_at')->first() && @$record->status->code == '05')
                         <div class="col-9 col-form-label">
                             <div class="radio-list">
                                 <label class="radio">
                                     <input type="radio" name="kontak_pelanggan" value="1"
-                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == 1 ? 'checked disabled': '' }} />
+                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == 1? 'checked disabled': '' }} />
                                     <span></span>
                                     Ya
                                 </label>
                                 <label class="radio">
                                     <input type="radio" name="kontak_pelanggan" value="1"
-                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == 0 ? 'checked disabled': '' }} />
+                                        {{ @$record->report()->orderByDesc('created_at')->first()->kontak_pelanggan == 0? 'checked disabled': '' }} />
                                     <span></span>
                                     Tidak
                                 </label>
@@ -60,7 +61,8 @@
                 <div class="form-group row">
                     <div class="col-3 col-form-label">
                         <label for="konfirmasi_pelanggan"
-                            class="">{{ __('Konfirmasi Pelanggan') }}</label><span class="text-danger">*</span>
+                            class="">{{ __('Konfirmasi Pelanggan') }}</label><span
+                            class="text-danger">*</span>
                     </div>
                     <div class="col-9 col-form-label">
                         @if (@$record->report()->orderByDesc('created_at')->first() && @$record->status->code == '05')
@@ -78,16 +80,16 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            <em class="flaticon-circle"></em>
-            Tutup
-        </button>
         @if ($record->status->code == '05')
-            <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
-                <em class="flaticon-add-circular-button"></em>
-                Simpan
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <em class="flaticon-circle"></em>
+                Tutup
             </button>
         @endif
+        <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
+            <em class="flaticon-add-circular-button"></em>
+            Simpan
+        </button>
     </div>
 
 </form>

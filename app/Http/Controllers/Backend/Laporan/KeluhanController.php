@@ -223,6 +223,7 @@ class KeluhanController extends Controller
 
     public function store(KeluhanPelangganRequest $request)
     {
+        // dd(Request()->all());
 
         if (request()->sosial_media == '' && request()->no_telepon == '') {
             $this->validate($request, [
