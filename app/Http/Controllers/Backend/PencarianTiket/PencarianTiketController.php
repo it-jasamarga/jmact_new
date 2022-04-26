@@ -30,7 +30,7 @@ class PencarianTiketController extends Controller
     //     catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) { if (! $can_cartik) abort(403); }
     //     return $next($request);
     //   });
-    $this->route = 'feedback-pelanggan';
+    $this->route = 'pencarian-tiket';
     }
 
     public function index(Request $request) {
