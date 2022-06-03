@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	$DATA['SQL'] = $IS_KELUHAN ?
 		"SELECT K.no_tiket, K.no_telepon, K.sosial_media, B.keluhan as bidang, K.keterangan_keluhan AS keterangan FROM keluhan K LEFT JOIN master_bk B ON B.id = K.bidang_id WHERE no_tiket='".$DATA['no_tiket']."';"
 		:
-		"SELECT C.no_tiket, C.no_telepon, C.sosial_media, J.jenis_claim AS bidang, c.keterangan_claim AS keterangan FROM claim C LEFT JOIN master_jenis_claim J ON J.id = C.jenis_claim_id WHERE no_tiket='".$DATA['no_tiket']."';";
+		"SELECT C.no_tiket, C.no_telepon, C.sosial_media, J.jenis_claim AS bidang, C.keterangan_claim AS keterangan FROM claim C LEFT JOIN master_jenis_claim J ON J.id = C.jenis_claim_id WHERE no_tiket='".$DATA['no_tiket']."';";
 	$DATA['QUERY'] = $conn->query($DATA['SQL']);
 
 	if ($DATA['QUERY']->num_rows != 1) {
