@@ -145,12 +145,12 @@
                                 value="{{ $record->url_file }}" readonly
                                 data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
                                 style="cursor: pointer"> --}}
-                                <a class="custome-modal alert alert-custom alert-default" href="javascript:void(0)"
+                            <a class="custome-modal alert alert-custom alert-default" href="javascript:void(0)"
                                 id="url_file" data-url="keluhan/show-attachment/{{ $record->id }}" data-modal="#xlarge"
                                 style="cursor: pointer;">
                                 {{ $record->url_file }}
                             </a>
-                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-12">
@@ -195,7 +195,5 @@
 
 @section('scripts')
     {{-- Page js files --}}
-    <script>
-
-    </script>
+    <script></script>
 @endsection
