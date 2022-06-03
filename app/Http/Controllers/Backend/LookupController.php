@@ -83,10 +83,10 @@ class LookupController extends Controller
                     return ($data->unit) ? $data->unit->unit : '-';
                 })
                 ->addColumn('nilai_claim_diajukan', function ($data) use ($request) {
-                    return $data->nominal_customer;
+                    return str_replace('.', "", $data->nominal_customer);
                 })
                 ->addColumn('nilai_claim_dibayarkan', function ($data) use ($request) {
-                    return $data->nominal_final;
+                    return str_replace('.', "", $data->nominal_final);
                 })
                 ->addColumn('status', function ($data) use ($request) {
                     return ($data->status) ? $data->status->status : '-';
@@ -169,7 +169,7 @@ class LookupController extends Controller
                 $return['charts']['count']['title'] = "Jumlah Claim";
 
                 $query = DB::table('claim')
-                    ->select($field, DB::raw('SUM(claim.nominal_customer) AS value'))
+                    ->select($field, DB::raw('SUM(REPLACE(claim.nominal_customer, ".", "")) AS value'))
                     ->leftJoin('master_ruas', 'master_ruas.id', '=', 'claim.ruas_id')
                     ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
                     ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')

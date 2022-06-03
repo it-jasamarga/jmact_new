@@ -332,7 +332,18 @@
 						exportOptions: {
 							// columns: ':not(:last-child)',
 						}
-						}], '#claim_listTables');
+						}], '#claim_listTables', function (row, data, index) {
+							// console.log({data});
+							let columns = {
+								'nilai_claim_diajukan':6,
+								'nilai_claim_dibayarkan':7
+							};
+							Object.keys(columns).forEach(key => {
+								let col = columns[key];
+								let num = new Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(data[key]).replace('Rp', "").replace(',00', "");
+								$('td', row).eq(col).text(num);
+							});
+						});
 						dashboard.filters.category.fillup();
 					}
 				}
@@ -768,6 +779,9 @@
 								case 'count':
 								case 'value':
 									colorRef = $(prefix+'categorySelector').children("option:selected").val()=='ruas' ? ("Chart Area "+$(prefix+'category_id').children("option:selected").text()) : ("Chart Area "+$(prefix+'category_id').children("option:selected").text()+" - "+item.name);
+									break;
+								case 'type':
+									colorRef = "Chart Claim Type "+item.name;
 									break;
 								default:
 									colorRef = (item.name);
