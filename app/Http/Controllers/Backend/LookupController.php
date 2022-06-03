@@ -83,10 +83,10 @@ class LookupController extends Controller
                     return ($data->unit) ? $data->unit->unit : '-';
                 })
                 ->addColumn('nilai_claim_diajukan', function ($data) use ($request) {
-                    return $data->nominal_customer;
+                    return str_replace('.', "", $data->nominal_customer);
                 })
                 ->addColumn('nilai_claim_dibayarkan', function ($data) use ($request) {
-                    return $data->nominal_final;
+                    return str_replace('.', "", $data->nominal_final);
                 })
                 ->addColumn('status', function ($data) use ($request) {
                     return ($data->status) ? $data->status->status : '-';

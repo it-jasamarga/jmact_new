@@ -23,7 +23,7 @@
 
 </style>
 <script>
-  function loadList(dataList = [], dataButtons = null, classTable = '#listTables') {
+  function loadList(dataList = [], dataButtons = null, classTable = '#listTables', fCreatedRow = null) {
     var page_url = 'list';
     @if(@$route)
       var page_url = "{{ (@$routeList) ? url($routeList).'/list' : route($route.'.list') }}";
@@ -59,6 +59,7 @@
     }
 
     var table = $(classTable).DataTable({
+        createdRow: fCreatedRow,
         processing: true,
         serverSide: true,
         responsive: false,
