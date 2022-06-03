@@ -780,6 +780,9 @@
 								case 'value':
 									colorRef = $(prefix+'categorySelector').children("option:selected").val()=='ruas' ? ("Chart Area "+$(prefix+'category_id').children("option:selected").text()) : ("Chart Area "+$(prefix+'category_id').children("option:selected").text()+" - "+item.name);
 									break;
+								case 'type':
+									colorRef = "Chart Claim Type "+item.name;
+									break;
 								default:
 									colorRef = (item.name);
 									break;
