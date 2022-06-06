@@ -169,7 +169,7 @@ class LookupController extends Controller
                 $return['charts']['count']['title'] = "Jumlah Claim";
 
                 $query = DB::table('claim')
-                    ->select($field, DB::raw('SUM(REPLACE(claim.nominal_customer, ".", "")) AS value'))
+                    ->select($field, DB::raw('SUM(REPLACE(claim.nominal_final, ".", "")) AS value'))
                     ->leftJoin('master_ruas', 'master_ruas.id', '=', 'claim.ruas_id')
                     ->leftJoin('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
                     ->leftJoin('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
