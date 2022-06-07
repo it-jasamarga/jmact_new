@@ -80,23 +80,23 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::group(['namespace' => 'PencarianTiket'], function () {
-            Route::group(['middleware' => ['role:Superadmin', 'permission:pencarian-tiket.detail|pencarian-tiket.expand']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:pencarian-tiket.detail|pencarian-tiket.expand']], function () {
                 Route::get('pencarian-tiket/list', 'PencarianTiketController@list')->name('pencarian-tiket.list');
                 Route::resource('pencarian-tiket', 'PencarianTiketController');
-            });
+            // });
         });
 
         Route::group(['namespace' => 'Feedback'], function () {
-            Route::group(['middleware' => ['role:Superadmin', 'permission:feedback-pelanggan.contact|feedback-pelanggan.detail']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:feedback-pelanggan.contact|feedback-pelanggan.detail']], function () {
                 Route::get('feedback-pelanggan/list', 'FeedbackController@list')->name('feedback-pelanggan.list');
                 Route::get('feedback-pelanggan/contact/{no_tiket}', 'FeedbackController@contact')->name('feedback-pelanggan.contact');
                 Route::get('feedback-pelanggan/detail/{no_tiket}', 'FeedbackController@detail')->name('feedback-pelanggan.detail');
                 Route::resource('feedback-pelanggan', 'FeedbackController');
-            });
+            // });
         });
 
         Route::group(['namespace' => 'Laporan'], function () {
-            Route::group(['middleware' => ['role:Superadmin', 'permission:keluhan.create|keluhan.detail|keluhan.forward|keluhan.sla']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:keluhan.create|keluhan.detail|keluhan.forward|keluhan.sla']], function () {
                 Route::put('keluhan/sla/{id}', 'KeluhanController@prosesSla')->name('keluhan.prosesSla');
                 Route::get('keluhan/sla/{id}', 'KeluhanController@sla')->name('keluhan.sla');
                 Route::put('keluhan/sla/report/{id}', 'KeluhanController@prosesReportSla')->name('keluhan.prosesReportSla');
@@ -110,9 +110,9 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::resource('keluhan', 'KeluhanController');
 
                 Route::get('keluhan/show-attachment/{id}', 'KeluhanController@showAttachment')->name('keluhan.showAttachment');
-            });
+            // });
 
-            Route::group(['middleware' => ['role:Superadmin', 'permission:claim.create|claim.detail|claim.forward|claim.stage']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:claim.create|claim.detail|claim.forward|claim.stage']], function () {
                 Route::put('claim/teruskan/{id}', 'ClaimController@history')->name('claim.history');
                 Route::get('claim/{id}/edit-stage', 'ClaimController@editStage')->name('claim.editStage');
                 Route::put('claim/tahapan/{id}', 'ClaimController@historyStage')->name('claim.historyStage');
@@ -122,44 +122,44 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::resource('claim', 'ClaimController');
 
                 Route::get('claim/show-attachment/{id}', 'ClaimController@showAttachment')->name('claim.showAttachment');
-            });
+            // });
         });
 
         Route::group(['namespace' => 'LogHistory'], function () {
-            Route::group(['middleware' => ['role:Superadmin', 'permission:bug-report.delete']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:bug-report.delete']], function () {
                 Route::delete('bug-report/removeMulti', 'BugReportController@removeMulti')->name('bug-report.removeMulti');
                 Route::get('bug-report/list', 'BugReportController@list')->name('bug-report.list');
                 Route::resource('bug-report', 'BugReportController');
-            });
+            // });
 
-            Route::group(['middleware' => ['role:Superadmin', 'permission:log-audit.index']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:log-audit.index']], function () {
                 Route::delete('log-audit/removeMulti', 'LogAuditController@removeMulti')->name('log-audit.removeMulti');
                 Route::get('log-audit/list', 'LogAuditController@list')->name('log-audit.list');
                 Route::resource('log-audit', 'LogAuditController');
-            });
+            // });
 
-            Route::group(['middleware' => ['role:Superadmin', 'permission:log-auth.index']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:log-auth.index']], function () {
                 Route::delete('log-auth/removeMulti', 'LogAuthController@removeMulti')->name('log-auth.removeMulti');
                 Route::get('log-auth/list', 'LogAuthController@list')->name('log-auth.list');
                 Route::resource('log-auth', 'LogAuthController');
-            });
+            // });
         });
 
         Route::group(['namespace' => 'Settings'], function () {
             Route::post('user-account/device', 'UserController@device')->name('user-account.device');
-            Route::group(['middleware' => ['role:Superadmin', 'permission:user-account.create|user-account.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:user-account.create|user-account.edit']], function () {
                 Route::delete('user-account/removeMulti', 'UserController@removeMulti')->name('user-account.removeMulti');
                 Route::get('user-account/list', 'UserController@list')->name('user-account.list');
                 Route::resource('user-account', 'UserController');
-            });
+            // });
 
-            Route::group(['middleware' => ['role:Superadmin', 'permission:role.create|role.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:role.create|role.edit']], function () {
                 Route::delete('role/removeMulti', 'RoleController@removeMulti')->name('role.removeMulti');
                 Route::post('role/permission', 'RoleController@storePermission')->name('role.storePermission');
                 Route::get('role/permission/{id}', 'RoleController@permission')->name('role.permission');
                 Route::get('role/list', 'RoleController@list')->name('role.list');
                 Route::resource('role', 'RoleController');
-            });
+            // });
 
             Route::delete('permission/removeMulti', 'PermissionController@removeMulti')->name('permission.removeMulti');
             Route::get('permission/list', 'PermissionController@list')->name('permission.list');
@@ -168,67 +168,67 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['namespace' => 'Master'], function () {
             // Master BK
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-bk.create|master-bk.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-bk.create|master-bk.edit']], function () {
                 Route::delete('master-bk/removeMulti', 'MasterBkController@removeMulti')->name('master-bk.removeMulti');
                 Route::get('master-bk/list', 'MasterBkController@list')->name('master-bk.list');
                 Route::resource('master-bk', 'MasterBkController');
-            });
+            // });
 
             // Master Golken
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-golken.create|master-golken.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-golken.create|master-golken.edit']], function () {
                 Route::delete('master-golken/removeMulti', 'MasterGolkenController@removeMulti')->name('master-golken.removeMulti');
                 Route::get('master-golken/list', 'MasterGolkenController@list')->name('master-golken.list');
                 Route::resource('master-golken', 'MasterGolkenController');
-            });
+            // });
 
             // Master Regional
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-regional.create|master-regional.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-regional.create|master-regional.edit']], function () {
                 Route::delete('master-regional/removeMulti', 'MasterRegionalController@removeMulti')->name('master-regional.removeMulti');
                 Route::get('master-regional/list', 'MasterRegionalController@list')->name('master-regional.list');
                 Route::resource('master-regional', 'MasterRegionalController');
-            });
+            // });
 
             // Master Regional
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-ro.create|master-ro.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-ro.create|master-ro.edit']], function () {
                 Route::delete('master-ro/removeMulti', 'MasterRoController@removeMulti')->name('master-ro.removeMulti');
                 Route::get('master-ro/list', 'MasterRoController@list')->name('master-ro.list');
                 Route::resource('master-ro', 'MasterRoController');
-            });
+            // });
 
             // Master Ruas
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-ruas.create|master-ruas.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-ruas.create|master-ruas.edit']], function () {
                 Route::delete('master-ruas/removeMulti', 'MasterRuasController@removeMulti')->name('master-ruas.removeMulti');
                 Route::get('master-ruas/list', 'MasterRuasController@list')->name('master-ruas.list');
                 Route::resource('master-ruas', 'MasterRuasController');
-            });
+            // });
 
             // Master Status
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-status.create|master-status.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-status.create|master-status.edit']], function () {
                 Route::delete('master-status/removeMulti', 'MasterStatusController@removeMulti')->name('master-status.removeMulti');
                 Route::get('master-status/list', 'MasterStatusController@list')->name('master-status.list');
                 Route::resource('master-status', 'MasterStatusController');
-            });
+            // });
 
             // Master Sumber
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-sumber.create|master-sumber.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-sumber.create|master-sumber.edit']], function () {
                 Route::delete('master-sumber/removeMulti', 'MasterSumberController@removeMulti')->name('master-sumber.removeMulti');
                 Route::get('master-sumber/list', 'MasterSumberController@list')->name('master-sumber.list');
                 Route::resource('master-sumber', 'MasterSumberController');
-            });
+            // });
 
             // Master Unit
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-unit.create|master-unit.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-unit.create|master-unit.edit']], function () {
                 Route::delete('master-unit/removeMulti', 'MasterUnitController@removeMulti')->name('master-unit.removeMulti');
                 Route::get('master-unit/list', 'MasterUnitController@list')->name('master-unit.list');
                 Route::resource('master-unit', 'MasterUnitController');
-            });
+            // });
 
             // Master Jenis Claim
-            Route::group(['middleware' => ['role:Superadmin', 'permission:master-claim.create|master-claim.edit']], function () {
+            // Route::group(['middleware' => ['role:Superadmin', 'permission:master-claim.create|master-claim.edit']], function () {
                 Route::delete('master-claim/removeMulti', 'MasterJenisClaimController@removeMulti')->name('master-claim.removeMulti');
                 Route::get('master-claim/list', 'MasterJenisClaimController@list')->name('master-claim.list');
                 Route::resource('master-claim', 'MasterJenisClaimController');
-            });
+            // });
         });
     });
 });
