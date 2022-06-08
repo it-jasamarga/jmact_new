@@ -101,7 +101,7 @@
 			</select>
 		</div>
 		<div class="col-3">
-			<select class="form-control filter-control keluhan_dashboard-filter-chart select2" data-post="category_id" id="keluhan_category_id" name="keluhan_category_id" place-holder="">
+			<select class="form-control filter-control keluhan_dashboard-filter-chart select2" data-post="category_id-x" id="keluhan_category_id" name="keluhan_category_id" place-holder="">
 				<option value=""></option>
 			</select>
 		</div>
@@ -655,6 +655,7 @@
 		let filterCount = Object.keys(filters).length;
 
 		console.log("## Filter: "+filterCount, {filters});
+		console.log("## #keluhan_category_id", $('#keluhan_category_id').val());
 
 		if (filterCount == 4) {
 			filters['scope'] = unification.current;
@@ -663,7 +664,7 @@
 			keluhan_updateChart('source', filters);
 			keluhan_updateChart('sector', filters);
 			if (! firstTime) {
-				console.log('re-draw table');
+				console.log('## re-draw table');
 				$('#keluhan_listTables').DataTable().ajax.reload();
 			}
 		}
@@ -1076,14 +1077,14 @@
 
 	$(document).ready(function () {
 		keluhan_loadChartSummary();
+
+		keluhan_fillCategory();
 		$('#keluhan_categorySelector').on('change', keluhan_fillCategory);
 		$('.keluhan_dashboard-filter-chart').on('change', function () {
 			keluhan_checkFilters();
 		})
 		$('input[name="keluhan_date_start"').val((new Date()).toISOString().slice(0, -17)+'-01');
 		$('input[name="keluhan_date_end"').val((new Date()).toISOString().slice(0, -14));
-
-		keluhan_fillCategory();
 
 		//////////
 
