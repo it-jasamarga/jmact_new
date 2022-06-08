@@ -357,7 +357,7 @@ class KeluhanController extends Controller
         }
 
         $data = [
-            'title' => 'SLA',
+            'title' => 'Pengerjaan Keluhan',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
             'record' => $record
