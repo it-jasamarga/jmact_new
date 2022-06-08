@@ -19,34 +19,29 @@ class LookupController extends Controller
     {
         if ($request->request->input('dashscope') == 'keluhan') {
 
-            $data  = KeluhanPelanggan::with('history')
-                ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
-                ->select('*')
-                ->filter($request);
-    
             if(auth()->user()->hasRole('Superadmin')){
                 $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
-            }
-
-            if(auth()->user()->hasRole('JMTC')){
+                // dd($data->get(), $request);
+            } else if(auth()->user()->hasRole('JMTC')){
                 $data  = KeluhanPelanggan::where('status_id','1')
                     ->orderByDesc('created_at')->select('*')->filter($request);
-            }
-
-            if(auth()->user()->hasRole('Service Provider')){
+            } else if(auth()->user()->hasRole('Service Provider')){
                 $data  = KeluhanPelanggan::with('history')
                     ->where('unit_id',auth()->user()->unit_id)
                     ->orderByDesc('created_at')
                     ->select('*')
                     ->filter($request);
-            }
-
-            if(auth()->user()->hasRole('Regional')){
+            } else if(auth()->user()->hasRole('Regional')){
                 $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
                 $data  = KeluhanPelanggan::where('regional_id',$regionalId)
                     ->orderByDesc('created_at')
                     ->select('*')
                     ->filter($request);
+            } else {
+                $data  = KeluhanPelanggan::with('history')
+                ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
+                ->select('*')
+                ->filter($request);
             }
     
             return datatables()->of($data)
