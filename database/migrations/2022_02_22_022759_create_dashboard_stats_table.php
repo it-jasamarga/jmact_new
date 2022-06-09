@@ -25,8 +25,8 @@ class CreateDashboardStatsTable extends Migration
                 RE.name AS regional,
                 RU.name AS ruas,
                 CASE
-                    WHEN MS.status = 'On Progress' AND DATEDIFF(NOW(), KE.updated_at) <=3 THEN 'OnProgress'
-                    WHEN MS.status = 'On Progress' AND DATEDIFF(NOW(), KE.updated_at) >3 THEN 'Overtime'
+                    WHEN MS.status = 'On Progress' AND KE.deadline >= NOW() THEN 'OnProgress'
+                    WHEN MS.status = 'On Progress' AND KE.deadline < NOW() THEN 'Overtime'
                     WHEN MS.status = 'Closed' AND
                         DATEDIFF(
                             (SELECT created_at FROM detail_history WHERE keluhan_id = KE.id AND status_id = (SELECT id FROM master_status WHERE status='Closed' AND type=1)),
