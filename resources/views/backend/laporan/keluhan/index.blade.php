@@ -233,11 +233,11 @@
                 },
                 @if (auth()->user()->can('keluhan.create'))
                     {
-                    text: "<i class='flaticon-file-1'></i>Add Keluhan</a>",
-                    className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
-                    attr: {
-                    'data-url': "{{ route($route . '.create') }}"
-                    }
+                        text: "<i class='flaticon-file-1'></i>Add Keluhan</a>",
+                        className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
+                        attr: {
+                            'data-url': "{{ route($route . '.create') }}"
+                        }
                     },
                 @endif
             ]);
