@@ -58,14 +58,14 @@
 					@foreach ($overtime['regional'] as $regional => $regional_data)
 						<div class="card">
 							<div class="card-header">
-								<div class="card-title collapsed" data-toggle="collapse" data-target="#OT_{{ str_replace(' ', '', $regional) }}">
+								<div class="card-title collapsed" data-toggle="collapse" data-target="#keluhan_OT_{{ str_replace(' ', '', $regional) }}">
 									{{ $regional }}
 									<div class="symbol symbol-35 symbol-light-warning ml-3">
 										<span class="symbol-label font-size-h6">{{ $regional_data['total'] }}</span>
 									</div>
 								</div>
 							</div>
-							<div id="keluhan_OT_{{ str_replace(' ', '', $regional) }}" class="collapse" data-parent="#accordionOvertime">
+							<div id="keluhan_OT_{{ str_replace(' ', '', $regional) }}" class="collapse" data-parent="#keluhan_accordionOvertime">
 								<div class="card-body pl-10">
 								@if ($regional_data['total'] == 0)
 									Tidak terdapat overtime.
