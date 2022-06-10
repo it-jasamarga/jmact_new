@@ -5,7 +5,6 @@
         a:hover {
             color: orangered;
         }
-
     </style>
 @endsection
 
@@ -141,8 +140,7 @@
                             <label for="alamat_pelanggan"
                                 class="">{{ __('Alamat Pelanggan') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="alamat_pelanggan" class="form-control" placeholder="Alamat Pelanggan" rows="1"
-                                readonly>{{ $record->alamat_pelanggan }}</textarea>
+                            <textarea name="alamat_pelanggan" class="form-control" placeholder="Alamat Pelanggan" rows="1" readonly>{{ $record->alamat_pelanggan }}</textarea>
                         </div>
                     </div>
 
@@ -266,8 +264,7 @@
                             <label for="keterangan_claim"
                                 class="">{{ __('Keterangan Claim') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim" rows="1"
-                                readonly>{{ $record->keterangan_claim }}</textarea>
+                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim" rows="1" readonly>{{ $record->keterangan_claim }}</textarea>
                         </div>
                     </div>
 
@@ -302,20 +299,21 @@
                         <em class="flaticon-circle"></em>
                         Kembali
                     </a>
-                        @if ($record->status->code == '01')
-                            @if (auth()->user()->hasRole('Supervisor JMTO') || auth()->user()->hasRole('Superadmin'))
-                                <div class="btn btn-light-success float-right save">
-                                    <em class="flaticon-plus"></em>
-                                    Approve
-                                </div>
+                    @if ($record->status->code == '01')
+                        @if (auth()->user()->hasRole('Supervisor JMTO') ||
+                            auth()->user()->hasRole('Superadmin'))
+                            <div class="btn btn-light-success float-right save">
+                                <em class="flaticon-plus"></em>
+                                Approve
+                            </div>
 
-                                <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
-                                    data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
-                                    <em class="flaticon-cancel"></em>
-                                    Reject
-                                </div>
-                            @endif
+                            <div class="btn btn-light-danger float-right mr-2 custome-modal" data-status="reject"
+                                data-modal="#largeModal" data-url="claim/reject/{{ $record->id }}">
+                                <em class="flaticon-cancel"></em>
+                                Reject
+                            </div>
                         @endif
+                    @endif
                 @endif
             </form>
         </div>
