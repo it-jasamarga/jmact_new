@@ -13,7 +13,7 @@ class Feedback extends Model
 		$ret = strtoupper($this->no_tiket[0]) == "K" ?
             $this->hasOne(KeluhanPelanggan::class, 'no_tiket', 'no_tiket')
         :
-            $this->hasOne(Claim::class, 'no_tiket', 'no_tiket');
+            $this->hasOne(ClaimPelanggan::class, 'no_tiket', 'no_tiket');
 
         return $ret;
 	}
