@@ -19,30 +19,32 @@ class LookupController extends Controller
     {
         if ($request->request->input('dashscope') == 'keluhan') {
 
-            if(auth()->user()->hasRole('Superadmin')){
-                $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
-                // dd($data->get(), $request);
-            } else if(auth()->user()->hasRole('JMTC')){
-                $data  = KeluhanPelanggan::where('status_id','1')
-                    ->orderByDesc('created_at')->select('*')->filter($request);
-            } else if(auth()->user()->hasRole('Service Provider')){
-                $data  = KeluhanPelanggan::with('history')
-                    ->where('unit_id',auth()->user()->unit_id)
-                    ->orderByDesc('created_at')
-                    ->select('*')
-                    ->filter($request);
-            } else if(auth()->user()->hasRole('Regional')){
-                $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
-                $data  = KeluhanPelanggan::where('regional_id',$regionalId)
-                    ->orderByDesc('created_at')
-                    ->select('*')
-                    ->filter($request);
-            } else {
-                $data  = KeluhanPelanggan::with('history')
-                ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
-                ->select('*')
-                ->filter($request);
-            }
+            $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
+
+            // if(auth()->user()->hasRole('Superadmin')){
+            //     $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
+            //     // dd($data->get(), $request);
+            // } else if(auth()->user()->hasRole('JMTC')){
+            //     $data  = KeluhanPelanggan::where('status_id','1')
+            //         ->orderByDesc('created_at')->select('*')->filter($request);
+            // } else if(auth()->user()->hasRole('Service Provider')){
+            //     $data  = KeluhanPelanggan::with('history')
+            //         ->where('unit_id',auth()->user()->unit_id)
+            //         ->orderByDesc('created_at')
+            //         ->select('*')
+            //         ->filter($request);
+            // } else if(auth()->user()->hasRole('Regional')){
+            //     $regionalId = (auth()->user()) ? auth()->user()->regional_id : null;
+            //     $data  = KeluhanPelanggan::where('regional_id',$regionalId)
+            //         ->orderByDesc('created_at')
+            //         ->select('*')
+            //         ->filter($request);
+            // } else {
+            //     $data  = KeluhanPelanggan::with('history')
+            //     ->whereHas('history',function($q) { $q->where('unit_id',auth()->user()->unit_id); })
+            //     ->select('*')
+            //     ->filter($request);
+            // }
     
             return datatables()->of($data)
                 ->addColumn('sumber_id', function ($data) use ($request) {
@@ -62,11 +64,13 @@ class LookupController extends Controller
 
         } else if ($request->request->input('dashscope') == 'claim') {
 
-            if (auth()->user()->hasRole('Superadmin')) $data = ClaimPelanggan::where('id', '>', 0);
-            else if (auth()->user()->hasRole('JMTC')) $data = ClaimPelanggan::where('status_id','1');
-            else if (auth()->user()->hasRole('Service Provider')) $data = ClaimPelanggan::with('history')->where('unit_id',auth()->user()->unit_id);
-            else if (auth()->user()->hasRole('Regional')) $data = ClaimPelanggan::where('regional_id', (auth()->user()) ? auth()->user()->regional_id : null);
-            else $data = ClaimPelanggan::with('history')->whereHas('history', function($q) { $q->where('unit_id', auth()->user()->unit_id); });
+            $data = ClaimPelanggan::where('id', '>', 0);
+            
+            // if (auth()->user()->hasRole('Superadmin')) $data = ClaimPelanggan::where('id', '>', 0);
+            // else if (auth()->user()->hasRole('JMTC')) $data = ClaimPelanggan::where('status_id','1');
+            // else if (auth()->user()->hasRole('Service Provider')) $data = ClaimPelanggan::with('history')->where('unit_id',auth()->user()->unit_id);
+            // else if (auth()->user()->hasRole('Regional')) $data = ClaimPelanggan::where('regional_id', (auth()->user()) ? auth()->user()->regional_id : null);
+            // else $data = ClaimPelanggan::with('history')->whereHas('history', function($q) { $q->where('unit_id', auth()->user()->unit_id); });
 
             // dd($request, $data->orderByDesc('created_at')->select('*')->filter($request)->get()->toArray());
     
