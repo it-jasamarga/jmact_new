@@ -110,9 +110,17 @@ class RoleController extends Controller
 
     public function store()
     {
-        request()->validate(['name' => 'required|unique:roles,name']);
-        request()->validate(['type_id' => 'required']);
-        request()->validate(['active' => 'required']);
+        $custom_message = [];
+        $validate = [
+            'name' => 'required|unique:roles,name',
+            'type_id' => 'required',
+            'active' => 'required',
+        ];
+
+        $validate['name'] = 'required|unique:roles,name';
+        $custom_message = ['name.required' => 'The role field is required.'];
+
+        request()->validate($validate, $custom_message);
 
         $record = Role::saveData(request());
         request()['id'] = $record->id;
