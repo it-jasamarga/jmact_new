@@ -64,8 +64,8 @@ class LookupController extends Controller
 
             if (auth()->user()->hasRole('Superadmin')) $data = ClaimPelanggan::where('id', '>', 0);
             else if (auth()->user()->hasRole('JMTC')) $data = ClaimPelanggan::where('status_id','1');
-            else if (auth()->user()->hasRole('Service Provider')) $data = KeluhanPelanggan::with('history')->where('unit_id',auth()->user()->unit_id);
-            else if (auth()->user()->hasRole('Regional')) $data = KeluhanPelanggan::where('regional_id', (auth()->user()) ? auth()->user()->regional_id : null);
+            else if (auth()->user()->hasRole('Service Provider')) $data = ClaimPelanggan::with('history')->where('unit_id',auth()->user()->unit_id);
+            else if (auth()->user()->hasRole('Regional')) $data = ClaimPelanggan::where('regional_id', (auth()->user()) ? auth()->user()->regional_id : null);
             else $data = ClaimPelanggan::with('history')->whereHas('history', function($q) { $q->where('unit_id', auth()->user()->unit_id); });
 
             // dd($request, $data->orderByDesc('created_at')->select('*')->filter($request)->get()->toArray());
