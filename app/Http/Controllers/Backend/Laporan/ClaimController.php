@@ -99,10 +99,10 @@ class ClaimController extends Controller
                     $q2->where('id', $roId);
                 });
             })
-            ->whereHas('status', function ($q2) {
-                $q2->whereIn('code', ['02', '04'])
-                    ->where('type', 2);
-            })
+                ->whereHas('status', function ($q2) {
+                    $q2->whereIn('code', ['02', '04'])
+                        ->where('type', 2);
+                })
                 ->orderByDesc('created_at')
                 ->select('*')
                 ->filter($request);
@@ -313,9 +313,9 @@ class ClaimController extends Controller
         $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
         $this->firebase->sendGroup(
-          $record,
-          'JMACT - Keluhan Diteruskan Kepada Service Provider',
-          'Diteruskan Ke '.$name
+            $record,
+            'JMACT - Keluhan Diteruskan Kepada Service Provider',
+            'Diteruskan Ke ' . $name
         );
 
         return response([
@@ -371,12 +371,12 @@ class ClaimController extends Controller
         unset($request['nominal_final']);
         $recordHistory = $record->history()->create($request->all());
 
-        $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
+        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
         $this->firebase->sendGroup(
-          $record,
-          'JMACT - Keluhan Diteruskan Kepada Service Provider',
-          'Diteruskan Ke '.$name
+            $record,
+            'JMACT - Keluhan Diteruskan Kepada Service Provider',
+            'Diteruskan Ke ' . $name
         );
 
         return response([
