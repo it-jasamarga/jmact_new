@@ -82,7 +82,7 @@ class KeluhanController extends Controller
         }
 
         // if (auth()->user()->hasRole('Service Provider')) {
-        if (auth()->user()->roles()->first()->type == "Service Provider") {
+        if (auth()->user()->roles()->first()->type->type == "Service Provider") {
             $data  = KeluhanPelanggan::with('history')
                 ->where('unit_id', auth()->user()->unit_id)
                 ->whereHas('status', function ($q1) {
@@ -96,7 +96,7 @@ class KeluhanController extends Controller
 
         // if (auth()->user()->hasRole('Regional')) {
         // if (@auth()->user()->roles()->first()->regional_id) {
-        if (auth()->user()->roles()->first()->type == "Regional") {
+        if (auth()->user()->roles()->first()->type->type == "Regional") {
             $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
             // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
@@ -113,7 +113,7 @@ class KeluhanController extends Controller
         }
 
         // if (@auth()->user()->roles()->first()->ro_id) {
-        if (auth()->user()->roles()->first()->type == "Representative Office") {
+        if (auth()->user()->roles()->first()->type->type == "Representative Office") {
             $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
 
             // $data  = KeluhanPelanggan::where('regional_id',$regionalId)

@@ -57,6 +57,7 @@
               <th>No</th>
               {{-- <th>Kode</th> --}}
               <th>Jenis Claim</th>
+              <th>Unit</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -78,7 +79,8 @@
       // { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
     //   { data:'code', name:'code' },
-      { data:'jenis_claim', name:'jenis_claim' },
+    { data:'jenis_claim', name:'jenis_claim' },
+      { data:'unit_id', name:'unit_id' },
       { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false, orderable: false }
       ],
