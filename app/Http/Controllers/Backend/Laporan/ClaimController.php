@@ -53,7 +53,7 @@ class ClaimController extends Controller
 
         // $data  = ClaimPelanggan::query()->orderByDesc('created_at')->filter($request);
 
-        $data  = ClaimPelanggan::with('history')
+        $data = ClaimPelanggan::with('history')
             ->whereHas('history', function ($q) {
                 $q->where('unit_id', auth()->user()->unit_id);
             })->orderByDesc('created_at')
@@ -66,10 +66,10 @@ class ClaimController extends Controller
         }
 
         // if (auth()->user()->hasRole('JMTC')) {
-        if (auth()->user()->roles()->first()->type == "Supervisor JMTC") {
-            $data  = ClaimPelanggan::whereHas('status', function ($q1) {
-                $q1->whereIn('code', ['00', '01', '02'])
-                    ->where('type', 1);
+        if (auth()->user()->roles()->first()->type->type == "Supervisor JMTC") {
+            $data = ClaimPelanggan::whereHas('status', function ($q1) {
+                $q1->whereIn('code', ['01', '02', '03', '04'])
+                    ->where('type', 2);
             })
                 ->orderByDesc('created_at')
                 ->select('*')
@@ -77,12 +77,12 @@ class ClaimController extends Controller
         }
 
         // if (auth()->user()->hasRole('Service Provider')) {
-        if (auth()->user()->roles()->first()->type == "Service Provider") {
-            $data  = ClaimPelanggan::with('history')
+        if (auth()->user()->roles()->first()->type->type == "Service Provider") {
+            $data = ClaimPelanggan::with('history')
                 ->where('unit_id', auth()->user()->unit_id)
                 ->whereHas('status', function ($q1) {
                     $q1->whereIn('code', ['03', '04', '05', '06', '07'])
-                        ->where('type', 1);
+                        ->where('type', 2);
                 })
                 ->orderByDesc('created_at')
                 ->select('*')
@@ -91,17 +91,17 @@ class ClaimController extends Controller
 
         // if (auth()->user()->hasRole('RO')) {
         // if (@auth()->user()->roles()->first()->ro_id) {
-        if (auth()->user()->roles()->first()->type == "Representative Office") {
+        if (auth()->user()->roles()->first()->type->type == "Representative Office") {
             $roId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->ro_id : null;
 
-            $data  = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
+            $data = ClaimPelanggan::whereHas('ruas', function ($q1) use ($roId) {
                 $q1->whereHas('ro', function ($q2) use ($roId) {
-                    $q2->where('id', $roId)
-                        ->whereHas('status', function ($q1) {
-                            $q1->whereIn('code', ['02', '03'])
-                                ->where('type', 1);
-                        });
+                    $q2->where('id', $roId);
                 });
+            })
+            ->whereHas('status', function ($q2) {
+                $q2->whereIn('code', ['02', '04'])
+                    ->where('type', 2);
             })
                 ->orderByDesc('created_at')
                 ->select('*')
@@ -110,7 +110,7 @@ class ClaimController extends Controller
 
         // if (auth()->user()->hasRole('Regional')) {
         // if (@auth()->user()->roles()->first()->regional_id) {
-        if (auth()->user()->roles()->first()->type == "Regional") {
+        if (auth()->user()->roles()->first()->type->type == "Regional") {
             $regionalId = (auth()->user()->roles()) ? auth()->user()->roles()->first()->regional_id : null;
 
             // $data  = KeluhanPelanggan::where('regional_id',$regionalId)
