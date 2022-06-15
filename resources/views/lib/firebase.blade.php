@@ -27,7 +27,10 @@
                 messaging.requestPermission().then(function (data) {
                     return messaging.getToken()
                 }).then(function(token) {
-                    if (window.location.pathname == '/login') {
+                    let path = window.location.pathname;
+                    let login = '/login';
+                    let lastchars = path.substr(path.length - login.length);
+                    if (lastchars == login) {
                         console.log('## Firebase Messaging: add Device Token information', {token});
                         $('<input name="device-token" type="hidden">').val(token).insertAfter('input[name="_token"]');
                     }
