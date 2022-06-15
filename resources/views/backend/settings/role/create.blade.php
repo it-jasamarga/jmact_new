@@ -35,7 +35,8 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="type_id" class="">{{ __('Type') }}</label><span class="text-danger">*</span>
+                            <label for="type_id" class="">{{ __('Type') }}</label><span
+                                class="text-danger">*</span>
                             <select class="form-control select2" name="type_id" required>
                                 {!! App\Models\MasterType::options('type', 'id', [], '( Pilih Type )') !!}
                             </select>
@@ -60,14 +61,14 @@
                             <label for="ro_id" class="">{{ __('RO') }}</label>
                             <select class="form-control select2" id="ro" name="ro_id">
                                 {!! App\Models\MasterRo::options(
-                                    function ($q) {
-                                        $regional = $q->regional ? $q->regional->name : '-';
-                                        return $q->name . ' - ' . $regional;
-                                    },
-                                    'id',
-                                    [],
-                                    '( Pilih RO )',
-                                ) !!}
+    function ($q) {
+        $regional = $q->regional ? $q->regional->name : '-';
+        return $q->name . ' - ' . $regional;
+    },
+    'id',
+    [],
+    '( Pilih RO )',
+) !!}
                             </select>
                         </div>
                     </div>
@@ -145,10 +146,10 @@
 
         $(document).on('change', "[name='type_id']", function(e) {
             var type = $("[name='type_id'] option:selected").text();
-            if (type == "Regional" ) {
+            if (type == "Regional") {
                 $('#ro').attr('disabled', true);
                 $('#regional').attr('disabled', false);
-            } else if (type == "Representative Office" ) {
+            } else if (type == "Representative Office") {
                 $('#ro').attr('disabled', false);
                 $('#regional').attr('disabled', true);
             } else {

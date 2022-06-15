@@ -4,11 +4,12 @@
 @endsection
 
 @section('toolbars')
-  <a href="javascript:void(0)" class="btn btn-light-primary font-weight-bolder btn-sm add-modal" data-modal="#largeModal">Create Data</a>
+    <a href="javascript:void(0)" class="btn btn-light-primary font-weight-bolder btn-sm add-modal"
+        data-modal="#largeModal">Create Data</a>
 @endsection
 
 @section('content')
-{{-- <div class="card card-custom card-collapsed" data-card="true" id="kt_card_4">
+    {{-- <div class="card card-custom card-collapsed" data-card="true" id="kt_card_4">
  <div class="card-header">
   <div class="card-title">
     <h3 class="card-label">{{ $title }}
@@ -40,62 +41,80 @@
 
 <br> --}}
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="card card-custom {{ @$class }}">
-      {{-- Body --}}
-      <div class="card-body pt-4 table-responsive" >
-        <table class="table data-thumb-view table-striped" id="listTables">
-          <thead>
-            <tr>
-              {{-- <th width="16">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card card-custom {{ @$class }}">
+                {{-- Body --}}
+                <div class="card-body pt-4 table-responsive">
+                    <table class="table data-thumb-view table-striped" id="listTables">
+                        <thead>
+                            <tr>
+                                {{-- <th width="16">
                 <label class="checkbox checkbox-single checkbox-solid checkbox-primary mb-0">
                   <input type="checkbox" value="" class="group-checkable"/>
                   <span></span>
                 </label>
               </th> --}}
-              <th>No</th>
-              {{-- <th>Kode</th> --}}
-              <th>Jenis Claim</th>
-              <th>Unit</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+                                <th>No</th>
+                                {{-- <th>Kode</th> --}}
+                                <th>Jenis Claim</th>
+                                <th>Unit</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
-        </table>
-      </div>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
 @endsection
 
 @section('scripts')
-{{-- Page js files --}}
-<script>
-  $(document).ready(function () {
-    loadList([
-      // { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
-      { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false, orderable: false  },
-    //   { data:'code', name:'code' },
-    { data:'jenis_claim', name:'jenis_claim' },
-      { data:'unit_id', name:'unit_id' },
-      { data:'active', name:'active' },
-      { data:'action', name: 'action', searchable: false, orderable: false }
-      ],
-      [
-        @if(auth()->user()->can('claim.create'))
-        {
-          text: "<i class='flaticon-file-1'></i>Add Jenis Claim</a>",
-          className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
-          attr: {
-            'data-modal': "#largeModal"
-          }
-        }
-        @endif
-      ]
-      );
-  });
-</script>
+    {{-- Page js files --}}
+    <script>
+        $(document).ready(function() {
+            loadList([
+                    // { data:'numSelect', name:'numSelect', searchable: false, orderable: false },
+                    {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false
+                    },
+                    //   { data:'code', name:'code' },
+                    {
+                        data: 'jenis_claim',
+                        name: 'jenis_claim'
+                    },
+                    {
+                        data: 'unit_id',
+                        name: 'unit_id'
+                    },
+                    {
+                        data: 'active',
+                        name: 'active'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        searchable: false,
+                        orderable: false
+                    }
+                ],
+                [
+                    @if (auth()->user()->can('claim.create'))
+                        {
+                            text: "<i class='flaticon-file-1'></i>Add Jenis Claim</a>",
+                            className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
+                            attr: {
+                                'data-modal': "#largeModal"
+                            }
+                        }
+                    @endif
+                ]
+            );
+        });
+    </script>
 @endsection
