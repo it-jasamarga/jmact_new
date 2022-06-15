@@ -44,6 +44,10 @@ class MasterJenisClaimController extends Controller
         ]);
         return $button;
         })
+        ->addColumn('unit_id', function ($data) use ($request) {
+            $button = ($data->unit) ? $data->unit->unit : '-';
+            return $button;
+        })
         ->addColumn('active', function ($data) use ($request) {
         $button = getActive($data->active);
         return $button;
