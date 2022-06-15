@@ -254,23 +254,42 @@ class UserController extends Controller
 
     public function device()
     {
+        return response([
+            'status' => false,
+            'message' => 'error',
+            'description' => "Deprecated by ADR, incorporated in login controller"
+        ]);
+
+        /*
+        if (! request()->device_id) return response([
+            'status' => false,
+            'message' => 'error'
+        ]);
+
+        if (! \App\Models\UserDevice::where('user_id', auth()->user()->id)->where('token', request()->device_id)->exists()) {
+            \App\Models\UserDevice::create([
+                'user_id'   => auth()->user()->id,
+                'token'     => request()->device_id,
+                'misc'      => request()->header('user-agent')
+            ]);
+        }
+
         $record = User::findOrFail(auth()->user()->id);
         $record->device_id = request()->device_id;
         $record->save();
 
-        // $messaging = app('firebase.messaging');
-        // $topic = (auth()->user()->unit) ? auth()->user()->unit->unit : 'public';
-        // if(request()->device_id){
-        //   $registrationTokens = [
-        //     request()->device_id
-        //   ];
-        //   // dd($topic);
-        //   $messaging->subscribeToTopic("".$topic."", $registrationTokens);
-        // }
+        $topic = null;
+        $messaging = app('firebase.messaging');
+        if (auth()->user()->unit) {
+            $topic = auth()->user()->unit->unit;
+            $messaging->subscribeToTopic($topic, [ request()->device_id ]);
+        }
 
         return response([
             'status' => true,
             'message' => 'success',
+            'FBM-subscribed-topic' => $topic
         ]);
+        */
     }
 }

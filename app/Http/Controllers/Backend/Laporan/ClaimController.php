@@ -310,13 +310,13 @@ class ClaimController extends Controller
 
         $recordHistory = $record->history()->create($request->all());
 
-        // $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
-        // $this->firebase->sendGroup(
-        //   $record,
-        //   'JMACT - Keluhan Diteruskan Kepada Service Provider',
-        //   'Diteruskan Ke '.$name
-        // );
+        $this->firebase->sendGroup(
+          $record,
+          'JMACT - Keluhan Diteruskan Kepada Service Provider',
+          'Diteruskan Ke '.$name
+        );
 
         return response([
             'status' => true,
@@ -371,13 +371,13 @@ class ClaimController extends Controller
         unset($request['nominal_final']);
         $recordHistory = $record->history()->create($request->all());
 
-        // $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
+        $name = $recordHistory->ruas->name.' - '.$recordHistory->ruas->ro->name;
 
-        // $this->firebase->sendGroup(
-        //   $record,
-        //   'JMACT - Keluhan Diteruskan Kepada Service Provider',
-        //   'Diteruskan Ke '.$name
-        // );
+        $this->firebase->sendGroup(
+          $record,
+          'JMACT - Keluhan Diteruskan Kepada Service Provider',
+          'Diteruskan Ke '.$name
+        );
 
         return response([
             'status' => true,

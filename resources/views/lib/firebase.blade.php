@@ -27,9 +27,12 @@
                 messaging.requestPermission().then(function (data) {
                     return messaging.getToken()
                 }).then(function(token) {
-                    $.post('{{ route("user-account.device") }}', { _token: "{{ csrf_token() }}", device_id: token });
-                }).catch(function (err) {
-                    console.log('eerr',err)
+                    if (window.location.pathname == '/login') {
+                        console.log('## Firebase Messaging: add Device Token information', {token});
+                        $('<input name="device-token" type="hidden">').val(token).insertAfter('input[name="_token"]');
+                    }
+                }).catch(function (error) {
+                    console.log('## Firebase Messaging: Error', {error})
                 });
             });
 
