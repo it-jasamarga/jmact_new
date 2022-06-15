@@ -34,7 +34,7 @@ class KeluhanController extends Controller
     public function __construct()
     {
         $this->route = 'keluhan';
-        // $this->firebase = new HelperFirestore();
+        $this->firebase = new HelperFirestore();
         // $this->middleware(function ($request, $next) {
         //     $keluhan = (auth()->user()->hasPermissionTo('keluhan.create') || auth()->user()->hasPermissionTo('keluhan.detail') || auth()->user()->hasPermissionTo('keluhan.forward') || auth()->user()->hasPermissionTo('keluhan.sla'));
         //     try {
@@ -273,11 +273,11 @@ class KeluhanController extends Controller
             //   'created_by' => $request->user_id
             // ]);
 
-            // $this->firebase->sendGroup(
-            //   $record,
-            //   'JMACT - Keluhan Kepada ' . $record->unit->unit,
-            //   'Proses Keluhan Dengan No Tiket ' . $record->no_tiket
-            // );
+            $this->firebase->sendGroup(
+              $record,
+              'JMACT - Keluhan Kepada ' . $record->unit->unit,
+              'Proses Keluhan Dengan No Tiket ' . $record->no_tiket
+            );
 
             $record->history()->create([
                 // 'ruas_id' => $record->ruas_id,
@@ -330,13 +330,13 @@ class KeluhanController extends Controller
 
         $recordHistory = $record->history()->create($request->all());
 
-        // $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
 
-        // $this->firebase->sendGroup(
-        //   $record,
-        //   'JMACT - Keluhan Diteruskan Kepada Service Provider',
-        //   'Diteruskan Ke ' . $name
-        // );
+        $this->firebase->sendGroup(
+          $record,
+          'JMACT - Keluhan Diteruskan Kepada Service Provider',
+          'Diteruskan Ke ' . $name
+        );
 
         return response([
             'status' => true,
@@ -406,11 +406,11 @@ class KeluhanController extends Controller
         // request()['regional_id'] = $record->regional_id;
         $recordHistory = $record->history()->create(request()->all());
 
-        // $this->firebase->sendGroup(
-        //   $record,
-        //   'JMACT - Keluhan Dalam Proses SLA',
-        //   'Estimasi Proses Dalam 3 Hari'
-        // );
+        $this->firebase->sendGroup(
+          $record,
+          'JMACT - Keluhan Dalam Proses SLA',
+          'Estimasi Proses Dalam 3 Hari'
+        );
         return response([
             'status' => true,
             'message' => 'success',
@@ -460,11 +460,11 @@ class KeluhanController extends Controller
             'status_id' => MasterStatus::where('code', '04')->where('type', '1')->first()->id
         ]);
 
-        // $this->firebase->send(
-        //   $record,
-        //   'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
-        //   'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
-        // );
+        $this->firebase->send(
+          $record,
+          'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+          'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
+        );
 
         return response([
             'status' => true,
@@ -535,11 +535,11 @@ class KeluhanController extends Controller
             'status_id' => MasterStatus::where('code', '05')->where('type', '1')->first()->id
         ]);
 
-        // $this->firebase->send(
-        //   $record,
-        //   'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
-        //   'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
-        // );
+        $this->firebase->send(
+          $record,
+          'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+          'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
+        );
 
         return response([
             'status' => true,

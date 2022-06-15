@@ -59,6 +59,28 @@ class LoginController extends Controller
         // dd($auth);
 
         if ($auth) {
+
+            $device_token = request()->input('device-token');
+
+            if (! \App\Models\UserDevice::where('user_id', auth()->user()->id)->where('token', $device_token)->exists()) {
+                \App\Models\UserDevice::create([
+                    'user_id'   => auth()->user()->id,
+                    'token'     => $device_token,
+                    'misc'      => request()->header('user-agent')
+                ]);
+            }
+    
+            $record = User::findOrFail(auth()->user()->id);
+            $record->device_id = $device_token;
+            $record->save();
+    
+            $topic = null;
+            $messaging = app('firebase.messaging');
+            if (auth()->user()->unit) {
+                $topic = auth()->user()->unit->unit;
+                $messaging->subscribeToTopic($topic, [ $device_token ]);
+            }    
+
             return redirect('/');
         }else{
 
@@ -93,8 +115,15 @@ class LoginController extends Controller
 
     public function logout()
     {
-       Auth::logout();
-       return redirect('/');
+        $record = \App\Models\User::where('id', auth()->user()->id)->first();
+        $device_token = $record->device_id;
+        $record->update(['device_id' => null]);
+        if (! is_null($device_token)) \App\Models\UserDevice::where('token', $device_token)->delete();
+
+        // TODO:$messaging->UNsubscribeToTopic
+
+        Auth::logout();
+        return redirect('/');
     }
 
    
