@@ -334,10 +334,9 @@ class KeluhanController extends Controller
         $record->status_id = $request->status_id;
         $record->unit_id = $request->unit_id;
         $record->save();
+        $record->history()->create($request->all());
 
-        $recordHistory = $record->history()->create($request->all());
-
-        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+        $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
         $this->firebase->sendGroup(
             $record,
@@ -460,14 +459,14 @@ class KeluhanController extends Controller
         // dump($unitHistory);
         // dd($record->history()->get());
 
-        $recordHistory = $record->history()->create([
+        $record->history()->create([
             'unit_id' => $unitHistory,
             // 'regional_id' => $record->regional_id,
             // 'ruas_id' => $ruasHistory,
             'status_id' => MasterStatus::where('code', '04')->where('type', '1')->first()->id
         ]);
 
-        $this->firebase->send(
+        $this->firebase->sendGroup(
             $record,
             'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
             'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
@@ -542,7 +541,7 @@ class KeluhanController extends Controller
             'status_id' => MasterStatus::where('code', '05')->where('type', '1')->first()->id
         ]);
 
-        $this->firebase->send(
+        $this->firebase->sendGroup(
             $record,
             'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
             'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '

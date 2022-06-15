@@ -31,7 +31,7 @@
                     {{-- <select class="form-control option-ajax select2" id="unit" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit','id',['selected' => $record->unit_id, 'filters' => ['unit_id' => $record->unit->unit_id]],'( Pilih Unit)') !!}
                     </select> --}}
-                    <select class="form-control option-ajax select2" id="unit" name="unit_id">
+                    <select class="form-control select2" id="unit" name="unit_id">
                         {!! App\Models\MasterUnit::options('unit','id',['selected' => $record->jenisClaim->unit_id,
                         'filters' => ['unit_id' => $record->unit->unit_id],
                         ],'( Pilih Unit)') !!}
