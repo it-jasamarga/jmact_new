@@ -280,11 +280,13 @@ class KeluhanController extends Controller
             //   'created_by' => $request->user_id
             // ]);
 
-            $this->firebase->sendGroup(
-                $record,
-                'JMACT - Keluhan Kepada ' . $record->unit->unit,
-                'Proses Keluhan Dengan No Tiket ' . $record->no_tiket
-            );
+            $this->firebase->notify($record);
+
+            // $this->firebase->sendGroup(
+            //     $record,
+            //     'JMACT - Keluhan Kepada ' . $record->unit->unit,
+            //     'Proses Keluhan Dengan No Tiket ' . $record->no_tiket
+            // );
 
             $record->history()->create([
                 // 'ruas_id' => $record->ruas_id,

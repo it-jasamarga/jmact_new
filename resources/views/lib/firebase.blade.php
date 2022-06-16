@@ -65,7 +65,8 @@
                 var htmlNotif = ``;
                 var dbFirestore = db.collection('notifications')
                 .where('status','==','Unread')
-                .where('unit_id','==', parseInt(unitId))
+                .where('user_id','==', parseInt({{ auth()->user()->id; }}))
+                // .where('unit_id','==', parseInt(unitId))
                 .orderBy("created_at", "desc")
                 .limit(10);
 

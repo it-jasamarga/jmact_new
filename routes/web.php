@@ -31,6 +31,28 @@ use Illuminate\Http\Request;
 // 	}
 // });
 
+Route::get('/test', function(Request $request) {
+    // $role = \App\Models\Role::where('name', '=', "Supervisor JMTC")->get(['id']);
+    // $data = \App\Models\User::with("roles")
+    //     ->whereIn('role_id')
+    //     ->get(['id'])
+    //     ->toArray();
+    $unit_id = 5;
+    $regional_id = 4;
+    $users = \App\Models\User::role('Service Provider')
+        ->with('roles')
+        ->whereHas('roles', function ($q) use($regional_id) { $q->where('type_id', '=', $regional_id); })
+        ->where('unit_id', $unit_id)
+        // ->with(['roles' => function($query) use($regional_id)
+        // {
+        //     $query->where('regional_id', '=', $regional_id);
+        // }
+    // ])        
+        ->get()
+        ->toArray();
+    $devices = \App\Models\UserDevice::whereIn('user_id', $users)->get(['token'])->pluck('token')->toArray();
+    dd($users, $devices);
+});
 
 
 
