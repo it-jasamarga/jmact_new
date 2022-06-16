@@ -12,6 +12,7 @@ use App\Models\MasterStatus;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
+use App\Helpers\HelperFirestore;
 
 class ClaimController extends Controller
 {
@@ -26,6 +27,7 @@ class ClaimController extends Controller
     public function __construct()
     {
         $this->route = 'claim';
+        $this->firebase = new HelperFirestore();
         // $this->middleware(function ($request, $next) {
         //     $claim = (auth()->user()->hasPermissionTo('claim.create') || auth()->user()->hasPermissionTo('claim.detail') || auth()->user()->hasPermissionTo('claim.forward') || auth()->user()->hasPermissionTo('claim.stage'));
         //     try {
@@ -315,14 +317,13 @@ class ClaimController extends Controller
         unset($request['ruas_id']);
         $record->status_id = $request->status_id;
         $record->save();
+        $record->history()->create($request->all());
 
-        $recordHistory = $record->history()->create($request->all());
-
-        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+        $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
         $this->firebase->sendGroup(
             $record,
-            'JMACT - Keluhan Diteruskan Kepada Service Provider',
+            'JMACT - Claim Diteruskan Kepada Service Provider',
             'Diteruskan Ke ' . $name
         );
 
@@ -377,13 +378,13 @@ class ClaimController extends Controller
         unset($request['proses_pembayaran']);
         unset($request['pembayaran_selesai']);
         unset($request['nominal_final']);
-        $recordHistory = $record->history()->create($request->all());
+        $record->history()->create($request->all());
 
-        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+        $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
         $this->firebase->sendGroup(
             $record,
-            'JMACT - Keluhan Diteruskan Kepada Service Provider',
+            'JMACT - Claim Diteruskan Kepada Service Provider',
             'Diteruskan Ke ' . $name
         );
 
@@ -433,7 +434,7 @@ class ClaimController extends Controller
         $data['unit_id'] = $record->unit_id;
         // $data['regional_id'] = $record->regional_id;
 
-        $recordHistory = $record->history()->create($data);
+        $record->history()->create($data);
 
         return response([
             'status' => true,
