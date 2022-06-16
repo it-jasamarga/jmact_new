@@ -534,7 +534,7 @@ class KeluhanController extends Controller
         // $record->selesai_pengerjaan = Carbon::now()->format('Y-m-d H:i:s');
         $record->save();
 
-        $recordHistory = $record->history()->create([
+        $record->history()->create([
             'unit_id' => $unitHistory,
             // 'regional_id' => $record->regional_id,
             // 'ruas_id' => $ruasHistory,

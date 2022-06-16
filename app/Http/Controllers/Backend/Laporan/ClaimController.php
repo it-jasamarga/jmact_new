@@ -378,9 +378,9 @@ class ClaimController extends Controller
         unset($request['proses_pembayaran']);
         unset($request['pembayaran_selesai']);
         unset($request['nominal_final']);
-        $recordHistory = $record->history()->create($request->all());
+        $record->history()->create($request->all());
 
-        $name = $recordHistory->ruas->name . ' - ' . $recordHistory->ruas->ro->name;
+        $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
         $this->firebase->sendGroup(
             $record,
@@ -434,7 +434,7 @@ class ClaimController extends Controller
         $data['unit_id'] = $record->unit_id;
         // $data['regional_id'] = $record->regional_id;
 
-        $recordHistory = $record->history()->create($data);
+        $record->history()->create($data);
 
         return response([
             'status' => true,
