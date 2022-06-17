@@ -292,18 +292,16 @@ function getRouteMid()
     return $data;
 }
 
-function changenamePermission($data) {
+function changenamePermission($data)
+{
     $result = $data;
     if ($data == "index") {
         $result = "";
-    }
-    else if ($data == "expand") {
+    } else if ($data == "expand") {
         $result = "histori_tiket";
-    }
-    else if ($data == "sla") {
+    } else if ($data == "sla") {
         $result = "pengerjaan_keluhan";
-    }
-    else if ($data == "stage") {
+    } else if ($data == "stage") {
         $result = "tahapan";
     }
 
