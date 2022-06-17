@@ -59,14 +59,13 @@
             });
 
 // READ / SHOW NOTIF
-            var unitId = '{{ (\Auth::check()) ? auth()->user()->unit->id : null }}';
+            var userId = '{{ (\Auth::check()) ? auth()->user()->id : null }}';
 
-            if(unitId){
+            if(userId){
                 var htmlNotif = ``;
                 var dbFirestore = db.collection('notifications')
                 .where('status','==','Unread')
-                .where('user_id','==', parseInt({{ auth()->user()->id; }}))
-                // .where('unit_id','==', parseInt(unitId))
+                .where('unit_id','==', parseInt(userId))
                 .orderBy("created_at", "desc")
                 .limit(10);
 
