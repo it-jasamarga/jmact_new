@@ -37,21 +37,38 @@ Route::get('/test', function(Request $request) {
     //     ->whereIn('role_id')
     //     ->get(['id'])
     //     ->toArray();
-    $unit_id = 5;
-    $regional_id = 4;
-    $users = \App\Models\User::role('Service Provider')
-        ->with('roles')
-        ->whereHas('roles', function ($q) use($regional_id) { $q->where('type_id', '=', $regional_id); })
-        ->where('unit_id', $unit_id)
+
+// 02 Tiket diteruskan => Service Provider dengan unit yang sesuai dengan bidang keluhan dan Regional sesuai dengan Ruas
+
+    $ruas_id = 11;
+
+    $debug = \DB::table('users')
+        ->join('role_users', 'role_users.user_id', '=', 'users.id')
+        ->join('roles', 'roles.id', '=', 'role_users.role_id')
+        ->join('master_type', 'master_type.id', '=', 'roles.type_id')
+        ->where('master_type.type', "Supervisor JMTO")
+        ->where('users.unit_id', 6)
+        ->select('users.id')
+        ->get(['id'])
+        ->pluck('id')
+        // ->select('users.*')
+        // ->get()
+        ->toArray();
+
+        // ->value('master_regional.id');
+
+    // $debug = \App\Models\MasterRuas::with('ro')
+    //     ->whereIn('unit_id', $unit_id)
+        // ->whereHas('roles', function ($q) use($regional_id) { $q->where('reional_id', '=', $regional_id); })
         // ->with(['roles' => function($query) use($regional_id)
         // {
         //     $query->where('regional_id', '=', $regional_id);
         // }
     // ])        
-        ->get()
-        ->toArray();
-    $devices = \App\Models\UserDevice::whereIn('user_id', $users)->get(['token'])->pluck('token')->toArray();
-    dd($users, $devices);
+        // ->get()
+        // ->toArray();
+    // $devices = \App\Models\UserDevice::whereIn('user_id', $users)->get(['token'])->pluck('token')->toArray();
+    dd($debug);
 });
 
 
