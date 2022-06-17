@@ -86,7 +86,7 @@ class ClaimController extends Controller
                 $data = ClaimPelanggan::with('history')
                     ->where('unit_id', auth()->user()->unit_id)
                     ->whereHas('status', function ($q1) {
-                        $q1->whereIn('code', ['03', '04', '05', '06', '07'])
+                        $q1->whereIn('code', ['03', '04', '05', '06', '07', '08'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
@@ -107,7 +107,7 @@ class ClaimController extends Controller
                     });
                 })
                     ->whereHas('status', function ($q2) {
-                        $q2->whereIn('code', ['02', '04'])
+                        $q2->whereIn('code', ['02', '04', '08'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')

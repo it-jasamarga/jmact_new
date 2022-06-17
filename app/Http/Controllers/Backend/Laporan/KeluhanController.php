@@ -88,7 +88,7 @@ class KeluhanController extends Controller
                 $data  = KeluhanPelanggan::with('history')
                     ->where('unit_id', auth()->user()->unit_id)
                     ->whereHas('status', function ($q1) {
-                        $q1->whereIn('code', ['02', '03', '04'])
+                        $q1->whereIn('code', ['02', '03', '04', '07'])
                             ->where('type', 1);
                     })
                     ->orderByDesc('created_at')
