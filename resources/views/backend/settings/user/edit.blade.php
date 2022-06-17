@@ -18,7 +18,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="is_ldap" class="">{{ __('Authentication') }}</label><span class="text-danger">*</span>
+                    <label for="is_ldap" class="">{{ __('Tipe User') }}</label><span class="text-danger">*</span>
                     <label class="checkbox">
                         <input type="checkbox" class="form-control" name="is_ldap" value="1" onchange="ann.x(this)" {{$record->is_ldap == 1 ? 'checked' : ''}}/>
                         <span></span>
