@@ -1094,6 +1094,10 @@
 		$('.dashboard-selector').on('change', dashboard.filters.category.fillup);
 		$('.dashboard-filter').on('change', dashboard.filters.check);
 
+		@if (session()->pull('ndt_alert', false))
+			alert("Mohon maaf, device yang Anda gunakan tidak mendukung sistem notifikasi otomatis.");
+		@endif
+
 	});
 </script>
 
