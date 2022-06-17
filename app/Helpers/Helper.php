@@ -291,3 +291,21 @@ function getRouteMid()
 
     return $data;
 }
+
+function changenamePermission($data) {
+    $result = $data;
+    if ($data == "index") {
+        $result = "";
+    }
+    else if ($data == "expand") {
+        $result = "histori_tiket";
+    }
+    else if ($data == "sla") {
+        $result = "pengerjaan_keluhan";
+    }
+    else if ($data == "stage") {
+        $result = "tahapan";
+    }
+
+    return $result;
+}

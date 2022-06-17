@@ -37,7 +37,7 @@
             </thead>
         @else
             <thead>
-                <th><i class="{{ $item->icon }} icon"></i> {!! $item->name !!}</th>
+                <th><i class="{{ $item->icon }} icon"></i> {!! $item->name !!} </th>
                 @if (isset($item->submenu) && count($item->submenu) > 0)
                     <th class="text-center">
                         <div class="btn btn-light-primary font-weight-bold btn-addon btn-sm"><i
@@ -55,7 +55,7 @@
                                     <label class="checkbox checkbox-square checkbox-outline checkbox-success">
                                         <input name="check[]" class="index check" type="checkbox"
                                             value="{{ $value->name }}">
-                                        <span></span>{{ explode('.', $value->name)[1] }}
+                                        <span></span>{{ changenamePermission(explode('.', $value->name)[1]) }}
                                     </label>
                                 @endforeach
                             @endif
@@ -87,7 +87,7 @@
                                             <label class="checkbox checkbox-square checkbox-outline checkbox-success">
                                                 <input name="check[]" class="index check" type="checkbox"
                                                     value="{{ $value->name }}">
-                                                <span></span>{{ explode('.', $value->name)[1] }}
+                                                <span></span>{{ changenamePermission(explode('.', $value->name)[1]) }}
                                             </label>
                                         @endforeach
                                     @endif
