@@ -93,7 +93,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="tanggal_input"
-                                class="">{{ __('Tanggal Input Claim') }}</label><span
+                                class="">{{ __('Tanggal Input Klaim') }}</label><span
                                 class="text-danger">*</span>
                             <input id="tanggal_input" type="text" class="form-control" name="tanggal_input"
                                 value="{{ $record->created_at }}" readonly>
@@ -252,7 +252,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="nominal_customer"
-                                class="">{{ __('Besaran claim yang diajukan') }}</label><span
+                                class="">{{ __('Besaran klaim yang diajukan') }}</label><span
                                 class="text-danger">*</span>
                             <input id="nominal_customer" type="text" class="form-control" name="nominal_customer"
                                 value="{{ $record->nominal_customer }}" readonly>

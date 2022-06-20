@@ -60,7 +60,7 @@ class PencarianTiketController extends Controller
 
         return datatables()->of($data)
         ->addColumn('status_id', function ($data) use ($request) { return ($data->status) ? $data->status->status : '-'; })
-        ->addColumn('type_id', function ($data) use ($request) { return ($data->type == 'K') ? "Keluhan" : "Claim"; })   // TODO: there must be somethin todo
+        ->addColumn('type_id', function ($data) use ($request) { return ($data->type == 'K') ? "Keluhan" : "Klaim"; })   // TODO: there must be somethin todo
         // ->addColumn('action', function($data){ return '
         // <a href="keluhan/'.$data->id.'" class="symbol-label font-size-h5 font-weight-bold"><i class="flaticon2-list-1 btn btn-icon btn-info btn-sm btn-hover-light"></i></a>
         // <span style="margin: 0 2px"></span>

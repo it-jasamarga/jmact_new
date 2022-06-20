@@ -255,7 +255,7 @@
 							<th>No Tiket</th>
 							<th>Lokasi</th>
 							<th>Tanggal Pelaporan</th>
-							<th>Tipe Claim</th>
+							<th>Tipe Klaim</th>
 							<th>Service Provider</th>
 							<th>Nilai Diajukan</th>
 							<th>Nilai Dibayarkan</th>
@@ -326,9 +326,9 @@
 						],[
 						{
 						extend: 'excelHtml5',
-						text: "<i class='flaticon2-file'></i>Export Claim</a>",
+						text: "<i class='flaticon2-file'></i>Export Klaim</a>",
 						className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
-						title: 'JMACT - Data Claim',
+						title: 'JMACT - Data Klaim',
 						exportOptions: {
 							// columns: ':not(:last-child)',
 						}
@@ -705,7 +705,7 @@
 					"total": 1
 				}
 			],
-			"title": "Jumlah Claim"
+			"title": "Jumlah Klaim"
 		}
 	}
 
@@ -761,7 +761,7 @@
 					console.log('## Draw Keluhan Charts', {resp});
 				},
 				claim: function(resp) {
-					console.log('## Draw Claim Charts', {resp});
+					console.log('## Draw Klaim Charts', {resp});
 
 					let prefix = '#'+unification.current+'_';
 
@@ -784,7 +784,7 @@
 									colorRef = $(prefix+'categorySelector').children("option:selected").val()=='ruas' ? ("Chart Area "+$(prefix+'category_id').children("option:selected").text()) : ("Chart Area "+$(prefix+'category_id').children("option:selected").text()+" - "+item.name);
 									break;
 								case 'type':
-									colorRef = "Chart Claim Type "+item.name;
+									colorRef = "Chart Klaim Type "+item.name;
 									break;
 								default:
 									colorRef = (item.name);
