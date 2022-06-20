@@ -59,7 +59,7 @@
           </fieldset>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
-          <label for="users-list-role">Claim</label>
+          <label for="users-list-role">Klaim</label>
           <fieldset class="form-group">
             <select class="form-control filter-control select2" data-post="jenis_claim_id">
                 {!! App\Models\MasterJenisClaim::options('jenis_claim','id',[],'( Claim )') !!}
@@ -117,7 +117,7 @@
               <th id="listTables">Nama Pelanggan</th>
               <th id="listTables">No Telepon</th>
               <th id="listTables">Sosial Media</th>
-              <th id="listTables">Claim</th>
+              <th id="listTables">Klaim</th>
               <th id="listTables">Golongan Kendaraan</th>
               <th id="listTables">Status</th>
               <th id="listTables">Action</th>
@@ -153,13 +153,13 @@
     ],[
         {
           extend: 'excelHtml5',
-          text: "<i class='flaticon2-file'></i>Export Claim</a>",
+          text: "<i class='flaticon2-file'></i>Export Klaim</a>",
           className: "btn buttons-copy btn btn-light-success font-weight-bold mr-2 buttons-html5",
           title: 'JMACT - Data Keluhan'
         },
         @if(auth()->user()->can('claim.create'))
         {
-          text: "<i class='flaticon-file-1'></i>Add Claim</a>",
+          text: "<i class='flaticon-file-1'></i>Add Klaim</a>",
           className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-page",
           attr: {
             'data-url': "{{ route($route.'.create') }}"

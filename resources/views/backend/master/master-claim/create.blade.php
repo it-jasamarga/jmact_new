@@ -1,7 +1,7 @@
 <form action="{{ route($route . '.store') }}" method="POST" id="formData" enctype="multipart/form-data">
     @csrf
     <div class="modal-header">
-        <h3 class="modal-title">Add Jenis Claim</h3>
+        <h3 class="modal-title">Add Jenis Klaim</h3>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -17,10 +17,10 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="jenis_claim" class="">{{ __('Jenis Claim') }}</label><span
+                    <label for="jenis_claim" class="">{{ __('Jenis Klaim') }}</label><span
                         class="text-danger">*</span>
                     <input id="jenis_claim" type="text" class="form-control" name="jenis_claim" required
-                        autocomplete="off" autofocus placeholder="Jenis Claim" maxlength="50">
+                        autocomplete="off" autofocus placeholder="Jenis Klaim" maxlength="50">
                 </div>
             </div>
 

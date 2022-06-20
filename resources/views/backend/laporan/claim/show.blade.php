@@ -240,7 +240,7 @@
                         </div> --}}
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="jenis_claim_id" class="">{{ __('Claim') }}</label><span
+                            <label for="jenis_claim_id" class="">{{ __('Klaim') }}</label><span
                                 class="text-danger">*</span>
                             <select disabled class="form-control select2" id="jenis_claim" name="jenis_claim_id">
                                 {!! App\Models\MasterJenisClaim::options('jenis_claim', 'id', ['selected' => $record->jenis_claim_id], '( Ruas Jalan Tol )') !!}
@@ -262,9 +262,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="keterangan_claim"
-                                class="">{{ __('Keterangan Claim') }}</label><span
+                                class="">{{ __('Keterangan Klaim') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Claim" rows="1" readonly>{{ $record->keterangan_claim }}</textarea>
+                            <textarea name="keterangan_claim" class="form-control" placeholder="Keterangan Klaim" rows="1" readonly>{{ $record->keterangan_claim }}</textarea>
                         </div>
                     </div>
 

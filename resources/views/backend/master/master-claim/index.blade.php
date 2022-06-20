@@ -57,7 +57,7 @@
               </th> --}}
                                 <th>No</th>
                                 {{-- <th>Kode</th> --}}
-                                <th>Jenis Claim</th>
+                                <th>Jenis Klaim</th>
                                 <th>Unit</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -106,7 +106,7 @@
                 [
                     @if (auth()->user()->can('claim.create'))
                         {
-                            text: "<i class='flaticon-file-1'></i>Add Jenis Claim</a>",
+                            text: "<i class='flaticon-file-1'></i>Add Jenis Klaim</a>",
                             className: "btn buttons-copy btn btn-light-primary font-weight-bold mr-2 buttons-html5 add-modal",
                             attr: {
                                 'data-modal': "#largeModal"

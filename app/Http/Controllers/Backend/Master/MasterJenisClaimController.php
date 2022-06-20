@@ -12,9 +12,9 @@ class MasterJenisClaimController extends Controller
 {
 
     public $breadcrumbs = [
-        ['name' => "Master Jenis Claim"],
+        ['name' => "Master Jenis Klaim"],
         ['link' => "#", 'name' => "Master"],
-        ['link' => "master-claim", 'name' => "Master Claim"]
+        ['link' => "master-claim", 'name' => "Master Klaim"]
     ];
 
     public function __construct() {
@@ -23,7 +23,7 @@ class MasterJenisClaimController extends Controller
 
     public function index(Request $request) {
       $data = [
-        'title' => 'Jenis Claim',
+        'title' => 'Jenis Klaim',
         'breadcrumbs' => $this->breadcrumbs,
         'route' => $this->route,
       ];

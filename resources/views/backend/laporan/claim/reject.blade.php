@@ -3,7 +3,7 @@
     @csrf
     <input type="hidden" name="status" value="03">
     <div class="modal-header">
-        <h3 class="modal-title">Reject Claim</h3>
+        <h3 class="modal-title">Reject Klaim</h3>
     </div>
     <div class="modal-body">
         <div class="row">

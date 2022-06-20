@@ -179,7 +179,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="jenis_claim_id" class="">{{ __('Claim') }}</label><span
+                            <label for="jenis_claim_id" class="">{{ __('Klaim') }}</label><span
                                 class="text-danger">*</span>
                             <select class="form-control select2" id="jenis_claim" name="jenis_claim_id">
                                 {!! App\Models\MasterJenisClaim::options('jenis_claim', 'id', [], '( Ruas Jalan Tol )') !!}
@@ -190,7 +190,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="nominal_customer"
-                                class="">{{ __('Besaran claim yang diajukan') }}</label><span
+                                class="">{{ __('Besaran klaim yang diajukan') }}</label><span
                                 class="text-danger">*</span>
                             <input id="nominal_customer" type="text" class="form-control" name="nominal_customer"
                                 value="{{ old('nominal_customer') }}" required autocomplete="off" autofocus
@@ -215,10 +215,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="keterangan_claim"
-                                class="">{{ __('Keterangan Claim') }}</label><span
+                                class="">{{ __('Keterangan Klaim') }}</label><span
                                 class="text-danger">*</span>
                             <textarea name="keterangan_claim" class="form-control" rows="1"
-                                placeholder="Keterangan Claim"></textarea>
+                                placeholder="Keterangan Klaim"></textarea>
                         </div>
                     </div>
 

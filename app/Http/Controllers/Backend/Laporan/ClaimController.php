@@ -19,9 +19,9 @@ class ClaimController extends Controller
     // private $route = 'claim';
 
     public $breadcrumbs = [
-        ['name' => "Laporan Claim Pelanggan"],
+        ['name' => "Laporan Klaim Pelanggan"],
         ['link' => "#", 'name' => "Laporan Pelanggan"],
-        ['link' => "claim", 'name' => "Claim"]
+        ['link' => "claim", 'name' => "Klaim"]
     ];
 
     public function __construct()
@@ -42,7 +42,7 @@ class ClaimController extends Controller
     public function index(Request $request)
     {
         $data = [
-            'title' => 'Claim',
+            'title' => 'Klaim',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
         ];
@@ -216,7 +216,7 @@ class ClaimController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Add Data Claim',
+            'title' => 'Add Data Klaim',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
         ];
@@ -243,7 +243,7 @@ class ClaimController extends Controller
             $noTiket = ($recordData) ? $recordData->no_tiket : '-';
             $idData = ($recordData) ? $recordData->id : '-';
             return response([
-                'messageBox' => "Claim sedang di proses dengan no tiket <a href='" . url('claim/' . $idData) . "'>" . $noTiket . "</a>",
+                'messageBox' => "Klaim sedang di proses dengan no tiket <a href='" . url('claim/' . $idData) . "'>" . $noTiket . "</a>",
             ], 412);
         }
 
@@ -323,7 +323,7 @@ class ClaimController extends Controller
 
         $this->firebase->sendGroup(
             $record,
-            'JMACT - Claim Diteruskan Kepada Service Provider',
+            'JMACT - Klaim Diteruskan Kepada Service Provider',
             'Diteruskan Ke ' . $name
         );
 
@@ -384,7 +384,7 @@ class ClaimController extends Controller
 
         $this->firebase->sendGroup(
             $record,
-            'JMACT - Claim Diteruskan Kepada Service Provider',
+            'JMACT - Klaim Diteruskan Kepada Service Provider',
             'Diteruskan Ke ' . $name
         );
 
@@ -400,7 +400,7 @@ class ClaimController extends Controller
         $record = ClaimPelanggan::findOrFail($id);
 
         $data = [
-            'title' => 'Detail Data Claim',
+            'title' => 'Detail Data Klaim',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
             'record' => $record
@@ -447,7 +447,7 @@ class ClaimController extends Controller
         $record = ClaimPelanggan::findOrFail($id);
 
         $data = [
-            'title' => 'Reject Claim',
+            'title' => 'Reject Klaim',
             'breadcrumbs' => $this->breadcrumbs,
             'route' => $this->route,
             'record' => $record

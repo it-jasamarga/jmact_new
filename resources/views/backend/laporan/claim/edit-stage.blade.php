@@ -57,11 +57,11 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="nominal_final" class="">{{ __('Nominal Claim (Rp)') }}</label><span
+                    <label for="nominal_final" class="">{{ __('Nominal Klaim (Rp)') }}</label><span
                         class="text-danger">*</span>
                     <input id="nominal_final" type="text" class="form-control" name="nominal_final"
                         value="{{ $record->nominal_final }}" required autocomplete="nominal_final" autofocus
-                        placeholder="Nominal Claim (Rp)" maxlength="30"
+                        placeholder="Nominal Klaim (Rp)" maxlength="30"
                         {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '04' || $record->status->code == '05' ? 'disabled': '' }}
                         oninput="this.value = convertToRupiah(this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1'))">
                 </div>
