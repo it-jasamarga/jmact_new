@@ -322,7 +322,7 @@ class HelperFirestore
                     case '01':
                         // 01 Tiket diinput => Supervisor JMTO
                         // JMACT – Claim dengan No Tiket (XXXXX) Diinput Oleh (Nama User – Nama Role)
-                        $message = "Claim dengan No Tiket (".$no_tiket.") Diinput".$by_processor;
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") Diinput".$by_processor;
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -340,7 +340,7 @@ class HelperFirestore
                     case '02':
                         // 02 Approve => Representative Office sesuai dengan Ruasnya
                         // JMACT – Claim dengan No Tiket (XXXXX) Approved Oleh (Nama User – Nama Role)
-                        $message = "Claim dengan No Tiket (".$no_tiket.") Approved".$by_processor;
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") Approved".$by_processor;
 
                         $regional_id = \DB::table('master_ruas')
                             ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
@@ -365,7 +365,7 @@ class HelperFirestore
                     case '03':
                         // 03 Rejected => Customer Service JMTO pembuat laporan Claim
                         // JMACT – Claim dengan No Tiket (XXXXX) Rejected Oleh (Nama User – Nama Role)
-                        $message = "Claim dengan No Tiket (".$no_tiket.") Rejected".$by_processor;
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") Rejected".$by_processor;
 
                         $user_ids = [$data->created_by];  // Customer Service JMTO ~ the inputer?
                         $creator_name = \App\Models\User::where('id', $data->created_by)->get('name')->pluck('name')->toArray();
@@ -375,7 +375,7 @@ class HelperFirestore
                     case '04':
                         // 04 Tiket diteruskan => Service Provider sesuai bidang claim dan Regional sesuai dengan Ruas
                         // JMACT – Claim dengan No Tiket (XXXXX) Diteruskan Oleh (Nama User – Nama Role
-                        $message = "Claim dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
 
                         $user_ids1 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
@@ -414,7 +414,7 @@ class HelperFirestore
                     case '05':
                         // 05 Klarifikasi dan Negosiasi	=> Regional sesuai dengan Ruas
                         // JMACT – Claim dengan No Tiket (XXXXX) tahap Klarifikasi dan Negosiasi telah selesai Oleh (Nama User – Nama Role)
-                        $message = "Claim dengan No Tiket (".$no_tiket.") tahap Klarifikasi dan Negosiasi telah selesai".$by_processor;
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") tahap Klarifikasi dan Negosiasi telah selesai".$by_processor;
 
                         $regional_id = \DB::table('master_ruas')
                             ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
@@ -439,7 +439,7 @@ class HelperFirestore
                     case '06':
                         // 06 Pembayaran Selesai => Regional dan Representative Office sesuai dengan Ruas
                         // JMACT – Claim dengan No Tiket (XXXXX) tahap Pembayaran telah selesai Oleh (Nama User – Nama Role)
-                        $message = "Claim dengan No Tiket (".$no_tiket.") tahap Pembayaran telah selesai".$by_processor;
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") tahap Pembayaran telah selesai".$by_processor;
 
                         $regional_id = \DB::table('master_ruas')
                             ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
@@ -480,7 +480,7 @@ class HelperFirestore
                     case '08':
                         // 08 Closed => Supervisor JMTO, Customer Service JMTO pembuat claim, Representative Office, Regional sesuai Ruas dan Service Provider.
                         // JMACT – Claim dengan No Tiket (XXXXX) Closed.
-                        $message = "Claim dengan No Tiket (".$no_tiket.") Closed.";
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") Closed.";
 
                         $user_ids1 = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -543,7 +543,7 @@ class HelperFirestore
                 }
                 if (count($user_ids) > 0) {
                   $device_tokens = UserDevice::whereIn('user_id', $user_ids)->get(['token'])->pluck('token')->toArray();
-                  self::notifier($user_ids, $device_tokens, "Claim ".$no_tiket, $data_onbell, "JMACT Notification", $message);
+                  self::notifier($user_ids, $device_tokens, "Klaim ".$no_tiket, $data_onbell, "JMACT Notification", $message);
                 }
             }
         }

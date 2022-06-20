@@ -95,7 +95,7 @@
                                 <!--end::Symbol-->
                                 <!--begin::Text-->
                                 <div class="d-flex flex-column font-weight-bold">
-                                    <a href="javascript:void(0)" data-url="{{ url('keluhan/${doc.data().target_id}') }}" data-id="${doc.id}" class="notifClick text-dark text-hover-primary mb-1 font-size-lg">${doc.data().title}</a>
+                                    <a href="javascript:void(0)" data-target_type="${doc.data().target_type}" data-target_id="${doc.data().target_id}" data-id="${doc.id}" class="notifClick text-dark text-hover-primary mb-1 font-size-lg">${doc.data().title}</a>
                                     <span class="text-muted">${doc.data().message}</span>
                                 </div>
                                 <!--end::Text-->
@@ -125,8 +125,12 @@
             }
 
             $(document).on('click','.notifClick',function(){
-                var id = $(this).data('id');
-                var url = $(this).data('url');
+                let id = $(this).data('id');
+                let t_id = $(this).data('target_id');
+                let t_type = $(this).data('target_type');
+                let url = (t_type == 'ClaimPelanggan' ? "{{ url('claim/') }}" : "{{ url('keluhan/') }}") + id;
+                // var id = $(this).data('id');
+                // var url = "{{ url('/') }}" + $(this).data('url');
                 var pathParent = null;
                 db.collection("notifications").doc(id).update({
                     'status':'Read'
