@@ -303,6 +303,10 @@ function changenamePermission($data)
         $result = "pengerjaan_keluhan";
     } else if ($data == "stage") {
         $result = "tahapan";
+    } else if ($data == "Claim") {
+        $result = "Klaim";
+    } else if ($data == "Jenis Claim") {
+        $result = "Jenis Klaim";
     }
 
     return $result;

@@ -12,7 +12,7 @@
 	        <i class="menu-bullet menu-bullet-line">
 	            <span></span>
 	        </i>
-	        <span class="menu-text">{{ $submenu->name }}</span>
+	        <span class="menu-text">{{ changenamePermission($submenu->name) }}</span>
 	        <!-- <span class="menu-label">
 	            <span class="label label-rounded label-primary">6</span>
 	        </span> -->

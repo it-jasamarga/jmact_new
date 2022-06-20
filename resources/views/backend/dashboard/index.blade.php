@@ -18,7 +18,7 @@
 				<button class="nav-link active" type="button" tab="keluhan">Dashboard Keluhan</button>
 			</li>
 			<li class="nav-item">
-				<button class="nav-link" type="button" tab="claim">Dashboard Claim</button>
+				<button class="nav-link" type="button" tab="claim">Dashboard Klaim</button>
 			</li>
 		</ul>
 		<input type="hidden" id="dashscope" name="dashscope" data-post="dashscope" class="filter-control" value="keluhan">
@@ -1045,7 +1045,7 @@
 		let category = $('#keluhan_categorySelector').children("option:selected").val();
 		let category_id = $('#keluhan_category_id');
 		let placeholder = $(category_id).next().find('span.select2-selection__placeholder');
-		
+
 		console.log('## Keluhan: Fill Category', category);
 
 		$("#keluhan_category_id").empty();
@@ -1062,7 +1062,7 @@
 
 				let category_id = $('#keluhan_category_id');
 				let placeholder = $(category_id).next().find('span.select2-selection__placeholder');
-				
+
 				let records = resp.data;
 				$.each(records, function (id, text) {
 					$('#keluhan_category_id').append($('<option>', { value: id, text: text }));
