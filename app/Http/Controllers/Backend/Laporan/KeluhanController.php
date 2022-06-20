@@ -281,7 +281,6 @@ class KeluhanController extends Controller
             // ]);
 
             $this->firebase->notify($record);
-
             // $this->firebase->sendGroup(
             //     $record,
             //     'JMACT - Keluhan Kepada ' . $record->unit->unit,
@@ -340,11 +339,12 @@ class KeluhanController extends Controller
 
         $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
-        $this->firebase->sendGroup(
-            $record,
-            'JMACT - Keluhan Diteruskan Kepada Service Provider',
-            'Diteruskan Ke ' . $name
-        );
+        $this->firebase->notify($record);
+        // $this->firebase->sendGroup(
+        //     $record,
+        //     'JMACT - Keluhan Diteruskan Kepada Service Provider',
+        //     'Diteruskan Ke ' . $name
+        // );
 
         return response([
             'status' => true,
@@ -414,11 +414,12 @@ class KeluhanController extends Controller
         // request()['regional_id'] = $record->regional_id;
         $recordHistory = $record->history()->create(request()->all());
 
-        $this->firebase->sendGroup(
-            $record,
-            'JMACT - Keluhan Dalam Proses SLA',
-            'Estimasi Proses Dalam 3 Hari'
-        );
+        $this->firebase->notify($record);
+        // $this->firebase->sendGroup(
+        //     $record,
+        //     'JMACT - Keluhan Dalam Proses SLA',
+        //     'Estimasi Proses Dalam 3 Hari'
+        // );
         return response([
             'status' => true,
             'message' => 'success',
@@ -468,11 +469,12 @@ class KeluhanController extends Controller
             'status_id' => MasterStatus::where('code', '04')->where('type', '1')->first()->id
         ]);
 
-        $this->firebase->sendGroup(
-            $record,
-            'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
-            'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
-        );
+        $this->firebase->notify($record);
+        // $this->firebase->sendGroup(
+        //     $record,
+        //     'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+        //     'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
+        // );
 
         return response([
             'status' => true,
@@ -543,11 +545,12 @@ class KeluhanController extends Controller
             'status_id' => MasterStatus::where('code', '05')->where('type', '1')->first()->id
         ]);
 
-        $this->firebase->sendGroup(
-            $record,
-            'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
-            'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
-        );
+        $this->firebase->notify($record);
+        // $this->firebase->sendGroup(
+        //     $record,
+        //     'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
+        //     'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
+        // );
 
         return response([
             'status' => true,
