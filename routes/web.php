@@ -32,16 +32,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::get('/test', function(Request $request) {
-    // $role = \App\Models\Role::where('name', '=', "Supervisor JMTC")->get(['id']);
-    // $data = \App\Models\User::with("roles")
-    //     ->whereIn('role_id')
-    //     ->get(['id'])
-    //     ->toArray();
-
-// 02 Tiket diteruskan => Service Provider dengan unit yang sesuai dengan bidang keluhan dan Regional sesuai dengan Ruas
-
-    $ruas_id = 11;
-
+    /*
     $debug = \DB::table('users')
         ->join('role_users', 'role_users.user_id', '=', 'users.id')
         ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -54,21 +45,10 @@ Route::get('/test', function(Request $request) {
         // ->select('users.*')
         // ->get()
         ->toArray();
-
-        // ->value('master_regional.id');
-
-    // $debug = \App\Models\MasterRuas::with('ro')
-    //     ->whereIn('unit_id', $unit_id)
-        // ->whereHas('roles', function ($q) use($regional_id) { $q->where('reional_id', '=', $regional_id); })
-        // ->with(['roles' => function($query) use($regional_id)
-        // {
-        //     $query->where('regional_id', '=', $regional_id);
-        // }
-    // ])        
-        // ->get()
-        // ->toArray();
-    // $devices = \App\Models\UserDevice::whereIn('user_id', $users)->get(['token'])->pluck('token')->toArray();
     dd($debug);
+    */
+    \App\Models\SysLog::write("log test");
+    echo "check test on syslog";
 });
 
 

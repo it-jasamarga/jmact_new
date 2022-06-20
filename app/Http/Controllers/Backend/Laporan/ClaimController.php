@@ -272,6 +272,8 @@ class ClaimController extends Controller
             //   'created_by' => $request->user_id
             // ]);
 
+            $this->firebase->notify($record);
+
             $record->history()->create([
                 // 'ruas_id' => $record->ruas_id,
                 // 'regional_id' => $record->regional_id,
@@ -321,11 +323,20 @@ class ClaimController extends Controller
 
         $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
+<<<<<<< HEAD
         $this->firebase->sendGroup(
             $record,
             'JMACT - Klaim Diteruskan Kepada Service Provider',
             'Diteruskan Ke ' . $name
         );
+=======
+        $this->firebase->notify($record);
+        // $this->firebase->sendGroup(
+        //     $record,
+        //     'JMACT - Claim Diteruskan Kepada Service Provider',
+        //     'Diteruskan Ke ' . $name
+        // );
+>>>>>>> 21e66bf21ff820c7b0fd847d60ca62dff85883aa
 
         return response([
             'status' => true,
@@ -382,11 +393,20 @@ class ClaimController extends Controller
 
         $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
+<<<<<<< HEAD
         $this->firebase->sendGroup(
             $record,
             'JMACT - Klaim Diteruskan Kepada Service Provider',
             'Diteruskan Ke ' . $name
         );
+=======
+        $this->firebase->notify($record);
+        // $this->firebase->sendGroup(
+        //     $record,
+        //     'JMACT - Claim Diteruskan Kepada Service Provider',
+        //     'Diteruskan Ke ' . $name
+        // );
+>>>>>>> 21e66bf21ff820c7b0fd847d60ca62dff85883aa
 
         return response([
             'status' => true,

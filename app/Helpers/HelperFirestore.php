@@ -88,6 +88,9 @@ class HelperFirestore
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTC [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '02':
@@ -128,6 +131,10 @@ class HelperFirestore
                           ->toArray();
                         
                         $user_ids = array_merge($user_ids1, $user_ids2);
+
+                        $user_ids_names1 = \App\Models\User:whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
+                        $user_ids_names2 = \App\Models\User:whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Service Provider dengan unit yang sesuai dengan bidang keluhan [". implode(", ", $user_ids_names1) . "], dan Regional sesuai dengan Ruas [". implode(", ", $user_ids_names2) . "]");
                         break;
 
                     case '03':
@@ -153,6 +160,9 @@ class HelperFirestore
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '04':
@@ -178,6 +188,9 @@ class HelperFirestore
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '05':
@@ -204,6 +217,9 @@ class HelperFirestore
                           ->pluck('user_id')
                           ->toArray();
 
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        $creator_name = \App\Models\User:where('id', $data->created_by)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."], dan Inputer pembuat laporan keluhan [". implode(", ", $creator_name) ."]");
                         $user_ids[] = $data->created_by;  // the inputer?
                         break;
 
@@ -260,6 +276,12 @@ class HelperFirestore
                             ->toArray();
 
                         $user_ids = array_merge($user_ids1, $user_ids2, $user_ids3);
+
+                        $user_ids_names1 = \App\Models\User:whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
+                        $user_ids_names2 = \App\Models\User:whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
+                        $user_ids_names3 = \App\Models\User:whereIn('id', $user_ids3)->get('name')->pluck('name')->toArray();
+                        $creator_name = \App\Models\User:where('id', $data->created_by)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names1) . "], Supervisor JMTC [". implode(", ", $user_ids_names2) . "], Inputer Pembuat Laporan [". implode(", ", $creator_name) . "], Service Provider sesuai dengan bidang keluhan [". implode(", ", $user_ids_names3) . "]");
                         $user_ids[] = $data->created_by;  // the inputer?
                         break;
 
@@ -287,7 +309,8 @@ class HelperFirestore
                           ->pluck('user_id')
                           ->toArray();
                         
-                        $device_tokens = UserDevice::whereIn('user_id', $user_ids)->get(['token'])->pluck('token')->toArray();
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
                         break;
                 }
                 if (count($user_ids) > 0) {
@@ -309,6 +332,9 @@ class HelperFirestore
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+                        
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTO [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '02':
@@ -331,6 +357,9 @@ class HelperFirestore
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+                        
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Representative Office sesuai dengan Ruasnya [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '03':
@@ -339,6 +368,8 @@ class HelperFirestore
                         $message = "Claim dengan No Tiket (".$no_tiket.") Rejected".$by_processor;
 
                         $user_ids = [$data->created_by];  // Customer Service JMTO ~ the inputer?
+                        $creator_name = \App\Models\User:where('id', $data->created_by)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Customer Service JMTO pembuat laporan Claim [". implode(", ", $creator_name) . "]");
                         break;
 
                     case '04':
@@ -374,6 +405,10 @@ class HelperFirestore
                           ->toArray();
 
                         $user_ids = array_merge($user_ids1, $user_ids2);
+
+                        $user_ids_names1 = \App\Models\User:whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
+                        $user_ids_names2 = \App\Models\User:whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Service Provider sesuai bidang claim [". implode(", ", $user_ids_names1) . "], dan Regional sesuai dengan Ruas [". implode(", ", $user_ids_names2) . "]");
                         break;
 
                     case '05':
@@ -396,6 +431,9 @@ class HelperFirestore
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+                        
+                        $user_ids_names = \App\Models\User:whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '06':
@@ -429,7 +467,11 @@ class HelperFirestore
                           ->pluck('user_id')
                           ->toArray();
                         
-                          $user_ids = array_merge($user_ids1, $user_ids2);
+                        $user_ids = array_merge($user_ids1, $user_ids2);
+
+                        $user_ids_names1 = \App\Models\User:whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
+                        $user_ids_names2 = \App\Models\User:whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names1) . "] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) . "]");
                         break;
 
                     case '07':
@@ -491,6 +533,12 @@ class HelperFirestore
                             ->toArray();
 
                         $user_ids = array_merge($user_ids1, $user_ids2, $user_ids3, $user_ids4, $user_ids5);
+
+                        $user_ids_names1 = \App\Models\User:whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
+                        $user_ids_names3 = \App\Models\User:whereIn('id', $user_ids3)->get('name')->pluck('name')->toArray();
+                        $user_ids_names4 = \App\Models\User:whereIn('id', $user_ids4)->get('name')->pluck('name')->toArray();
+                        $creator_name = \App\Models\User:where('id', $data->created_by)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTO [". implode(", ", $user_ids_names1) . "], Customer Service JMTO pembuat claim [". implode(", ", $creator_name) . "], Representative Office [". implode(", ", $user_ids_names3) . "], Regional sesuai Ruas [". implode(", ", $user_ids_names4) . "] dan Service Provider [". implode(", ", $user_ids_names5) . "]");
                         break;
                 }
                 if (count($user_ids) > 0) {

@@ -715,6 +715,8 @@
 			let data = { labels: [], datasets: datasets };
 			data.labels.push(title);
 
+			if (maxValue<1) maxValue = 1;
+
 			let oChart = new Chart(ctx, {
 				type: 'bar',
 				// plugins: [ChartDataLabels],
@@ -797,7 +799,7 @@
 							// BAR
 							let dataset = {};
 							let values = [];
-							values.push(item.value);
+							values.push(item.value == null ? 0 : item.value);
 							dataset['label'] = item.name;
 							dataset['data'] = values;
 							dataset['borderColor'] = color;
@@ -806,7 +808,7 @@
 						})
 
 						if (typeof dashboard.charts.instances[unification.current] === 'undefined') dashboard.charts.instances[unification.current] = [];
-						// console.log('claim_chart-'+name, detail.title, datasets, max);
+						console.log('>>>claim_chart-'+name, detail.title, datasets, max);
 						if (datasets.length > 0) dashboard.charts.instances[unification.current][name] = charting.bar('claim_chart-'+name, detail.title, datasets, max);
 					});
 
