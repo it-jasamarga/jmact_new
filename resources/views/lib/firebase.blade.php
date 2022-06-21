@@ -128,7 +128,7 @@
                 let id = $(this).data('id');
                 let t_id = $(this).data('target_id');
                 let t_type = $(this).data('target_type');
-                let url = (t_type == 'ClaimPelanggan' ? "{{ url('claim/') }}" : "{{ url('keluhan/') }}") + id;
+                let url = (t_type == 'ClaimPelanggan' ? "{{ url('claim/') }}" : "{{ url('keluhan/') }}") +'/'+ id;
                 // var id = $(this).data('id');
                 // var url = "{{ url('/') }}" + $(this).data('url');
                 var pathParent = null;
