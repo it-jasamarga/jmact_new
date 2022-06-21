@@ -6,7 +6,7 @@
         <!--begin::Logo-->
         <a href="index.html" class="brand-logo">
             <!--begin::Heading-->
-                <img alt="Logo" src="{{ asset('assets/media/logos/logo-jmact.png') }}" />
+            <img alt="Logo" src="{{ asset('assets/media/logos/logo-jmact.png') }}" />
             <!--end::Heading-->
         </a>
         <!--end::Logo-->
