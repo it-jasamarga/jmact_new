@@ -159,7 +159,7 @@ class ClaimController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $buttons = "";
-                if ($data->status->code == '07' || $data->status->code == '08') {
+                if ($data->status->code == '07' || $data->status->code == '08' ||  $data->status->code == '03') {
                     if (auth()->user()->can('claim.detail')) {
                         $buttons .= makeButton([
                             'type' => 'url',
