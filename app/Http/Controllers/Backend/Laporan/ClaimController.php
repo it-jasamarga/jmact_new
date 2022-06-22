@@ -86,7 +86,7 @@ class ClaimController extends Controller
                 $data = ClaimPelanggan::with('history')
                     ->where('unit_id', auth()->user()->unit_id)
                     ->whereHas('status', function ($q1) {
-                        $q1->whereIn('code', ['03', '04', '05', '06', '07', '08'])
+                        $q1->whereIn('code', ['03', '04', '06', '07', '08', '09'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
@@ -107,7 +107,7 @@ class ClaimController extends Controller
                     });
                 })
                     ->whereHas('status', function ($q2) {
-                        $q2->whereIn('code', ['02', '04', '08'])
+                        $q2->whereIn('code', ['02', '04', '05', '09'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
@@ -159,7 +159,7 @@ class ClaimController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $buttons = "";
-                if ($data->status->code == '07' || $data->status->code == '08' ||  $data->status->code == '03') {
+                if ($data->status->code == '08' || $data->status->code == '09' ||  $data->status->code == '03') {
                     if (auth()->user()->can('claim.detail')) {
                         $buttons .= makeButton([
                             'type' => 'url',
@@ -184,7 +184,7 @@ class ClaimController extends Controller
                     }
 
                     if (auth()->user()->can('claim.stage')) {
-                        if ($data->status->code == '04' || $data->status->code == '05' || $data->status->code == '06') {
+                        if ($data->status->code == '04' || $data->status->code == '05' || $data->status->code == '06' || $data->status->code == '07') {
                             $buttons .= makeButton([
                                 'type' => 'modal',
                                 'url'   => $this->route . '/' . $data->id . '/edit-stage',
@@ -350,15 +350,15 @@ class ClaimController extends Controller
     public function historyStage(Request $request, $id)
     {
         // dd(request()->all());
-        if (!request()->status == '05') {
+        if (!request()->status == '06') {
             $this->validate($request, [
                 'negosiasi_dan_klarifikasi' => 'required'
             ]);
-        } elseif (request()->status == '06') {
+        } elseif (request()->status == '07') {
             $this->validate($request, [
                 'proses_pembayaran' => 'required'
             ]);
-        } elseif (request()->status == '07') {
+        } elseif (request()->status == '08') {
             $this->validate($request, [
                 'pembayaran_selesai' => 'required',
                 'nominal_final' => 'required'
