@@ -300,7 +300,7 @@
                         Kembali
                     </a>
                     @if ($record->status->code == '01')
-                        @if (auth()->user()->hasRole('Supervisor JMTO') ||
+                        @if (auth()->user()->hasRole('Manager Area') ||
                             auth()->user()->hasRole('Superadmin'))
                             <div class="btn btn-light-success float-right save">
                                 <em class="flaticon-plus"></em>
