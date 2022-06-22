@@ -78,7 +78,7 @@
             </div>
 
 
-            @if (@$record->status->code == '05')
+            @if (@$record->status->code == '06')
                 <input type="hidden" name="kontak_pelanggan" value="0">
                 <div class="col-md-12">
                     <div class="form-group row">
@@ -128,7 +128,7 @@
                                 class="text-danger">*</span>
                         </div>
                         <div class="col-9 col-form-label">
-                            @if (@$record->report()->orderByDesc('created_at')->first() && @$record->status->code == '05')
+                            @if (@$record->report()->orderByDesc('created_at')->first() && @$record->status->code == '06')
                                 <textarea name="konfirmasi_pelanggan" class="form-control" placeholder="Konfirmasi Pelanggan"
                                     readonly>{{ @$record->report()->orderByDesc('created_at')->first()->konfirmasi_pelanggan }}</textarea>
                             @else
