@@ -57,7 +57,7 @@ class HelperFirestore
             $messaging->sendMulticast($message, $device_tokens);
 
             $bell_names = \DB::table('users')
-              ->join('user_devices', 'user_devices.user_id', '=', 'user.id')
+              ->join('user_devices', 'user_devices.user_id', '=', 'users.id')
               ->whereIn('user_devices.token', $user_ids)
               ->select('users.name')
               ->get(['name'])
@@ -65,7 +65,7 @@ class HelperFirestore
               ->toArray();
 
             $fbms_names = \DB::table('users')
-              ->join('user_devices', 'user_devices.user_id', '=', 'user.id')
+              ->join('user_devices', 'user_devices.user_id', '=', 'users.id')
               ->whereIn('user_devices.token', $device_tokens)
               ->select('users.name')
               ->get(['name'])
