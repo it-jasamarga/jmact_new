@@ -23,7 +23,7 @@
             <form>
                 <div class="row">
                     <div class="col-12">
-                        <canvas id="ann" class="col-12" height="auto" style="border:#EEE solid 1px" />
+                        <canvas id="flowgraph" class="col-12 p-0" height="auto" style="border:#EEE solid 1px" />
                     </div>
                 </div>
                 <div class="row">
@@ -263,12 +263,109 @@
 
 @section('scripts')
     {{-- Page js files --}}
-    <script src="../js/ann.js"></script>
+    <script src="../js/flowist.js"></script>
     <script defer>
         $(function() {
-            let sc = {{ $record->status->code * 1 }};
-            console.log('## status->code:', sc);
-            ann.keluhan.draw(sc, "Diterima SPV JMTC", "Agent", "Spv JMTC", "Service Provider", "Regional");
+            let flowgraph = new Flowist('flowgraph', 3, 5, 10);
+            // ann.keluhan.draw(sc, "Diterima SPV JMTC", "Agent", "Spv JMTC", "Service Provider", "Regional");
+
+            let color = {
+                circle: {
+                    active: '#b4d9ea',
+                    passive: '#ebecec'
+                },
+                line: {
+                    active: '#51a7ce',
+                    passive: '#a1a6a6'
+                },
+                text: {
+                    active: '#51a7ce',
+                    passive: '#a1a6a6'
+                }
+            }
+
+            flowgraph.assets.load([
+                '{{ url('icon') }}/inputer.png',
+                '{{ url('icon') }}/regional.png',
+                '{{ url('icon') }}/ro.png',
+                '{{ url('icon') }}/service_provider.png',
+                '{{ url('icon') }}/supervisor_manager.png',
+                '{{ url('icon') }}/gray_inputer.png',
+                '{{ url('icon') }}/gray_regional.png',
+                '{{ url('icon') }}/gray_ro.png',
+                '{{ url('icon') }}/gray_service_provider.png',
+                '{{ url('icon') }}/gray_supervisor_manager.png'],
+            ()=>{
+                // flowgraph.grid.draw();
+                let sc = {{ $record->status->code * 1 }};
+                debug({flowgraph}, 'status->code: '+ sc);
+
+                flowgraph.draw.thickness((flowgraph.row.height/2) * 0.75);
+
+                flowgraph.draw.color(color.circle.active);
+                flowgraph.grid.move.cell(2, 1);
+                flowgraph.draw.dot();
+
+                flowgraph.draw.color(color.circle.passive);
+                flowgraph.grid.move.cell(2, 3);
+                flowgraph.draw.dot();
+                flowgraph.grid.move.cell(1, 5);
+                flowgraph.draw.dot();
+                flowgraph.grid.move.cell(3, 5);
+                flowgraph.draw.dot();
+
+                let d = 0.6 * (flowgraph.column.width > flowgraph.row.height ? flowgraph.row.height : flowgraph.column.width);
+
+                flowgraph.draw.font("bold 16px verdana");
+                flowgraph.grid.move.cell(2, 1);
+                flowgraph.draw.resource('inputer', d, d, "Inputer", color.text.active);
+                flowgraph.draw.thickness(5);
+                flowgraph.draw.color(color.line.active);
+                flowgraph.grid.move.cell(2, 2, 0, -1);
+                flowgraph.grid.lineto.cell(2, 2, 0, 1);
+
+                flowgraph.grid.move.cell(2, 3);
+                flowgraph.draw.resource('gray_supervisor_manager', d, d, "Supervisor JMTC", color.text.passive);
+                flowgraph.draw.thickness(5);
+                flowgraph.draw.color(color.line.passive);
+                flowgraph.grid.move.cell(2, 4, 0, -1);
+                flowgraph.grid.lineto.cell(1, 5, 0, -1);
+                flowgraph.draw.dash(15, 5);
+                flowgraph.draw.color(color.line.passive);
+                flowgraph.grid.move.cell(2, 4, 0, -1);
+                flowgraph.grid.lineto.cell(3, 5, 0, -1);
+
+                flowgraph.grid.move.cell(1, 5);
+                flowgraph.draw.resource('gray_service_provider', d, d, "Service Provider", color.text.passive);
+
+                flowgraph.grid.move.cell(3, 5);
+                flowgraph.draw.resource('gray_regional', d, d, "Regional", color.text.passive);
+
+                flowgraph.draw.font("14px verdana");
+                flowgraph.draw.dash(0, 0);
+                flowgraph.draw.color(color.line.active);
+                flowgraph.grid.move.cell(1, 1, -1, -1);
+                flowgraph.draw.adjust(0, 10);
+                flowgraph.grid.lineto.cell(1, 1, -1, 1, -100, 10);
+                flowgraph.draw.adjust(15, 5);
+                flowgraph.draw.align('left');
+                flowgraph.draw.color('#666666');
+                flowgraph.draw.text("User Pelaksana Laporan");
+
+                flowgraph.draw.dash(15, 5);
+                flowgraph.draw.color(color.line.active);
+                flowgraph.grid.move.cell(1, 1, -1, -1);
+                flowgraph.draw.adjust(0, 30);
+                flowgraph.grid.lineto.cell(1, 1, -1, 1, -100, 30);
+                flowgraph.draw.adjust(15, 5);
+                flowgraph.draw.align('left');
+                flowgraph.draw.color('#666666');
+                flowgraph.draw.text("User Monitoring");
+    
+
+
+            });
+            
         });
     </script>
 @endsection

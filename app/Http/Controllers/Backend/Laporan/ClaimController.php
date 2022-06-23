@@ -424,6 +424,8 @@ class ClaimController extends Controller
         }
 
         $record->save();
+        
+        $this->firebase->notify($record);
 
         $data['status_id'] = $status->id;
         $data['unit_id'] = $record->unit_id;

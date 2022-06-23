@@ -40,6 +40,8 @@ class HelperFirestore
             $notifications->add($data);
         }
 
+        $user_ids_names = [];
+
         if (count($device_tokens) > 0) {
             $message = CloudMessage::new()->withNotification([
                 'title'         => $title_onbar,
@@ -53,7 +55,24 @@ class HelperFirestore
 
             $messaging = app('firebase.messaging');
             $messaging->sendMulticast($message, $device_tokens);
+
+            $bell_names = \DB::table('users')
+              ->join('user_devices', 'user_devices.user_id', '=', 'user.id')
+              ->whereIn('user_devices.token', $user_ids)
+              ->select('users.name')
+              ->get(['name'])
+              ->pluck('name')
+              ->toArray();
+
+            $fbms_names = \DB::table('users')
+              ->join('user_devices', 'user_devices.user_id', '=', 'user.id')
+              ->whereIn('user_devices.token', $device_tokens)
+              ->select('users.name')
+              ->get(['name'])
+              ->pluck('name')
+              ->toArray();
         }
+        \App\Models\SysLog::write("Notifikasi melalui Lonceng [". implode(", ", $bell_names) ."], melalui Firebase.Messaging [". implode(", ", $fbms_names) ."]");
     }
 
     public static function notify($data) {
@@ -318,17 +337,15 @@ class HelperFirestore
                         // JMACT – Klaim dengan No Tiket (XXXXX) Approved Oleh (Nama User – Nama Role)
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Approved".$by_processor;
 
-                        $regional_id = \DB::table('master_ruas')
-                            ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
-                            ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                        $ro_id = \DB::table('master_ruas')
                             ->where('master_ruas.id', $data->ruas_id)
-                            ->value('master_regional.id');
+                            ->value('master_ruas.ro_id');
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
                           ->where('master_type.type', "Representative Office")
-                          ->where('roles.regional_id', $regional_id)
+                          ->where('roles.ro_id', $ro_id)
                           ->select('role_users.*')
                           ->get(['user_id'])
                           ->pluck('user_id')
