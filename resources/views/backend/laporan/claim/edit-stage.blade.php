@@ -31,8 +31,8 @@
                             <label class="checkbox">
                                 {{-- dd({{$record->status}}) --}}
                                 <input type="checkbox" class="form-control" name="negosiasi_dan_klarifikasi"
-                                    {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '03'? '': 'disabled' }}
-                                    {{ $record->status->code == '04' || $record->status->code == '05' || $record->status->code == '06' || $record->status->code == '07'? 'checked': '' }} />
+                                    {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '03' ? '' : 'disabled' }}
+                                    {{ $record->status->code == '04' || $record->status->code == '05' || $record->status->code == '06' || $record->status->code == '07' ? 'checked' : '' }} />
                                 <span></span>
                                 Negosiasi dan Klarifikasi
                             </label>
@@ -62,7 +62,7 @@
                     <input id="nominal_final" type="text" class="form-control" name="nominal_final"
                         value="{{ $record->nominal_final }}" required autocomplete="nominal_final" autofocus
                         placeholder="Nominal Klaim (Rp)" maxlength="30"
-                        {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '04' || $record->status->code == '06' ? 'disabled': '' }}
+                        {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '04' || $record->status->code == '06' ? 'disabled' : '' }}
                         oninput="this.value = convertToRupiah(this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1'))">
                 </div>
             </div>
@@ -72,20 +72,20 @@
 
     </div>
     <div class="modal-footer">
-        @if( $record->status->code == '08' )
+        @if ($record->status->code == '08')
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
                 <i class="flaticon-circle"></i>
                 Tutup
             </button>
         @else
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            <i class="flaticon-circle"></i>
-            Tutup
-        </button>
-        <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
-            <i class="flaticon-add-circular-button"></i>
-            Simpan
-        </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <i class="flaticon-circle"></i>
+                Tutup
+            </button>
+            <button type="button" class="btn btn-light-success font-weight-bold mr-2 save">
+                <i class="flaticon-add-circular-button"></i>
+                Simpan
+            </button>
         @endif
     </div>
 
