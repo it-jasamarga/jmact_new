@@ -40,7 +40,8 @@ class HelperFirestore
             $notifications->add($data);
         }
 
-        $user_ids_names = [];
+        $bell_names = [];
+        $fbms_names = [];
 
         if (count($device_tokens) > 0) {
             $message = CloudMessage::new()->withNotification([
