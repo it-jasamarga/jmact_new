@@ -57,13 +57,20 @@ class HelperFirestore
     }
 
     public static function notify($data) {
-        if ((! isset($data['no_tiket'])) || (! isset($data['status_id']))) return false;
+      \App\Models\SysLog::write("notify with data ". json_encode($data));
+
+      if ((! isset($data['no_tiket'])) || (! isset($data['status_id']))) return false;
 
         $no_tiket = $data['no_tiket'];
         $master_status = MasterStatus::where('id', $data['status_id'])->first(['code']);
 
-        $user_name = auth()->user()->name ?? auth()->user()->username;
-        $user_role = auth()->user()->roles()->first()->name;
+        // if (auth()->check()) {
+            $user_name = auth()->user()->name ?? auth()->user()->username;
+            $user_role = auth()->user()->roles()->first()->name;
+        // } else {
+        //   $user_name = "<system>";
+        //   $user_role = "<system>";
+        // }
         $processor = " (".$user_name." – ".$user_role.")";
         $by_processor = " oleh".$processor;
 
@@ -537,6 +544,7 @@ class HelperFirestore
                         $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
                         $user_ids_names3 = \App\Models\User::whereIn('id', $user_ids3)->get('name')->pluck('name')->toArray();
                         $user_ids_names4 = \App\Models\User::whereIn('id', $user_ids4)->get('name')->pluck('name')->toArray();
+                        $user_ids_names5 = \App\Models\User::whereIn('id', $user_ids5)->get('name')->pluck('name')->toArray();
                         $creator_name = \App\Models\User::where('id', $data->created_by)->get('name')->pluck('name')->toArray();
                         \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTO [". implode(", ", $user_ids_names1) . "], Customer Service JMTO pembuat claim [". implode(", ", $creator_name) . "], Representative Office [". implode(", ", $user_ids_names3) . "], Regional sesuai Ruas [". implode(", ", $user_ids_names4) . "] dan Service Provider [". implode(", ", $user_ids_names5) . "]");
                         break;

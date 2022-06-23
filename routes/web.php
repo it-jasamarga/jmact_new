@@ -51,7 +51,27 @@ Route::get('/test', function(Request $request) {
     echo "check test on syslog";
 });
 
+Route::post('system/notification', function (Request $request) {
+    $json = json_decode($request->getContent(), true);
+    $retr = ['request' => $json, 'tipe' => $json['no_tiket'][0]];
+    
+    try {
+        $data = $json['no_tiket'][0] == 'K' ?
+            \App\Models\KeluhanPelanggan::where('no_tiket', $json['no_tiket'])->first()
+        :
+            \App\Models\ClaimPelanggan::where('no_tiket', $json['no_tiket'])->first();
+        if ($data) {
+            Auth::loginUsingId('admin', true);
+            $hfs = new \App\Helpers\HelperFirestore();
+            $hfs->notify($data);
+            Auth::logout();
+        }
+    } catch (\Exception $ex) {
+        if (Auth::check()) Auth::logout();
+    }
 
+    return response()->json($retr);
+});
 
 Route::post('forgot-password', 'Auth\ForgotPasswordController@store');
 Route::post('reset-password', 'Auth\ResetPasswordController@store');
