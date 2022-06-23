@@ -57,7 +57,9 @@ class HelperFirestore
     }
 
     public static function notify($data) {
-        if ((! isset($data['no_tiket'])) || (! isset($data['status_id']))) return false;
+      // \App\Models\SysLog::write("notify with data ". json_encode($data));
+
+      if ((! isset($data['no_tiket'])) || (! isset($data['status_id']))) return false;
 
         $no_tiket = $data['no_tiket'];
         $master_status = MasterStatus::where('id', $data['status_id'])->first(['code']);
@@ -79,7 +81,6 @@ class HelperFirestore
                         // JMACT – Keluhan dengan No Tiket (XXXXX) Diinput Oleh (Nama User – Nama Role)
                         $message = "Keluhan dengan No Tiket (".$no_tiket.") Diinput".$by_processor;
 
-                        // $user_ids = User::role('Supervisor JMTC')->get(['id'])->pluck('id')->toArray();
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
@@ -98,10 +99,6 @@ class HelperFirestore
                         // JMACT – Keluhan dengan No Tiket (XXXXX) Diteruskan Oleh (Nama User – Nama Role)
                         $message = "Keluhan dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
 
-                        // $user_ids1 = \App\Models\User::role('Service Provider')
-                        //     ->with('roles')
-                        //     ->where('unit_id', $data->unit_id)
-                        //     ->get(['id'])->pluck('id')->toArray();
                         $user_ids1 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
                             ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -118,9 +115,7 @@ class HelperFirestore
                             ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                             ->where('master_ruas.id', $data->ruas_id)
                             ->value('master_regional.id');
-                        // $user_ids2 = \App\Models\User::with('roles')
-                        //     ->whereHas('roles', function ($q) use($regional_id) { $q->where('regional_id', '=', $regional_id); })
-                        //     ->get(['id'])->pluck('id')->toArray();
+
                         $user_ids2 = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
@@ -140,16 +135,14 @@ class HelperFirestore
                     case '03':
                         // 03 On Progress => Regional sesuai dengan Ruas
                         // JMACT – Keluhan dengan No Tiket (XXXXX) sedang diproses Oleh (Nama User – Nama Role) – Estimasti Pengerjaan dalam (waktu SLA) hari
-                        $message = "Keluhan dengan No Tiket (".$no_tiket.") sedang diproses".$by_processor." - Estimasti Pengerjaan dalam (waktu SLA) hari";  // TODO: get SLA
+                        $sla = \App\Models\MasterBk::where('id', $data['bidang_id'])->value('sla');
+                        $message = "Keluhan dengan No Tiket (".$no_tiket.") sedang diproses".$by_processor." - Estimasti Pengerjaan dalam ".(is_null($sla) ? '?' : $sla/24)." hari";
 
                         $regional_id = \DB::table('master_ruas')
                             ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
                             ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                             ->where('master_ruas.id', $data->ruas_id)
                             ->value('master_regional.id');
-                        // $user_ids = \App\Models\User::with('roles')
-                        //     ->whereHas('roles', function ($q) use($regional_id) { $q->where('regional_id', '=', $regional_id); })
-                        //     ->get(['id'])->pluck('id')->toArray();
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -175,9 +168,6 @@ class HelperFirestore
                             ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                             ->where('master_ruas.id', $data->ruas_id)
                             ->value('master_regional.id');
-                        // $user_ids = \App\Models\User::with('roles')
-                        //     ->whereHas('roles', function ($q) use($regional_id) { $q->where('regional_id', '=', $regional_id); })
-                        //     ->get(['id'])->pluck('id')->toArray();
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -203,9 +193,6 @@ class HelperFirestore
                             ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                             ->where('master_ruas.id', $data->ruas_id)
                             ->value('master_regional.id');
-                        // $user_ids = \App\Models\User::with('roles')
-                        //     ->whereHas('roles', function ($q) use($regional_id) { $q->where('regional_id', '=', $regional_id); })
-                        //     ->get(['id'])->pluck('id')->toArray();
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -236,9 +223,6 @@ class HelperFirestore
                             ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                             ->where('master_ruas.id', $data->ruas_id)
                             ->value('master_regional.id');
-                        // $user_ids1 = \App\Models\User::with('roles')
-                        //     ->whereHas('roles', function ($q) use($regional_id) { $q->where('regional_id', '=', $regional_id); })
-                        //     ->get(['id'])->pluck('id')->toArray();
 
                         $user_ids1 = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -250,7 +234,6 @@ class HelperFirestore
                           ->pluck('user_id')
                           ->toArray();
 
-                        // $user_ids2 = User::role('Supervisor JMTC')->get(['id'])->pluck('id')->toArray();
                         $user_ids2 = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
@@ -260,10 +243,6 @@ class HelperFirestore
                           ->pluck('user_id')
                           ->toArray();
 
-                        // $user_ids3 = \App\Models\User::role('Service Provider')
-                        //     ->with('roles')
-                        //     ->where('unit_id', $data->unit_id)
-                        //     ->get(['id'])->pluck('id')->toArray();
                         $user_ids3 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
                             ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -295,9 +274,6 @@ class HelperFirestore
                             ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
                             ->where('master_ruas.id', $data->ruas_id)
                             ->value('master_regional.id');
-                        // $user_ids = \App\Models\User::with('roles')
-                        //     ->whereHas('roles', function ($q) use($regional_id) { $q->where('regional_id', '=', $regional_id); })
-                        //     ->get(['id'])->pluck('id')->toArray();
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -320,26 +296,26 @@ class HelperFirestore
             } else if ($no_tiket[0] == 'C') {
                 switch ($status) {
                     case '01':
-                        // 01 Tiket diinput => Supervisor JMTO
-                        // JMACT – Claim dengan No Tiket (XXXXX) Diinput Oleh (Nama User – Nama Role)
+                        // 01 Tiket diinput => Manager Area
+                        // JMACT – Klaim dengan No Tiket (XXXXX) Diinput Oleh (Nama User – Nama Role)
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Diinput".$by_processor;
 
                         $user_ids = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
-                          ->where('master_type.type', "Supervisor JMTO")
+                          ->where('master_type.type', "Manager Area")
                           ->select('role_users.*')
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
 
                         $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
-                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTO [". implode(", ", $user_ids_names) ."]");
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Manager Area [". implode(", ", $user_ids_names) ."]");
                         break;
 
                     case '02':
                         // 02 Approve => Representative Office sesuai dengan Ruasnya
-                        // JMACT – Claim dengan No Tiket (XXXXX) Approved Oleh (Nama User – Nama Role)
+                        // JMACT – Klaim dengan No Tiket (XXXXX) Approved Oleh (Nama User – Nama Role)
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Approved".$by_processor;
 
                         $regional_id = \DB::table('master_ruas')
@@ -363,13 +339,13 @@ class HelperFirestore
                         break;
 
                     case '03':
-                        // 03 Rejected => Customer Service JMTO pembuat laporan Claim
-                        // JMACT – Claim dengan No Tiket (XXXXX) Rejected Oleh (Nama User – Nama Role)
+                        // 03 Rejected => JMTO Area pembuat laporan Claim
+                        // JMACT – Klaim dengan No Tiket (XXXXX) Rejected Oleh (Nama User – Nama Role)
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Rejected".$by_processor;
 
-                        $user_ids = [$data->created_by];  // Customer Service JMTO ~ the inputer?
+                        $user_ids = [$data->created_by];  // JMTO Area ~ the inputer?
                         $creator_name = \App\Models\User::where('id', $data->created_by)->get('name')->pluck('name')->toArray();
-                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Customer Service JMTO pembuat laporan Claim [". implode(", ", $creator_name) . "]");
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => JMTO Area pembuat laporan Claim [". implode(", ", $creator_name) . "]");
                         break;
 
                     case '04':
@@ -412,9 +388,9 @@ class HelperFirestore
                         break;
 
                     case '05':
-                        // 05 Klarifikasi dan Negosiasi	=> Regional sesuai dengan Ruas
-                        // JMACT – Claim dengan No Tiket (XXXXX) tahap Klarifikasi dan Negosiasi telah selesai Oleh (Nama User – Nama Role)
-                        $message = "Klaim dengan No Tiket (".$no_tiket.") tahap Klarifikasi dan Negosiasi telah selesai".$by_processor;
+                        // 05 Monitoring RO (Proyek)	=> Regional sesuai dengan Ruas
+                        // JMACT – Klaim dengan No Tiket (XXXXX) dalam Monitoring RO (Proyek) Oleh (Nama User – Nama Role)
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") dalam Monitoring RO (Proyek)".$by_processor;
 
                         $regional_id = \DB::table('master_ruas')
                             ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
@@ -437,8 +413,71 @@ class HelperFirestore
                         break;
 
                     case '06':
-                        // 06 Pembayaran Selesai => Regional dan Representative Office sesuai dengan Ruas
-                        // JMACT – Claim dengan No Tiket (XXXXX) tahap Pembayaran telah selesai Oleh (Nama User – Nama Role)
+                        // 06 Klarifikasi dan Negosiasi	=> Regional sesuai dengan Ruas
+                        // JMACT – Klaim dengan No Tiket (XXXXX) tahap Klarifikasi dan Negosiasi telah selesai Oleh (Nama User – Nama Role)
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") tahap Klarifikasi dan Negosiasi telah selesai".$by_processor;
+
+                        $regional_id = \DB::table('master_ruas')
+                            ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                            ->where('master_ruas.id', $data->ruas_id)
+                            ->value('master_regional.id');
+
+                        $user_ids = \DB::table('role_users')
+                          ->join('roles', 'roles.id', '=', 'role_users.role_id')
+                          ->join('master_type', 'master_type.id', '=', 'roles.type_id')
+                          ->where('master_type.type', "Regional")
+                          ->where('roles.regional_id', $regional_id)
+                          ->select('role_users.*')
+                          ->get(['user_id'])
+                          ->pluck('user_id')
+                          ->toArray();
+
+                        $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
+                        break;
+
+                    case '07':
+                        // 07 Proses Pembayaran => Regional dan Representative Office sesuai dengan Ruas
+                        // JMACT – Klaim dengan No Tiket (XXXXX) tahap Proses Pembayaran Oleh (Nama User – Nama Role)
+                        $message = "Klaim dengan No Tiket (".$no_tiket.") tahap Proses Pembayaran".$by_processor;
+
+                        $regional_id = \DB::table('master_ruas')
+                            ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
+                            ->join('master_regional', 'master_regional.id', '=', 'master_ro.regional_id')
+                            ->where('master_ruas.id', $data->ruas_id)
+                            ->value('master_regional.id');
+
+                        $user_ids1 = \DB::table('role_users')
+                          ->join('roles', 'roles.id', '=', 'role_users.role_id')
+                          ->join('master_type', 'master_type.id', '=', 'roles.type_id')
+                          ->where('master_type.type', "Regional")
+                          ->where('roles.regional_id', $regional_id)
+                          ->select('role_users.*')
+                          ->get(['user_id'])
+                          ->pluck('user_id')
+                          ->toArray();
+
+                        $user_ids2 = \DB::table('role_users')
+                          ->join('roles', 'roles.id', '=', 'role_users.role_id')
+                          ->join('master_type', 'master_type.id', '=', 'roles.type_id')
+                          ->where('master_type.type', "Representative Office")
+                          ->where('roles.regional_id', $regional_id)
+                          ->select('role_users.*')
+                          ->get(['user_id'])
+                          ->pluck('user_id')
+                          ->toArray();
+
+                        $user_ids = array_merge($user_ids1, $user_ids2);
+
+                        $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
+                        $user_ids_names2 = \App\Models\User::whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names1) . "] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) . "]");
+                        break;
+
+                    case '08':
+                        // 08 Pembayaran Selesai => Regional dan Representative Office sesuai dengan Ruas
+                        // JMACT – Klaim dengan No Tiket (XXXXX) tahap Pembayaran telah selesai Oleh (Nama User – Nama Role)
                         $message = "Klaim dengan No Tiket (".$no_tiket.") tahap Pembayaran telah selesai".$by_processor;
 
                         $regional_id = \DB::table('master_ruas')
@@ -474,24 +513,21 @@ class HelperFirestore
                         \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names1) . "] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) . "]");
                         break;
 
-                    case '07':
-                        break;
-
-                    case '08':
-                        // 08 Closed => Supervisor JMTO, Customer Service JMTO pembuat claim, Representative Office, Regional sesuai Ruas dan Service Provider.
-                        // JMACT – Claim dengan No Tiket (XXXXX) Closed.
+                    case '09':
+                        // 09 Closed => Manager Area, JMTO Area pembuat claim, Representative Office, Regional sesuai Ruas dan Service Provider.
+                        // JMACT – Klaim dengan No Tiket (XXXXX) Closed.
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Closed.";
 
                         $user_ids1 = \DB::table('role_users')
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
-                          ->where('master_type.type', "Supervisor JMTO")
+                          ->where('master_type.type', "Manager Area")
                           ->select('role_users.*')
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
 
-                        $user_ids2 = [$data->created_by];  // Customer Service JMTO ~ the inputer?
+                        $user_ids2 = [$data->created_by];  // JMTO Area ~ the inputer?
 
                         $regional_id = \DB::table('master_ruas')
                           ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')
@@ -537,8 +573,9 @@ class HelperFirestore
                         $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
                         $user_ids_names3 = \App\Models\User::whereIn('id', $user_ids3)->get('name')->pluck('name')->toArray();
                         $user_ids_names4 = \App\Models\User::whereIn('id', $user_ids4)->get('name')->pluck('name')->toArray();
+                        $user_ids_names5 = \App\Models\User::whereIn('id', $user_ids5)->get('name')->pluck('name')->toArray();
                         $creator_name = \App\Models\User::where('id', $data->created_by)->get('name')->pluck('name')->toArray();
-                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTO [". implode(", ", $user_ids_names1) . "], Customer Service JMTO pembuat claim [". implode(", ", $creator_name) . "], Representative Office [". implode(", ", $user_ids_names3) . "], Regional sesuai Ruas [". implode(", ", $user_ids_names4) . "] dan Service Provider [". implode(", ", $user_ids_names5) . "]");
+                        \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Manager Area [". implode(", ", $user_ids_names1) . "], JMTO Area pembuat claim [". implode(", ", $creator_name) . "], Representative Office [". implode(", ", $user_ids_names3) . "], Regional sesuai Ruas [". implode(", ", $user_ids_names4) . "] dan Service Provider [". implode(", ", $user_ids_names5) . "]");
                         break;
                 }
                 if (count($user_ids) > 0) {

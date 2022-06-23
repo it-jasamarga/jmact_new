@@ -192,6 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 					if ($stmt = $conn->prepare($sql)) $stmt->execute();
 					$sql = 'INSERT INTO detail_history ('.($IS_KELUHAN ? "keluhan" : "claim").'_id, status_id, created_at, updated_at) VALUES ('.$id.', '.$status_id.', now(), now());';
 					if ($stmt = $conn->prepare($sql)) $stmt->execute();
+					$notify_tiket = $DATA['POSTED']['no_tiket'];
 				}
 			}
 		}
@@ -363,6 +364,26 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 			input.removeAttribute("required");
 		}
 	}
+
+<?php if (isset($notify_tiket)) { ?>
+	window.notify = function(no_tiket) {
+		let data = {no_tiket: no_tiket};
+
+		console.log("## Post notify tiket "+no_tiket);
+		fetch("system/notification", {
+			method: "POST",
+			headers: {'Content-Type': 'application/json'}, 
+			body: JSON.stringify(data)
+		}).then(response => {
+			return response.json()
+		}).then(response => {
+			console.log("## Response from server:", {response});
+		});
+	}
+
+	notify('<?= $notify_tiket ?>');
+<?php } ?>
+
 </script>
 </body>
 </html>
