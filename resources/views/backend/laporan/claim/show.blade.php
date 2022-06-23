@@ -26,7 +26,7 @@
                 @csrf
                 <div class="row">
                     <div class="col-12">
-                        <canvas id="ann" class="col-12" height="auto" style="border:#EEE solid 1px" />
+                        <canvas id="flowgraph" class="col-12" height="auto" style="border:#EEE solid 1px" />
                     </div>
                 </div>
                 <input type="hidden" name="status" value="02">
@@ -322,7 +322,7 @@
 
 @section('scripts')
     {{-- Page js files --}}
-    <script src="../js/ann.js"></script>
+    <script src="../js/flowist.js"></script>
     <script>
         // $(document).on("click", ".save", function(){
         //     var save = $(this).data("status")
@@ -332,9 +332,111 @@
         // })
         $(document).ready(function() {
             $("[name='nominal_customer']").val(convertToRupiah("{{ $record->nominal_customer }}"));
-            let sc = {{ $record->status->code * 1 }};
-            console.log('## status->code:', sc);
-            ann.claim.draw(sc, "CS JMTO", "Spv JMTO", "RO", "Service Provider", "Regional");
+            let flowgraph = new Flowist('flowgraph', 3, 7, 10);
+            // ann.claim.draw(sc, "CS JMTO", "Spv JMTO", "RO", "Service Provider", "Regional");
+
+            let color = {
+                circle: {
+                    active: '#b4d9ea',
+                    passive: '#ebecec'
+                },
+                line: {
+                    active: '#51a7ce',
+                    passive: '#a1a6a6'
+                },
+                text: {
+                    active: '#51a7ce',
+                    passive: '#a1a6a6'
+                }
+            }
+
+            flowgraph.assets.load([
+                '{{ url('icon') }}/inputer.png',
+                '{{ url('icon') }}/regional.png',
+                '{{ url('icon') }}/ro.png',
+                '{{ url('icon') }}/service_provider.png',
+                '{{ url('icon') }}/supervisor_manager.png',
+                '{{ url('icon') }}/gray_inputer.png',
+                '{{ url('icon') }}/gray_regional.png',
+                '{{ url('icon') }}/gray_ro.png',
+                '{{ url('icon') }}/gray_service_provider.png',
+                '{{ url('icon') }}/gray_supervisor_manager.png'],
+            ()=>{
+                // flowgraph.grid.draw();
+                let sc = {{ $record->status->code * 1 }};
+                debug({flowgraph}, 'status->code: '+ sc);
+
+                flowgraph.draw.thickness((flowgraph.row.height/2) * 0.75);
+
+                flowgraph.draw.color(color.circle.active);
+                flowgraph.grid.move.cell(2, 1);
+                flowgraph.draw.dot();
+
+                flowgraph.draw.color(color.circle.passive);
+                flowgraph.grid.move.cell(2, 3);
+                flowgraph.draw.dot();
+                flowgraph.grid.move.cell(2, 5);
+                flowgraph.draw.dot();
+                flowgraph.grid.move.cell(1, 7);
+                flowgraph.draw.dot();
+                flowgraph.grid.move.cell(3, 7);
+                flowgraph.draw.dot();
+
+                let d = 0.6 * (flowgraph.column.width > flowgraph.row.height ? flowgraph.row.height : flowgraph.column.width);
+
+                flowgraph.draw.font("bold 16px verdana");
+                flowgraph.grid.move.cell(2, 1);
+                flowgraph.draw.resource('inputer', d, d, "JMTO Area", color.text.active, 35);
+                flowgraph.draw.thickness(5);
+                flowgraph.draw.color(color.line.active);
+                flowgraph.grid.move.cell(2, 2, 0, -1);
+                flowgraph.grid.lineto.cell(2, 2, 0, 1);
+                flowgraph.grid.move.cell(2, 4, 0, -1);
+                flowgraph.grid.lineto.cell(2, 4, 0, 1);
+
+                flowgraph.grid.move.cell(2, 3);
+                flowgraph.draw.resource('gray_supervisor_manager', d, d, "Manager Area", color.text.passive, 35);
+
+                flowgraph.grid.move.cell(2, 5);
+                flowgraph.draw.resource('gray_ro', d, d, "Representative Office", color.text.passive, 35);
+                flowgraph.draw.thickness(5);
+                flowgraph.draw.color(color.line.passive);
+                flowgraph.grid.move.cell(2, 6, 0, -1);
+                flowgraph.grid.lineto.cell(1, 7, 0, -1);
+                flowgraph.draw.dash(15, 5);
+                flowgraph.draw.color(color.line.passive);
+                flowgraph.grid.move.cell(2, 6, 0, -1);
+                flowgraph.grid.lineto.cell(3, 7, 0, -1);
+
+                flowgraph.grid.move.cell(1, 7);
+                flowgraph.draw.resource('gray_service_provider', d, d, "Service Provider", color.text.passive, 35);
+
+                flowgraph.grid.move.cell(3, 7);
+                flowgraph.draw.resource('gray_regional', d, d, "Regional", color.text.passive, 35);
+
+                flowgraph.draw.font("14px verdana");
+                flowgraph.draw.dash(0, 0);
+                flowgraph.draw.color(color.line.active);
+                flowgraph.grid.move.cell(1, 1, -1, -1);
+                flowgraph.draw.adjust(0, 10);
+                flowgraph.grid.lineto.cell(1, 1, -1, 1, -100, 10);
+                flowgraph.draw.adjust(15, 5);
+                flowgraph.draw.align('left');
+                flowgraph.draw.color('#666666');
+                flowgraph.draw.text("User Pelaksana Laporan");
+
+                flowgraph.draw.dash(15, 5);
+                flowgraph.draw.color(color.line.active);
+                flowgraph.grid.move.cell(1, 1, -1, -1);
+                flowgraph.draw.adjust(0, 30);
+                flowgraph.grid.lineto.cell(1, 1, -1, 1, -100, 30);
+                flowgraph.draw.adjust(15, 5);
+                flowgraph.draw.align('left');
+                flowgraph.draw.color('#666666');
+                flowgraph.draw.text("User Monitoring");
+
+            });
+
         })
     </script>
 @endsection
