@@ -365,6 +365,7 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 		}
 	}
 
+<?php if (isset($notify_tiket)) { ?>
 	window.notify = function(no_tiket) {
 		let data = {no_tiket: no_tiket};
 
@@ -380,7 +381,9 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 		});
 	}
 
-	notify('<?= $DATA['RECORD']['no_tiket'] ?>');
+	notify('<?= $notify_tiket ?>');
+<?php } ?>
+
 </script>
 </body>
 </html>
