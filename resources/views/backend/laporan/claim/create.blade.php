@@ -36,7 +36,8 @@
                                 class="text-danger">*</span>
                             <input id="nik_pelanggan" type="text" class="form-control" name="nik_pelanggan"
                                 value="{{ old('nik_pelanggan') }}" required autocomplete="off" autofocus
-                                placeholder="NIK Pelanggan" maxlength="16" oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
+                                placeholder="NIK Pelanggan" maxlength="16"
+                                oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>
                     </div>
 
@@ -44,8 +45,9 @@
                         <div class="form-group">
                             <label for="no_telepon" class="">{{ __('No Telepon') }}</label>
                             <input id="no_telepon" type="text" class="form-control" name="no_telepon"
-                                value="{{ old('no_telepon') }}" autocomplete="off" autofocus
-                                placeholder="No Telepon" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
+                                value="{{ old('no_telepon') }}" autocomplete="off" autofocus placeholder="No Telepon"
+                                maxlength="12"
+                                oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>
                     </div>
 
@@ -53,18 +55,16 @@
                         <div class="form-group">
                             <label for="sosial_media" class="">{{ __('Sosial Media') }}</label>
                             <input id="sosial_media" type="text" class="form-control" name="sosial_media"
-                                value="{{ old('sosial_media') }}" autocomplete="off" autofocus
-                                placeholder="Sosial Media" maxlength="100">
+                                value="{{ old('sosial_media') }}" autocomplete="off" autofocus placeholder="Sosial Media"
+                                maxlength="100">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="alamat_pelanggan"
-                                class="">{{ __('Alamat Pelanggan') }}</label><span
+                            <label for="alamat_pelanggan" class="">{{ __('Alamat Pelanggan') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="alamat_pelanggan" class="form-control" rows="1"
-                                placeholder="Alamat Pelanggan"></textarea>
+                            <textarea name="alamat_pelanggan" class="form-control" rows="1" placeholder="Alamat Pelanggan"></textarea>
                         </div>
                     </div>
 
@@ -83,21 +83,29 @@
                             <label for="sumber_id" class="">{{ __('Sumber') }}</label><span
                                 class="text-danger">*</span>
                             <select class="form-control select2" name="sumber_id">
-                                {!! App\Models\MasterSumber::options('description', 'id', ['filters' => [function($q){
-                                    $q->where('claim',1);
-                                }]], '( Sumber )') !!}
+                                {!! App\Models\MasterSumber::options(
+    'description',
+    'id',
+    [
+        'filters' => [
+            function ($q) {
+                $q->where('claim', 1);
+            },
+        ],
+    ],
+    '( Sumber )',
+) !!}
                             </select>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tanggal_pelaporan"
-                                class="">{{ __('Tanggal Pelaporan') }}</label><span
+                            <label for="tanggal_pelaporan" class="">{{ __('Tanggal Pelaporan') }}</label><span
                                 class="text-danger">*</span>
                             <input id="tanggal_pelaporan" type="text" class="form-control datetimepicker"
-                                name="tanggal_pelaporan" value="{{ old('tanggal_pelaporan') }}" required autocomplete="off"
-                                autofocus placeholder="Tanggal Pelaporan" maxlength="20">
+                                name="tanggal_pelaporan" value="{{ old('tanggal_pelaporan') }}" required
+                                autocomplete="off" autofocus placeholder="Tanggal Pelaporan" maxlength="20">
                         </div>
                     </div>
 
@@ -214,11 +222,9 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="keterangan_claim"
-                                class="">{{ __('Keterangan Klaim') }}</label><span
+                            <label for="keterangan_claim" class="">{{ __('Keterangan Klaim') }}</label><span
                                 class="text-danger">*</span>
-                            <textarea name="keterangan_claim" class="form-control" rows="1"
-                                placeholder="Keterangan Klaim"></textarea>
+                            <textarea name="keterangan_claim" class="form-control" rows="1" placeholder="Keterangan Klaim"></textarea>
                         </div>
                     </div>
 
