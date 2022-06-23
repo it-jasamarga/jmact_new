@@ -321,7 +321,7 @@ class ClaimController extends Controller
         $record->save();
         $record->history()->create($request->all());
 
-        $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
+        // $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
         $this->firebase->notify($record);
         // $this->firebase->sendGroup(
@@ -383,7 +383,7 @@ class ClaimController extends Controller
         unset($request['nominal_final']);
         $record->history()->create($request->all());
 
-        $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
+        // $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
 
         $this->firebase->notify($record);
         // $this->firebase->sendGroup(

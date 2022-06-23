@@ -98,24 +98,30 @@ class StatusSeeder extends Seeder
             ],
             [
                 'code' => '06',
-                'status' =>'Klarifikasi & Negosiasi',
+                'status' =>'Negosiasi & Klarifikasi',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '07',
-                'status' =>'Pembayaran Selesai',
+                'status' =>'Proses Pembayaran',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '08',
-                'status' =>'Follow Up Feedback Pelanggan',
+                'status' =>'Pembayaran Selesai',
                 'type' => 2,
                 'active' => 1
             ],
             [
                 'code' => '09',
+                'status' =>'Follow Up Feedback Pelanggan',
+                'type' => 2,
+                'active' => 1
+            ],
+            [
+                'code' => '10',
                 'status' =>'Closed',
                 'type' => 2,
                 'active' => 1
