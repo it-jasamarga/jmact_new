@@ -57,8 +57,7 @@ class HelperFirestore
             $messaging->sendMulticast($message, $device_tokens);
 
             $bell_names = \DB::table('users')
-              ->join('user_devices', 'user_devices.user_id', '=', 'users.id')
-              ->whereIn('user_devices.token', $user_ids)
+              ->whereIn('users.id', $user_ids)
               ->select('users.name')
               ->get(['name'])
               ->pluck('name')
