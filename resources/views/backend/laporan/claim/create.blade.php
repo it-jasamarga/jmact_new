@@ -173,7 +173,7 @@
                                 class="text-danger">*</span>
                             <input id="no_polisi" type="text" class="form-control" name="no_polisi"
                                 value="{{ old('no_polisi') }}" required autocomplete="off" autofocus
-                                placeholder="No Polisi" maxlength="10">
+                                placeholder="No Polisi" maxlength="11">
                         </div>
                     </div>
 

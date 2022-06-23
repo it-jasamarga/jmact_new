@@ -309,26 +309,26 @@ class ClaimController extends Controller
         return view('backend.laporan.claim.edit', $data);
     }
 
-    public function history(DetailHistoryRequest $request, $id)
+    public function history(Request $request, $id)
     {
         $record = ClaimPelanggan::findOrFail($id);
 
+        if(!isset($request->unit_id)){
+            $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
+            $record->history()->create($request->all());
+            $request['status_id'] = MasterStatus::where('code', '05')->where('type', 2)->first()->id;
+            $record->history()->create($request->all());
+            $record->status_id = $request->status_id;
+            $record->save();
+        }
+
         $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
-        // $request['unit_id'] = $record->unit_id;
-        // $request['regional_id'] = $record->regional_id;
         unset($request['ruas_id']);
         $record->status_id = $request->status_id;
         $record->save();
         $record->history()->create($request->all());
 
-        // $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
-
         $this->firebase->notify($record);
-        // $this->firebase->sendGroup(
-        //     $record,
-        //     'JMACT - Klaim Diteruskan Kepada Service Provider',
-        //     'Diteruskan Ke ' . $name
-        // );
 
         return response([
             'status' => true,
@@ -349,7 +349,6 @@ class ClaimController extends Controller
 
     public function historyStage(Request $request, $id)
     {
-        // dd(request()->all());
         if (!request()->status == '06') {
             $this->validate($request, [
                 'negosiasi_dan_klarifikasi' => 'required'
@@ -383,14 +382,7 @@ class ClaimController extends Controller
         unset($request['nominal_final']);
         $record->history()->create($request->all());
 
-        // $name = $record->ruas->name . ' - ' . $record->ruas->ro->name;
-
         $this->firebase->notify($record);
-        // $this->firebase->sendGroup(
-        //     $record,
-        //     'JMACT - Claim Diteruskan Kepada Service Provider',
-        //     'Diteruskan Ke ' . $name
-        // );
 
         return response([
             'status' => true,
@@ -415,7 +407,6 @@ class ClaimController extends Controller
 
     public function claimDetail(Request $request, $id)
     {
-        // dd(request()->all());
         if (request()->keterangan_reject == '' && request()->status == 03) {
             $this->validate($request, [
                 'keterangan_reject' => 'required',

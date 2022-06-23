@@ -2,7 +2,7 @@
     enctype="multipart/form-data">
     @method('PUT')
     @csrf
-    @if ($record->status->code == '01' || $record->status->code == '02' || $record->status->code == '04')
+    @if ($record->status->code == '01' || $record->status->code == '02' || $record->status->code == '04' || $record->status->code == '05')
         <input type="hidden" name="status" value="06">
     @elseif($record->status->code == '06')
         <input type="hidden" name="status" value="07">
@@ -32,7 +32,7 @@
                                 {{-- dd({{$record->status}}) --}}
                                 <input type="checkbox" class="form-control" name="negosiasi_dan_klarifikasi"
                                     {{ $record->status->code == '01' || $record->status->code == '02' || $record->status->code == '03'? '': 'disabled' }}
-                                    {{ $record->status->code == '04' || $record->status->code == '06' || $record->status->code == '07'? 'checked': '' }} />
+                                    {{ $record->status->code == '04' || $record->status->code == '05' || $record->status->code == '06' || $record->status->code == '07'? 'checked': '' }} />
                                 <span></span>
                                 Negosiasi dan Klarifikasi
                             </label>
