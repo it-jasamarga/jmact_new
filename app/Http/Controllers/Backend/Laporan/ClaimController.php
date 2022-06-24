@@ -320,13 +320,13 @@ class ClaimController extends Controller
             $record->history()->create($request->all());
             $record->status_id = $request->status_id;
             $record->save();
+        } else {
+            $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
+            unset($request['ruas_id']);
+            $record->status_id = $request->status_id;
+            $record->save();
+            $record->history()->create($request->all());
         }
-
-        $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
-        unset($request['ruas_id']);
-        $record->status_id = $request->status_id;
-        $record->save();
-        $record->history()->create($request->all());
 
         $this->firebase->notify($record);
 
@@ -424,7 +424,7 @@ class ClaimController extends Controller
         }
 
         $record->save();
-        
+
         $this->firebase->notify($record);
 
         $data['status_id'] = $status->id;
