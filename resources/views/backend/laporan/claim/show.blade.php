@@ -422,6 +422,7 @@
                 } else {
                     flowgraph.grid.move.cell(2, 6, 0, -1);
                     flowgraph.grid.lineto.cell(1, 7, 0, -1);
+                    flowgraph.draw.dash(15, 5);
                     flowgraph.grid.move.cell(2, 6, 0, -1);
                     flowgraph.grid.lineto.cell(3, 7, 0, -1);
                 }

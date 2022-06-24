@@ -334,6 +334,7 @@
                 // second column lines
                 flowgraph.grid.move.cell(2, 4, 0, -1);
                 flowgraph.grid.lineto.cell(1, 5, 0, -1);
+                flowgraph.draw.dash(15, 5);
                 flowgraph.grid.move.cell(2, 4, 0, -1);
                 flowgraph.grid.lineto.cell(3, 5, 0, -1);
 
