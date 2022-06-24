@@ -506,11 +506,35 @@ class KeluhanController extends Controller
         //     ]);
         // }
         // dd(request()->all());
-        if ((request()->kontak_pelanggan == 0) || request()->konfirmasi_pelanggan == null) {
+        // if ((request()->kontak_pelanggan == 0) || request()->konfirmasi_pelanggan == null) {
+        //     return response([
+        //         "message" => "The given data was invalid.",
+        //         "errors" => [
+        //             "kontak_pelanggan" => ["The kontak pelanggan field is required"],
+        //             "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
+        //         ]
+        //     ], 422);
+        // }
+
+        if (request()->kontak_pelanggan == 0 && request()->konfirmasi_pelanggan == null) {
             return response([
                 "message" => "The given data was invalid.",
                 "errors" => [
                     "kontak_pelanggan" => ["The kontak pelanggan field is required"],
+                    "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
+                ]
+            ], 422);
+        } else if(request()->kontak_pelanggan == 0) {
+            return response([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "kontak_pelanggan" => ["The kontak pelanggan field is required"],
+                ]
+            ], 422);
+        } else {
+            return response([
+                "message" => "The given data was invalid.",
+                "errors" => [
                     "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
                 ]
             ], 422);
@@ -521,6 +545,7 @@ class KeluhanController extends Controller
         // $request['tidak'] = (request()->kontak_pelanggan['tidak']) ? 1 : 0;
 
         // unset($request['kontak_pelanggan']);
+
         $recordReport = DetailReport::where('keluhan_id', $id)->orderByDesc('created_at')->first();
         $recordReport->kontak_pelanggan = request()->kontak_pelanggan;
         $recordReport->konfirmasi_pelanggan = request()->konfirmasi_pelanggan;
@@ -547,11 +572,6 @@ class KeluhanController extends Controller
         ]);
 
         $this->firebase->notify($record);
-        // $this->firebase->sendGroup(
-        //     $record,
-        //     'JMACT - Pelaporan Tiket Keluhan No Tiket' . $record->no_tiket . '',
-        //     'Pelaporan Keluhan Dengan No Tiket ' . $record->no_tiket . ' Telah Selesai Dikerjakan '
-        // );
 
         return response([
             'status' => true,

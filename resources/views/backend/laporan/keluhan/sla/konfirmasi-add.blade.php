@@ -45,7 +45,7 @@
                                     Ya
                                 </label>
                                 <label class="radio">
-                                    <input type="radio" name="kontak_pelanggan" value="1" />
+                                    <input type="radio" name="kontak_pelanggan" value="0" />
                                     <span></span>
                                     Tidak
                                 </label>
