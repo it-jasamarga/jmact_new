@@ -40,8 +40,14 @@ class HelperFirestore
             $notifications->add($data);
         }
 
-        $bell_names = [];
         $fbms_names = [];
+
+        $bell_names = \DB::table('users')
+          ->whereIn('users.id', $user_ids)
+          ->select('users.name')
+          ->get(['name'])
+          ->pluck('name')
+          ->toArray();
 
         if (count($device_tokens) > 0) {
             $message = CloudMessage::new()->withNotification([
@@ -56,13 +62,6 @@ class HelperFirestore
 
             $messaging = app('firebase.messaging');
             $messaging->sendMulticast($message, $device_tokens);
-
-            $bell_names = \DB::table('users')
-              ->whereIn('users.id', $user_ids)
-              ->select('users.name')
-              ->get(['name'])
-              ->pluck('name')
-              ->toArray();
 
             $fbms_names = \DB::table('users')
               ->join('user_devices', 'user_devices.user_id', '=', 'users.id')
