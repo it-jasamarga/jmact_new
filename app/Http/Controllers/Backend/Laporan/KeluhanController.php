@@ -505,6 +505,7 @@ class KeluhanController extends Controller
         //         'konfirmasi_pelanggan' => 'required',
         //     ]);
         // }
+        // dd(request()->all());
         if ((request()->kontak_pelanggan == 0) || request()->konfirmasi_pelanggan == null) {
             return response([
                 "message" => "The given data was invalid.",

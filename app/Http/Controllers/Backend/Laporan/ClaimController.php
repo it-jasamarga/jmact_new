@@ -86,7 +86,7 @@ class ClaimController extends Controller
                 $data = ClaimPelanggan::with('history')
                     ->where('unit_id', auth()->user()->unit_id)
                     ->whereHas('status', function ($q1) {
-                        $q1->whereIn('code', ['03', '04', '06', '07', '08', '09'])
+                        $q1->whereIn('code', ['04', '06', '07', '08', '09', '10'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
@@ -107,7 +107,7 @@ class ClaimController extends Controller
                     });
                 })
                     ->whereHas('status', function ($q2) {
-                        $q2->whereIn('code', ['02', '04', '05', '09'])
+                        $q2->whereIn('code', ['02', '05', '06', '07', '08', '09', '10'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
@@ -137,7 +137,7 @@ class ClaimController extends Controller
         }
 
         return datatables()->of($data)
-            ->addColumn('numSelect', function ($data) use ($request) {
+            ->addColumn('numSelect', function ($data) {
                 $button = '';
                 $button .= makeButton([
                     'type' => 'deleteAll',
@@ -145,15 +145,15 @@ class ClaimController extends Controller
                 ]);
                 return $button;
             })
-            ->addColumn('ruas_id', function ($data) use ($request) {
+            ->addColumn('ruas_id', function ($data) {
                 $button = ($data->ruas) ? $data->ruas->name : '-';
                 return $button;
             })
-            ->addColumn('status_id', function ($data) use ($request) {
+            ->addColumn('status_id', function ($data) {
                 $button = ($data->status) ? $data->status->status : '-';
                 return $button;
             })
-            ->addColumn('golongan_id', function ($data) use ($request) {
+            ->addColumn('golongan_id', function ($data) {
                 $button = ($data->golongan) ? $data->golongan->golongan : '-';
                 return $button;
             })
@@ -367,7 +367,7 @@ class ClaimController extends Controller
 
         $request['status_id'] = MasterStatus::where('code', $request->status)->where('type', 2)->first()->id;
         $request['unit_id'] = $record->unit_id;
-        // $request['regional_id'] = $record->regional_id;
+
         if ($request->nominal_final) {
             $record->nominal_final = $request->nominal_final;
         }
@@ -429,7 +429,6 @@ class ClaimController extends Controller
 
         $data['status_id'] = $status->id;
         $data['unit_id'] = $record->unit_id;
-        // $data['regional_id'] = $record->regional_id;
 
         $record->history()->create($data);
 

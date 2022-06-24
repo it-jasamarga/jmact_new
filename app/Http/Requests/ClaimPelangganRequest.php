@@ -38,7 +38,7 @@ class ClaimPelangganRequest extends FormRequest
         // 'nominal_final' => 'required|numeric|min:1|digits_between:8,14',
         // 'unit_id' => 'required|min:1|max:255',
         // 'regional_id' => 'required|min:1|max:255',
-        // 'sumber_id' => 'required|min:1|max:255',
+        'sumber_id' => 'required|min:1|max:255',
         'jenis_claim_id' => 'required|min:1|max:255',
         'ruas_id' => 'required|min:1|max:255',
         'golongan_id' => 'required|min:1|max:255'
