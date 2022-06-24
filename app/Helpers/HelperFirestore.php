@@ -138,6 +138,7 @@ class HelperFirestore
                           ->join('roles', 'roles.id', '=', 'role_users.role_id')
                           ->join('master_type', 'master_type.id', '=', 'roles.type_id')
                           ->where('master_type.type', "Regional")
+                          ->where('roles.regional_id', $regional_id)
                           ->select('role_users.*')
                           ->get(['user_id'])
                           ->pluck('user_id')
@@ -229,6 +230,7 @@ class HelperFirestore
                         break;
 
                     case '06':
+                        // unimplemented
                         break;
 
                     case '07':
@@ -530,7 +532,11 @@ class HelperFirestore
                         break;
 
                     case '09':
-                        // 09 Closed => Manager Area, JMTO Area pembuat claim, Representative Office, Regional sesuai Ruas dan Service Provider.
+                        // unimplemented
+                        break;
+
+                    case '10':
+                        // 10 Closed => Manager Area, JMTO Area pembuat claim, Representative Office, Regional sesuai Ruas dan Service Provider.
                         // JMACT – Klaim dengan No Tiket (XXXXX) Closed.
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Closed.";
 

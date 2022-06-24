@@ -90,8 +90,9 @@ class FeedbackController extends Controller
     public function contact(Request $request, $no_tiket) {
       $IS_KELUHAN = strtoupper($no_tiket[0]) == "K";
       $statuses = \App\Models\MasterStatus::where('type', '=', $IS_KELUHAN ? 1 : 2)
-        ->where('status', 'LIKE', "%Feedback%")
-        ->orWhere('status', 'LIKE', $IS_KELUHAN ? "%Konfirmasi%" : "%Pembayaran%")
+        // ->where('status', 'LIKE', "%Feedback%")
+        // ->orWhere('status', 'LIKE', $IS_KELUHAN ? "%Konfirmasi%" : "%Pembayaran%")
+        ->where('status', '=', $IS_KELUHAN ? "Konfirmasi Pelanggan" : "Pembayaran Selesai")
         ->get(['id'])->pluck(['id'])->toArray();
       $model = $IS_KELUHAN ? "\\App\\Models\\KeluhanPelanggan" : "\\App\\Models\\ClaimPelanggan";
       $query = $model::where('no_tiket', $no_tiket)->whereIn('status_id', $statuses)->first();
@@ -139,8 +140,9 @@ class FeedbackController extends Controller
           switch($request->input('status')) {
             case "outstanding":
               $statuses = \App\Models\MasterStatus::where('type', '=', 1)
-                ->where('status', 'LIKE', "%Konfirmasi%")
-                ->orWhere('status', 'LIKE', "%Feedback%")
+                // ->where('status', 'LIKE', "%Konfirmasi%")
+                // ->orWhere('status', 'LIKE', "%Feedback%")
+                ->where('status', '=', "Konfirmasi Pelanggan")
                 ->get(['id'])->pluck(['id'])->toArray();
               $keluhan = $keluhan->whereIn('keluhan.status_id', $statuses);
               break;
@@ -172,8 +174,9 @@ class FeedbackController extends Controller
           switch($request->input('status')) {
             case "outstanding":
               $statuses = \App\Models\MasterStatus::where('type', '=', 2)
-                ->where('status', 'LIKE', "%Pembayaran%")
-                ->orWhere('status', 'LIKE', "%Feedback%")
+                // ->where('status', 'LIKE', "%Pembayaran%")
+                // ->orWhere('status', 'LIKE', "%Feedback%")
+                ->where('status', '=', "Pembayaran Selesai")
                 ->get(['id'])->pluck(['id'])->toArray();
               $claim = $claim->whereIn('claim.status_id', $statuses);
               break;
