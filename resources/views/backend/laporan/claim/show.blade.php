@@ -364,55 +364,91 @@
             ()=>{
                 // flowgraph.grid.draw();
                 let sc = {{ $record->status->code * 1 }};
+                let is_project = null; // TODO: get from field, sc >= 4
                 debug({flowgraph}, 'status->code: '+ sc);
 
                 flowgraph.draw.thickness((flowgraph.row.height/2) * 0.75);
 
                 flowgraph.draw.color(color.circle.active);
+
+                // first column circle
                 flowgraph.grid.move.cell(2, 1);
                 flowgraph.draw.dot();
 
-                flowgraph.draw.color(color.circle.passive);
+                if (sc <= 1) flowgraph.draw.color(color.circle.passive);
+
+                // second column circle
                 flowgraph.grid.move.cell(2, 3);
                 flowgraph.draw.dot();
+
+                if (sc <= 3) flowgraph.draw.color(color.circle.passive);
+
+                // third column circle
                 flowgraph.grid.move.cell(2, 5);
                 flowgraph.draw.dot();
-                flowgraph.grid.move.cell(1, 7);
-                flowgraph.draw.dot();
-                flowgraph.grid.move.cell(3, 7);
-                flowgraph.draw.dot();
+
+                if (sc <= 4) flowgraph.draw.color(color.circle.passive);
+
+                // fourth column circle
+                if (is_project) {
+                    flowgraph.grid.move.cell(2, 7);
+                    flowgraph.draw.dot();
+                } else {
+                    flowgraph.grid.move.cell(1, 7);
+                    flowgraph.draw.dot();
+                    flowgraph.grid.move.cell(3, 7);
+                    flowgraph.draw.dot();
+                }
+
+                flowgraph.draw.color(color.line.active);
+                flowgraph.draw.thickness(5);
+
+                // first column line
+                flowgraph.grid.move.cell(2, 2, 0, -1);
+                flowgraph.grid.lineto.cell(2, 2, 0, 1);
+
+                if ((sc <= 1) || (sc == 3)) flowgraph.draw.color(color.line.passive);
+
+                // second column line
+                flowgraph.grid.move.cell(2, 4, 0, -1);
+                flowgraph.grid.lineto.cell(2, 4, 0, 1);
+                
+                if (sc <= 3) flowgraph.draw.color(color.line.passive);
+
+                // third column line
+                if (is_project) {
+                    flowgraph.grid.move.cell(2, 6, 0, -1);
+                    flowgraph.grid.lineto.cell(2, 6, 0, 1);
+                } else {
+                    flowgraph.grid.move.cell(2, 6, 0, -1);
+                    flowgraph.grid.lineto.cell(1, 7, 0, -1);
+                    flowgraph.grid.move.cell(2, 6, 0, -1);
+                    flowgraph.grid.lineto.cell(3, 7, 0, -1);
+                }
 
                 let d = 0.6 * (flowgraph.column.width > flowgraph.row.height ? flowgraph.row.height : flowgraph.column.width);
 
                 flowgraph.draw.font("bold 16px verdana");
+
                 flowgraph.grid.move.cell(2, 1);
                 flowgraph.draw.resource('inputer', d, d, "JMTO Area", color.text.active, 35);
-                flowgraph.draw.thickness(5);
-                flowgraph.draw.color(color.line.active);
-                flowgraph.grid.move.cell(2, 2, 0, -1);
-                flowgraph.grid.lineto.cell(2, 2, 0, 1);
-                flowgraph.grid.move.cell(2, 4, 0, -1);
-                flowgraph.grid.lineto.cell(2, 4, 0, 1);
 
                 flowgraph.grid.move.cell(2, 3);
-                flowgraph.draw.resource('gray_supervisor_manager', d, d, "Manager Area", color.text.passive, 35);
+                flowgraph.draw.resource((sc>1? '' : 'gray_')+ 'supervisor_manager', d, d, "Manager Area", sc>1? color.text.active : color.text.passive, 35);
 
                 flowgraph.grid.move.cell(2, 5);
-                flowgraph.draw.resource('gray_ro', d, d, "Representative Office", color.text.passive, 35);
-                flowgraph.draw.thickness(5);
-                flowgraph.draw.color(color.line.passive);
-                flowgraph.grid.move.cell(2, 6, 0, -1);
-                flowgraph.grid.lineto.cell(1, 7, 0, -1);
-                flowgraph.draw.dash(15, 5);
-                flowgraph.draw.color(color.line.passive);
-                flowgraph.grid.move.cell(2, 6, 0, -1);
-                flowgraph.grid.lineto.cell(3, 7, 0, -1);
+                flowgraph.draw.resource((((sc>2) && (sc!=3))? '' : 'gray_')+ 'ro', d, d, "Representative Office", ((sc>2) && (sc!=3))? color.text.active : color.text.passive, 35);
 
-                flowgraph.grid.move.cell(1, 7);
-                flowgraph.draw.resource('gray_service_provider', d, d, "Service Provider", color.text.passive, 35);
+                if (is_project) {
+                    flowgraph.grid.move.cell(2, 7);
+                    flowgraph.draw.resource((sc>4? '' : 'gray_')+ 'regional', d, d, "Regional", sc>4? color.text.active : color.text.passive, 35);
+                } else {
+                    flowgraph.grid.move.cell(1, 7);
+                    flowgraph.draw.resource((sc>4? '' : 'gray_')+ 'service_provider', d, d, "Service Provider", sc>4? color.text.active : color.text.passive, 35);
 
-                flowgraph.grid.move.cell(3, 7);
-                flowgraph.draw.resource('gray_regional', d, d, "Regional", color.text.passive, 35);
+                    flowgraph.grid.move.cell(3, 7);
+                    flowgraph.draw.resource((sc>4? '' : 'gray_')+ 'regional', d, d, "Regional", sc>4? color.text.active : color.text.passive, 35);
+                }
 
                 flowgraph.draw.font("14px verdana");
                 flowgraph.draw.dash(0, 0);
