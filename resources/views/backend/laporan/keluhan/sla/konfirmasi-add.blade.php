@@ -8,7 +8,7 @@
     <div class="modal-body">
         <div class="row">
 
-            <input type="hidden" name="kontak_pelanggan" value="0">
+            {{-- <input type="hidden" name="kontak_pelanggan" value="0"> --}}
 
             <div class="col-md-12">
                 <div class="form-group row">

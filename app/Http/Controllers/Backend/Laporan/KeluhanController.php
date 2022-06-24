@@ -516,7 +516,7 @@ class KeluhanController extends Controller
         //     ], 422);
         // }
 
-        if (request()->kontak_pelanggan == 0 && request()->konfirmasi_pelanggan == null) {
+        if (!isset(request()->kontak_pelanggan) && (request()->konfirmasi_pelanggan == null)) {
             return response([
                 "message" => "The given data was invalid.",
                 "errors" => [
@@ -524,21 +524,45 @@ class KeluhanController extends Controller
                     "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
                 ]
             ], 422);
-        } else if(request()->kontak_pelanggan == 0) {
-            return response([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "kontak_pelanggan" => ["The kontak pelanggan field is required"],
-                ]
-            ], 422);
-        } else {
+        } else if (request()->konfirmasi_pelanggan == null) {
             return response([
                 "message" => "The given data was invalid.",
                 "errors" => [
                     "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
+                ]
+            ], 422);
+        } else if (!isset(request()->kontak_pelanggan)){
+            return response([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "kontak_pelanggan" => ["The kontak pelanggan field is required"],
                 ]
             ], 422);
         }
+
+        // if (request()->kontak_pelanggan == 0 || request()->konfirmasi_pelanggan == null) {
+        //     return response([
+        //         "message" => "The given data was invalid.",
+        //         "errors" => [
+        //             "kontak_pelanggan" => ["The kontak pelanggan field is required"],
+        //             "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
+        //         ]
+        //     ], 422);
+        // } else if(request()->kontak_pelanggan == 0) {
+        //     return response([
+        //         "message" => "The given data was invalid.",
+        //         "errors" => [
+        //             "kontak_pelanggan" => ["The kontak pelanggan field is required"],
+        //         ]
+        //     ], 422);
+        // } else {
+        //     return response([
+        //         "message" => "The given data was invalid.",
+        //         "errors" => [
+        //             "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
+        //         ]
+        //     ], 422);
+        // }
 
         // $request['ya'] = (request()->kontak_pelanggan['ya']) ? 1 : 0;
 
