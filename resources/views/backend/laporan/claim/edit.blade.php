@@ -9,9 +9,9 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="penyelesaian_klaim" class="">{{ __('Penyelesaian Klaim') }}</label>
-                    <select class="form-control select2 changClaim" id="penyelesaian_klaim">
-                        <option value="service_provider">Service Provider</option>
+                    <label for="penyelesaian" class="">{{ __('Penyelesaian Klaim') }}</label>
+                    <select class="form-control select2 changClaim" id="penyelesaian" name="penyelesaian">
+                        <option value="service provider">Service Provider</option>
                         <option value="proyek">Proyek</option>
                     </select>
                 </div>

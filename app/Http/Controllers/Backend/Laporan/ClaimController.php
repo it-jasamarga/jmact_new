@@ -319,17 +319,22 @@ class ClaimController extends Controller
         $record = ClaimPelanggan::findOrFail($id);
 
         if (!isset($request->unit_id)) {
+            $penyelesaian = $request->penyelesaian;
+            unset($request['penyelesaian']);
             $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
             $record->history()->create($request->all());
             $request['status_id'] = MasterStatus::where('code', '05')->where('type', 2)->first()->id;
             $record->history()->create($request->all());
             $record->status_id = $request->status_id;
+            $record->penyelesaian = $penyelesaian;
             $record->save();
         } else {
             $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
-            unset($request['ruas_id']);
             $record->status_id = $request->status_id;
+            $record->penyelesaian = $request->penyelesaian;
             $record->save();
+            unset($request['ruas_id']);
+            unset($request['penyelesaian']);
             $record->history()->create($request->all());
         }
 
