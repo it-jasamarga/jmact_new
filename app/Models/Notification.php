@@ -16,10 +16,17 @@ class Notification extends Model implements Auditable
 {
    	use HasFactory, Filterable, Blameable, Utilities;
     use \OwenIt\Auditing\Auditable;
-    
-	// protected $table = 'master_unit';
+
+	protected $table = 'notifications';
 
  	protected $guarded = [];
 
+     public function user(){
+		return $this->belongsTo(User::class,'user_id');
+	}
+
+    public function unit(){
+		return $this->belongsTo(MasterUnit::class,'unit_id');
+	}
 
 }

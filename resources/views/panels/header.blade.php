@@ -23,7 +23,7 @@
 		<!--end::Header Menu Wrapper-->
 		<!--begin::Topbar-->
 		<div class="topbar">
-			
+
 			<!--begin::Notifications-->
 			<div class="dropdown">
 				<!--begin::Toggle-->
@@ -37,7 +37,9 @@
 								</g>
 							</svg>
 							<!--end::Svg Icon-->
+                            {{-- <span class="label label-rounded label-primary">6</span> --}}
 						</span>
+                        <b style="position: relative;bottom:7px;right:5px;font-size:12px" class="appendCount"></b>
 						<span class="pulse-ring"></span>
 					</div>
 				</div>
@@ -69,14 +71,14 @@
 								<!--begin::Scroll-->
 								<div class="scroll pr-7 mr-n7 addHeader" data-scroll="true" data-height="300" data-mobile-height="200">
 									<!--begin::Item-->
-									
+
 									<!--end::Item-->
 								</div>
 								<!--end::Scroll-->
 								<!--begin::Action-->
-								<!-- <div class="d-flex flex-center pt-7">
-									<a href="#" class="btn btn-light-primary font-weight-bold text-center">See All</a>
-								</div> -->
+								 <div class="d-flex flex-center pt-7">
+									<a href="{{url('notification')}}" class="btn btn-light-primary font-weight-bold text-center">See All</a>
+								</div>
 								<!--end::Action-->
 							</div>
 						</div>
@@ -86,7 +88,7 @@
 				<!--end::Dropdown-->
 			</div>
 			<!--end::Notifications-->
-			
+
 			<!--begin::User-->
 			<div class="topbar-item">
 				<div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">

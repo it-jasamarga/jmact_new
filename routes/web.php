@@ -54,7 +54,7 @@ Route::get('/test', function(Request $request) {
 Route::post('system/notification', function (Request $request) {
     $json = json_decode($request->getContent(), true);
     $retr = ['request' => $json, 'tipe' => $json['no_tiket'][0]];
-    
+
     try {
         $data = $json['no_tiket'][0] == 'K' ?
             \App\Models\KeluhanPelanggan::where('no_tiket', $json['no_tiket'])->first()
@@ -269,6 +269,9 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::resource('master-claim', 'MasterJenisClaimController');
             // });
         });
+
+        Route::resource('notification', 'Notification\NotificationController');
+
     });
 });
 

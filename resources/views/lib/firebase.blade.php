@@ -120,6 +120,7 @@
                     }
 
                     $('.totalNotif').text(notifLength+' New');
+                    $('.appendCount').text(notifLength)
                     $('.addHeader').html(htmlNotif);
                 });
             }
