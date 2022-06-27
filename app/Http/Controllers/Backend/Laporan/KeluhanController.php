@@ -86,9 +86,14 @@ class KeluhanController extends Controller
         if (auth()->user()->roles()->first()->type) {
             if (auth()->user()->roles()->first()->type->type == "Service Provider") {
                 $data  = KeluhanPelanggan::with('history')
-                    ->where('unit_id', auth()->user()->unit_id)
-                    ->whereHas('status', function ($q1) {
-                        $q1->whereIn('code', ['02', '03', '04', '07'])
+                    // ->where('unit_id', auth()->user()->unit_id)
+                    ->whereHas('bidang', function($q) {
+                        $q->whereHas('unit', function($q1) {
+                            $q1->where('id', auth()->user()->unit_id);
+                        });
+                    })
+                    ->whereHas('status', function ($q2) {
+                        $q2->whereIn('code', ['02', '03', '04', '07'])
                             ->where('type', 1);
                     })
                     ->orderByDesc('created_at')

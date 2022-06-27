@@ -84,9 +84,14 @@ class ClaimController extends Controller
         if (auth()->user()->roles()->first()->type) {
             if (auth()->user()->roles()->first()->type->type == "Service Provider") {
                 $data = ClaimPelanggan::with('history')
-                    ->where('unit_id', auth()->user()->unit_id)
-                    ->whereHas('status', function ($q1) {
-                        $q1->whereIn('code', ['04', '06', '07', '08', '09', '10'])
+                    // ->where('unit_id', auth()->user()->unit_id)
+                    ->whereHas('jenisClaim', function($q) {
+                        $q->whereHas('unit', function($q1) {
+                            $q1->where('id', auth()->user()->unit_id);
+                        });
+                    })
+                    ->whereHas('status', function ($q2) {
+                        $q2->whereIn('code', ['04', '06', '07', '08', '09', '10'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
