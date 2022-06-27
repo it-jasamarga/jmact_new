@@ -364,7 +364,7 @@
             ()=>{
                 // flowgraph.grid.draw();
                 let sc = {{ $record->status->code * 1 }};
-                let is_project = null; // TODO: get from field, sc >= 4
+                let is_project = {{ ($record->penyelesaian === 'proyek') ? 'true' : 'false'; }}; // TODO: get from field, sc >= 4
                 debug({flowgraph}, 'status->code: '+ sc);
 
                 flowgraph.draw.thickness((flowgraph.row.height/2) * 0.75);
