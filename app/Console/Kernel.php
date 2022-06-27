@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\CronOvertimeNotification::class,
+        Commands\CronCloseFeedback::class,
     ];
 
     /**
@@ -24,7 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('cron:overtime:notification')
+            ->dailyAt('08:00');
+            // ->everyFiveMinutes();
+        $schedule->command('cron:close:feedback')
+            ->dailyAt('01:00');
+            // ->everyTenMinutes();
     }
 
     /**
