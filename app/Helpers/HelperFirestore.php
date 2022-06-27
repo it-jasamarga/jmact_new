@@ -72,25 +72,44 @@ class HelperFirestore
               ->pluck('name')
               ->toArray();
         }
-        \App\Models\SysLog::write("Notifikasi melalui Lonceng [". implode(", ", $bell_names) ."], melalui Firebase.Messaging [". implode(", ", $fbms_names) ."]");
+        \App\Models\SysLog::write("Notifikasi melalui Lonceng [". implode(", ", $bell_names) ."], melalui Firebase.Messaging [". implode(", ", $fbms_names) ."] message: ". $message);
     }
 
-    public static function overtimeNotify($data) {
-      /*
-        $no_tiket = $data['no_tiket'];
-        $master_status = MasterStatus::where('id', $data['status_id'])->first(['code']);
-        $status = $master_status['code'];
-        $data_onbell = ['unit_id' => $data->unit_id*1, 'target_id' => $data->id, 'target_type' => $data->filesMorphClass() ];
+    public static function notifyOvertime($overtime) {
+/*
 
-        $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
-        \App\Models\SysLog::write("Notifikasi Overtime ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
+array:1 [▼
+  "Jasamarga Transjawa Tol" => array:3 [▼
+    "no_tikets" => array:2 [▼
+      12 => "KA01220005"
+      11 => "KE01220002"
+    ]
+    "user_names" => array:1 [▼
+      15 => "Regional JTT"
+    ]
+    "user_ids" => array:1 [▼
+      0 => 15
+    ]
+  ]
+]
 
-        if (count($user_ids) > 0) {
-            $message = "Keluhan dengan No Tiket (".$no_tiket.") sudah Overtime!";
-            $device_tokens = UserDevice::whereIn('user_id', $user_ids)->get(['token'])->pluck('token')->toArray();
-            self::notifier($user_ids, $device_tokens, "Keluhan ".$no_tiket, $data_onbell, "JMACT Notification", $message);
+*/
+        foreach ($overtime as $regional_name => $regional_data) {
+            foreach ($regional_data['no_tikets'] as $id => $no_tiket) {
+                $data = \App\Models\KeluhanPelanggan::find($id);
+                $status = MasterStatus::where('id', $data['status_id'])->value('code');
+                $data_onbell = ['unit_id' => $data->unit_id*1, 'target_id' => $data->id, 'target_type' => $data->filesMorphClass() ];
+                $user_ids = $regional_data['user_ids'];
+                $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
+                \App\Models\SysLog::write("Notifikasi Overtime ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
+        
+                if (count($user_ids) > 0) {
+                    $message = "Keluhan dengan No Tiket (".$no_tiket.") sudah Overtime!";
+                    $device_tokens = UserDevice::whereIn('user_id', $user_ids)->get(['token'])->pluck('token')->toArray();
+                    self::notifier($user_ids, $device_tokens, "Keluhan ".$no_tiket, $data_onbell, "JMACT Notification", $message);
+                }
+            }
         }
-      */
     }
 
     public static function notify($data) {
@@ -391,12 +410,13 @@ class HelperFirestore
                         // JMACT – Claim dengan No Tiket (XXXXX) Diteruskan Oleh (Nama User – Nama Role
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
 
+                        $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id);
                         $user_ids1 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
                             ->join('roles', 'roles.id', '=', 'role_users.role_id')
                             ->join('master_type', 'master_type.id', '=', 'roles.type_id')
                             ->where('master_type.type', "Service Provider")
-                            ->where('users.unit_id', $data->unit_id)
+                            ->where('users.unit_id', $unit_id)
                             ->select('users.id')
                             ->get(['id'])
                             ->pluck('id')
