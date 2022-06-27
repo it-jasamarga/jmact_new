@@ -112,7 +112,7 @@ class ClaimController extends Controller
                     });
                 })
                     ->whereHas('status', function ($q2) {
-                        $q2->whereIn('code', ['02', '05', '06', '07', '08', '09', '10'])
+                        $q2->whereIn('code', ['02', '04', '05', '06', '07', '08', '09', '10'])
                             ->where('type', 2);
                     })
                     ->orderByDesc('created_at')
@@ -272,10 +272,6 @@ class ClaimController extends Controller
             $record = ClaimPelanggan::saveData($request);
             $record->no_tiket = getTiketClaim($record);
             $record->save();
-            // $record->keluhanUnit()->create([
-            //   'unit_id' => $record->unit_id,
-            //   'created_by' => $request->user_id
-            // ]);
 
             $this->firebase->notify($record);
 

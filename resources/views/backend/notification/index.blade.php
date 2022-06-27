@@ -70,7 +70,8 @@
 
             <!--begin::Pagination-->
             <div class="col-12 col-sm-6 col-xxl-4 order-2 order-xxl-3 d-flex align-items-center justify-content-sm-end text-right my-2">
-               @include('backend.notification.partials.pagination')
+               {{-- @include('backend.notification.partials.pagination') --}}
+               {!! $record->links('backend.partial.pagination') !!}
             </div>
             <!--end::Pagination-->
         </div>
@@ -103,7 +104,7 @@
                             <!--begin::Toolbar-->
                             <div class="d-flex align-items-center">
                                 <!--begin::Actions-->
-                                <div class="d-flex align-items-center mr-3" data-inbox="actions">
+                                <div class="d-flex align-items-center mt-2 mr-3" data-inbox="actions">
                                     <label class="checkbox checkbox-inline checkbox-primary flex-shrink-0 mr-3">
                                         <input type="checkbox">
                                         <span></span>
@@ -117,8 +118,8 @@
                                 </div>
                                 <!--end::Actions-->
                                 <!--begin::Author-->
-                                <div class="d-flex align-items-center flex-wrap w-xxl-120px mr-3" data-toggle="view">
-                                    <a href="#" class="{{$value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} text-dark-75 text-hover-primary">{{ $value->target_type == 'KeluhanPelanggan' ? 'Keluhan' : 'Klaim'}}</a>
+                                <div class="d-flex align-items-center flex-wrap w-xxl-120px mt-2 mr-3" data-toggle="view">
+                                    <a target="_blank" href="{{ ($value->target_type == 'KeluhanPelanggan') ? url('keluhan'.'/'. $value->id) : url('claim'.'/'. $value->id) }}" class="{{$value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} text-dark-75 text-hover-primary">{{ ($value->target_type == 'KeluhanPelanggan') ? 'Keluhan' : 'Klaim'}}</a>
                                 </div>
                                 <!--end::Author-->
                             </div>
