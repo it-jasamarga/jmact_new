@@ -410,7 +410,7 @@ array:1 [▼
                         // JMACT – Claim dengan No Tiket (XXXXX) Diteruskan Oleh (Nama User – Nama Role
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
 
-                        $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id);
+                        $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id)->value('unit_id');
                         $user_ids1 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
                             ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -683,7 +683,7 @@ array:1 [▼
                             $creator_name = \App\Models\User::where('id', $data->created_by)->get('name')->pluck('name')->toArray();
                             \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Manager Area [". implode(", ", $user_ids_names1) . "], JMTO Area pembuat claim [". implode(", ", $creator_name) . "], Representative Office [". implode(", ", $user_ids_names3) . "], Regional sesuai Ruas [". implode(", ", $user_ids_names4) . "]");
                         } else {
-                            $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id);
+                            $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id)->value('unit_id');
                             $user_ids5 = \DB::table('users')
                                 ->join('role_users', 'role_users.user_id', '=', 'users.id')
                                 ->join('roles', 'roles.id', '=', 'role_users.role_id')
