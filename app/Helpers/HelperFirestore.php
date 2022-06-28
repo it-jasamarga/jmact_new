@@ -410,7 +410,7 @@ array:1 [▼
                         // JMACT – Claim dengan No Tiket (XXXXX) Diteruskan Oleh (Nama User – Nama Role
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
 
-                        $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id);
+                        $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id)->value('unit_id');
                         $user_ids1 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
                             ->join('roles', 'roles.id', '=', 'role_users.role_id')
