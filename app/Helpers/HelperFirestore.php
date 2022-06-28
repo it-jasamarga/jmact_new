@@ -50,7 +50,7 @@ class HelperFirestore
           ->toArray();
 
         if (count($device_tokens) > 0) {
-            $message = CloudMessage::new()->withNotification([
+            $cloud_message = CloudMessage::new()->withNotification([
                 'title'         => $title_onbar,
                 'body'          => $message
             ])->withData([
@@ -61,7 +61,7 @@ class HelperFirestore
             ]);
 
             $messaging = app('firebase.messaging');
-            $messaging->sendMulticast($message, $device_tokens);
+            $messaging->sendMulticast($cloud_message, $device_tokens);
 
             $fbms_names = \DB::table('users')
               ->join('user_devices', 'user_devices.user_id', '=', 'users.id')
