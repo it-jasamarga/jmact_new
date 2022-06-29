@@ -43,7 +43,7 @@ class CronCloseFeedback extends Command
         $from_where = "
 FROM	keluhan
 		LEFT JOIN master_status ON master_status.id = keluhan.status_id
-WHERE	DATE_ADD(keluhan.updated_at, INTERVAL 7 DAY) > NOW()
+WHERE	DATE_ADD(keluhan.updated_at, INTERVAL 7 DAY) < NOW()
 		AND master_status.status = 'Konfirmasi Pelanggan'
 ";
         $select_info = "SELECT keluhan.no_tiket, keluhan.updated_at, DATE_ADD(keluhan.updated_at, INTERVAL 7 DAY) AS feedback_expired";
@@ -60,7 +60,7 @@ WHERE	DATE_ADD(keluhan.updated_at, INTERVAL 7 DAY) > NOW()
         $from_where = "
 FROM	claim
         LEFT JOIN master_status ON master_status.id = claim.status_id
-WHERE	DATE_ADD(claim.updated_at, INTERVAL 7 DAY) > NOW()
+WHERE	DATE_ADD(claim.updated_at, INTERVAL 7 DAY) < NOW()
         AND master_status.status = 'Pembayaran Selesai'
 ";
         $select_info = "SELECT claim.no_tiket, claim.updated_at, DATE_ADD(claim.updated_at, INTERVAL 7 DAY) AS feedback_expired";
