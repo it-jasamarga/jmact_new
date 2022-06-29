@@ -36,11 +36,11 @@ class TypeSeeder extends Seeder
                 'active' => 1
             ],
             [
-                'type' => 'Customer Service JMTO',
+                'type' => 'JMTO Area',
                 'active' => 1
             ],
             [
-                'type' => 'Supervisor JMTO',
+                'type' => 'Manager Area',
                 'active' => 1
             ],
             [
