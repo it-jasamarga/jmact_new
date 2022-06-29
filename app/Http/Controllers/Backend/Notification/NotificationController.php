@@ -21,7 +21,7 @@ class NotificationController extends Controller
     public function index()
     {
         $data  = Notification::whereHas('unit', function ($q) {
-            $q->where('unit_id', auth()->user()->unit_id);
+            $q->where('user_id', auth()->user()->id);
         })->orderByDesc('created_at')->paginate(10);
 
         return view('backend.notification.index', [

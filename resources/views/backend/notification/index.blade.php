@@ -163,7 +163,7 @@
                                 <!--end::Info-->
                                 <!--begin::Datetime-->
                                 <div class="mt-2 mr-3 {{ $value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} w-80px text-right"
-                                    data-toggle="view">8:30 PM</div>
+                                    data-toggle="view">{{ Carbon\Carbon::parse($value->created_at)->format('Y-m-d h:m:s') }}</div>
                                 <!--end::Datetime-->
                             </div>
                         @endforeach
