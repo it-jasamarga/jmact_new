@@ -852,11 +852,11 @@ array:1 [▼
       }
     }
 
-    public static function collection($db){
+    public static function collection($db, $id){
       $firestore = app('firebase.firestore');
       $dbFire = $firestore->database();
       $collection = $dbFire->collection($db);
-      $snapshot = $collection->documents();
+      $snapshot = $collection->where('user_id','=',(int)$id)->documents();
       if(count($snapshot->rows()) > 0){
         return $snapshot->rows();
       }

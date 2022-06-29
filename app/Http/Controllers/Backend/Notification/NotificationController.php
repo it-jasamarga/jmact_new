@@ -27,7 +27,7 @@ class NotificationController extends Controller
 
     public function index()
     {
-        $notif = $this->firebase->collection('notifications');
+        $notif = $this->firebase->collection('notifications', auth()->user()->id);
         $paginate = $this->paginate(collect($notif));
         // dd($paginate);
         // $data  = Notification::whereHas('unit', function ($q) {
