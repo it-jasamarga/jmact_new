@@ -102,7 +102,7 @@ array:1 [▼
                 $user_ids = $regional_data['user_ids'];
                 $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                 \App\Models\SysLog::write("Notifikasi Overtime ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
-        
+
                 if (count($user_ids) > 0) {
                     $message = "Keluhan dengan No Tiket (".$no_tiket.") sudah Overtime!";
                     $device_tokens = UserDevice::whereIn('user_id', $user_ids)->get(['token'])->pluck('token')->toArray();
@@ -841,7 +841,16 @@ array:1 [▼
       if ($snapshot->exists()) {
         return $snapshot->data();
       }
+    }
 
+    public static function collaction($db){
+      $firestore = app('firebase.firestore');
+      $dbFire = $firestore->database();
+      $collection = $dbFire->collection($db);
+      $snapshot = $collection->snapshot();
+      if ($snapshot->exists()) {
+        return $snapshot->data();
+      }
     }
 
 }

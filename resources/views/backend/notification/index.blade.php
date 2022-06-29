@@ -192,13 +192,13 @@
                 },
                 success: function() {
                     console.log('success')
-                    // window.location.href = url;
-                    let db = firebase.firestore();
-                    db.collection("notifications").doc(fbid).update({
-                        'status':'Read'
-                    }).then(function(){
-                        window.location = url;
-                    });
+                    window.location.href = url;
+                    // let db = firebase.firestore();
+                    // db.collection("notifications").doc(fbid).update({
+                    //     'status':'Read'
+                    // }).then(function(){
+                    //     window.location = url;
+                    // });
                 },
                 error: function() {
                     console.log('error')
