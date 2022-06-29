@@ -165,7 +165,7 @@ class LookupController extends Controller
                     ->orderBy($field)
                     ->get();
                 $return['charts']['count']['data'] = $query->toArray();
-                $return['charts']['count']['title'] = "Jumlah Claim";
+                $return['charts']['count']['title'] = "Jumlah Klaim";
 
                 $query = DB::table('claim')
                     ->select($field, DB::raw('SUM(REPLACE(claim.nominal_final, ".", "")) AS value'))
@@ -179,7 +179,7 @@ class LookupController extends Controller
                     ->orderBy($field)
                     ->get();
                 $return['charts']['value']['data'] = $query->toArray();
-                $return['charts']['value']['title'] = "Nilai Claim";
+                $return['charts']['value']['title'] = "Nilai Klaim";
 
                 $query = DB::table('claim')
                     ->select('master_jenis_claim.jenis_claim AS name', DB::raw('COUNT(claim.no_tiket) AS value'))
@@ -194,7 +194,7 @@ class LookupController extends Controller
                     ->orderBy('master_jenis_claim.jenis_claim')
                     ->get();
                 $return['charts']['type']['data'] = $query->toArray();
-                $return['charts']['type']['title'] = "Tipe Claim";
+                $return['charts']['type']['title'] = "Tipe Klaim";
 
             }
 
