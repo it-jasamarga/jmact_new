@@ -190,7 +190,12 @@
                 },
                 success: function() {
                     console.log('success')
-                    window.location.href = url;
+                    // window.location.href = url;
+                    db.collection("notifications").doc(id).update({
+                        'status':'Read'
+                    }).then(function(){
+                        window.location.href = url;
+                    });
                 },
                 error: function() {
                     console.log('error')
