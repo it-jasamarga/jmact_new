@@ -181,7 +181,7 @@
             var url = $(this).data('href');
 
             console.log('url', url);
-            window.fbid = id;
+            window.fbid = id*1;
 
             $.ajax({
                 type: "POST",
