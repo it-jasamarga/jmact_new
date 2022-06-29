@@ -175,30 +175,12 @@
 @section('scripts')
 
     <script>
-        $(document).ready(function(){
-            const firebaseConfig = {
-                apiKey: "AIzaSyB86lcBroscc6kvR4GnOsPbQgQk7e1B6aI",
-                authDomain: "jm-act.firebaseapp.com",
-                projectId: "jm-act",
-                storageBucket: "jm-act.appspot.com",
-                messagingSenderId: "438056594649",
-                appId: "1:438056594649:web:ed98a89d39d196417ca2c8",
-                // measurementId: "G-RDYLHFVMXX"
-            };
-
-            // Initialize Firebase
-            try { firebase.initializeApp(firebaseConfig); } catch (err) {};
-            try { window.fbdb = firebase.firestore(); } catch (err) {};
-        });
-
         $(document).on('click', '.addClick', function() {
 
             var id = $(this).data('id');
             var url = $(this).data('href');
 
             console.log('url', url);
-
-            window.fbid = id;
 
             $.ajax({
                 type: "POST",
@@ -210,7 +192,8 @@
                 success: function() {
                     console.log('success')
                     // window.location.href = url;
-                    fbdb.collection("notifications").doc(fbid).update({
+                    let db = firebase.firestore();
+                    db.collection("notifications").doc(fbid).update({
                         'status':'Read'
                     }).then(function(){
                         window.location.href = url;
