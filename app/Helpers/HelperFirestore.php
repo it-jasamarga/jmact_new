@@ -511,7 +511,7 @@ array:1 [▼
                             $user_ids = array_merge($user_ids1, $user_ids2);
                         }
 
-                        if (! $is_project) {
+                        if ($is_project) {
                             $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                             \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
                         } else {
@@ -613,7 +613,7 @@ array:1 [▼
                             $user_ids = array_merge($user_ids1, $user_ids2);
                         }
 
-                        if (! $is_project) {
+                        if ($is_project) {
                             $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                             \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
                         } else {
