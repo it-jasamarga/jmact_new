@@ -170,7 +170,7 @@ class KeluhanController extends Controller
             })
             ->addColumn('action', function ($data) use ($request) {
                 $buttons = "";
-                if ($data->status->code == '08') {
+                if ($data->status->code == '05' || $data->status->code == '06' || $data->status->code == '07' || $data->status->code == '08') {
                     if (auth()->user()->can('keluhan.detail')) {
                         $buttons .= makeButton([
                             'type' => 'url',
