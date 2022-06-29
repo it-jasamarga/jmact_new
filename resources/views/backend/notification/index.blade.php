@@ -119,8 +119,8 @@
 
                             @endphp
                             <div class="d-flex align-items-start list-item card-spacer-x py-3 addClick"
-                                data-id="{{ $value->id }}"
-                                data-href="{{ $value->target_type == 'KeluhanPelanggan' ? url('keluhan' . '/' . $value->id) : url('claim' . '/' . $value->id) }}"
+                                data-id="{{ $value->target_id }}"
+                                data-href="{{ $value->target_type == 'KeluhanPelanggan' ? url('keluhan' . '/' . $value->target_id) : url('claim' . '/' . $value->target_id) }}"
                                 data-inbox="message">
                                 <!--begin::Toolbar-->
                                 <div class="d-flex align-items-center">
