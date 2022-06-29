@@ -130,12 +130,6 @@
                                             <input type="checkbox">
                                             <span></span>
                                         </label>
-                                        {{-- <a href="#" class="btn btn-icon btn-xs btn-hover-text-warning active" data-toggle="tooltip" data-placement="right" title="" data-original-title="Star">
-                                        <i class="flaticon-star text-muted"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-xs text-hover-warning" data-toggle="tooltip" data-placement="right" title="" data-original-title="Mark as important">
-                                        <i class="flaticon-add-label-button text-muted"></i>
-                                    </a> --}}
                                     </div>
                                     <!--end::Actions-->
                                     <!--begin::Author-->

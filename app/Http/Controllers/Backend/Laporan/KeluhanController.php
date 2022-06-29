@@ -93,7 +93,7 @@ class KeluhanController extends Controller
                         });
                     })
                     ->whereHas('status', function ($q2) {
-                        $q2->whereIn('code', ['02', '03', '04', '07'])
+                        $q2->whereIn('code', ['02', '03', '04', '05', '06', '07'])
                             ->where('type', 1);
                     })
                     ->orderByDesc('created_at')
