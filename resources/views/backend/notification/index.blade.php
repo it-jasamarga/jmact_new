@@ -187,8 +187,8 @@
             };
 
             // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            const db = firebase.firestore();
+            try { firebase.initializeApp(firebaseConfig); } catch (err) {};
+            try { window.fbdb = firebase.firestore(); } catch (err) {};
         });
 
         $(document).on('click', '.addClick', function() {
@@ -197,6 +197,8 @@
             var url = $(this).data('href');
 
             console.log('url', url);
+
+            window.fbid = id;
 
             $.ajax({
                 type: "POST",
@@ -208,7 +210,7 @@
                 success: function() {
                     console.log('success')
                     // window.location.href = url;
-                    db.collection("notifications").doc(id).update({
+                    fbdb.collection("notifications").doc(fbid).update({
                         'status':'Read'
                     }).then(function(){
                         window.location.href = url;
