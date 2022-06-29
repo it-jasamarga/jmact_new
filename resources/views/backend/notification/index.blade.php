@@ -173,6 +173,7 @@
 @endsection
 
 @section('scripts')
+
     <script>
         $(document).on('click', '.addClick', function() {
 
@@ -180,6 +181,7 @@
             var url = $(this).data('href');
 
             console.log('url', url);
+            window.fbid = id*1;
 
             $.ajax({
                 type: "POST",
@@ -191,7 +193,8 @@
                 success: function() {
                     console.log('success')
                     // window.location.href = url;
-                    db.collection("notifications").doc(id).update({
+                    let db = firebase.firestore();
+                    db.collection("notifications").doc(fbid).update({
                         'status':'Read'
                     }).then(function(){
                         window.location = url;
