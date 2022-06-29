@@ -67,14 +67,17 @@
                 .where('status','==','Unread')
                 .where('user_id','==', parseInt(userId))
                 .orderBy("created_at", "desc")
-                .limit(10);
+                // .limit(10)
+                ;
 
                 dbFirestore.onSnapshot(function(querySnapshot) {
                     var htmlNotif = ``;
+                    let iNotif = 0;
+                    let maxNotif = 3;
                     querySnapshot.forEach(function(doc) {
+                        iNotif++;
 
-
-                        htmlNotif += `
+                        if (iNotif <= maxNotif) htmlNotif += `
                             <div class="d-flex align-items-center mb-6">
                                 <!--begin::Symbol-->
                                 <div class="symbol symbol-40 symbol-light-success mr-5">
