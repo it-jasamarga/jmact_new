@@ -194,7 +194,7 @@
                     db.collection("notifications").doc(id).update({
                         'status':'Read'
                     }).then(function(){
-                        window.location.href = url;
+                        window.location = url;
                     });
                 },
                 error: function() {
