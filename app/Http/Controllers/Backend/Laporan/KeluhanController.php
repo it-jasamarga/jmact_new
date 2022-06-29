@@ -87,8 +87,8 @@ class KeluhanController extends Controller
             if (auth()->user()->roles()->first()->type->type == "Service Provider") {
                 $data  = KeluhanPelanggan::with('history')
                     // ->where('unit_id', auth()->user()->unit_id)
-                    ->whereHas('bidang', function($q) {
-                        $q->whereHas('unit', function($q1) {
+                    ->whereHas('bidang', function ($q) {
+                        $q->whereHas('unit', function ($q1) {
                             $q1->where('id', auth()->user()->unit_id);
                         });
                     })
@@ -536,7 +536,7 @@ class KeluhanController extends Controller
                     "konfirmasi_pelanggan" => ["The konfirmasi pelanggan field is required"]
                 ]
             ], 422);
-        } else if (!isset(request()->kontak_pelanggan)){
+        } else if (!isset(request()->kontak_pelanggan)) {
             return response([
                 "message" => "The given data was invalid.",
                 "errors" => [
