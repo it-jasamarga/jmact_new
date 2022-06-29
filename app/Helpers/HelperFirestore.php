@@ -517,7 +517,7 @@ array:1 [▼
                         } else {
                             $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
                             $user_ids_names2 = \App\Models\User::whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
-                            \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names) ."] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) ."]");
+                            \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names1) ."] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) ."]");
                         }
                         break;
 
@@ -568,7 +568,7 @@ array:1 [▼
                         } else {
                             $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
                             $user_ids_names2 = \App\Models\User::whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
-                            \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names) ."] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) ."]");
+                            \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names1) ."] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) ."]");
                         }
                         break;
 
@@ -619,7 +619,7 @@ array:1 [▼
                         } else {
                             $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
                             $user_ids_names2 = \App\Models\User::whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
-                            \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names) ."] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) ."]");
+                            \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional [". implode(", ", $user_ids_names1) ."] dan Representative Office sesuai dengan Ruas [". implode(", ", $user_ids_names2) ."]");
                         }
                         break;
 
