@@ -193,7 +193,7 @@
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore();
-        }
+        });
 
         $(document).on('click', '.addClick', function() {
 
