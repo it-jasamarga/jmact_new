@@ -21,8 +21,8 @@ class NotificationController extends Controller
     public function index()
     {
         $data  = Notification::whereHas('unit', function ($q) {
-                    $q->where('unit_id', auth()->user()->unit_id);
-                })->orderByDesc('created_at')->paginate(10);
+            $q->where('unit_id', auth()->user()->unit_id);
+        })->orderByDesc('created_at')->paginate(10);
 
         return view('backend.notification.index', [
             'record' => $data
@@ -33,20 +33,18 @@ class NotificationController extends Controller
     {
         $record = Notification::find(request()->id);
 
-        if($record){
+        if ($record) {
             $record->status = 'Read';
             $record->save();
             return response([
                 'status' => true,
                 'message' => 'success',
             ]);
-        }else{
+        } else {
             return response([
                 'status' => false,
                 'message' => 'failed',
-            ],500);
+            ], 500);
         }
     }
-
 }
-
