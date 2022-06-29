@@ -25,12 +25,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('cron:overtime:notification')
-            ->dailyAt('08:00');
-            // ->everyFiveMinutes();
-        $schedule->command('cron:close:feedback')
-            ->dailyAt('01:00');
-            // ->everyTenMinutes();
+/* lines to add vie "crontab -e"
+# JMACT
+0 8 * * * /usr/bin/php /var/www/html/JMACT-NEW/artisan cron:overtime:notification > /dev/null 2>&1
+0 1 * * * /usr/bin/php /var/www/html/JMACT-NEW/artisan cron:close:feedback > /dev/null 2>&1
+*/
+        $schedule->command('cron:overtime:notification')->dailyAt('08:00');
+        $schedule->command('cron:close:feedback')->dailyAt('01:00');
     }
 
     /**
