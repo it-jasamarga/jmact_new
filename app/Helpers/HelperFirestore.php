@@ -823,6 +823,15 @@ array:1 [▼
       $fireStore = $collection->add($data);
     }
 
+    public static function updateData($data, $db, $id){
+        $firestore = app('firebase.firestore');
+        $dbFire = $firestore->database();
+        $collection = $dbFire->collection($db);
+        $documents = $collection->document($id);
+        $documents->update($data);
+
+      }
+
     public static function delete($id, $db){
       $firestore = app('firebase.firestore');
       $dbFire = $firestore->database();
@@ -843,13 +852,13 @@ array:1 [▼
       }
     }
 
-    public static function collaction($db){
+    public static function collection($db){
       $firestore = app('firebase.firestore');
       $dbFire = $firestore->database();
       $collection = $dbFire->collection($db);
-      $snapshot = $collection->snapshot();
-      if ($snapshot->exists()) {
-        return $snapshot->data();
+      $snapshot = $collection->documents();
+      if(count($snapshot->rows()) > 0){
+        return $snapshot->rows();
       }
     }
 

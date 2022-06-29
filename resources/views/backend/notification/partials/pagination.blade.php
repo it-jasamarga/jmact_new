@@ -1,31 +1,37 @@
- <!--begin::Per Page Dropdown-->
- <div class="d-flex align-items-center mr-2" data-toggle="tooltip" title="" data-original-title="Records per page">
-    <span class="text-muted font-weight-bold mr-2" data-toggle="dropdown">1 - 50 of 235</span>
-    <div class="dropdown-menu dropdown-menu-right p-0 m-0 dropdown-menu-sm">
-        <ul class="navi py-3">
-            <li class="navi-item">
-                <a href="#" class="navi-link">
-                    <span class="navi-text">20 per page</span>
-                </a>
+<nav aria-label="Page navigation example">
+    @if ($paginator->lastPage() > 1)
+        <ul class="pagination justify-content-center mt-2">
+            <li class="page-item prev">
+                <a class="page-link" href="{{ ($paginator->currentPage() == 1) ? 'javascript:void(0)' : url('notification'.$paginator->url($paginator->currentPage()-1)) }}">Prev</a>
             </li>
-            <li class="navi-item">
-                <a href="#" class="navi-link active">
-                    <span class="navi-text">50 par page</span>
-                </a>
-            </li>
-            <li class="navi-item">
-                <a href="#" class="navi-link">
-                    <span class="navi-text">100 per page</span>
-                </a>
+
+            @php
+                $out      = '';
+                $isGap    = false;
+                $cntAround = 1;
+                $current  = $paginator->currentPage();
+                $cntPages = $paginator->lastPage();
+            @endphp
+            @for ($i = 1; $i <= $paginator->lastPage(); $i++)
+                @php
+                    $isGap = false;
+                    if ($cntAround >= 0 && $i > 0 && $i < $cntPages - 1 && abs($i - $current) > $cntAround) {
+                        $isGap    = true;
+                        $i = ($i < $current ? $current - $cntAround : $cntPages - 1) - 1;
+                    }
+
+                @endphp
+                <li class="page-item {{ ($paginator->currentPage() == $i) ? ' active' : '' }}">
+                    @if(($i != $current) && (!$isGap))
+                        <a class="page-link" href="{{ url('notification'.$paginator->url($i)) }}">{{$i}}</a>
+                    @else
+                        <a class="page-link" href="{{ ($isGap) ? '-' : $i }}">{{ ($isGap) ? '...' : $i }}</a>
+                    @endif
+                </li>
+            @endfor
+            <li class="page-item next">
+                <a class="page-link" href="{{ ($paginator->currentPage() == $paginator->lastPage()) ? 'javascript:void(0)' : url('notification'.$paginator->url($paginator->currentPage()+1)) }}">Next</a>
             </li>
         </ul>
-    </div>
-</div>
-<!--end::Per Page Dropdown-->
-<!--begin::Arrow Buttons-->
-<span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title="" data-original-title="Previose page">
-    <i class="ki ki-bold-arrow-back icon-sm"></i>
-</span>
-<span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title="" data-original-title="Next page">
-    <i class="ki ki-bold-arrow-next icon-sm"></i>
-</span>
+    @endif
+</nav>

@@ -18,14 +18,14 @@
                 <div class="col-12 col-sm-6 col-xxl-4 order-2 order-xxl-1 d-flex flex-wrap align-items-center">
                     <div class="d-flex align-items-center mr-1 my-2">
                         <label data-inbox="group-select" class="checkbox checkbox-inline checkbox-primary mr-3">
-                            <input type="checkbox">
+                            <input type="checkbox" class="selectAll" value="1">
                             <span class="symbol-label"></span>
                         </label>
 
                     </div>
                     <div class="d-flex align-items-center mr-1 my-2">
-                        <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title=""
-                            data-original-title="Archive">
+                        <span class="btn btn-default btn-icon btn-sm mr-2 markUs" data-toggle="tooltip" title=""
+                            data-original-title="Mark Us">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-opened.svg-->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -43,7 +43,7 @@
                                 <!--end::Svg Icon-->
                             </span>
                         </span>
-                        <span class="btn btn-default btn-icon btn-sm mr-2 d-none" data-toggle="tooltip" title=""
+                        <span class="btn btn-default btn-icon btn-sm mr-2 d-none " data-toggle="tooltip" title=""
                             data-original-title="Spam">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Warning-1-circle.svg-->
@@ -62,7 +62,7 @@
                                 <!--end::Svg Icon-->
                             </span>
                         </span>
-                        <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title=""
+                        <span class="btn btn-default btn-icon btn-sm mr-2 deleteUs" data-toggle="tooltip" title=""
                             data-original-title="Delete">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->
@@ -89,7 +89,7 @@
                 <div
                     class="col-12 col-sm-6 col-xxl-4 order-2 order-xxl-3 d-flex align-items-center justify-content-sm-end text-right my-2">
                     {{-- @include('backend.notification.partials.pagination') --}}
-                    {!! $record->links('backend.partial.pagination') !!}
+                    {!! $record->links('backend.notification.partials.pagination') !!}
                 </div>
                 <!--end::Pagination-->
             </div>
@@ -99,35 +99,33 @@
                 <!--begin::Items-->
                 <div class="list list-hover min-w-500px" data-inbox="list">
 
-                    @if ($record->count() > 0)
+                    @if ($record)
                         @foreach ($record as $k => $value)
                             @php
                                 $style = '';
                                 $title = '';
 
-                                if ($value->status == 'Unread') {
+                                if ($value->data()['status'] == 'Unread') {
                                     $style = 'background: #e0e8ff';
                                 }
 
-                                if (strpos($value->title, 'Keluhan ') !== false) {
-                                    $title = str_replace('Keluhan ', '', $value->title);
-                                } elseif (strpos($value->title, 'Klaim ') !== false) {
-                                    $title = str_replace('Klaim ', '', $value->title);
+                                if (strpos($value->data()['title'], 'Keluhan ') !== false) {
+                                    $title = str_replace('Keluhan ', '', $value->data()['title']);
+                                } elseif (strpos($value->data()['title'], 'Klaim ') !== false) {
+                                    $title = str_replace('Klaim ', '', $value->data()['title']);
                                 } else {
-                                    $title = $value->title;
+                                    $title = $value->data()['title'];
                                 }
 
                             @endphp
-                            <div class="d-flex align-items-start list-item card-spacer-x py-3 addClick"
-                                data-id="{{ $value->target_id }}"
-                                data-href="{{ $value->target_type == 'KeluhanPelanggan' ? url('keluhan' . '/' . $value->target_id) : url('claim' . '/' . $value->target_id) }}"
-                                data-inbox="message">
+                            <div class="d-flex align-items-start list-item card-spacer-x py-3 " data-inbox="message">
                                 <!--begin::Toolbar-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Actions-->
                                     <div class="d-flex align-items-center mt-2 mr-3" data-inbox="actions">
                                         <label class="checkbox checkbox-inline checkbox-primary flex-shrink-0 mr-3">
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="nameCheck[]" class="selectCheck"
+                                                value="{{ $value->id() }}">
                                             <span></span>
                                         </label>
                                     </div>
@@ -136,18 +134,25 @@
                                     <div class="d-flex align-items-center flex-wrap w-xxl-120px mt-2 mr-3"
                                         data-toggle="view">
                                         <a href="javascript:void(0)"
-                                            class="{{ $value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} text-dark-75 text-hover-primary">{{ $value->target_type == 'KeluhanPelanggan' ? 'Keluhan' : 'Klaim' }}</a>
+                                            class="{{ $value->data()['status'] == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} text-dark-75 text-hover-primary addClick"
+                                            data-id="{{ $value->data()['target_id'] }}" data-fire="{{ $value->id() }}"
+                                            data-href="{{ $value->data()['target_type'] == 'KeluhanPelanggan' ? url('keluhan' . '/' . $value->data()['target_id']) : url('claim' . '/' . $value->data()['target_id']) }}">
+                                            {{ $value->data()['target_type'] == 'KeluhanPelanggan' ? 'Keluhan' : 'Klaim' }}
+                                        </a>
                                     </div>
                                     <!--end::Author-->
                                 </div>
                                 <!--end::Toolbar-->
                                 <!--begin::Info-->
-                                <div class="flex-grow-1 mt-2 mr-2" data-toggle="view">
+                                <div class="flex-grow-1 mt-2 mr-2 addClick" data-id="{{ $value->data()['target_id'] }}"
+                                    data-fire="{{ $value->id() }}"
+                                    data-href="{{ $value->data()['target_type'] == 'KeluhanPelanggan' ? url('keluhan' . '/' . $value->data()['target_id']) : url('claim' . '/' . $value->data()['target_id']) }}"
+                                    data-toggle="view">
                                     <div>
                                         <span
-                                            class="{{ $value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} font-size-lg mr-2">{{ $title }}
+                                            class="{{ $value->data()['status'] == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} font-size-lg mr-2">{{ $title }}
                                             -</span>
-                                        <span class="text-muted">{{ $value->message }}</span>
+                                        <span class="text-muted">{{ $value->data()['message'] }}</span>
                                     </div>
                                     {{-- <div class="mt-2">
                                     <span class="label label-light-primary font-weight-bold label-inline mr-1">inbox</span>
@@ -156,8 +161,9 @@
                                 </div>
                                 <!--end::Info-->
                                 <!--begin::Datetime-->
-                                <div class="mt-2 mr-3 {{ $value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} w-80px text-right"
-                                    data-toggle="view">{{ Carbon\Carbon::parse($value->created_at)->format('Y-m-d H:i:s') }}</div>
+                                <div class="mt-2 mr-3 {{ $value->data()['status'] == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} w-80px text-right"
+                                    data-toggle="view">
+                                    {{ Carbon\Carbon::parse($value->data()['created_at'])->format('Y-m-d H:i:s') }}</div>
                                 <!--end::Datetime-->
                             </div>
                         @endforeach
@@ -173,37 +179,94 @@
 @endsection
 
 @section('scripts')
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyB86lcBroscc6kvR4GnOsPbQgQk7e1B6aI",
+            authDomain: "jm-act.firebaseapp.com",
+            projectId: "jm-act",
+            storageBucket: "jm-act.appspot.com",
+            messagingSenderId: "438056594649",
+            appId: "1:438056594649:web:ed98a89d39d196417ca2c8",
+            // measurementId: "G-RDYLHFVMXX"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         $(document).on('click', '.addClick', function() {
 
             var id = $(this).data('id');
+            var firebaseId = $(this).data('fire');
             var url = $(this).data('href');
 
-            console.log('url', url);
-            window.fbid = id*1;
-
-            $.ajax({
-                type: "POST",
-                url: "{{ url('notification-status') }}",
-                data: {
-                    "id": id,
-                    "_token": "{{ csrf_token() }}"
-                },
-                success: function() {
-                    console.log('success')
-                    window.location.href = url;
-                    // let db = firebase.firestore();
-                    // db.collection("notifications").doc(fbid).update({
-                    //     'status':'Read'
-                    // }).then(function(){
-                    //     window.location = url;
-                    // });
-                },
-                error: function() {
-                    console.log('error')
-                },
+            db.collection("notifications").doc(firebaseId).update({
+                'status': 'Read'
+            }).then(function() {
+                window.location.href = url;
             })
+            // $.ajax({
+            //     type: "POST",
+            //     url: "{{ url('notification-status') }}",
+            //     data: {
+            //         "id": id,
+            //         "firebaseId": firebaseId,
+            //         "_token": "{{ csrf_token() }}"
+            //     },
+            //     success: function() {
+            //         console.log('success')
+            //         // window.location.href = url;
+            //         db.collection("notifications").doc(firebaseId).update({
+            //             'status':'Read'
+            //         })
+            //     },
+            //     error: function() {
+            //         console.log('error')
+            //     },
+            // })
+        });
+
+        $(document).on('click', '.selectAll', function() {
+            if ($('.selectAll').prop('checked') === true) {
+                $('.selectCheck').attr('checked', true)
+            } else {
+                $('.selectCheck').attr('checked', false)
+            }
+        });
+
+        $(document).on('click', '.markUs', function() {
+            var data = $('.selectCheck:checked').serializeArray();
+            if (data.length > 0) {
+                $.each(data, function(k, v) {
+                    db.collection("notifications").doc(v.value).update({
+                        'status': 'Read'
+                    })
+                })
+
+                setInterval(function() {
+                    window.location.reload()
+                }, 2000);
+
+
+            }
+        });
+
+        $(document).on('click', '.deleteUs', function() {
+
+            var data = $('.selectCheck:checked').serializeArray();
+            if (data.length > 0) {
+                $.each(data, function(k, v) {
+                    db.collection("notifications").doc(v.value).delete()
+                })
+
+                setInterval(function() {
+                    window.location.reload()
+                }, 2000);
+            }
         });
     </script>
 @endsection

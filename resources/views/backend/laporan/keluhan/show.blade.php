@@ -237,7 +237,7 @@
                         Kembali
                     </a>
                 @else
-                    <a href="{{ route($route . '.index') }}" class="btn btn-secondary">
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
                         <em class="flaticon-circle"></em>
                         Kembali
                     </a>
@@ -376,7 +376,7 @@
                 flowgraph.draw.text("User Monitoring");
 
             });
-            
+
         });
     </script>
 @endsection
