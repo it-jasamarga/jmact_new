@@ -100,7 +100,7 @@
                             }
 
                         @endphp
-                        <div class="d-flex align-items-start list-item card-spacer-x py-3" data-inbox="message">
+                        <div class="d-flex align-items-start list-item card-spacer-x py-3 addClick" data-id="{{ $value->id }}" data-href="{{ ($value->target_type == 'KeluhanPelanggan') ? url('keluhan'.'/'. $value->id) : url('claim'.'/'. $value->id) }}" data-inbox="message">
                             <!--begin::Toolbar-->
                             <div class="d-flex align-items-center">
                                 <!--begin::Actions-->
@@ -119,7 +119,7 @@
                                 <!--end::Actions-->
                                 <!--begin::Author-->
                                 <div class="d-flex align-items-center flex-wrap w-xxl-120px mt-2 mr-3" data-toggle="view">
-                                    <a target="_blank" href="{{ ($value->target_type == 'KeluhanPelanggan') ? url('keluhan'.'/'. $value->id) : url('claim'.'/'. $value->id) }}" class="{{$value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} text-dark-75 text-hover-primary">{{ ($value->target_type == 'KeluhanPelanggan') ? 'Keluhan' : 'Klaim'}}</a>
+                                    <a href="javascript:void(0)" class="{{$value->status == 'Unread' ? 'font-weight-bolder' : 'text-muted' }} text-dark-75 text-hover-primary">{{ ($value->target_type == 'KeluhanPelanggan') ? 'Keluhan' : 'Klaim'}}</a>
                                 </div>
                                 <!--end::Author-->
                             </div>
@@ -150,4 +150,32 @@
     </div>
     <!--end::Card-->
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).on('click','.addClick',function(){
+
+        var id = $(this).data('id');
+        var url = $(this).data('href');
+
+        console.log('url',url);
+
+        $.ajax({
+            type: "POST",
+            url: "{{ url('notification-status') }}",
+            data: {
+                "id": id,
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function() {
+                console.log('success')
+                window.location.href = url;
+            },
+            error: function() {
+                console.log('error')
+            },
+        })
+    });
+</script>
 @endsection

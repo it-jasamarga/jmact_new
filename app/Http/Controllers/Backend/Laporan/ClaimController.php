@@ -94,6 +94,7 @@ class ClaimController extends Controller
                         $q2->whereIn('code', ['04', '06', '07', '08', '09', '10'])
                             ->where('type', 2);
                     })
+                    ->where('penyelesaian', 'service provider')
                     ->orderByDesc('created_at')
                     ->select('*')
                     ->filter($request);
@@ -140,6 +141,7 @@ class ClaimController extends Controller
                     ->filter($request);
             }
         }
+
 
         return datatables()->of($data)
             ->addColumn('numSelect', function ($data) {
@@ -190,13 +192,23 @@ class ClaimController extends Controller
 
                     if (auth()->user()->can('claim.stage')) {
                         if ($data->status->code == '04' || $data->status->code == '05' || $data->status->code == '06' || $data->status->code == '07') {
-                            $buttons .= makeButton([
-                                'type' => 'modal',
-                                'url'   => $this->route . '/' . $data->id . '/edit-stage',
-                                'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-                                'label'   => '<i class="flaticon2-checking"></i>',
-                                'tooltip' => 'Tahapan'
-                            ]);
+                            if (($data->penyelesaian == "proyek") && (auth()->user()->roles()->first()->type->type == "Representative Office")) {
+                                $buttons .= makeButton([
+                                    'type' => 'modal',
+                                    'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                                    'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                                    'label'   => '<i class="flaticon2-checking"></i>',
+                                    'tooltip' => 'Tahapan'
+                                ]);
+                            } else if (($data->penyelesaian == "service provider") && (auth()->user()->roles()->first()->type->type == "Service Provider")) {
+                                $buttons .= makeButton([
+                                    'type' => 'modal',
+                                    'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                                    'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                                    'label'   => '<i class="flaticon2-checking"></i>',
+                                    'tooltip' => 'Tahapan'
+                                ]);
+                            }
                         }
                     }
 
@@ -317,8 +329,6 @@ class ClaimController extends Controller
         if (!isset($request->unit_id)) {
             $penyelesaian = $request->penyelesaian;
             unset($request['penyelesaian']);
-            $request['status_id'] = MasterStatus::where('code', '04')->where('type', 2)->first()->id;
-            $record->history()->create($request->all());
             $request['status_id'] = MasterStatus::where('code', '05')->where('type', 2)->first()->id;
             $record->history()->create($request->all());
             $record->status_id = $request->status_id;

@@ -270,7 +270,11 @@ Route::group(['middleware' => 'auth'], function () {
             // });
         });
 
-        Route::resource('notification', 'Notification\NotificationController');
+        Route::group(['namespace' => 'Notification'], function () {
+            Route::post('notification-status', 'NotificationController@updateStatus')->name('notification.updateStatus');
+            Route::resource('notification', 'NotificationController');
+        });
+
     });
 });
 

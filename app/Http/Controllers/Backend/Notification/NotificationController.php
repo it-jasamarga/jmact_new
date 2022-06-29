@@ -29,5 +29,24 @@ class NotificationController extends Controller
         ]);
     }
 
+    public function updateStatus()
+    {
+        $record = Notification::find(request()->id);
+
+        if($record){
+            $record->status = 'Read';
+            $record->save();
+            return response([
+                'status' => true,
+                'message' => 'success',
+            ]);
+        }else{
+            return response([
+                'status' => false,
+                'message' => 'failed',
+            ],500);
+        }
+    }
+
 }
 
