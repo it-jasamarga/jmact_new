@@ -192,23 +192,35 @@ class ClaimController extends Controller
 
                     if (auth()->user()->can('claim.stage')) {
                         if ($data->status->code == '04' || $data->status->code == '05' || $data->status->code == '06' || $data->status->code == '07') {
-                            if (($data->penyelesaian == "proyek") && (auth()->user()->roles()->first()->type->type == "Representative Office")) {
-                                $buttons .= makeButton([
-                                    'type' => 'modal',
-                                    'url'   => $this->route . '/' . $data->id . '/edit-stage',
-                                    'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-                                    'label'   => '<i class="flaticon2-checking"></i>',
-                                    'tooltip' => 'Tahapan'
-                                ]);
-                            } else if (($data->penyelesaian == "service provider") && (auth()->user()->roles()->first()->type->type == "Service Provider")) {
-                                $buttons .= makeButton([
-                                    'type' => 'modal',
-                                    'url'   => $this->route . '/' . $data->id . '/edit-stage',
-                                    'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
-                                    'label'   => '<i class="flaticon2-checking"></i>',
-                                    'tooltip' => 'Tahapan'
-                                ]);
-                            }
+                            // if(auth()->user()->roles()->first()){
+                                if(auth()->user()->roles()->first()->type){
+                                    if (($data->penyelesaian == "proyek") && (auth()->user()->roles()->first()->type->type == "Representative Office")) {
+                                        $buttons .= makeButton([
+                                            'type' => 'modal',
+                                            'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                                            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                                            'label'   => '<i class="flaticon2-checking"></i>',
+                                            'tooltip' => 'Tahapan'
+                                        ]);
+                                    } else if (($data->penyelesaian == "service provider") && (auth()->user()->roles()->first()->type->type == "Service Provider")) {
+                                        $buttons .= makeButton([
+                                            'type' => 'modal',
+                                            'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                                            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                                            'label'   => '<i class="flaticon2-checking"></i>',
+                                            'tooltip' => 'Tahapan'
+                                        ]);
+                                    } else {
+                                        $buttons .= makeButton([
+                                            'type' => 'modal',
+                                            'url'   => $this->route . '/' . $data->id . '/edit-stage',
+                                            'class'   => 'btn btn-icon btn-success btn-sm btn-hover-light custome-modal',
+                                            'label'   => '<i class="flaticon2-checking"></i>',
+                                            'tooltip' => 'Tahapan'
+                                        ]);
+                                    }
+                                }
+                            // }
                         }
                     }
 
