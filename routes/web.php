@@ -53,20 +53,26 @@ Route::get('/test', function (Request $request) {
 
 Route::post('system/notification', function (Request $request) {
     $json = json_decode($request->getContent(), true);
-    $retr = ['request' => $json, 'tipe' => $json['no_tiket'][0]];
+    $retr = ['status' => "error", 'request' => $json, 'tipe' => $json['no_tiket'][0], 'data' => []];
 
     try {
         $data = $json['no_tiket'][0] == 'K' ?
             \App\Models\KeluhanPelanggan::where('no_tiket', $json['no_tiket'])->first()
             :
             \App\Models\ClaimPelanggan::where('no_tiket', $json['no_tiket'])->first();
-        if ($data) {
-            Auth::loginUsingId('admin', true);
+        // $retr['data'] = $data;
+        if (! is_null($data)) {
+            // Auth::loginUsingId('admin', true);
+            $user_for_auth = \App\Models\User::where('username', "admin")->first();
+            Auth::login($user_for_auth, true);
             $hfs = new \App\Helpers\HelperFirestore();
             $hfs->notify($data);
             Auth::logout();
+            $retr['data']['no_tiket'] = $data['no_tiket'];
+            $retr['status'] = "ok";
         }
     } catch (\Exception $ex) {
+        // $retr['exception'] = $ex;
         if (Auth::check()) Auth::logout();
     }
 

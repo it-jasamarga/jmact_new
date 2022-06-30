@@ -125,21 +125,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		exit;
 	}
 
-	$other = isset($_POST['other']);
+	// $other = isset($_POST['other']);
 
 	$posted = $_POST;
 
 	$ketidakpuasan = [];
-	if (! $other) {
-		$sql = "SELECT ketidakpuasan FROM feedback_unsatisfactions;";
-		$qry = $conn->query($sql);
-		while($row = $qry->fetch_assoc()) $ketidakpuasan[] = $row['ketidakpuasan'];
-		foreach($posted['ketidakpuasan'] as $index => $value) {
-			if (! in_array($value, $ketidakpuasan)) {
-				unset($_POST['ketidakpuasan'][$index]);
-			}
-		}
-	}
+	// if (! $other) {
+	// 	$sql = "SELECT ketidakpuasan FROM feedback_unsatisfactions;";
+	// 	$qry = $conn->query($sql);
+	// 	while($row = $qry->fetch_assoc()) $ketidakpuasan[] = $row['ketidakpuasan'];
+	// 	foreach($posted['ketidakpuasan'] as $index => $value) {
+	// 		if (! in_array($value, $ketidakpuasan)) {
+	// 			unset($_POST['ketidakpuasan'][$index]);
+	// 		}
+	// 	}
+	// }
 
 	// echo "<pre>"; var_dump($posted); var_dump($ketidakpuasan); var_dump($_POST); exit;
 
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		$DATA['NEW'] = true;
 		$DATA['EXIST'] = false;
 		$DATA['POSTED'] = $_POST;
-		$DATA['POSTED']['ketidakpuasan'] = json_encode($_POST['ketidakpuasan']);
+		$DATA['POSTED']['ketidakpuasan'] = "";	// json_encode($_POST['ketidakpuasan']);
 		$DATA['POSTED']['attribute'] = json_encode(['ip_address' => $_SERVER['REMOTE_ADDR']]);
 		$DATA['SQL'] = "INSERT INTO feedback (no_tiket, no_telepon_sosial_media, rating, ketidakpuasan, saran_masukan, attribute, created_at) VALUES (";
 		$DATA['SQL'] .= "\"".mysqli_real_escape_string($conn, $DATA['POSTED']['no_tiket'])."\", ";
@@ -339,6 +339,7 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 	}
 ?>
 		</p>
+<?php if (1!=1) { ?>
 		<p style="margin-top: 10px">Jika anda merasa kurang puas, hal apa yang membuat anda kurang puas (dapat memilih lebih dari satu)?<br>
 <?php
 	foreach ($ketidakpuasan as $item) {
@@ -347,6 +348,7 @@ if ((! $DATA['NEW']) && (! $DATA['EXIST'])) echo "Mohon maaf, feedback Anda deng
 ?>
 			<input onclick="theother(this)" name="other" type="checkbox">lainnya<span id="other-wrapper" style="display: none"> : <input id="other-input" type="text" name="ketidakpuasan[]" autocomplete="off"></span>
 		</p>
+<?php } ?>
 		<p>Saran dan Masukan :<br><input type="text" name="saran_masukan" autocomplete="off" required style="min-width: 500px"></p>
 		<p><input type="submit" value="Submit"></p>
 	</div>
