@@ -61,7 +61,7 @@
     var table = $(classTable).DataTable({
         createdRow: fCreatedRow,
         processing: true,
-        serverSide: true,
+        serverSide: false,
         responsive: false,
         autoWidth: false,
         scrollX: true,
