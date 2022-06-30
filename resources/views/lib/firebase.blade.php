@@ -114,6 +114,9 @@
 
                         $('.svg-check').removeClass('svg-icon-primary');
                         $('.svg-check').addClass('svg-icon-danger');
+
+                        bell.play();
+                        
                     }else{
                         $('.pulse-check').removeClass('pulse-danger');
                         $('.pulse-check').addClass('pulse-primary');
