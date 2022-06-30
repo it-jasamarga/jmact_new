@@ -91,14 +91,14 @@ class SumberSeeder extends Seeder
             ],
             [
                 'code' => 'K',
-                'description' => 'Customer Service JMTO',
+                'description' => 'JMTO Area',
                 'keluhan' => true,
                 'claim' => true,
                 'active' => 1
             ],
             [
                 'code' => 'L',
-                'description' => 'Customer Service JMTM',
+                'description' => 'JMTM Area',
                 'keluhan' => true,
                 'claim' => true,
                 'active' => 1

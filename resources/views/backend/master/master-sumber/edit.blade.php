@@ -49,7 +49,7 @@
                     <label class="checkbox">
                         <input type="checkbox" class="form-control" name="type[claim]" value="1" {{ $record->claim == 1 ? 'checked' : ''}}/>
                         <span></span>
-                        Claim
+                        Klaim
                     </label>
                 </div>
             </div>

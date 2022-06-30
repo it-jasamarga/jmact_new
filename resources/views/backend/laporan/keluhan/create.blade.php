@@ -43,7 +43,7 @@
                             <label for="no_telepon" class="">{{ __('No Telepon') }}</label>
                             <input id="no_telepon" type="text" class="form-control" name="no_telepon"
                                 value="{{ old('no_telepon') }}" autocomplete="off" autofocus
-                                placeholder="No Telepon" maxlength="12"
+                                placeholder="No Telepon" maxlength="13"
                                 oninput="this.value = this.value.replace(/[^0-9.,]/g, '').replace(/(\..*)\.,/g, '$1')">
                         </div>
                     </div>

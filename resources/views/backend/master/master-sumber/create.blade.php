@@ -48,7 +48,7 @@
                     <label class="checkbox">
                         <input type="checkbox" class="form-control" name="type[claim]" value="1" />
                         <span></span>
-                        Claim
+                        Klaim
                     </label>
                 </div>
             </div>

@@ -856,7 +856,7 @@ array:1 [▼
       $firestore = app('firebase.firestore');
       $dbFire = $firestore->database();
       $collection = $dbFire->collection($db);
-      $snapshot = $collection->where('user_id','=',(int)$id)->documents();
+      $snapshot = $collection->where('user_id','=',(int)$id)->orderBy('created_at','DESC')->documents();
       if(count($snapshot->rows()) > 0){
         return $snapshot->rows();
       }
