@@ -411,7 +411,7 @@ array:1 [▼
                         // JMACT – Claim dengan No Tiket (XXXXX) Diteruskan Oleh (Nama User – Nama Role
                         $message = "Klaim dengan No Tiket (".$no_tiket.") Diteruskan".$by_processor;
 
-                        $unit_id = \App\Models\MasterJenisClaim::find($data->jenis_claim_id)->value('unit_id');
+                        $unit_id = \App\Models\MasterJenisClaim::where('id', $data->jenis_claim_id)->value('unit_id');
                         $user_ids1 = \DB::table('users')
                             ->join('role_users', 'role_users.user_id', '=', 'users.id')
                             ->join('roles', 'roles.id', '=', 'role_users.role_id')
@@ -423,7 +423,7 @@ array:1 [▼
                             ->pluck('id')
                             ->toArray();
                         
-                        \App\Models\SysLog::write("DEBUG >> unit_id ".$unit_id." data->jenis_claim_id ".$data->jenis_claim_id." user_ids1 [". implode(", ", $user_ids1) . "]");
+                        \App\Models\SysLog::write("DEBUG '.$no_tiket.' >> unit_id ".$unit_id." data->jenis_claim_id ".$data->jenis_claim_id." user_ids1 [". implode(", ", $user_ids1) . "]");
 
                         $regional_id = \DB::table('master_ruas')
                             ->join('master_ro', 'master_ro.id', '=', 'master_ruas.ro_id')

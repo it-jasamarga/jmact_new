@@ -122,7 +122,9 @@
 		@include('panels.partials.modal')
 		@include('panels/scripts')
 
-
+<script>
+	window.bell = new Audio("{{ url('bell.ogg') }}");
+</script>
 
 	</body>
 
