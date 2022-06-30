@@ -92,7 +92,8 @@ class FeedbackController extends Controller
       $statuses = \App\Models\MasterStatus::where('type', '=', $IS_KELUHAN ? 1 : 2)
         // ->where('status', 'LIKE', "%Feedback%")
         // ->orWhere('status', 'LIKE', $IS_KELUHAN ? "%Konfirmasi%" : "%Pembayaran%")
-        ->where('status', '=', $IS_KELUHAN ? "Konfirmasi Pelanggan" : "Pembayaran Selesai")
+        // ->where('status', '=', $IS_KELUHAN ? "Konfirmasi Pelanggan" : "Pembayaran Selesai")
+        ->whereIn('status', $IS_KELUHAN ? ["Konfirmasi Pelanggan", "Follow Up Feedback Pelanggan"] : ["Pembayaran Selesai", "Follow Up Feedback Pelanggan"])
         ->get(['id'])->pluck(['id'])->toArray();
       $model = $IS_KELUHAN ? "\\App\\Models\\KeluhanPelanggan" : "\\App\\Models\\ClaimPelanggan";
       $query = $model::where('no_tiket', $no_tiket)->whereIn('status_id', $statuses)->first();
@@ -122,6 +123,7 @@ class FeedbackController extends Controller
       // dd($request->input('no_tiket'), $request->input('status'));
         $keluhan = DB::table('keluhan')
           ->select(
+              'keluhan.status_id',
               'keluhan.no_tiket', 'keluhan.nama_cust AS nama_pelanggan',
               'keluhan.no_telepon', 'keluhan.sosial_media',
               // DB::raw('CONCAT(keluhan.no_telepon, "/", keluhan.sosial_media) AS no_telepon_sosial_media'),
@@ -142,12 +144,13 @@ class FeedbackController extends Controller
               $statuses = \App\Models\MasterStatus::where('type', '=', 1)
                 // ->where('status', 'LIKE', "%Konfirmasi%")
                 // ->orWhere('status', 'LIKE', "%Feedback%")
-                ->where('status', '=', "Konfirmasi Pelanggan")
+                // ->where('status', '=', "Konfirmasi Pelanggan")
+                ->whereIn('status', ["Konfirmasi Pelanggan", "Follow Up Feedback Pelanggan"])
                 ->get(['id'])->pluck(['id'])->toArray();
               $keluhan = $keluhan->whereIn('keluhan.status_id', $statuses);
               break;
             case "closed":
-              $keluhan = $keluhan->where('keluhan.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "Closed" AND type=1 LIMIT 1)'));
+              $keluhan = $keluhan->where('keluhan.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status = "Closed" AND type=1 LIMIT 1)'));
               break;
           }
         } else {
@@ -156,6 +159,7 @@ class FeedbackController extends Controller
 
         $claim = DB::table('claim')
           ->select(
+              'claim.status_id',
               'claim.no_tiket', 'claim.nama_pelanggan',
               'claim.no_telepon', 'claim.sosial_media',
               // DB::raw('CONCAT(claim.no_telepon, "/", claim.sosial_media) AS no_telepon_sosial_media'),
@@ -176,12 +180,13 @@ class FeedbackController extends Controller
               $statuses = \App\Models\MasterStatus::where('type', '=', 2)
                 // ->where('status', 'LIKE', "%Pembayaran%")
                 // ->orWhere('status', 'LIKE', "%Feedback%")
-                ->where('status', '=', "Pembayaran Selesai")
+                // ->where('status', '=', "Pembayaran Selesai")
+                ->whereIn('status', ["Pembayaran Selesai", "Follow Up Feedback Pelanggan"])
                 ->get(['id'])->pluck(['id'])->toArray();
               $claim = $claim->whereIn('claim.status_id', $statuses);
               break;
             case "closed":
-              $claim = $claim->where('claim.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status LIKE "Closed" AND type=2 LIMIT 1)'));
+              $claim = $claim->where('claim.status_id', '=', DB::raw('(SELECT id FROM master_status WHERE status = "Closed" AND type=2 LIMIT 1)'));
               break;
           }
         } else {
@@ -213,7 +218,8 @@ class FeedbackController extends Controller
         })
         ->addColumn('action', function($data) {
             $buttons = "";
-            if(auth()->user()->can('feedback-pelanggan.contact') && is_null($data->id)) {
+            $status = \App\Models\MasterStatus::find($data->status_id);
+            if(auth()->user()->can('feedback-pelanggan.contact') && is_null($data->id) && (in_array($status->status, ["Konfirmasi Pelanggan", "Follow Up Feedback Pelanggan", "Pembayaran Selesai", "Follow Up Feedback Pelanggan"]))) {
               $buttons .= makeButton([
                 'type' => 'url',
                 'url'   => 'feedback-pelanggan/contact/'.$data->no_tiket,

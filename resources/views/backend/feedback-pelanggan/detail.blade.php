@@ -34,6 +34,7 @@ ul {
             <div class="col-4 d-flex align-items-center"><label>Layanan dari petugas di lapangan</label></div>
             <div class="col-8 d-flex align-items-center"><input type="text" readonly class="form-control" value="{{ $kepuasan[$record['rating']] }}"></div>
         </div>
+{{--
         <div class="row">
             <div class="col-4 d-flex align-items-center"><label>Hal yang dirasa kurang puas</label></div>
             <div class="col-8 d-flex align-items-center">
@@ -44,6 +45,7 @@ ul {
                 </ul>
             </div>
         </div>
+--}}
         <div class="row">
             <div class="col-4 d-flex align-items-center"><label>Saran dan Masukan</label></div>
             <div class="col-8 d-flex align-items-center"><textarea readonly class="form-control">{{ $record['saran_masukan'] }}</textarea></div>

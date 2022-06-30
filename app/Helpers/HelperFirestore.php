@@ -57,6 +57,7 @@ class HelperFirestore
                 'image'         => url('assets/media/logos/jm-logo.png'),
                 "id"            => $data_onbell['target_id'],
                 "type"          => $data_onbell['target_type'],
+                "sound"         => "default",
                 "click_action"  => "FLUTTER_NOTIFICATION_CLICK"
             ]);
 
