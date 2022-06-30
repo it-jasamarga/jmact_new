@@ -243,12 +243,13 @@ class ClaimController extends Controller
 
     public function store(ClaimPelangganRequest $request)
     {
-        // if (request()->sosial_media == '' && request()->no_telepon == '') {
-        //     $this->validate($request, [
-        //         'sosial_media' => 'required',
-        //         'no_telepon' => 'required',
-        //     ]);
-        // }
+        if (request()->sosial_media == '' && request()->no_telepon == '') {
+            $this->validate($request, [
+                'sosial_media' => 'required',
+                'no_telepon' => 'required',
+            ]);
+        }
+
         $tglPelaporan = Carbon::parse($request->tanggal_pelaporan)->format('Y-m-d');
         $recordData =  ClaimPelanggan::where(DB::raw('UPPER(nama_pelanggan)'), 'like', '%' . strtoupper($request->nama_pelanggan) . '%')
             ->where('no_telepon', $request->no_telepon)
