@@ -120,7 +120,7 @@ array:1 [▼
         $no_tiket = $data['no_tiket'];
         $master_status = MasterStatus::where('id', $data['status_id'])->first(['code']);
 
-        $user_name = auth()->user()->name ?? auth()->user()->username;
+        $user_name = auth()->user()->name ?? (auth()->user()->username ?? "User ID #".auth()->user()->id);
         $user_role = auth()->user()->roles()->first()->name;
         $processor = " (".$user_name." – ".$user_role.")";
         $by_processor = " oleh".$processor;
