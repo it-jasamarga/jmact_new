@@ -53,7 +53,7 @@
                     setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
                     return;
                 } else adr.speech.wts = whattosay;
-                
+
                 if (! adr.speech.available) {
                     bell.play();
                 } else {
@@ -77,7 +77,7 @@
 	setTimeout(function() {
 		adr.speech.init();
 		// setTimeout(function() {
-			let kalimat = "Halo, selamat pagi {{ auth()->user()->username ?? "" }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
+			let kalimat = "Halo, selamat pagi {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
 			if (typeof unread_notification !== 'undefined')
 				kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
 			// kalimat += " Selamat bekerja, jangan lupa berdoa, keluarga menanti di rumah !  ";
@@ -203,7 +203,7 @@
                         if (bell_reminder_skip) {
                             bell_reminder_skip = false;
                         } else {
-                            let kalimat = "Halo {{ auth()->user()->username ?? "" }}!";
+                            let kalimat = "Halo {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}!";
                             if (typeof unread_notification !== 'undefined')
                                 kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
                             adr.speech.speak(kalimat);
