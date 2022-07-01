@@ -4,7 +4,7 @@
 
 <script>
   $(document).ready(function(){
-    window.bell_reminder_skip = true;
+    window.just_logged_in = {{ Session::pull('adr:just-logged-in', false) ? 'true' : 'false'; }};
 
     let adr = {
 		speech: {
@@ -37,7 +37,7 @@
                 adr.speech.ready = (adr.speech.language != -1);
                 adr.speech.initiated = true;
 			},
-			speak: function(whattosay) {
+			speak: function(whattosay, func_onend = null) {
                 if ((adr.speech.available) && (!adr.speech.ready)) {
                     console.log('## Speak on hold 1sec due un-ready engine');
                     setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
@@ -64,6 +64,10 @@
                     ssu.onend = function(event) {
                         adr.speech.wts = null;
                         console.log('## Stop speaking');
+                        if (func_onend !== null) {
+                            console.log('## Running function', {func_onend});
+                            func_onend();
+                        }
                     };
 
                     console.log('## Start speaking "'+whattosay+'"');
@@ -76,13 +80,24 @@
 @if (auth()->check())
 	setTimeout(function() {
 		adr.speech.init();
-		// setTimeout(function() {
-			let kalimat = "Halo, selamat pagi {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
+        if (just_logged_in) {
+            let today = new Date();
+            let jam = parseInt(today.getHours().toString().padStart(2, '0')+today.getMinutes().toString().padStart(2, '0'));
+            let waktu = "";
+            if ((jam>500) && (jam<1100))
+                waktu = "selamat pagi";
+            else if ((jam>1059) && (jam<1500))
+                waktu = "selamat siang";
+            else if ((jam>1459) && (jam<1800))
+                waktu = "selamat sore";
+            else
+                waktu = "selamat malam";
+			let kalimat = "Halo, "+waktu+" {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
 			if (typeof unread_notification !== 'undefined')
 				kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
 			// kalimat += " Selamat bekerja, jangan lupa berdoa, keluarga menanti di rumah !  ";
-			adr.speech.speak(kalimat);
-		// }, 1000);
+			adr.speech.speak(kalimat, () => { console.log('## Set just_logged_in to false'); just_logged_in = false; });
+        }
 	}, 3000);
 @endif
 
@@ -200,9 +215,7 @@
                         $('.svg-check').removeClass('svg-icon-primary');
                         $('.svg-check').addClass('svg-icon-danger');
 
-                        if (bell_reminder_skip) {
-                            bell_reminder_skip = false;
-                        } else {
+                        if (! just_logged_in) {
                             let kalimat = "Halo {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}!";
                             if (typeof unread_notification !== 'undefined')
                                 kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
