@@ -161,14 +161,13 @@
 
         $('.datetimepicker').datetimepicker({
             // format:'Y-m-d h:i:s',
-            format: 'Y-m-d H:m:s',
-            useCurrent: false,
+            format: 'Y-m-d H:i:s',
             autoclose: true
         });
 
         $('.datetimepicker-year').datetimepicker({
             format:'Y',
-            useCurrent: false,
+            // useCurrent: true,
             autoclose: true
         });
 
@@ -443,7 +442,7 @@
         });
         $('.datetimepicker').datetimepicker({
             format:'yyyy-mm-DD hh:mm',
-            useCurrent: false,
+            useCurrent: true,
             autoclose: true
         });
         $('.dropify').dropify();
