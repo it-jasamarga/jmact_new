@@ -104,8 +104,8 @@
             else
                 waktu = "selamat malam";
 			let kalimat = "Halo, "+waktu+" {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
-			if (typeof unread_notification !== 'undefined')
-				kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
+			if ((typeof unread_notification !== 'undefined') && (unread_notification>0))
+                kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
 			// kalimat += " Selamat bekerja, jangan lupa berdoa, keluarga menanti di rumah !  ";
 			adr.speech.speak(kalimat, () => { console.log('## Set just_logged_in to false'); just_logged_in = false; });
         }
