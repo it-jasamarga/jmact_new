@@ -5,6 +5,7 @@
 <script>
   $(document).ready(function(){
     window.just_logged_in = {{ Session::pull('adr:just-logged-in', false) ? 'true' : 'false'; }};
+    window.skip_bell_voice = false;
 
     let adr = {
 		speech: {
@@ -37,6 +38,11 @@
                 adr.speech.ready = (adr.speech.language != -1);
                 adr.speech.initiated = true;
 			},
+            stop: function() {
+                console.log('## Stop to speak');
+                adr.speech.wss.cancel();
+                adr.speech.wts = null;
+            },
 			speak: function(whattosay, func_onend = null) {
                 if ((adr.speech.available) && (!adr.speech.ready)) {
                     console.log('## Speak on hold 1sec due un-ready engine');
@@ -216,10 +222,15 @@
                         $('.svg-check').addClass('svg-icon-danger');
 
                         if (! just_logged_in) {
-                            let kalimat = "Halo {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}!";
-                            if (typeof unread_notification !== 'undefined')
-                                kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
-                            adr.speech.speak(kalimat);
+                            if (skip_bell_voice) {
+                                skip_bell_voice = false;
+                                console.log('## Bell voice skipped');
+                            } else {
+                                let kalimat = "Halo {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}!";
+                                if (typeof unread_notification !== 'undefined')
+                                    kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
+                                adr.speech.speak(kalimat);
+                            }
                         }
                         
                     }else{
@@ -244,6 +255,8 @@
                 // var id = $(this).data('id');
                 // var url = "{{ url('/') }}" + $(this).data('url');
                 var pathParent = null;
+                skip_bell_voice = true;
+                adr.speech.stop();
                 db.collection("notifications").doc(id).update({
                     'status':'Read'
                 }).then(function(){
