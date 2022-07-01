@@ -65,19 +65,24 @@
                 } else {
                     adr.speech.wss.cancel();
 
-                    let ssu = new SpeechSynthesisUtterance(whattosay);
-                    ssu.voice = adr.speech.voices[adr.speech.language];
-                    ssu.onend = function(event) {
-                        adr.speech.wts = null;
-                        console.log('## Stop speaking');
-                        if (func_onend !== null) {
-                            console.log('## Running function', {func_onend});
-                            func_onend();
-                        }
-                    };
+                    if (! just_logged_in) {
+                        console.log('## Can only speak once, the rest is ring a bell');
+                        bell.play();
+                    } else {
+                        let ssu = new SpeechSynthesisUtterance(whattosay);
+                        ssu.voice = adr.speech.voices[adr.speech.language];
+                        ssu.onend = function(event) {
+                            adr.speech.wts = null;
+                            console.log('## Stop speaking');
+                            if (func_onend !== null) {
+                                console.log('## Running function', {func_onend});
+                                func_onend();
+                            }
+                        };
 
-                    console.log('## Start speaking "'+whattosay+'"');
-                    adr.speech.wss.speak(ssu);
+                        console.log('## Start speaking "'+whattosay+'"');
+                        adr.speech.wss.speak(ssu);
+                    }
                 }
 			}
 		}
