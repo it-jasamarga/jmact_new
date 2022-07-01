@@ -94,26 +94,26 @@
 <div class="dashboard-keluhan card card-custom" data-card="true">
 	<div class="card-header row pt-5">
 		<div class="col-2">
-			<select id="keluhan_categorySelector" data-post="category" name="keluhan_category" class="form-control filter-control select2" place-holder="Pilih Kategori">
+			<select id="keluhan_categorySelector" data-post="keluhan_category" name="keluhan_category" class="form-control filter-control select2" place-holder="Pilih Kategori">
 				<option value="regional">Regional</option>
 				<option value="ro">R.O</option>
 				<option value="ruas">Ruas</option>
 			</select>
 		</div>
 		<div class="col-3">
-			<select class="form-control filter-control keluhan_dashboard-filter-chart select2" data-post="category_id-x" id="keluhan_category_id" name="keluhan_category_id" place-holder="">
+			<select class="form-control filter-control keluhan_dashboard-filter-chart select2" data-post="keluhan_category_id" id="keluhan_category_id" name="keluhan_category_id" place-holder="">
 				<option value=""></option>
 			</select>
 		</div>
 
 		<div class="col-3">
 			<fieldset class="form-group ">
-				<input type="text" name="keluhan_date_start" data-post="tanggal_awal" class="form-control filter-control pickadate-start keluhan_dashboard-filter-chart" placeholder="Waktu Dari">
+				<input type="text" name="keluhan_date_start" data-post="keluhan_tanggal_awal" class="form-control filter-control pickadate-start keluhan_dashboard-filter-chart" placeholder="Waktu Dari">
 			</fieldset>
 		</div>
 		<div class="col-3">
 			<fieldset class="form-group">
-				<input type="text" name="keluhan_date_end" data-post="tanggal_akhir" class="form-control filter-control pickadate-end keluhan_dashboard-filter-chart" placeholder="Waktu Sampai">
+				<input type="text" name="keluhan_date_end" data-post="keluhan_tanggal_akhir" class="form-control filter-control pickadate-end keluhan_dashboard-filter-chart" placeholder="Waktu Sampai">
 			</fieldset>
 		</div>
 
@@ -194,19 +194,19 @@
 			</select>
 		</div>
 		<div class="col-3">
-			<select class="form-control filter-control dashboard-filter select2" data-post="category_id" id="claim_category_id" name="claim_category_id" place-holder="">
+			<select class="form-control filter-control dashboard-filter select2" data-post="claim_category_id" id="claim_category_id" name="claim_category_id" place-holder="">
 				<option value=""></option>
 			</select>
 		</div>
 
 		<div class="col-3">
 			<fieldset class="form-group ">
-				<input type="text" name="claim_date_start" data-post="tanggal_awal" class="form-control filter-control pickadate-start dashboard-filter" placeholder="Waktu Dari">
+				<input type="text" name="claim_date_start" data-post="claim_tanggal_awal" class="form-control filter-control pickadate-start dashboard-filter" placeholder="Waktu Dari">
 			</fieldset>
 		</div>
 		<div class="col-3">
 			<fieldset class="form-group">
-				<input type="text" name="claim_date_end" data-post="tanggal_akhir" class="form-control filter-control pickadate-end dashboard-filter" placeholder="Waktu Sampai">
+				<input type="text" name="claim_date_end" data-post="claim_tanggal_akhir" class="form-control filter-control pickadate-end dashboard-filter" placeholder="Waktu Sampai">
 			</fieldset>
 		</div>
 

@@ -19,7 +19,8 @@ class LookupController extends Controller
     {
         if ($request->request->input('dashscope') == 'keluhan') {
 
-            $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
+            $data = KeluhanPelanggan::where('id', '>', 0);
+            // $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
 
             // if(auth()->user()->hasRole('Superadmin')){
             //     $data  = KeluhanPelanggan::orderByDesc('created_at')->select('*')->filter($request);
@@ -45,8 +46,10 @@ class LookupController extends Controller
             //     ->select('*')
             //     ->filter($request);
             // }
+
+            // dd($request, $data->orderByDesc('created_at')->select('*')->filter($request));
     
-            return datatables()->of($data)
+            return datatables()->of($data->orderByDesc('created_at')->select('*')->filter($request))
                 ->addColumn('sumber_id', function ($data) use ($request) {
                     return ($data->sumber) ? $data->sumber->description : '-';
                 })
