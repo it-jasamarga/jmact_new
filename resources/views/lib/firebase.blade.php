@@ -4,6 +4,88 @@
 
 <script>
   $(document).ready(function(){
+    window.bell_reminder_skip = true;
+
+    let adr = {
+		speech: {
+            initiated: false,
+            ready: false,
+			available: false,
+			voices: [],
+			language: -1,
+            wts: null,
+			wss: window.speechSynthesis,
+			init: function(preferences = ['id-ID', 'in_ID']) {
+                if (adr.speech.initiated) return;
+				if (! (adr.speech.available = (typeof speechSynthesis !== 'undefined'))) {
+					console.log('## speechSynthesis feature not available');
+					return;
+				}
+				if (adr.speech.voices.length < 1) {
+					let voices = speechSynthesis.getVoices();
+					adr.speech.voices = voices;
+					console.log('## Available Voice', {voices}, 'Preferences', {preferences});
+					adr.speech.voices.forEach(function(value, index) {
+						if (adr.speech.language < 0) preferences.forEach(function(lang) {
+							if (value.lang == lang) {
+								adr.speech.language = index;
+								console.log('## Selected Voice', adr.speech.voices[adr.speech.language]);
+							}
+						})
+					});
+				}
+                adr.speech.ready = (adr.speech.language != -1);
+                adr.speech.initiated = true;
+			},
+			speak: function(whattosay) {
+                if ((adr.speech.available) && (!adr.speech.ready)) {
+                    console.log('## Speak on hold 1sec due un-ready engine');
+                    setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
+                    return;
+                }
+                if (! adr.speech.initiated) {
+                    console.log('## Speak on hold 1sec due un-initiated engine');
+                    setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
+                    return;
+                }
+                if ((adr.speech.available) && (adr.speech.wts !== null)) {
+                    console.log('## Speak on hold 1sec due engine is still speaking');
+                    setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
+                    return;
+                } else adr.speech.wts = whattosay;
+                
+                if (! adr.speech.available) {
+                    bell.play();
+                } else {
+                    adr.speech.wss.cancel();
+
+                    let ssu = new SpeechSynthesisUtterance(whattosay);
+                    ssu.voice = adr.speech.voices[adr.speech.language];
+                    ssu.onend = function(event) {
+                        adr.speech.wts = null;
+                        console.log('## Stop speaking');
+                    };
+
+                    console.log('## Start speaking "'+whattosay+'"');
+                    adr.speech.wss.speak(ssu);
+                }
+			}
+		}
+	}
+
+@if (auth()->check())
+	setTimeout(function() {
+		adr.speech.init();
+		// setTimeout(function() {
+			let kalimat = "Halo, selamat pagi {{ auth()->user()->username ?? "" }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
+			if (typeof unread_notification !== 'undefined')
+				kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
+			// kalimat += " Selamat bekerja, jangan lupa berdoa, keluarga menanti di rumah !  ";
+			adr.speech.speak(kalimat);
+		// }, 1000);
+	}, 3000);
+@endif
+
         const firebaseConfig = {
             apiKey: "AIzaSyB86lcBroscc6kvR4GnOsPbQgQk7e1B6aI",
             authDomain: "jm-act.firebaseapp.com",
@@ -108,6 +190,9 @@
 
                     var notifLength = querySnapshot.docs.length;
                     console.log('notifLength',notifLength)
+
+                    window.unread_notification = notifLength;
+
                     if(notifLength > 0){
                         $('.pulse-check').removeClass('pulse-primary');
                         $('.pulse-check').addClass('pulse-danger');
@@ -115,7 +200,14 @@
                         $('.svg-check').removeClass('svg-icon-primary');
                         $('.svg-check').addClass('svg-icon-danger');
 
-                        bell.play();
+                        if (bell_reminder_skip) {
+                            bell_reminder_skip = false;
+                        } else {
+                            let kalimat = "Halo {{ auth()->user()->username ?? "" }}!";
+                            if (typeof unread_notification !== 'undefined')
+                                kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
+                            adr.speech.speak(kalimat);
+                        }
                         
                     }else{
                         $('.pulse-check').removeClass('pulse-danger');
@@ -147,7 +239,6 @@
             });
 
         }
-
 
 
   });

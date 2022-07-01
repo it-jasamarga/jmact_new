@@ -44,7 +44,9 @@ class DashboardFilter extends QueryFilters
 
     public function category($term) {
         $dashfilter = [];
-        $cid = $this->http->input('dashscope') == 'keluhan' ? 'category_id-x' : 'category_id';  // FIX 220608
+        // $cid = $this->http->input('dashscope') == 'keluhan' ? 'category_id-x' : 'category_id';  // FIX 220608
+        $cid = is_numeric($this->http->input('category_id')) ? $this->http->input('category_id') : $this->http->input('category_id-x');
+        // dd($cid, $this->http->input('category_id'), $this->http->input('category_id-x'));
         switch($term) {
             case 'regional':
                 $ro = \App\Models\MasterRo::where('regional_id', $this->http->input($cid))->get(['id'])->pluck('id');
