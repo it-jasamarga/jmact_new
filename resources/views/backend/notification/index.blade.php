@@ -24,8 +24,8 @@
 
                     </div>
                     <div class="d-flex align-items-center mr-1 my-2">
-                        <span class="btn btn-default btn-icon btn-sm mr-2 markUs" data-toggle="tooltip" title=""
-                            data-original-title="Mark Us">
+                        <span class="btn btn-primary btn-icon btn-sm mr-2 markUs" data-toggle="tooltip" title=""
+                            data-original-title="Tandai Sudah Dibaca">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-opened.svg-->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -43,7 +43,7 @@
                                 <!--end::Svg Icon-->
                             </span>
                         </span>
-                        <span class="btn btn-default btn-icon btn-sm mr-2 d-none " data-toggle="tooltip" title=""
+                        <span class="btn btn-primary btn-hover-light btn-icon btn-sm mr-2 d-none " data-toggle="tooltip" title=""
                             data-original-title="Spam">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Warning-1-circle.svg-->
@@ -62,8 +62,8 @@
                                 <!--end::Svg Icon-->
                             </span>
                         </span>
-                        <span class="btn btn-default btn-icon btn-sm mr-2 deleteUs" data-toggle="tooltip" title=""
-                            data-original-title="Delete">
+                        <span class="btn btn-primary btn-icon btn-sm mr-2 deleteUs" data-toggle="tooltip" title=""
+                            data-original-title="Hapus">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

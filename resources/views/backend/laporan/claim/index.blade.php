@@ -176,8 +176,8 @@
                     name: 'sosial_media'
                 },
                 {
-                    data: 'keterangan_claim',
-                    name: 'keterangan_claim'
+                    data: 'jenis_claim',
+                    name: 'jenis_claim'
                 },
                 {
                     data: 'golongan_id',

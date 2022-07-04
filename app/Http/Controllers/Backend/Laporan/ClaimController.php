@@ -160,6 +160,10 @@ class ClaimController extends Controller
                 $button = ($data->status) ? $data->status->status : '-';
                 return $button;
             })
+            ->addColumn('jenis_claim', function ($data) {
+                $button = ($data->jenisClaim) ? $data->jenisClaim->jenis_claim : '-';
+                return $button;
+            })
             ->addColumn('golongan_id', function ($data) {
                 $button = ($data->golongan) ? $data->golongan->golongan : '-';
                 return $button;
