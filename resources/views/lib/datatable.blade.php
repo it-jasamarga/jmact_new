@@ -58,7 +58,7 @@
       ];
     }
 
-    var table = $(classTable).DataTable({
+    let table = $(classTable).DataTable({
         createdRow: fCreatedRow,
         processing: true,
         serverSide: false,
@@ -91,7 +91,7 @@
       }
     });
 	
-	// console.log('## ADR', {table});
+	console.log('## ADR', {table});
 
 
     $('.group-checkable').on('change',function() {
@@ -109,7 +109,9 @@
     });
 
     $('.filter-data').on('click', function(e) {
-      table.draw();
+      console.log('## *.filter-data.click()', {table});
+      // table.draw();
+      table.ajax.reload();
     });
 
     $('.dashboard-filter-chart').on('change', function(e) {
