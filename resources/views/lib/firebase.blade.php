@@ -4,6 +4,114 @@
 
 <script>
   $(document).ready(function(){
+    window.just_logged_in = {{ Session::pull('adr:just-logged-in', false) ? 'true' : 'false'; }};
+    window.skip_bell_voice = false;
+
+    let adr = {
+		speech: {
+            initiated: false,
+            ready: false,
+			available: false,
+			voices: [],
+			language: -1,
+            wts: null,
+			wss: window.speechSynthesis,
+			init: function(preferences = ['id-ID', 'in_ID']) {
+                if (adr.speech.initiated) return;
+				if (! (adr.speech.available = (typeof speechSynthesis !== 'undefined'))) {
+					console.log('## speechSynthesis feature not available');
+					return;
+				}
+				if (adr.speech.voices.length < 1) {
+					let voices = speechSynthesis.getVoices();
+					adr.speech.voices = voices;
+					console.log('## Available Voice', {voices}, 'Preferences', {preferences});
+					adr.speech.voices.forEach(function(value, index) {
+						if (adr.speech.language < 0) preferences.forEach(function(lang) {
+							if (value.lang == lang) {
+								adr.speech.language = index;
+								console.log('## Selected Voice', adr.speech.voices[adr.speech.language]);
+							}
+						})
+					});
+				}
+                adr.speech.ready = (adr.speech.language != -1);
+                adr.speech.initiated = true;
+			},
+            stop: function() {
+                console.log('## Stop to speak');
+                adr.speech.wss.cancel();
+                adr.speech.wts = null;
+            },
+			speak: function(whattosay, func_onend = null) {
+                if ((adr.speech.available) && (!adr.speech.ready)) {
+                    console.log('## Speak on hold 1sec due un-ready engine');
+                    setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
+                    return;
+                }
+                if (! adr.speech.initiated) {
+                    console.log('## Speak on hold 1sec due un-initiated engine');
+                    setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
+                    return;
+                }
+                if ((adr.speech.available) && (adr.speech.wts !== null)) {
+                    console.log('## Speak on hold 1sec due engine is still speaking');
+                    setTimeout(function() { adr.speech.speak(whattosay); }, 1000);
+                    return;
+                } else adr.speech.wts = whattosay;
+
+                if (! adr.speech.available) {
+                    bell.play();
+                } else {
+                    adr.speech.wss.cancel();
+
+                    if (! just_logged_in) {
+                        console.log('## Can only speak once, the rest is ring a bell');
+                        bell.play();
+                    } else {
+                        let ssu = new SpeechSynthesisUtterance(whattosay);
+                        ssu.voice = adr.speech.voices[adr.speech.language];
+                        ssu.onend = function(event) {
+                            adr.speech.wts = null;
+                            console.log('## Stop speaking');
+                            if (func_onend !== null) {
+                                console.log('## Running function', {func_onend});
+                                func_onend();
+                            }
+                        };
+
+                        console.log('## Start speaking "'+whattosay+'"');
+                        adr.speech.wss.speak(ssu);
+                    }
+                }
+			}
+		}
+	}
+
+@if (auth()->check())
+	setTimeout(function() {
+		adr.speech.init();
+        if (just_logged_in) {
+            let today = new Date();
+            let jam = parseInt(today.getHours().toString().padStart(2, '0')+today.getMinutes().toString().padStart(2, '0'));
+            let waktu = "";
+            if ((jam>500) && (jam<1100))
+                waktu = "selamat pagi";
+            else if ((jam>1059) && (jam<1500))
+                waktu = "selamat siang";
+            else if ((jam>1459) && (jam<1800))
+                waktu = "selamat sore";
+            else
+                waktu = "selamat malam";
+			let kalimat = "Halo, "+waktu+" {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}! Selamat datang kembali di aplikasi web J M A C T ! Apa kabarnya Anda hari ini?";
+			if ((typeof unread_notification !== 'undefined') && (unread_notification>0))
+                kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
+			// kalimat += " Selamat bekerja, jangan lupa berdoa, keluarga menanti di rumah !  ";
+			adr.speech.speak(kalimat, () => { console.log('## Set just_logged_in to false'); just_logged_in = false; });
+        }
+	}, 3000);
+@endif
+
         const firebaseConfig = {
             apiKey: "AIzaSyB86lcBroscc6kvR4GnOsPbQgQk7e1B6aI",
             authDomain: "jm-act.firebaseapp.com",
@@ -108,6 +216,9 @@
 
                     var notifLength = querySnapshot.docs.length;
                     console.log('notifLength',notifLength)
+
+                    window.unread_notification = notifLength;
+
                     if(notifLength > 0){
                         $('.pulse-check').removeClass('pulse-primary');
                         $('.pulse-check').addClass('pulse-danger');
@@ -115,7 +226,17 @@
                         $('.svg-check').removeClass('svg-icon-primary');
                         $('.svg-check').addClass('svg-icon-danger');
 
-                        bell.play();
+                        if (! just_logged_in) {
+                            if (skip_bell_voice) {
+                                skip_bell_voice = false;
+                                console.log('## Bell voice skipped');
+                            } else {
+                                let kalimat = "Halo {{ auth()->user()->name ?? (auth()->user()->username ?? "") }}!";
+                                if (typeof unread_notification !== 'undefined')
+                                    kalimat += " Anda memiliki "+unread_notification+" notifikasi yang belum dibaca.";
+                                adr.speech.speak(kalimat);
+                            }
+                        }
                         
                     }else{
                         $('.pulse-check').removeClass('pulse-danger');
@@ -139,6 +260,8 @@
                 // var id = $(this).data('id');
                 // var url = "{{ url('/') }}" + $(this).data('url');
                 var pathParent = null;
+                skip_bell_voice = true;
+                adr.speech.stop();
                 db.collection("notifications").doc(id).update({
                     'status':'Read'
                 }).then(function(){
@@ -147,7 +270,6 @@
             });
 
         }
-
 
 
   });

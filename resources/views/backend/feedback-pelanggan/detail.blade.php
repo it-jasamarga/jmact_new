@@ -14,6 +14,11 @@ ul {
         <h3 class="modal-title">Detail Feedback Pelanggan</h3>
     </div>
     <div class="modal-body">
+@if (is_null($record))
+        <div class="row">
+            <div class="col-12 d-flex align-items-center">Pelanggan tidak memberikan feedback pada waktunya.</div>
+        </div>
+@else
         <div class="row">
             <div class="col-4 d-flex align-items-center"><label>No Tiket</label></div>
             <div class="col-8 d-flex align-items-center"><input type="text" readonly class="form-control" value="{{ $record['no_tiket'] }}"></div>
@@ -50,6 +55,8 @@ ul {
             <div class="col-4 d-flex align-items-center"><label>Saran dan Masukan</label></div>
             <div class="col-8 d-flex align-items-center"><textarea readonly class="form-control">{{ $record['saran_masukan'] }}</textarea></div>
         </div>
+@endif
+
     </div>
 
     </div>

@@ -64,6 +64,8 @@ class CustomUserProvider implements UserProvider
             if ($user->active == 1) $auth = (Hash::check($credentials['password'], $user->password));
         }
 
+        if ($auth) Request()->session()->put('adr:just-logged-in', true);
+
         return $auth;
     }
 }
