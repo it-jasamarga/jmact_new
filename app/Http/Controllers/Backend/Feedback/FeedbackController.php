@@ -229,14 +229,24 @@ class FeedbackController extends Controller
               ]);
             }
 
-            if(auth()->user()->can('feedback-pelanggan.detail') && !is_null($data->id)) {
-              $buttons .= makeButton([
-                'type' => 'modal',
-                'url'   => 'feedback-pelanggan/detail/'.$data->no_tiket,
-                'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light custome-modal',
-                'label'   => '<i class="flaticon2-list-1"></i>',
-                'tooltip' => 'Detail Feedback'
-              ]);
+            if (($buttons == "") && auth()->user()->can('feedback-pelanggan.detail')) {
+                if (is_null($data->id)) {
+                    $buttons .= makeButton([
+                      'type' => 'modal',
+                      'url'   => 'feedback-pelanggan/detail/'.$data->no_tiket,
+                      'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light custome-modal',
+                      'label'   => '<i class="flaticon2-list-1"></i>',
+                      'tooltip' => 'Detail Feedback'
+                    ]);
+                } else {
+                    $buttons .= makeButton([
+                      'type' => 'modal',
+                      'url'   => 'feedback-pelanggan/detail/'.$data->no_tiket,
+                      'class'   => 'btn btn-icon btn-info btn-sm btn-hover-light custome-modal',
+                      'label'   => '<i class="flaticon2-list-1"></i>',
+                      'tooltip' => 'Detail Feedback'
+                    ]);
+                }
             }
 
             return $buttons;
