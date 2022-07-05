@@ -9,13 +9,12 @@ class BlastController extends Controller
 {
     public function __construct(Request $request)
     {
-        //
+        $secret = "JMACT:WA-BLAST";
+        if ($request->header('api-secret') !== $secret) return response("Forbidden, client is not authorized to perform request.", 403);
     }
 
     public function getZeroBlast(Request $request)
     {
-        if ($request->header('api-secret') !== 'JMACT:WA-BLAST') return response("Forbidden, client is not authorized to perform request.", 403);
-
         $data = [];
         $query = \App\Models\Blast::where('blast_state', 0)->get(['id', 'no_telepon', 'nama', 'no_tiket', 'attributes']);
         foreach ($query as $record) {
