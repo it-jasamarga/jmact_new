@@ -10,7 +10,7 @@ class BlastController extends Controller
     public function __construct(Request $request)
     {
         $secret = "JMACT:WA-BLAST";
-        if ($request->header('api-secret') !== $secret) return response("Forbidden, client is not authorized to perform request.", 403);
+        if ($request->header('api-secret') !== $secret) return abort(403);
     }
 
     public function getZeroBlast(Request $request)
