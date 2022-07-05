@@ -150,13 +150,14 @@
 
 // GET MESSAGE AND PUSH
             messaging.onMessage((payload) => {
-              console.log('Message received. ', payload);
+              console.log('## Message received. ', {payload});
               // ...
                 var notify;
                 notify = new Notification(payload.notification.title,{
                     body: payload.notification.body,
                     icon: payload.notification.image,
-                    tag: payload.data.type
+                    tag: payload.data.type,
+                    sound: "default"
                 });
 
             });

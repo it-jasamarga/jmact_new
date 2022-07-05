@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'system/notification'
+        'system/notification',
+        '/api/blast-list',
+        '/api/blast-update'        
     ];
 }

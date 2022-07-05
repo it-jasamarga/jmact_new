@@ -147,6 +147,15 @@ array:1 [▼
                           ->pluck('user_id')
                           ->toArray();
 
+                        if (is_numeric($data['no_telepon'])) {
+                            \App\Models\Blast::create([
+                                'no_telepon'  =>  $data['no_telepon'],
+                                'nama'        =>  $data['nama_cust'],
+                                'no_tiket'    =>  $data['no_tiket'],
+                                'attributes'  =>  ['status'=>"created"]
+                            ]);
+                        }
+
                         $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                         \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Supervisor JMTC [". implode(", ", $user_ids_names) ."]");
                         break;
@@ -262,6 +271,16 @@ array:1 [▼
                           ->pluck('user_id')
                           ->toArray();
 
+                        if (is_numeric($data['no_telepon'])) {
+                            $url = url("feedback.php?".$data['no_tiket'].":".substr(strtoupper(MD5($data['no_tiket'])), -4));
+                            \App\Models\Blast::create([
+                                'no_telepon'  =>  $data['no_telepon'],
+                                'nama'        =>  $data['nama_cust'],
+                                'no_tiket'    =>  $data['no_tiket'],
+                                'attributes'  =>  ['status'=>"feedback", 'url'=>$url]
+                            ]);
+                        }
+
                         $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                         $creator_name = \App\Models\User::where('id', $data->created_by)->get('name')->pluck('name')->toArray();
                         \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."], dan Inputer pembuat laporan keluhan [". implode(", ", $creator_name) ."]");
@@ -314,6 +333,15 @@ array:1 [▼
                             ->toArray();
 
                         $user_ids = array_merge($user_ids1, $user_ids2, $user_ids3);
+
+                        if (is_numeric($data['no_telepon'])) {
+                            \App\Models\Blast::create([
+                                'no_telepon'  =>  $data['no_telepon'],
+                                'nama'        =>  $data['nama_cust'],
+                                'no_tiket'    =>  $data['no_tiket'],
+                                'attributes'  =>  ['status'=>"closed"]
+                            ]);
+                        }
 
                         $user_ids_names1 = \App\Models\User::whereIn('id', $user_ids1)->get('name')->pluck('name')->toArray();
                         $user_ids_names2 = \App\Models\User::whereIn('id', $user_ids2)->get('name')->pluck('name')->toArray();
@@ -368,6 +396,16 @@ array:1 [▼
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+
+                        if (is_numeric($data['no_telepon'])) {
+                            $url = url("feedback.php?".$data->no_tiket.":".substr(strtoupper(MD5($data->no_tiket)), -4));
+                            \App\Models\Blast::create([
+                                'no_telepon'  =>  $data['no_telepon'],
+                                'nama'        =>  $data['nama_cust'],
+                                'no_tiket'    =>  $data['no_tiket'],
+                                'attributes'  =>  ['status'=>"created"]
+                            ]);
+                        }
 
                         $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                         \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Manager Area [". implode(", ", $user_ids_names) ."]");
@@ -616,6 +654,16 @@ array:1 [▼
                             $user_ids = array_merge($user_ids1, $user_ids2);
                         }
 
+                        if (is_numeric($data['no_telepon'])) {
+                            $url = url("feedback.php?".$data['no_tiket'].":".substr(strtoupper(MD5($data['no_tiket'])), -4));
+                            \App\Models\Blast::create([
+                                'no_telepon'  =>  $data['no_telepon'],
+                                'nama'        =>  $data['nama_cust'],
+                                'no_tiket'    =>  $data['no_tiket'],
+                                'attributes'  =>  ['status'=>"feedback", 'url'=>$url]
+                            ]);
+                        }
+
                         if ($is_project) {
                             $user_ids_names = \App\Models\User::whereIn('id', $user_ids)->get('name')->pluck('name')->toArray();
                             \App\Models\SysLog::write("Notifikasi ".$no_tiket." Status ".$status." => Regional sesuai dengan Ruas [". implode(", ", $user_ids_names) ."]");
@@ -677,6 +725,15 @@ array:1 [▼
                           ->get(['user_id'])
                           ->pluck('user_id')
                           ->toArray();
+
+                        if (is_numeric($data['no_telepon'])) {
+                            \App\Models\Blast::create([
+                                'no_telepon'  =>  $data['no_telepon'],
+                                'nama'        =>  $data['nama_cust'],
+                                'no_tiket'    =>  $data['no_tiket'],
+                                'attributes'  =>  ['status'=>"closed"]
+                            ]);
+                        }
 
                         if ($is_project) {
                             $user_ids = array_merge($user_ids1, $user_ids2, $user_ids3, $user_ids4);
