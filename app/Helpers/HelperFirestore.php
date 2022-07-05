@@ -401,7 +401,7 @@ array:1 [▼
                             $url = url("feedback.php?".$data->no_tiket.":".substr(strtoupper(MD5($data->no_tiket)), -4));
                             \App\Models\Blast::create([
                                 'no_telepon'  =>  $data['no_telepon'],
-                                'nama'        =>  $data['nama_cust'],
+                                'nama'        =>  $data['nama_pelanggan'],
                                 'no_tiket'    =>  $data['no_tiket'],
                                 'attributes'  =>  ['status'=>"created"]
                             ]);
@@ -658,7 +658,7 @@ array:1 [▼
                             $url = url("feedback.php?".$data['no_tiket'].":".substr(strtoupper(MD5($data['no_tiket'])), -4));
                             \App\Models\Blast::create([
                                 'no_telepon'  =>  $data['no_telepon'],
-                                'nama'        =>  $data['nama_cust'],
+                                'nama'        =>  $data['nama_pelanggan'],
                                 'no_tiket'    =>  $data['no_tiket'],
                                 'attributes'  =>  ['status'=>"feedback", 'url'=>$url]
                             ]);
@@ -729,7 +729,7 @@ array:1 [▼
                         if (is_numeric($data['no_telepon'])) {
                             \App\Models\Blast::create([
                                 'no_telepon'  =>  $data['no_telepon'],
-                                'nama'        =>  $data['nama_cust'],
+                                'nama'        =>  $data['nama_pelanggan'],
                                 'no_tiket'    =>  $data['no_tiket'],
                                 'attributes'  =>  ['status'=>"closed"]
                             ]);
