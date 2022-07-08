@@ -313,7 +313,7 @@ class BidangKeluhanSeeder extends Seeder
             ],
             [
                 'bidang' => 'Lalin',
-                'keluhan' => 'Lain-lain Traffice Management',
+                'keluhan' => 'Lain-lain Traffic Management',
                 'tipe_layanan_keluhan' => 'Operational',
                 'unit_id' => 'JMTO',
                 'sla' => 72,
