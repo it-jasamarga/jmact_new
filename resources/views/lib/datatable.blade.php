@@ -61,7 +61,7 @@
     let table = $(classTable).DataTable({
         createdRow: fCreatedRow,
         processing: true,
-        serverSide: false,
+        serverSide: true,
         responsive: false,
         autoWidth: false,
         scrollX: true,
@@ -91,7 +91,7 @@
       }
     });
 	
-	console.log('## ADR', {table});
+	// console.log('## ADR', {table});
 
 
     $('.group-checkable').on('change',function() {
