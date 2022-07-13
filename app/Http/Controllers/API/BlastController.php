@@ -18,13 +18,15 @@ class BlastController extends Controller
         $data = [];
         $query = \App\Models\Blast::where('blast_state', 0)->get(['id', 'no_telepon', 'nama', 'no_tiket', 'attributes']);
         foreach ($query as $record) {
+            $attr = json_decode($record['attributes']);
+            $attr->blast = "unsent";
             $data[] = [
                 'id'            => $record->id,
                 'no_telepon'    => $record['no_telepon'],
                 'nama'          => $record['nama'],
                 'no_tiket'      => $record['no_tiket'],
                 'type'          => ($record['no_tiket'][0] == 'K' ? 'keluhan' : 'klaim'),
-                'attributes'    => json_decode($record['attributes'])
+                'attributes'    => $attr
             ];
         }
 
@@ -39,9 +41,29 @@ class BlastController extends Controller
         foreach ($data as $item) {
             $record = \App\Models\Blast::where('id', $item->id)->first();
             if ($record) {
-                $state = $item->blast*1;
+                $state = ($item->state ?? 0) *1;
                 $record->update(['blast_state' => $state]);
                 $succeed[$item->id] = $state;
+            } else {
+                $failed[] = $item->id;
+            }
+        }
+        $retr = ['succeed' => $succeed, 'failed' => $failed];
+
+        return response()->json($retr);
+    }
+
+    public function setBlastText(Request $request)
+    {
+        $succeed = [];
+        $failed = [];
+        $data = json_decode($request->getContent());
+        foreach ($data as $item) {
+            $record = \App\Models\Blast::where('id', $item->id)->first();
+            if ($record) {
+                $text = $item->text ?? "";
+                $record->update(['blast_text' => $item->text]);
+                $succeed[$item->id] = $text;
             } else {
                 $failed[] = $item->id;
             }

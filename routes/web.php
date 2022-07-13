@@ -32,7 +32,8 @@ use Illuminate\Http\Request;
 // });
 
 Route::post('/api/blast-list', 'API\BlastController@getZeroBlast');
-Route::post('/api/blast-update', 'API\BlastController@setBlastState');
+Route::post('/api/blast-update-state', 'API\BlastController@setBlastState');
+Route::post('/api/blast-update-text', 'API\BlastController@setBlastText');
 
 Route::get('/test', function (Request $request) {
     /*

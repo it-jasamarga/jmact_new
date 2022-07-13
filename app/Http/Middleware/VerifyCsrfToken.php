@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'system/notification',
         '/api/blast-list',
-        '/api/blast-update'        
+        '/api/blast-update-state',
+        '/api/blast-update-text'        
     ];
 }

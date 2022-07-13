@@ -21,6 +21,7 @@ class CreateBlastsTable extends Migration
             $table->string('no_tiket');
             $table->text('attributes')->nullable();
             $table->integer('blast_state')->default(0);
+            $table->string('blast_text')->nullable();
 
             $table->timestamps();
         });
