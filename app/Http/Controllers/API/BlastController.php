@@ -26,7 +26,7 @@ class BlastController extends Controller
                 'nama'          => $record['nama'],
                 'no_tiket'      => $record['no_tiket'],
                 'type'          => ($record['no_tiket'][0] == 'K' ? 'keluhan' : 'klaim'),
-                'attributes'    => $attr
+                'attributes'    => json_decode($attr)
             ];
         }
 

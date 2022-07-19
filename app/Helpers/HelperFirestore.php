@@ -152,7 +152,7 @@ array:1 [▼
                                 'no_telepon'  =>  $data['no_telepon'],
                                 'nama'        =>  $data['nama_cust'],
                                 'no_tiket'    =>  $data['no_tiket'],
-                                'attributes'  =>  ['status'=>"created"]
+                                'attributes'  =>  json_encode(['status'=>"created"])
                             ]);
                         }
 
@@ -277,7 +277,7 @@ array:1 [▼
                                 'no_telepon'  =>  $data['no_telepon'],
                                 'nama'        =>  $data['nama_cust'],
                                 'no_tiket'    =>  $data['no_tiket'],
-                                'attributes'  =>  ['status'=>"feedback", 'url'=>$url]
+                                'attributes'  =>  json_encode(['status'=>"feedback", 'url'=>$url])
                             ]);
                         }
 
@@ -339,7 +339,7 @@ array:1 [▼
                                 'no_telepon'  =>  $data['no_telepon'],
                                 'nama'        =>  $data['nama_cust'],
                                 'no_tiket'    =>  $data['no_tiket'],
-                                'attributes'  =>  ['status'=>"closed"]
+                                'attributes'  =>  json_encode(['status'=>"closed"])
                             ]);
                         }
 
@@ -403,7 +403,7 @@ array:1 [▼
                                 'no_telepon'  =>  $data['no_telepon'],
                                 'nama'        =>  $data['nama_pelanggan'],
                                 'no_tiket'    =>  $data['no_tiket'],
-                                'attributes'  =>  ['status'=>"created"]
+                                'attributes'  =>  json_encode(['status'=>"created"])
                             ]);
                         }
 
@@ -660,7 +660,7 @@ array:1 [▼
                                 'no_telepon'  =>  $data['no_telepon'],
                                 'nama'        =>  $data['nama_pelanggan'],
                                 'no_tiket'    =>  $data['no_tiket'],
-                                'attributes'  =>  ['status'=>"feedback", 'url'=>$url]
+                                'attributes'  =>  json_encode(['status'=>"feedback", 'url'=>$url])
                             ]);
                         }
 
@@ -731,7 +731,7 @@ array:1 [▼
                                 'no_telepon'  =>  $data['no_telepon'],
                                 'nama'        =>  $data['nama_pelanggan'],
                                 'no_tiket'    =>  $data['no_tiket'],
-                                'attributes'  =>  ['status'=>"closed"]
+                                'attributes'  =>  json_encode(['status'=>"closed"])
                             ]);
                         }
 
