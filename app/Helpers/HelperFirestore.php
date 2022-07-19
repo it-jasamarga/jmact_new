@@ -460,7 +460,7 @@ array:1 [▼
                             ->get(['id'])
                             ->pluck('id')
                             ->toArray();
-                        
+
                         \App\Models\SysLog::write("DEBUG '.$no_tiket.' >> unit_id ".$unit_id." data->jenis_claim_id ".$data->jenis_claim_id." user_ids1 [". implode(", ", $user_ids1) . "]");
 
                         $regional_id = \DB::table('master_ruas')
