@@ -79,8 +79,8 @@
       // { data:'numSelect', name:'numSelect', searchable: false,orderable: false },
       { data:'DT_RowIndex', name:'DT_RowIndex', searchable: false,orderable: false  },
       { data:'name', name:'name' },
-      { data:'ro_id', name:'ro_id' },
-      { data:'regional_id', name:'regional_id' },
+      { data:'ro', name:'ro' },
+      { data:'regional', name:'regional' },
       { data:'active', name:'active' },
       { data:'action', name: 'action', searchable: false,orderable: false }
       ],[

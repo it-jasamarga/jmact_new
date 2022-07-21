@@ -103,14 +103,16 @@
                     <div class="col-12 col-sm-6 col-lg-4">
                         <label for="users-list-role">Tanggal Pelaporan Dari</label>
                         <fieldset class="form-group ">
-                            <input type="text" data-post="tanggal_awal" id="dataFilter"
+                            {{-- <input type="text" data-post="tanggal_awal" id="dataFilter" --}}
+                            <input type="text" data-post="tanggal_pelaporan" id="dataFilter"
                                 class="form-control filter-control pickadate-start" placeholder="Waktu Dari">
                         </fieldset>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
                         <label for="users-list-role">Tanggal Pelaporan Sampai</label>
                         <fieldset class="form-group">
-                            <input type="text" data-post="tanggal_akhir" id="dataFilter"
+                            {{-- <input type="text" data-post="tanggal_akhir" id="dataFilter" --}}
+                            <input type="text" data-post="tanggal_pelaporan" id="dataFilter"
                                 class="form-control filter-control pickadate-end" placeholder="Waktu Sampai">
                         </fieldset>
                     </div>
@@ -137,7 +139,7 @@
                     <table class="table data-thumb-view table-striped" id="listTables">
                         <thead>
                             <tr>
-                                <th id="listTables">No</th>
+                                {{-- <th id="listTables">No</th>
                                 <th id="listTables">No Tiket</th>
                                 <th id="listTables">Ruas</th>
                                 <th id="listTables">Lokasi</th>
@@ -149,7 +151,20 @@
                                 <th id="listTables">Bidang Keluhan</th>
                                 <th id="listTables">Golongan Kendaraan</th>
                                 <th id="listTables">Status</th>
-                                <th id="listTables">Action</th>
+                                <th id="listTables">Action</th> --}}
+                                <th>No</th>
+                                <th>No Tiket</th>
+                                <th>Ruas</th>
+                                <th>Lokasi</th>
+                                <th>Tanggal Pelaporan</th>
+                                <th>Nama Pelanggan</th>
+                                <th>No Telepon</th>
+                                <th>Sosial Media</th>
+                                <th>Sumber</th>
+                                <th>Bidang Keluhan</th>
+                                <th>Golongan Kendaraan</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -177,8 +192,8 @@
                     name: 'no_tiket'
                 },
                 {
-                    data: 'ruas_id',
-                    name: 'ruas_id'
+                    data: 'ruas',
+                    name: 'ruas'
                 },
                 {
                     data: 'lokasi_kejadian',
@@ -201,20 +216,20 @@
                     name: 'sosial_media'
                 },
                 {
-                    data: 'sumber_id',
-                    name: 'sumber_id'
+                    data: 'sumber',
+                    name: 'sumber'
                 },
                 {
-                    data: 'bidang_id',
-                    name: 'bidang_id'
+                    data: 'bidang',
+                    name: 'bidang'
                 },
                 {
-                    data: 'golongan_id',
-                    name: 'golongan_id'
+                    data: 'golongan',
+                    name: 'golongan'
                 },
                 {
-                    data: 'status_id',
-                    name: 'status_id'
+                    data: 'status',
+                    name: 'status'
                 },
                 {
                     data: 'action',

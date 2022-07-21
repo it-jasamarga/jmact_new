@@ -16,12 +16,16 @@ class KeluhanPelangganFilter extends QueryFilters
         parent::__construct($request);
     }
 
+    public function no_tiket($term) {
+        return $this->builder->where('no_tiket', "LIKE","%$term%");
+    }
+
     public function nama_cust($term) {
         return $this->builder->where('nama_cust', "LIKE","%$term%");
     }
 
-    public function no_tiket($term) {
-        return $this->builder->where('no_tiket', "LIKE","%$term%");
+    public function lokasi_kejadian($term) {
+        return $this->builder->where('lokasi_kejadian', "LIKE","%$term%");
     }
 
     public function tanggal_awal($term) {

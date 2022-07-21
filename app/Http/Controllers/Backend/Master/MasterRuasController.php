@@ -52,11 +52,11 @@ class MasterRuasController extends Controller
                 ]);
                 return $button;
             })
-            ->addColumn('ro_id', function ($data) use ($request) {
+            ->addColumn('ro', function ($data) use ($request) {
                 $button = ($data->ro) ? $data->ro->name : '-';
                 return $button;
             })
-            ->addColumn('regional_id', function ($data) use ($request) {
+            ->addColumn('regional', function ($data) use ($request) {
                 $button = ($data->ro->regional) ? $data->ro->regional->name : '-';
                 return $button;
             })

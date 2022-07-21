@@ -148,23 +148,23 @@ class KeluhanController extends Controller
                 ]);
                 return $button;
             })
-            ->addColumn('ruas_id', function ($data) use ($request) {
+            ->addColumn('ruas', function ($data) use ($request) {
                 $button = ($data->ruas) ? $data->ruas->name : '-';
                 return $button;
             })
-            ->addColumn('sumber_id', function ($data) use ($request) {
+            ->addColumn('sumber', function ($data) use ($request) {
                 $button = ($data->sumber) ? $data->sumber->description : '-';
                 return $button;
             })
-            ->addColumn('bidang_id', function ($data) use ($request) {
+            ->addColumn('bidang', function ($data) use ($request) {
                 $button = ($data->bidang) ? $data->bidang->keluhan : '-';
                 return $button;
             })
-            ->addColumn('status_id', function ($data) use ($request) {
+            ->addColumn('status', function ($data) use ($request) {
                 $button = ($data->status) ? $data->status->status : '-';
                 return $button;
             })
-            ->addColumn('golongan_id', function ($data) use ($request) {
+            ->addColumn('golongan', function ($data) use ($request) {
                 $button = ($data->golongan) ? $data->golongan->golongan : '-';
                 return $button;
             })

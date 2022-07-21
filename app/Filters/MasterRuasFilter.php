@@ -16,7 +16,7 @@ class MasterRuasFilter extends QueryFilters
     public function name($term) {
         return $this->builder->where('name', "LIKE","%$term%");
     }
-    
+
     public function regional_id($term) {
         return $this->builder->whereHas('ro', function($q) use($term){
             $q->whereHas('regional',function($q1) use($term){
