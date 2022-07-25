@@ -123,7 +123,7 @@
 		@include('panels/scripts')
 
 <script>
-	window.bell = new Audio("{{ url('bell.ogg') }}");
+	window.bell = new Audio("{{ url('bell-001.ogg') }}");
 </script>
 
 	</body>
