@@ -49,7 +49,6 @@ class BlastController extends Controller
                 ];
             }
         } catch (\Exception $ex) {
-            dd($ex->getMessage());
             \App\Models\SysLog::write("getZeroBlast Exception [". $ex->getMessage() ."]");
         };
 
