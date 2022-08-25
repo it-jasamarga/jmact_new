@@ -41,12 +41,12 @@ class DashboardController extends Controller
 
         $query = \App\Models\DashboardStat::get();
 
-        $overtime = ['total' => $query->where('group_info', "Overtime")->sum('total')];
+        $overtime = ['total' => ($query->count() > 0) ? $query->where('group_info', "Overtime")->sum('total') : 0];
         $regionals = \App\Models\MasterRegional::get(['name'])->pluck('name')->toArray();
         foreach ($regionals as $regional) {
             $overtime['regional'][$regional] = [
-                'total' => $query->where('group_info', "Overtime")->where('regional', $regional)->sum('total'),
-                'ruas' => $query->where('group_info', "Overtime")->where('regional', $regional)->pluck('total', 'ruas')->toArray()
+                'total' => ($query->count() > 0) ? $query->where('group_info', "Overtime")->where('regional', $regional)->sum('total') : 0,
+                'ruas' => ($query->count() > 0) ? $query->where('group_info', "Overtime")->where('regional', $regional)->pluck('total', 'ruas')->toArray() : []
             ];
         }
 
