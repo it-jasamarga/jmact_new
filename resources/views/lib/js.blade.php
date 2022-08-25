@@ -118,7 +118,7 @@
     });
 
     // FUNCTION ---------------------------------------------------------------------------------------------------------
-    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+    // $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
     $(document).ready(function(){
         $('.pickadate').pickadate({
@@ -226,6 +226,7 @@
             type: 'GET',
         })
         .done(function(response){
+            console.log('modals',modals.modal())
             modals.modal('show');
             modals.off('shown.bs.modal');
             modals.find('.modal-content').empty();

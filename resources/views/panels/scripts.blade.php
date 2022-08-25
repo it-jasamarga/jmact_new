@@ -1,6 +1,9 @@
 
-<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
-<script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}" crossorigin="anonymous"></script>
+
+<!-- <script src="{{ asset('assets/plugins/global/jquery-3.6.0.js') }}" ></script> -->
+
+<!-- <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script> -->
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <!--end::Global Theme Bundle-->
 
